@@ -15,6 +15,14 @@ extern "C" {
 JNIEXPORT jstring JNICALL Java_com_zuochengyao_sdk_engine_ZcyNative_helloWorld
   (JNIEnv *, jclass);
 
+/*
+ * Class:     com_zuochengyao_sdk_engine_ZcyNative
+ * Method:    updateFileContent
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_com_zuochengyao_sdk_engine_ZcyNative_updateFileContent
+  (JNIEnv *, jclass, jstring);
+
 #ifdef __cplusplus
 }
 #endif
