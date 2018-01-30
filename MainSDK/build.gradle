@@ -36,6 +36,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+//    externalNativeBuild {
+//        ndk {
+//            moduleName "zcy"
+//            abiFilters 'armeabi'
+//        }
+//
+//        sourceSets.main {
+//            jni.srcDirs = ['src/main/jni/']
+//            jniLibs.srcDir "src/main/libs"
+//        }
+//    }
+
 
 }
 
