@@ -10,5 +10,5 @@ public class ZcyNative
     {
         System.loadLibrary("zcy");
     }
-    public native String helloWorld();
+    public static native String helloWorld();
 }
