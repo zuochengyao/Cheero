@@ -6,5 +6,5 @@
 
 JNIEXPORT jstring JNICALL Java_com_zuochengyao_sdk_engine_ZcyNative_helloWorld(JNIEnv * env, jobject obj)
 {
-    return (*env)->NewStringUTF(env,"This just a test for Android Studio NDK JNI developer!");
+    return (*env) -> NewStringUTF(env, "This just a test for Android Studio NDK JNI developer!");
 }
