@@ -15,7 +15,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = findViewById(R.id.hello_jni);
-        textView.setText(ZcyNative.helloWorld());
-        ZcyNative.updateFileContent("/mnt/sdcard/boy.txt");
+        ZcyNative zcyNative = new ZcyNative();
+        textView.setText(zcyNative.helloWorld());
+        zcyNative.updateFileContent("/mnt/sdcard/boy.txt");
     }
 }
