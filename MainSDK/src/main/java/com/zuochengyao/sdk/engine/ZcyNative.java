@@ -8,9 +8,17 @@ public class ZcyNative
 {
     static
     {
-        System.loadLibrary("zcy");
+        try
+        {
+            System.loadLibrary("zcy");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
-    public native String helloWorld();
 
-    public native void updateFileContent(String filePath);
+    public static native String helloWorld();
+
+    public static native void updateFileContent(String filePath);
 }

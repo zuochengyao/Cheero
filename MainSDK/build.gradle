@@ -16,7 +16,7 @@ android {
             cmake {
                 cppFlags ""
                 //生成多个版本的so文件
-                abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'
+                abiFilters 'armeabi-v7a'
             }
             sourceSets.main {
                 jni.srcDirs = ['src/main/jni/']
@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'com.android.support:appcompat-v7:26.1.0'
     testImplementation 'junit:junit:4.12'

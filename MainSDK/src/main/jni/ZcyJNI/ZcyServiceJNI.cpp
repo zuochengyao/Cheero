@@ -44,8 +44,8 @@ JNIEXPORT void JNICALL zcy_native_updateFileContent(JNIEnv *env, jclass obj, jst
 static const char *classPathName = JNI_PACKAGE_NAME"engine/ZcyNative";
 
 static JNINativeMethod methods[] = {
-        {"helloWorld",        "()Ljava/lang/String",   (void *) zcy_native_helloWorld},
-        {"updateFileContent", "(Ljava/lang/String;)V", (void *) zcy_native_updateFileContent}
+        {"helloWorld",        "()Ljava/lang/String",  (void *) zcy_native_helloWorld},
+        {"updateFileContent", "(Ljava/lang/String)V", (void *) zcy_native_updateFileContent}
 };
 
 jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
@@ -63,9 +63,7 @@ jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
         LOGE("ERROR: Class not found");
         return JNI_FALSE;
     }
-
-    if (env->RegisterNatives(clazz, methods, sizeof(methods) / sizeof(methods[0])) < 0)
-    {
+    if (env->RegisterNatives(clazz, methods, sizeof(methods) / sizeof(methods[0])) < 0) {
         LOGE("ERROR: RegisterNatives failed");
         return JNI_FALSE;
     }

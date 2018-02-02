@@ -4,8 +4,8 @@ cmake_minimum_required(VERSION 3.4.1)
 # 定义工程名称
 # project(jni)
 
-#设置生成的so动态库最后输出的路径
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}../../../../libs/${ANDROID_ABI})
+# 设置生成的so动态库最后输出的路径
+# set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}../../../../libs/${ANDROID_ABI})
 
 # 生成so动态库
 add_library(zcy SHARED ZcyJNI/ZcyServiceJNI.cpp)
