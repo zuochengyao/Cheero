@@ -9,7 +9,7 @@
 #include <android/log.h>
 #include <assert.h>
 
-#define JNI_PACKAGE_NAME "com/zuochengyao/sdk/"
+#define JNI_PACKAGE_NAME "com/zcy/sdk/"
 #define TAG "ZCY_JNI"
 
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, TAG, __VA_ARGS__)
@@ -19,10 +19,12 @@
 static JavaVM *mJVM = NULL;
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-JNIEXPORT jstring JNICALL zcy_native_helloWorld(JNIEnv *env, jclass obj) {
+JNIEXPORT jstring JNICALL zcy_native_helloWorld(JNIEnv *env, jclass obj)
+{
     return env->NewStringUTF((char *) "This just a test for Android Studio NDK JNI developer!");
 }
 
@@ -41,35 +43,35 @@ JNIEXPORT void JNICALL zcy_native_updateFileContent(JNIEnv *env, jclass obj, jst
     }
 }
 
-static const char *classPathName = JNI_PACKAGE_NAME"engine/ZcyNative";
+static const char *classPathName = JNI_PACKAGE_NAME"engine/JniNative";
 
 static JNINativeMethod methods[] = {
-        {"helloWorld",        "()Ljava/lang/String",  (void *) zcy_native_helloWorld},
-        {"updateFileContent", "(Ljava/lang/String)V", (void *) zcy_native_updateFileContent}
+        {"helloWorld",        "()Ljava/lang/String;",  (void *) zcy_native_helloWorld},
+        {"updateFileContent", "(Ljava/lang/String;)V", (void *) zcy_native_updateFileContent}
 };
-
-jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
-    JNIEnv *env = NULL;
-    LOGI("OnLoad");
-    mJVM = vm;
-    if (vm->GetEnv((void **) &env, JNI_VERSION_1_4) != JNI_OK) {
-        LOGE("ERROR: GetEnv failed");
-        return JNI_ERR;
-    }
-    assert(env != NULL);
-
-    jclass clazz = env->FindClass(classPathName);
-    if (clazz == NULL) {
-        LOGE("ERROR: Class not found");
-        return JNI_FALSE;
-    }
-    if (env->RegisterNatives(clazz, methods, sizeof(methods) / sizeof(methods[0])) < 0) {
-        LOGE("ERROR: RegisterNatives failed");
-        return JNI_FALSE;
-    }
-
-    return JNI_OK;
-}
+//
+//jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
+//    JNIEnv *env = NULL;
+//    LOGI("OnLoad");
+//    mJVM = vm;
+//    if (vm->GetEnv((void **) &env, JNI_VERSION_1_4) != JNI_OK) {
+//        LOGE("ERROR: GetEnv failed");
+//        return JNI_ERR;
+//    }
+//    assert(env != NULL);
+//
+//    jclass clazz = env->FindClass(classPathName);
+//    if (clazz == NULL) {
+//        LOGE("ERROR: Class not found");
+//        return JNI_FALSE;
+//    }
+//    if (env->RegisterNatives(clazz, methods, sizeof(methods) / sizeof(methods[0])) < 0) {
+//        LOGE("ERROR: RegisterNatives failed");
+//        return JNI_FALSE;
+//    }
+//
+//    return JNI_OK;
+//}
 
 #ifdef __cplusplus
 }

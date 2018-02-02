@@ -9,19 +9,15 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
         externalNativeBuild {
-
             cmake {
-                cppFlags ""
-                //生成多个版本的so文件
-                abiFilters 'armeabi-v7a'
+                abiFilters 'armeabi-v7a', 'x86', 'x86_64'
             }
-            sourceSets.main {
-                jni.srcDirs = ['src/main/jni/']
-                // jniLibs.srcDir "libs"
-            }
+
+//            sourceSets.main {
+//                jni.srcDirs = ['src/main/jni/']
+//                // jniLibs.srcDir "libs"
+//            }
         }
     }
 
@@ -32,19 +28,14 @@ android {
         }
     }
 
-    // 配置CMakeLists.txt路径
     externalNativeBuild {
         cmake {
-            path 'src/main/jni/CMakeLists.txt' // 设置所要编写的c源码位置，以及编译后so文件的名字
+            path 'src/main/jni/CMakeLists.txt'
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
