@@ -13,7 +13,6 @@ android {
                 cppFlags "-std=c++11", "-frtti", "-fexceptions"
                 abiFilters "armeabi-v7a"
             }
-
 //            sourceSets.main {
 //                jniLibs.srcDirs = ['libs']
 //            }
