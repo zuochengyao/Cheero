@@ -11,6 +11,7 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags "-std=c++11", "-frtti", "-fexceptions"
+                abiFilters "armeabi-v7a"
             }
 
 //            sourceSets.main {
@@ -28,7 +29,7 @@ android {
 
     externalNativeBuild {
         cmake {
-            path 'CMakeLists.txt'
+            path 'src/main/jni/CMakeLists.txt'
         }
     }
 }

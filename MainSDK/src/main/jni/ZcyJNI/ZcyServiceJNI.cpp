@@ -31,9 +31,17 @@ JNIEXPORT jint JNICALL zcy_native_add(JNIEnv, jclass, jint a, jint b) {
     return a + b;
 }
 
+JNIEXPORT jstring JNICALL sayHello(JNIEnv *env, jobject)
+{
+    LOGI("sayHello");
+    const char* hello = "Hello from jni";
+    return env -> NewStringUTF(hello);
+}
+
 static JNINativeMethod methods[] = {
-        {"helloWorld", "()V", (void *) zcy_native_helloWorld},
-        {"add",        "(II)I",                (void *) zcy_native_add}
+        {"helloWorld", "()V",   (void *) zcy_native_helloWorld},
+        {"add",        "(II)I", (void *) zcy_native_add},
+        {"sayHello", "()Ljava/lang/String;", (void *) sayHello}
 };
 
 static int registNativeMethods(JNIEnv *env) {
@@ -44,12 +52,11 @@ static int registNativeMethods(JNIEnv *env) {
         LOGE("ERROR: Class not found");
         return JNI_FALSE;
     }
-    if ((env -> RegisterNatives(clazz, methods, sizeof(methods) / sizeof(methods[0]))) < 0)
-    {
+    if ((env->RegisterNatives(clazz, methods, sizeof(methods) / sizeof(methods[0]))) < 0) {
         LOGE("Register natives failed for '%s'\n", classPathName);
         return JNI_ERR;
     }
-    env -> DeleteLocalRef(clazz);
+    env->DeleteLocalRef(clazz);
     return JNI_OK;
 }
 
