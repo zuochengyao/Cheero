@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = findViewById(R.id.hello_jni);
-        textView.setText(JniNative.helloWorld());
-        // JniNative.updateFileContent("/mnt/sdcard/boy.txt");
+        new JniNative().helloWorld();
     }
 }

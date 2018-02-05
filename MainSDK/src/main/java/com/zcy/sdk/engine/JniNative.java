@@ -6,13 +6,13 @@ package com.zcy.sdk.engine;
 
 public class JniNative
 {
-    public static native String helloWorld();
+    public native void helloWorld();
 
-    public static native void updateFileContent(String filePath);
+    public native int add(int a, int b);
 
     static
     {
-        System.loadLibrary("Zcy");
+        System.loadLibrary("zcy");
     }
 
 }

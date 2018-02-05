@@ -8,15 +8,13 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-
         externalNativeBuild {
             cmake {
-                abiFilters 'armeabi-v7a', 'x86', 'x86_64'
+                cppFlags "-std=c++11", "-frtti", "-fexceptions"
             }
 
 //            sourceSets.main {
-//                jni.srcDirs = ['src/main/jni/']
-//                // jniLibs.srcDir "libs"
+//                jniLibs.srcDirs = ['libs']
 //            }
         }
     }
@@ -30,7 +28,7 @@ android {
 
     externalNativeBuild {
         cmake {
-            path 'src/main/jni/CMakeLists.txt'
+            path 'CMakeLists.txt'
         }
     }
 }
