@@ -39,9 +39,11 @@ JNIEXPORT jstring JNICALL sayHello(JNIEnv *env, jobject)
     return env->NewStringUTF(hello);
 }
 
-static JNINativeMethod methods[] = {{"helloWorld", "()V",                  (void *) zcy_native_helloWorld},
-                                    {"add",        "(II)I",                (void *) zcy_native_add},
-                                    {"sayHello",   "()Ljava/lang/String;", (void *) sayHello}};
+static JNINativeMethod methods[] = {
+    {"helloWorld", "()V",                  (void *) zcy_native_helloWorld},
+    {"add",        "(II)I",                (void *) zcy_native_add},
+    {"sayHello",   "()Ljava/lang/String;", (void *) sayHello}
+};
 
 static int registNativeMethods(JNIEnv *env)
 {

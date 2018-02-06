@@ -2,12 +2,12 @@
 cmake_minimum_required(VERSION 3.4.1)
 
 # 定义工程名称
-# project(jni)
+project(jni)
 
 set(ANDROID_NDK_REVISION 13)
 
 # 设置生成的so动态库最后输出的路径
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}../../../../libs/${ANDROID_ABI})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/main/jniLibs/)
 
 # 生成so动态库
 add_library( # 设置so文件名称.
@@ -15,16 +15,14 @@ add_library( # 设置so文件名称.
              # 设置这个so文件为共享.
              SHARED
              # 设置 c文件源码位置.
-             ZcyJNI/ZcyServiceJNI.cpp)
+             ZcyJNI/ZcyServiceJNI.cpp Util/src/Trace.c)
+             # ${DIR_SRCS})
 
-find_library( # Sets the name of the path variable.
-              log-lib
-              log )
+# Sets the name of the path variable.
+find_library(log-lib log)
 
-
-target_link_libraries( # 制定目标库.
-                        zcy
-                        ${log-lib} )
+# 制定目标库.
+target_link_libraries(zcy ${log-lib})
 
 # 添加子目录,将会调用子目录中的CMakeLists.txt
 # add_subdirectory(src/main/cpp/test_module)
