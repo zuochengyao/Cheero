@@ -4,33 +4,37 @@ cmake_minimum_required(VERSION 3.4.1)
 # 定义工程名称
 project(jni)
 
-set(ANDROID_NDK_REVISION 13)
+set(_VERSION 0.1.0)
 
 # 设置生成的so动态库最后输出的路径
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/src/main/jniLibs/)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../jniLibs/${ANDROID_ABI})
+
+#当前cmakelists.txt所在目录的所有.c .cpp源文件
+AUX_SOURCE_DIRECTORY(. SRC_LIST)
+
+#增加其他目录的源文件到集合变量中
+list(APPEND SRC_LIST
+    ZcyJNI/ZcyServiceJNI.cpp
+    Util/src/Trace.c)
 
 # 生成so动态库
 add_library( # 设置so文件名称.
-             zcy
+             zcy-${_VERSION}
              # 设置这个so文件为共享.
              SHARED
              # 设置 c文件源码位置.
-             ZcyJNI/ZcyServiceJNI.cpp Util/src/Trace.c)
-             # ${DIR_SRCS})
+             ${SRC_LIST})
+
+message ("message!!!!!!!!!!!!!!!!!!!"${CMAKE_CURRENT_LIST_DIR})
 
 # Sets the name of the path variable.
 find_library(log-lib log)
 
 # 制定目标库.
-target_link_libraries(zcy ${log-lib})
+target_link_libraries(zcy-${_VERSION} ${log-lib})
 
 # 添加子目录,将会调用子目录中的CMakeLists.txt
 # add_subdirectory(src/main/cpp/test_module)
-
-# include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
-
-# 查找当前目录下的所有源文件,并将名称保存到 DIR_SRCS 变量
-# aux_source_directory(. DIR_SRCS)
 
 
 # 指定生成目标

@@ -14,7 +14,7 @@ public class JniNative
 
     static
     {
-        System.loadLibrary("zcy");
+        System.loadLibrary("zcy-0.1.0");
     }
 
 }
