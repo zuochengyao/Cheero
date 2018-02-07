@@ -1,4 +1,4 @@
-package com.zcy.sdk.engine;
+package com.zcy.sdk.media;
 
 import android.content.Context;
 import android.hardware.camera2.CameraCaptureSession;
