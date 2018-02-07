@@ -15,9 +15,8 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        JniNative jniNative = new JniNative();
         textView = findViewById(R.id.hello_jni);
-        jniNative.helloWorld();
-        textView.setText(jniNative.add(1, 2) + "");
+        JniNative.serviceSetTraceMode(0);
+        JniNative.serviceSizeOfDataType();
     }
 }

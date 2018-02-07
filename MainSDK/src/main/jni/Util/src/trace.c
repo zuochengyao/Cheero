@@ -8,13 +8,13 @@
 #include <string.h>
 #include <android/log.h>
 
-#include "../inc/Trace.h"
+#include "trace.h"
 
 FILE *m_trace_file = NULL;
 char *m_trace_file_path = NULL;
 
 #ifdef TRACE_ON
-TRACE_MODE tMode = TRACE_ON_FILE;
+TRACE_MODE tMode = TRACE_ON_SCREEN;
 #else
 TRACE_MODE tMode = TRACE_OFF;
 #endif

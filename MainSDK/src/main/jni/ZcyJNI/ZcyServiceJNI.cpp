@@ -8,6 +8,9 @@
 #include <jni.h>
 #include <android/log.h>
 
+#include "trace.h"
+#include "serviceEngine.h"
+
 #define JNI_PACKAGE_NAME "com/zcy/sdk/"
 #define TAG "ZCY_JNI"
 
@@ -22,27 +25,21 @@ static const char *classPathName = JNI_PACKAGE_NAME"engine/JniNative";
 extern "C" {
 #endif
 
-JNIEXPORT void JNICALL zcy_native_helloWorld(JNIEnv, jclass)
+JNIEXPORT void JNICALL zcy_native_serviceSetTraceMode(JNIEnv *, jobject, jint jTraceMode)
 {
-    LOGI("This just a test for Android Studio NDK JNI developer!");
+    TRACE(__FILE__, __LINE__, "zcy_native_serviceSetTraceMode IN\n");
+    service_trace_mode(jTraceMode);
 }
 
-JNIEXPORT jint JNICALL zcy_native_add(JNIEnv, jclass, jint a, jint b)
+JNIEXPORT void JNICALL zcy_native_serviceSizeOfDataType(JNIEnv *, jobject)
 {
-    return a + b;
-}
-
-JNIEXPORT jstring JNICALL sayHello(JNIEnv *env, jobject)
-{
-    LOGI("sayHello");
-    const char *hello = "Hello from jni";
-    return env->NewStringUTF(hello);
+    TRACE(__FILE__, __LINE__, "zcy_native_serviceSizeOfDataType IN\n");
+    service_sizeof_data_type();
 }
 
 static JNINativeMethod methods[] = {
-    {"helloWorld", "()V",                  (void *) zcy_native_helloWorld},
-    {"add",        "(II)I",                (void *) zcy_native_add},
-    {"sayHello",   "()Ljava/lang/String;", (void *) sayHello}
+    {"serviceSizeOfDataType", "()V", (void *) zcy_native_serviceSizeOfDataType},
+    {"serviceSetTraceMode","(I)V", (void*) zcy_native_serviceSetTraceMode}
 };
 
 static int registNativeMethods(JNIEnv *env)

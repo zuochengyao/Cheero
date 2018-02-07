@@ -4,8 +4,8 @@
 // on 2018/2/6.
 //
 
-#ifndef TRACE_H
-#define TRACE_H
+#ifndef __TRACE_H__
+#define __TRACE_H__
 
 #if defined(_WIN32) || defined(_WIN32_WCE)
 #define TRACE_FILE_NAME "d:\\ZcyTrace.txt"
@@ -17,7 +17,7 @@
 #define TRACE_FILE_NAME "fs:/shared/PocTrace"
 #endif
 
-#include "stdio.h"
+#include <stdio.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -39,4 +39,4 @@ void TRACE(const char *fi, int level, const char *chfr, ...);
 }
 #endif
 
-#endif //TRACE_H
+#endif //__TRACE_H__

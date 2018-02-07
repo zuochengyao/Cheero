@@ -6,11 +6,9 @@ package com.zcy.sdk.engine;
 
 public class JniNative
 {
-    public native void helloWorld();
+    public static native void serviceSetTraceMode(int traceMode);
 
-    public native int add(int a, int b);
-
-    public native String sayHello();
+    public static native void serviceSizeOfDataType();
 
     static
     {
