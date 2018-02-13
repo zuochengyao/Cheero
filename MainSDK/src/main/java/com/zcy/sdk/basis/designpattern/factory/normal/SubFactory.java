@@ -1,7 +1,8 @@
 package com.zcy.sdk.basis.designpattern.factory.normal;
 
-import com.zcy.designpattern.factory.Operation;
-import com.zcy.designpattern.factory.Sub;
+
+import com.zcy.sdk.basis.designpattern.factory.Sub;
+import com.zcy.sdk.basis.designpattern.factory.Operation;
 
 public class SubFactory implements IFactory
 {

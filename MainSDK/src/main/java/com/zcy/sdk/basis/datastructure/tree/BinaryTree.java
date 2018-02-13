@@ -1,9 +1,9 @@
 package com.zcy.sdk.basis.datastructure.tree;
 
+import com.zcy.sdk.basis.datastructure.tree.node.BinaryTreeNode;
+
 import java.util.LinkedList;
 import java.util.Stack;
-
-import com.zcy.datastructure.tree.node.BinaryTreeNode;
 
 public class BinaryTree
 {

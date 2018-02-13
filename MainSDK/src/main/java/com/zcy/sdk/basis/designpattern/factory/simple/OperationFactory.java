@@ -1,10 +1,11 @@
 package com.zcy.sdk.basis.designpattern.factory.simple;
 
-import com.zcy.designpattern.factory.Add;
-import com.zcy.designpattern.factory.Div;
-import com.zcy.designpattern.factory.Mul;
-import com.zcy.designpattern.factory.Operation;
-import com.zcy.designpattern.factory.Sub;
+
+import com.zcy.sdk.basis.designpattern.factory.Add;
+import com.zcy.sdk.basis.designpattern.factory.Div;
+import com.zcy.sdk.basis.designpattern.factory.Mul;
+import com.zcy.sdk.basis.designpattern.factory.Sub;
+import com.zcy.sdk.basis.designpattern.factory.Operation;
 
 public class OperationFactory
 {

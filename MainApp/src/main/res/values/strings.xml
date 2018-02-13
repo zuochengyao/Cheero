@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Demo</string>
+    <string name="practice_app_name">MyPractice</string>
+    <string name="practice_title_activity_main">MainActivity</string>
 </resources>
+

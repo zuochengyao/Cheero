@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="button_height">36dp</dimen>
+    <dimen name="button_width">50dp</dimen>
+    <dimen name="checkbox_width">36dp</dimen>
+</resources>
