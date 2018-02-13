@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.zcy.sdk.engine.JniNative;
+import com.zcy.sdk.ndk.JniNative;
 
 public class MainActivity extends AppCompatActivity
 {
