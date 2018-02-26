@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:orientation="vertical"
     tools:context="com.zcy.app.ui.activity.MainActivity"
     tools:showIn="@layout/activity_main">
 
@@ -20,5 +21,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TO CustomViewActivity"/>
+
+    <Button
+        android:id="@+id/to_sections_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TO SectionsActivity"/>
 
 </LinearLayout>
