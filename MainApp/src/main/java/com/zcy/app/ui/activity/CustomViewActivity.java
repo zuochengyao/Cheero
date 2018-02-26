@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.Button;
 
 import com.zcy.app.R;
@@ -24,9 +25,6 @@ public class CustomViewActivity extends Activity
     @BindView(R.id.animate_flipper)
     Button mFlipper;
 
-    private ObjectAnimator mFlipperAnimate;
-    private boolean isHeads = true;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -34,26 +32,6 @@ public class CustomViewActivity extends Activity
         setContentView(R.layout.activity_custom_view);
 
         ButterKnife.bind(this);
-
-        mFlipperAnimate = ObjectAnimator.ofFloat(mBullEye, "rotationX", 0f, 180f);
-        mFlipperAnimate.setDuration(500);
-        mFlipperAnimate.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
-        {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation)
-            {
-                if (animation.getAnimatedFraction() >= 0.25f && isHeads)
-                {
-                    mBullEye.updateColor(Color.GREEN);
-                    isHeads = false;
-                }
-                else if (animation.getAnimatedFraction() >= 0.75f && isHeads)
-                {
-                    mBullEye.updateColor(Color.RED);
-                    isHeads = true;
-                }
-            }
-        });
     }
 
     @OnClick({R.id.animate_alpha_x, R.id.animate_flipper})
@@ -75,7 +53,11 @@ public class CustomViewActivity extends Activity
             }
             case R.id.animate_flipper:
             {
-                mFlipperAnimate.start();
+                final ObjectAnimator mObjectAnimator = ObjectAnimator.ofInt(mBullEye, "centerPointColor", Color.RED, Color.GREEN);
+                mObjectAnimator.setDuration(3000);
+                mObjectAnimator.setRepeatCount(Animation.INFINITE);
+                mObjectAnimator.setRepeatMode(ValueAnimator.REVERSE);
+                mObjectAnimator.start();
                 break;
             }
         }

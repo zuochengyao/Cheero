@@ -18,7 +18,18 @@ public class BullEyeView extends View
     private Paint mPaint;
     private Point mCenter;
     private float mRadius;
-    private int mCenterColor = Color.RED;
+
+    private int mCenterPointColor = Color.RED;
+
+    public int getCenterPointColor()
+    {
+        return mCenterPointColor;
+    }
+
+    public void setCenterPointColor(int mCenterPointColor)
+    {
+        this.mCenterPointColor = mCenterPointColor;
+    }
 
     public BullEyeView(Context context)
     {
@@ -61,12 +72,6 @@ public class BullEyeView extends View
         return specSize;
     }
 
-    public void updateColor(int color)
-    {
-        mCenterColor = color;
-        postInvalidate();
-    }
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
@@ -107,7 +112,7 @@ public class BullEyeView extends View
         mPaint.setColor(Color.WHITE);
         canvas.drawCircle(mCenter.x, mCenter.y, mRadius * 0.4f, mPaint);
 
-        mPaint.setColor(mCenterColor);
+        mPaint.setColor(mCenterPointColor);
         canvas.drawCircle(mCenter.x, mCenter.y, mRadius * 0.1f, mPaint);
     }
 }
