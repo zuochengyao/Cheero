@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity
 {
     @BindView(R.id.to_styled_activity)
     Button toStyledActivity;
+    @BindView(R.id.to_custom_view_activity)
+    Button toCustomViewActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.to_styled_activity})
+    @OnClick({R.id.to_styled_activity, R.id.to_custom_view_activity})
     public void OnClickEvent(View v)
     {
         switch (v.getId())
@@ -49,6 +51,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.to_styled_activity:
             {
                 startActivity(new Intent(this, StyledActivity.class));
+                break;
+            }
+            case R.id.to_custom_view_activity:
+            {
+                startActivity(new Intent(this, CustomViewActivity.class));
                 break;
             }
         }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.zcy.app.ui.activity.CustomViewActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/animate_alpha_x"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="alpha+x"/>
+
+        <Button
+            android:id="@+id/animate_flipper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="flipper"/>
+
+    </LinearLayout>
+
+    <com.zcy.app.ui.view.BullEyeView
+        android:id="@+id/bullEye"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>
