@@ -23,8 +23,7 @@
             android:name=".ui.activity.StyledActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ui.activity.CustomViewActivity"/>
-        <activity android:name=".ui.activity.SectionsActivity">
-        </activity>
+        <activity android:name=".ui.activity.SectionsActivity"/>
     </application>
 
 </manifest>
