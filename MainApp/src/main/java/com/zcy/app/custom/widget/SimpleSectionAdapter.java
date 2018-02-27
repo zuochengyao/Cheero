@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.zcy.app.R;
 import com.zcy.app.model.SectionItem;
 
 import java.util.ArrayList;
@@ -115,7 +116,7 @@ public abstract class SimpleSectionAdapter<T> extends BaseAdapter implements Ada
         if (convertView == null)
             convertView = mLayoutInflater.inflate(mHeaderResource, parent, false);
         SectionItem<T> item = mKeyedSections.get(position);
-        TextView textView = convertView.findViewById(android.R.id.text1);
+        TextView textView = convertView.findViewById(R.id.list_header_text);
         textView.setText(item.getTitle());
         return convertView;
     }
@@ -125,7 +126,7 @@ public abstract class SimpleSectionAdapter<T> extends BaseAdapter implements Ada
         if (convertView == null)
             convertView = mLayoutInflater.inflate(mItemResource, parent, false);
         T item = findSectionItemAtPosition(position);
-        TextView textView = convertView.findViewById(android.R.id.text1);
+        TextView textView = convertView.findViewById(/* android.R.id.text1 */ R.id.list_item_text);
         textView.setText(item.toString());
         return convertView;
     }

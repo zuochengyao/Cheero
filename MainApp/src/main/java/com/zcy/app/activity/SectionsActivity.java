@@ -17,7 +17,7 @@ public class SectionsActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         ListView list = new ListView(this);
-        SimpleSectionAdapter<String> adapter = new SimpleSectionAdapter<String>(list, R.layout.list_header, android.R.layout.simple_list_item_1)
+        SimpleSectionAdapter<String> adapter = new SimpleSectionAdapter<String>(list, R.layout.list_header, /* android.R.layout.simple_list_item_1 */ R.layout.list_item)
         {
             @Override
             public void onSectionItemClick(String item)
