@@ -1,4 +1,4 @@
-package com.zcy.app.ui.activity;
+package com.zcy.app.activity;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -10,7 +10,7 @@ import android.view.animation.Animation;
 import android.widget.Button;
 
 import com.zcy.app.R;
-import com.zcy.app.ui.view.BullEyeView;
+import com.zcy.app.custom.view.BullEyeView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -1,4 +1,4 @@
-package com.zcy.app.ui.widget;
+package com.zcy.app.custom.widget;
 
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.zcy.app.ui.model.SectionItem;
+import com.zcy.app.model.SectionItem;
 
 import java.util.ArrayList;
 import java.util.List;

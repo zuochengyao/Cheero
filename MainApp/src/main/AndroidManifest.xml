@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/practice_title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -20,10 +20,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.StyledActivity"
+            android:name=".activity.StyledActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ui.activity.CustomViewActivity"/>
-        <activity android:name=".ui.activity.SectionsActivity"/>
+        <activity android:name=".activity.CustomViewActivity"/>
+        <activity android:name=".activity.SectionsActivity"/>
     </application>
 
 </manifest>

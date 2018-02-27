@@ -1,4 +1,4 @@
-package com.zcy.app.ui.model;
+package com.zcy.app.model;
 
 import android.text.TextUtils;
 

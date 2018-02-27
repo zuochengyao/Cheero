@@ -1,4 +1,4 @@
-package com.zcy.app.ui.util;
+package com.zcy.app.util;
 
 import android.content.Context;
 

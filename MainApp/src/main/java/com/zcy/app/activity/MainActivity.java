@@ -1,4 +1,4 @@
-package com.zcy.app.ui.activity;
+package com.zcy.app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.to_styled_activity:
             {
                 startActivity(new Intent(this, StyledActivity.class));
+                overridePendingTransition(R.anim.activity_open_enter, R.anim.activity_open_exit);
                 break;
             }
             case R.id.to_custom_view_activity:

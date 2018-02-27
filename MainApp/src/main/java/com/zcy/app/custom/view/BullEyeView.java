@@ -1,4 +1,4 @@
-package com.zcy.app.ui.view;
+package com.zcy.app.custom.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
