@@ -51,6 +51,7 @@ public class AnimActivity extends BaseActivity
             {
                 mLauncher.clearAnimation();
                 ObjectAnimator animator = (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.translation_x);
+                animator.setTarget(mLauncher);
                 animator.start();
                 break;
             }

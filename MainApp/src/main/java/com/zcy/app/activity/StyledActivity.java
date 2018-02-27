@@ -19,6 +19,5 @@ public class StyledActivity extends AppCompatActivity
     public void finish()
     {
         super.finish();
-        overridePendingTransition(R.anim.activity_close_enter, R.anim.activity_close_exit);
     }
 }
