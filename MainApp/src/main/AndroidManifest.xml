@@ -8,25 +8,22 @@
         android:label="@string/practice_app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".activity.MainActivity"
-            android:label="@string/practice_title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".activity.base.MainActivity"
+            android:label="@string/practice_title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.StyledActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".activity.CustomViewActivity"/>
-        <activity android:name=".activity.SectionsActivity"/>
-        <activity android:name=".activity.AnimActivity"/>
-        <activity android:name=".activity.BaseActivity">
-        </activity>
-        </application>
+        <activity android:name=".activity.ui.StyledActivity"/>
+        <activity android:name=".activity.ui.CustomViewActivity"/>
+        <activity android:name=".activity.ui.SectionsActivity"/>
+        <activity android:name=".activity.ui.AnimActivity"/>
+        <activity android:name=".activity.base.BaseActivity"/>
+        <activity android:name=".activity.ui.DialogActivity"/>
+    </application>
 
 </manifest>

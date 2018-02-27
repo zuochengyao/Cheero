@@ -1,4 +1,4 @@
-package com.zcy.app.activity;
+package com.zcy.app.activity.ui;
 
 import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.zcy.app.R;
+import com.zcy.app.activity.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;

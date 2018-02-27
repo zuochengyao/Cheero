@@ -1,4 +1,4 @@
-package com.zcy.app.activity;
+package com.zcy.app.activity.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import com.zcy.app.custom.widget.SimpleSectionAdapter;
 
 public class SectionsActivity extends Activity
 {
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

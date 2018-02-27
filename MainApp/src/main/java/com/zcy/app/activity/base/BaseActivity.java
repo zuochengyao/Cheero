@@ -1,4 +1,4 @@
-package com.zcy.app.activity;
+package com.zcy.app.activity.base;
 
 import android.app.Activity;
 import android.os.Bundle;

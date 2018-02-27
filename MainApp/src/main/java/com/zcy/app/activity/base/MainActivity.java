@@ -1,4 +1,4 @@
-package com.zcy.app.activity;
+package com.zcy.app.activity.base;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -12,6 +12,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.zcy.app.R;
+import com.zcy.app.activity.ui.AnimActivity;
+import com.zcy.app.activity.ui.CustomViewActivity;
+import com.zcy.app.activity.ui.DialogActivity;
+import com.zcy.app.activity.ui.SectionsActivity;
+import com.zcy.app.activity.ui.StyledActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +32,8 @@ public class MainActivity extends AppCompatActivity
     Button toSectionsActivity;
     @BindView(R.id.to_anim_activity)
     Button toAnimActivity;
+    @BindView(R.id.to_dialog_activity)
+    Button toDialogActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -51,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity})
+    @OnClick({R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity, R.id.to_dialog_activity})
     public void OnClickEvent(View v)
     {
         Intent toActivity = new Intent();
@@ -84,6 +91,10 @@ public class MainActivity extends AppCompatActivity
                 toActivity.putExtra("transition", "fade");
                 startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
+            }
+            case R.id.to_dialog_activity:
+            {
+                startActivity(new Intent(this, DialogActivity.class));
             }
         }
     }

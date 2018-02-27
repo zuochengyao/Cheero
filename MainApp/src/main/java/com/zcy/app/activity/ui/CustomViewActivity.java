@@ -1,6 +1,5 @@
-package com.zcy.app.activity;
+package com.zcy.app.activity.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.transition.Slide;
 import android.view.Gravity;
@@ -8,13 +7,13 @@ import android.view.View;
 import android.widget.Button;
 
 import com.zcy.app.R;
+import com.zcy.app.activity.base.BaseActivity;
 import com.zcy.app.custom.view.BullEyeView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CustomViewActivity extends Activity
+public class CustomViewActivity extends BaseActivity
 {
     @BindView(R.id.bullEye)
     BullEyeView mBullEye;
@@ -24,12 +23,11 @@ public class CustomViewActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_view);
+        super.onCreate(savedInstanceState);
         Slide slide = new Slide(Gravity.BOTTOM);
         slide.setDuration(1000L);
         getWindow().setEnterTransition(slide);
-        ButterKnife.bind(this);
     }
 
     @OnClick({R.id.animate_alpha_x})
