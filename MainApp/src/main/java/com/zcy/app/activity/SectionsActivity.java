@@ -2,6 +2,7 @@ package com.zcy.app.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.transition.Fade;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,5 +31,8 @@ public class SectionsActivity extends Activity
 
         list.setAdapter(adapter);
         setContentView(list);
+        Fade fade = new Fade();
+        fade.setDuration(1000L);
+        getWindow().setEnterTransition(fade);
     }
 }

@@ -3,6 +3,7 @@ package com.zcy.app.activity;
 import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.transition.Fade;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -29,6 +30,9 @@ public class AnimActivity extends BaseActivity
     {
         setContentView(R.layout.activity_animator);
         super.onCreate(savedInstanceState);
+        Fade fade = new Fade();
+        fade.setDuration(1000L);
+        getWindow().setEnterTransition(fade);
     }
 
     @OnClick({R.id.launcher_image, R.id.start_animation, R.id.start_animator})

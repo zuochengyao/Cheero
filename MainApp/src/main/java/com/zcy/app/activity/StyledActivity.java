@@ -2,6 +2,7 @@ package com.zcy.app.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Explode;
 
 import com.zcy.app.R;
 
@@ -13,6 +14,13 @@ public class StyledActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_styled);
+        String transition = getIntent().getStringExtra("transition");
+        if (transition.equals("explode"))
+        {
+            Explode explode = new Explode();
+            explode.setDuration(700l);
+            getWindow().setEnterTransition(explode);
+        }
     }
 
     @Override

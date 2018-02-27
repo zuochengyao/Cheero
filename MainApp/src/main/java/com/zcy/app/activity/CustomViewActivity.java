@@ -2,6 +2,8 @@ package com.zcy.app.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 
@@ -24,7 +26,9 @@ public class CustomViewActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_view);
-
+        Slide slide = new Slide(Gravity.BOTTOM);
+        slide.setDuration(1000L);
+        getWindow().setEnterTransition(slide);
         ButterKnife.bind(this);
     }
 

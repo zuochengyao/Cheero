@@ -27,6 +27,6 @@
         <activity android:name=".activity.AnimActivity"/>
         <activity android:name=".activity.BaseActivity">
         </activity>
-    </application>
+        </application>
 
 </manifest>
