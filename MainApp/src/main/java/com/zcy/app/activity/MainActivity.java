@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity
     Button toCustomViewActivity;
     @BindView(R.id.to_sections_activity)
     Button toSectionsActivity;
+    @BindView(R.id.to_anim_activity)
+    Button toAnimActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity})
+    @OnClick({R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity})
     public void OnClickEvent(View v)
     {
         switch (v.getId())
@@ -64,6 +66,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.to_sections_activity:
             {
                 startActivity(new Intent(this, SectionsActivity.class));
+                break;
+            }
+            case R.id.to_anim_activity:
+            {
+                startActivity(new Intent(this, AnimActivity.class));
                 break;
             }
         }

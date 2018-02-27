@@ -1,12 +1,8 @@
 package com.zcy.app.activity;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.Button;
 
 import com.zcy.app.R;
@@ -22,8 +18,6 @@ public class CustomViewActivity extends Activity
     BullEyeView mBullEye;
     @BindView(R.id.animate_alpha_x)
     Button mAlphaX;
-    @BindView(R.id.animate_flipper)
-    Button mFlipper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,7 +28,7 @@ public class CustomViewActivity extends Activity
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.animate_alpha_x, R.id.animate_flipper})
+    @OnClick({R.id.animate_alpha_x})
     public void OnClickEvent(View v)
     {
         switch (v.getId())
@@ -49,15 +43,6 @@ public class CustomViewActivity extends Activity
                     mBullEye.setTranslationX(10f);
                     mBullEye.animate().alpha(1f);
                 }
-                break;
-            }
-            case R.id.animate_flipper:
-            {
-                final ObjectAnimator mObjectAnimator = ObjectAnimator.ofInt(mBullEye, "centerPointColor", Color.RED, Color.GREEN);
-                mObjectAnimator.setDuration(3000);
-                mObjectAnimator.setRepeatCount(Animation.INFINITE);
-                mObjectAnimator.setRepeatMode(ValueAnimator.REVERSE);
-                mObjectAnimator.start();
                 break;
             }
         }

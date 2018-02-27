@@ -17,12 +17,6 @@
             android:layout_height="wrap_content"
             android:text="alpha+x"/>
 
-        <Button
-            android:id="@+id/animate_flipper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="flipper"/>
-
     </LinearLayout>
 
     <com.zcy.app.custom.view.BullEyeView

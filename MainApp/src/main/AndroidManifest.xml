@@ -24,6 +24,9 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.CustomViewActivity"/>
         <activity android:name=".activity.SectionsActivity"/>
+        <activity android:name=".activity.AnimActivity"/>
+        <activity android:name=".activity.BaseActivity">
+        </activity>
     </application>
 
 </manifest>
