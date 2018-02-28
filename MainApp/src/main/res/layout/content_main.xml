@@ -14,37 +14,43 @@
         android:id="@+id/to_styled_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TO StyledActivity"/>
+        android:text="StyledActivity"
+        android:textAllCaps="false"/>
 
     <Button
         android:id="@+id/to_custom_view_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TO CustomViewActivity"/>
+        android:text="CustomViewActivity"
+        android:textAllCaps="false"/>
 
     <Button
         android:id="@+id/to_sections_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TO SectionsActivity"/>
+        android:text="SectionsActivity"
+        android:textAllCaps="false"/>
 
     <Button
         android:id="@+id/to_anim_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TO AnimActivity"/>
+        android:text="AnimActivity"
+        android:textAllCaps="false"/>
 
     <Button
         android:id="@+id/to_dialog_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TO DialogActivity"/>
+        android:text="DialogActivity"
+        android:textAllCaps="false"/>
 
     <Button
         android:id="@+id/to_option_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TO OptionActivity"/>
+        android:text="OptionActivity"
+        android:textAllCaps="false"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,14 +61,23 @@
             android:id="@+id/to_touch_pan_gesture_scroll_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TO PanGestureScrollActivity"/>
+            android:text="PanGestureScrollActivity"
+            android:textAllCaps="false"/>
 
         <Button
             android:id="@+id/to_touch_pan_scroll_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TO PanScrollActivity"/>
+            android:text="PanScrollActivity"
+            android:textAllCaps="false"/>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/to_web_view_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WebViewActivity"
+        android:textAllCaps="false"/>
 
 </LinearLayout>
