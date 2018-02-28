@@ -40,4 +40,10 @@
         android:layout_height="wrap_content"
         android:text="TO DialogActivity"/>
 
+    <Button
+        android:id="@+id/to_option_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TO OptionActivity"/>
+
 </LinearLayout>
