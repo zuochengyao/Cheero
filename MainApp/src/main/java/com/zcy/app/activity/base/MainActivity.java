@@ -18,6 +18,7 @@ import com.zcy.app.activity.ui.DialogActivity;
 import com.zcy.app.activity.ui.OptionActivity;
 import com.zcy.app.activity.ui.SectionsActivity;
 import com.zcy.app.activity.ui.StyledActivity;
+import com.zcy.app.activity.ui.touch.PanGestureScrollActivity;
 import com.zcy.app.activity.ui.touch.PanScrollActivity;
 
 import butterknife.BindView;
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity
     Button toDialogActivity;
     @BindView(R.id.to_option_activity)
     Button toOptionActivity;
+    @BindView(R.id.to_touch_pan_gesture_scroll_activity)
+    Button toPanGestureScrollActivity;
     @BindView(R.id.to_touch_pan_scroll_activity)
     Button toPanScrollActivity;
 
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity, R.id.to_dialog_activity, R.id.to_option_activity, R.id.to_touch_pan_scroll_activity})
+    @OnClick({R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity, R.id.to_dialog_activity, R.id.to_option_activity, R.id.to_touch_pan_scroll_activity, R.id.to_touch_pan_gesture_scroll_activity})
     public void OnClickEvent(View v)
     {
         Intent toActivity = new Intent();
@@ -106,6 +109,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.to_option_activity:
             {
                 startActivity(new Intent(this, OptionActivity.class));
+                break;
+            }
+            case R.id.to_touch_pan_gesture_scroll_activity:
+            {
+                startActivity(new Intent(this, PanGestureScrollActivity.class));
                 break;
             }
             case R.id.to_touch_pan_scroll_activity:

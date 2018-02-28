@@ -19,13 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".activity.base.BaseActivity"/>
         <activity android:name=".activity.ui.StyledActivity"/>
         <activity android:name=".activity.ui.CustomViewActivity"/>
         <activity android:name=".activity.ui.SectionsActivity"/>
         <activity android:name=".activity.ui.AnimActivity"/>
-        <activity android:name=".activity.base.BaseActivity"/>
         <activity android:name=".activity.ui.DialogActivity"/>
         <activity android:name=".activity.ui.OptionActivity"/>
+        <activity android:name=".activity.ui.touch.PanGestureScrollActivity"/>
         <activity android:name=".activity.ui.touch.PanScrollActivity"/>
     </application>
 

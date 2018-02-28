@@ -7,15 +7,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.zcy.app.R;
-import com.zcy.app.custom.widget.scrollview.PanScrollView;
+import com.zcy.app.custom.widget.scrollview.PanGestureScrollView;
 
-public class PanScrollActivity extends Activity
+public class PanGestureScrollActivity extends Activity
 {
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        PanScrollView scrollView = new PanScrollView(this);
+        PanGestureScrollView scrollView = new PanGestureScrollView(this);
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
         for (int i = 0; i < 5; i++)

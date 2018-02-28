@@ -1,4 +1,4 @@
-package com.zcy.app.custom.widget;
+package com.zcy.app.custom.widget.scrollview;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
