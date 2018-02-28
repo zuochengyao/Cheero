@@ -46,4 +46,10 @@
         android:layout_height="wrap_content"
         android:text="TO OptionActivity"/>
 
+    <Button
+        android:id="@+id/to_touch_pan_scroll_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TO PanScrollActivity"/>
+
 </LinearLayout>
