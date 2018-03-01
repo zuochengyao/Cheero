@@ -8,7 +8,7 @@ import android.widget.Toast;
  * Created by zuochengyao on 2018/2/26.
  */
 
-public class Utils
+public class Common
 {
     public static int dp2px(Context context, float dp)
     {

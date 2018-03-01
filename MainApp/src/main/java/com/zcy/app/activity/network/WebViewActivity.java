@@ -1,4 +1,4 @@
-package com.zcy.app.activity;
+package com.zcy.app.activity.network;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -13,7 +13,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.zcy.app.util.Utils;
+import com.zcy.app.util.Common;
 import com.zcy.sdk.util.Log;
 
 public class WebViewActivity extends Activity
@@ -62,7 +62,7 @@ public class WebViewActivity extends Activity
                 Uri uri = request.getUrl();
                 if (TextUtils.equals(uri.getAuthority(), WEB_GOOGLE_URL))
                     return false;
-                Utils.toast(WebViewActivity.this, "Sorry, buddy!", Toast.LENGTH_SHORT);
+                Common.toast(WebViewActivity.this, "Sorry, buddy!", Toast.LENGTH_SHORT);
             }
             else if (mType == TYPE_ASSETS)
             {
@@ -83,7 +83,7 @@ public class WebViewActivity extends Activity
                     super.onPageStarted(view, url, favicon);
                 else
                 {
-                    Utils.toast(WebViewActivity.this, "Sorry, buddy!", Toast.LENGTH_SHORT);
+                    Common.toast(WebViewActivity.this, "Sorry, buddy!", Toast.LENGTH_SHORT);
                     view.stopLoading();
                 }
             }
@@ -110,7 +110,7 @@ public class WebViewActivity extends Activity
             editor.putString(id, element);
             editor.commit();
             if (!TextUtils.isEmpty(element))
-                Utils.toast(WebViewActivity.this, element, Toast.LENGTH_SHORT);
+                Common.toast(WebViewActivity.this, element, Toast.LENGTH_SHORT);
         }
     }
 }

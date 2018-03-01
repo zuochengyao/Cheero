@@ -31,7 +31,9 @@
         <activity android:name=".activity.ui.OptionActivity"/>
         <activity android:name=".activity.ui.touch.PanGestureScrollActivity"/>
         <activity android:name=".activity.ui.touch.PanScrollActivity"/>
-        <activity android:name=".activity.WebViewActivity"/>
+        <activity android:name=".activity.network.WebViewActivity"/>
+        <activity android:name=".activity.network.ImageDownloadActivity">
+        </activity>
     </application>
 
 </manifest>
