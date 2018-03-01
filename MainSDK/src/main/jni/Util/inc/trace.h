@@ -10,7 +10,7 @@
 #if defined(_WIN32) || defined(_WIN32_WCE)
 #define TRACE_FILE_NAME "d:\\ZcyTrace.txt"
 #elif defined(__linux) || defined(ANDROID)
-#define TRACE_FILE_NAME "/sdcard/AirTalkee/logs/PocTrace"
+#define TRACE_FILE_NAME "/sdcard/ZuoChengyao/logs/Traces"
 #elif defined(__APPLE__)
 #define TRACE_FILE_NAME "/Users/Shared/PocTrace"
 #elif defined(BREW)

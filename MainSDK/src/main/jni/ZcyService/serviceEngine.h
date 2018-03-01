@@ -23,7 +23,11 @@ extern "C"
 
 ZCY_DLL_IMPORT void service_sizeof_data_type();
 ZCY_DLL_IMPORT void service_trace_mode(int mode);
-
+#if defined(ANDROID)
+ZCY_DLL_IMPORT void service_trace(const char *tag, const char *log, int prio);
+#else
+ZCY_DLL_IMPORT void service_trace(const char *log);
+#endif
 
 #ifdef __cplusplus
 }

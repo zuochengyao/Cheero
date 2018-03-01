@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:name=".application.MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/practice_app_name"
@@ -30,8 +31,7 @@
         <activity android:name=".activity.ui.OptionActivity"/>
         <activity android:name=".activity.ui.touch.PanGestureScrollActivity"/>
         <activity android:name=".activity.ui.touch.PanScrollActivity"/>
-        <activity android:name=".activity.WebViewActivity">
-        </activity>
-        </application>
+        <activity android:name=".activity.WebViewActivity"/>
+    </application>
 
 </manifest>

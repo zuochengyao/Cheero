@@ -19,7 +19,7 @@
 
 // jvm obj
 static JavaVM *mJVM = NULL;
-static const char *classPathName = JNI_PACKAGE_NAME"engine/JniNative";
+static const char *classPathName = JNI_PACKAGE_NAME"ndk/JniNative";
 
 #ifdef __cplusplus
 extern "C" {
@@ -37,12 +37,23 @@ JNIEXPORT void JNICALL zcy_native_serviceSizeOfDataType(JNIEnv *, jobject)
     service_sizeof_data_type();
 }
 
+JNIEXPORT void JNICALL zcy_native_serviceTrace(JNIEnv * env, jobject, jstring tag, jstring log, jint prio)
+{
+    TRACE(__FILE__, __LINE__, "zcy_native_serviceTrace IN\n");
+    const char *id = env->GetStringUTFChars(log, NULL);
+    const char *_tag = env->GetStringUTFChars(tag, NULL);
+    service_trace(_tag, id, prio);
+    env->ReleaseStringUTFChars(log, id);
+    env->ReleaseStringUTFChars(tag, _tag);
+}
+
 static JNINativeMethod methods[] = {
     {"serviceSizeOfDataType", "()V", (void *) zcy_native_serviceSizeOfDataType},
-    {"serviceSetTraceMode","(I)V", (void*) zcy_native_serviceSetTraceMode}
+    {"serviceSetTraceMode","(I)V", (void*) zcy_native_serviceSetTraceMode},
+    {"serviceTrace","(Ljava/lang/String;Ljava/lang/String;I)V", (void*) zcy_native_serviceTrace}
 };
 
-static int registNativeMethods(JNIEnv *env)
+static int registerNativeMethods(JNIEnv *env)
 {
     jclass clazz;
     LOGI("Registering %s native\n", classPathName);
@@ -70,7 +81,7 @@ jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved)
     {
         return JNI_EVERSION;
     }
-    registNativeMethods(env);
+    registerNativeMethods(env);
     return JNI_VERSION_1_4;
 }
 

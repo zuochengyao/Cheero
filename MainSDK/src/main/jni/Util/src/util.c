@@ -10,6 +10,20 @@ void service_trace_mode(int mode)
 {
     traceMode(mode);
 }
+#if defined(ANDROID)
+void service_trace(const char *tag,const char *log,int prio)
+{
+    TRACE(tag, prio, (char *)log);
+}
+#else
+void service_trace(const char *log)
+{
+    if (log != NULL)
+    {
+        TRACE("ZCY", 0, (char*)log);
+    }
+}
+#endif
 
 void service_sizeof_data_type()
 {

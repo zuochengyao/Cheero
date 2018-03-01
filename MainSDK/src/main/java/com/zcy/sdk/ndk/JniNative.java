@@ -8,6 +8,8 @@ public class JniNative
 {
     public static native void serviceSetTraceMode(int traceMode);
 
+    public static native void serviceTrace(String tag, String log, int prio);
+
     public static native void serviceSizeOfDataType();
 
     static
