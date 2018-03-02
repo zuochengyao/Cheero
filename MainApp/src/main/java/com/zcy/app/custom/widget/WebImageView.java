@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
-import com.zcy.sdk.communication.OkHttpManager;
+import com.zcy.sdk.communication.rest.OkHttpManager;
 
 /**
  * Created by zuochengyao on 2018/3/1.
@@ -58,7 +58,7 @@ public class WebImageView extends AppCompatImageView
         @Override
         protected Bitmap doInBackground(String... strings)
         {
-            byte[] data = OkHttpManager.getInstance().fileDownload(strings[0]);
+            byte[] data = OkHttpManager.getInstance().downloadSync(strings[0]);
             return BitmapFactory.decodeByteArray(data, 0, data.length);
         }
 
