@@ -1,4 +1,4 @@
-package com.zcy.app.util;
+package com.zcy.sdk.util;
 
 import android.content.Context;
 import android.support.annotation.StringRes;

@@ -1,4 +1,4 @@
-package com.zcy.sdk.communication.rest;
+package com.zcy.sdk.control.network.okhttp;
 
 import java.io.IOException;
 
