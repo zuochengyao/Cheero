@@ -2,8 +2,6 @@
 <manifest package="com.zcy.app"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-
     <application
         android:name=".application.MainApplication"
         android:allowBackup="true"
@@ -32,12 +30,9 @@
         <activity android:name=".activity.ui.touch.PanGestureScrollActivity"/>
         <activity android:name=".activity.ui.touch.PanScrollActivity"/>
         <activity android:name=".activity.network.WebViewActivity"/>
-        <activity android:name=".activity.network.ImageDownloadActivity">
-        </activity>
-        <activity android:name=".activity.network.DownloadActivity">
-        </activity>
-        <activity android:name=".activity.map.LocationActivity">
-        </activity>
+        <activity android:name=".activity.network.ImageDownloadActivity"/>
+        <activity android:name=".activity.network.DownloadActivity"/>
+        <activity android:name=".activity.media.CameraActivity"/>
     </application>
 
 </manifest>

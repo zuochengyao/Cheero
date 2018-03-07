@@ -1,12 +1,19 @@
 package com.zcy.sdk.interaction.media;
 
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.SparseIntArray;
 import android.view.Surface;
 import android.view.SurfaceHolder;
+
+import java.io.File;
 
 /**
  * Created by zuochengyao on 2018/2/5.
@@ -14,6 +21,7 @@ import android.view.SurfaceHolder;
 
 public class ICamera
 {
+    public static final int REQUEST_CODE_IMAGE = 100;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
 
     static
@@ -50,6 +58,23 @@ public class ICamera
             }
         }
         return mInstance;
+    }
+
+    public void openSystemCamera(Activity activity) throws ActivityNotFoundException
+    {
+        if (activity != null)
+            openSystemCamera(activity, null);
+    }
+
+    public void openSystemCamera(Activity activity, File file) throws ActivityNotFoundException
+    {
+        if (activity != null)
+        {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (file != null)
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+            activity.startActivityForResult(intent, REQUEST_CODE_IMAGE);
+        }
     }
 
 }

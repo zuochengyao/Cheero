@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.zcy.app.R;
+import com.zcy.app.activity.media.CameraActivity;
 import com.zcy.app.activity.network.DownloadActivity;
 import com.zcy.app.activity.network.ImageDownloadActivity;
 import com.zcy.app.activity.network.WebViewActivity;
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity
     Button toImageDownloadActivity;
     @BindView(R.id.to_download_activity)
     Button toDownloadActivity;
+    @BindView(R.id.to_camera_activity)
+    Button toCameraActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -76,7 +79,7 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.to_download_activity, R.id.to_image_download_activity, R.id.to_web_view_activity, R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity, R.id.to_dialog_activity, R.id.to_option_activity, R.id.to_touch_pan_scroll_activity, R.id.to_touch_pan_gesture_scroll_activity})
+    @OnClick({R.id.to_camera_activity, R.id.to_download_activity, R.id.to_image_download_activity, R.id.to_web_view_activity, R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity, R.id.to_dialog_activity, R.id.to_option_activity, R.id.to_touch_pan_scroll_activity, R.id.to_touch_pan_gesture_scroll_activity})
     public void OnClickEvent(View v)
     {
         Intent toActivity = new Intent();
@@ -143,6 +146,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.to_download_activity:
             {
                 startActivity(new Intent(this, DownloadActivity.class));
+                break;
+            }
+            case R.id.to_camera_activity:
+            {
+                startActivity(new Intent(this, CameraActivity.class));
                 break;
             }
         }
