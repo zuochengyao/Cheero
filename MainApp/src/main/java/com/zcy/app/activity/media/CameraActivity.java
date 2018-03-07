@@ -52,7 +52,7 @@ public class CameraActivity extends BaseActivity
         }
         else if (requestCode == ICamera.REQUEST_CODE_VIDEO)
         {
-            destination = new File(Environment.getExternalStorageDirectory(), "practice_video");
+            destination = new File(Environment.getExternalStorageDirectory(), "practice_video.mp4");
             cameraButton.setText("Take a Video");
         }
     }
