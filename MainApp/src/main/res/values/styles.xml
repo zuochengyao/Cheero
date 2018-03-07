@@ -11,6 +11,7 @@
         <!--是否覆盖执行，其实可以理解成是否同步执行还是顺序执行-->
         <item name="android:windowAllowEnterTransitionOverlap">false</item>
         <item name="android:windowAllowReturnTransitionOverlap">false</item>
+        <item name="android:textAllCaps">false</item>
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

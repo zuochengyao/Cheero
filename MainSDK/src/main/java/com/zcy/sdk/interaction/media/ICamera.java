@@ -22,6 +22,7 @@ import java.io.File;
 public class ICamera
 {
     public static final int REQUEST_CODE_IMAGE = 100;
+    public static final int REQUEST_CODE_VIDEO = 101;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
 
     static
@@ -60,13 +61,13 @@ public class ICamera
         return mInstance;
     }
 
-    public void openSystemCamera(Activity activity) throws ActivityNotFoundException
+    public void openSystemImageCamera(Activity activity) throws ActivityNotFoundException
     {
         if (activity != null)
-            openSystemCamera(activity, null);
+            openSystemImageCamera(activity, null);
     }
 
-    public void openSystemCamera(Activity activity, File file) throws ActivityNotFoundException
+    public void openSystemImageCamera(Activity activity, File file) throws ActivityNotFoundException
     {
         if (activity != null)
         {
@@ -74,6 +75,18 @@ public class ICamera
             if (file != null)
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
             activity.startActivityForResult(intent, REQUEST_CODE_IMAGE);
+        }
+    }
+
+    public void openSystemVideoCamera(Activity activity, File file) throws ActivityNotFoundException
+    {
+        if (activity != null)
+        {
+            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+            // 添加（可选）附加信息以将视频保存到指定文件
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
+            activity.startActivityForResult(intent, REQUEST_CODE_VIDEO);
         }
     }
 

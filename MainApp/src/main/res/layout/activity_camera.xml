@@ -6,15 +6,19 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/button_capture"
+        android:id="@+id/button_camera"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Take a Picture"/>
+        android:layout_height="wrap_content"/>
 
     <ImageView
         android:id="@+id/image_capture"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerInside"/>
+
+    <TextView
+        android:id="@+id/text_file"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

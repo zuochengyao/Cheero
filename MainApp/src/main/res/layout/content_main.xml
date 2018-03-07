@@ -14,43 +14,37 @@
         android:id="@+id/to_styled_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="StyledActivity"
-        android:textAllCaps="false"/>
+        android:text="StyledActivity"/>
 
     <Button
         android:id="@+id/to_custom_view_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CustomViewActivity"
-        android:textAllCaps="false"/>
+        android:text="CustomViewActivity"/>
 
     <Button
         android:id="@+id/to_sections_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SectionsActivity"
-        android:textAllCaps="false"/>
+        android:text="SectionsActivity"/>
 
     <Button
         android:id="@+id/to_anim_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="AnimActivity"
-        android:textAllCaps="false"/>
+        android:text="AnimActivity"/>
 
     <Button
         android:id="@+id/to_dialog_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DialogActivity"
-        android:textAllCaps="false"/>
+        android:text="DialogActivity"/>
 
     <Button
         android:id="@+id/to_option_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="OptionActivity"
-        android:textAllCaps="false"/>
+        android:text="OptionActivity"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,15 +55,13 @@
             android:id="@+id/to_touch_pan_gesture_scroll_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PanGestureScrollActivity"
-            android:textAllCaps="false"/>
+            android:text="PanGestureScrollActivity"/>
 
         <Button
             android:id="@+id/to_touch_pan_scroll_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PanScrollActivity"
-            android:textAllCaps="false"/>
+            android:text="PanScrollActivity"/>
 
     </LinearLayout>
 
@@ -77,28 +69,24 @@
         android:id="@+id/to_web_view_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="WebViewActivity"
-        android:textAllCaps="false"/>
+        android:text="WebViewActivity"/>
 
     <Button
         android:id="@+id/to_image_download_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ImageDownloadActivity"
-        android:textAllCaps="false"/>
+        android:text="ImageDownloadActivity"/>
 
     <Button
         android:id="@+id/to_download_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DownloadActivity"
-        android:textAllCaps="false"/>
+        android:text="DownloadActivity"/>
 
     <Button
         android:id="@+id/to_camera_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CameraActivity"
-        android:textAllCaps="false"/>
+        android:text="CameraActivity"/>
 
 </LinearLayout>

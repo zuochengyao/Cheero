@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.zcy.app.R;
 import com.zcy.app.activity.base.BaseActivity;
@@ -20,13 +21,18 @@ import butterknife.OnClick;
 
 public class CameraActivity extends BaseActivity
 {
+    public static final String KEY_REQUEST_CODE = "requestCode";
     private ICamera mCamera;
     private File destination;
+    private int requestCode = ICamera.REQUEST_CODE_IMAGE;
 
-    @BindView(R.id.button_capture)
-    Button captureButton;
+    @BindView(R.id.button_camera)
+    Button cameraButton;
     @BindView(R.id.image_capture)
     ImageView imageView;
+    @BindView(R.id.text_file)
+    TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -38,17 +44,30 @@ public class CameraActivity extends BaseActivity
     private void init()
     {
         mCamera = ICamera.getInstance(this);
-        destination = new File(Environment.getExternalStorageDirectory(), "practice_image.jpg");
+        requestCode = getIntent().getIntExtra("requestCode", ICamera.REQUEST_CODE_IMAGE);
+        if (requestCode == ICamera.REQUEST_CODE_IMAGE)
+        {
+            destination = new File(Environment.getExternalStorageDirectory(), "practice_image.jpg");
+            cameraButton.setText("Take a Picture");
+        }
+        else if (requestCode == ICamera.REQUEST_CODE_VIDEO)
+        {
+            destination = new File(Environment.getExternalStorageDirectory(), "practice_video");
+            cameraButton.setText("Take a Video");
+        }
     }
 
-    @OnClick({R.id.button_capture})
+    @OnClick({R.id.button_camera})
     public void OnClickEvent(View v)
     {
         switch (v.getId())
         {
-            case R.id.button_capture:
+            case R.id.button_camera:
             {
-                mCamera.openSystemCamera(this, destination);
+                if (requestCode == ICamera.REQUEST_CODE_IMAGE)
+                    mCamera.openSystemImageCamera(this, destination);
+                else if (requestCode == ICamera.REQUEST_CODE_VIDEO)
+                    mCamera.openSystemVideoCamera(this, destination);
                 break;
             }
         }
@@ -58,10 +77,27 @@ public class CameraActivity extends BaseActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ICamera.REQUEST_CODE_IMAGE && resultCode == RESULT_OK)
+        if (resultCode == RESULT_OK)
         {
-            Bitmap image = FileUtils.convertToBitmap(destination);
-            imageView.setImageBitmap(image);
+            switch (requestCode)
+            {
+                case ICamera.REQUEST_CODE_IMAGE:
+                {
+                    Bitmap image = FileUtils.convertToBitmap(destination);
+                    imageView.setImageBitmap(image);
+                    imageView.setVisibility(View.VISIBLE);
+                    textView.setVisibility(View.GONE);
+                    break;
+                }
+                case ICamera.REQUEST_CODE_VIDEO:
+                {
+                    String location = data.getData().toString();
+                    textView.setText(location);
+                    imageView.setVisibility(View.GONE);
+                    textView.setVisibility(View.VISIBLE);
+                    break;
+                }
+            }
         }
     }
 }

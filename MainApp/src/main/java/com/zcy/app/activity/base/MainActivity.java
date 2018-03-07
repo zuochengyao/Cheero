@@ -24,6 +24,7 @@ import com.zcy.app.activity.ui.SectionsActivity;
 import com.zcy.app.activity.ui.StyledActivity;
 import com.zcy.app.activity.ui.touch.PanGestureScrollActivity;
 import com.zcy.app.activity.ui.touch.PanScrollActivity;
+import com.zcy.sdk.interaction.media.ICamera;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -150,7 +151,9 @@ public class MainActivity extends AppCompatActivity
             }
             case R.id.to_camera_activity:
             {
-                startActivity(new Intent(this, CameraActivity.class));
+                Intent intent = new Intent(this, CameraActivity.class);
+                intent.putExtra(CameraActivity.KEY_REQUEST_CODE, ICamera.REQUEST_CODE_VIDEO);
+                startActivity(intent);
                 break;
             }
         }
