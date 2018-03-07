@@ -13,7 +13,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.zcy.app.util.Common;
+import com.zcy.sdk.util.Common;
 import com.zcy.sdk.util.Log;
 
 public class WebViewActivity extends Activity

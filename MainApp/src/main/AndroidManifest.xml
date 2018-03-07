@@ -36,6 +36,8 @@
         </activity>
         <activity android:name=".activity.network.DownloadActivity">
         </activity>
+        <activity android:name=".activity.map.LocationActivity">
+        </activity>
     </application>
 
 </manifest>
