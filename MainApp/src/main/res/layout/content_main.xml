@@ -101,16 +101,48 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <Button
-        android:id="@+id/to_camera_activity"
+    <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CameraActivity"/>
+        android:scrollbars="none">
 
-    <Button
-        android:id="@+id/to_preference_activity"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/to_camera_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CameraActivity"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PreferenceActivity"/>
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/to_custom_setting_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CustomSettingActivity"/>
+
+            <Button
+                android:id="@+id/to_system_setting_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SystemSettingActivity"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
 </LinearLayout>

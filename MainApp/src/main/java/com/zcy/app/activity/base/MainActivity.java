@@ -13,6 +13,7 @@ import android.widget.Button;
 
 import com.zcy.app.R;
 import com.zcy.app.activity.data.CustomSettingActivity;
+import com.zcy.app.activity.data.SystemSettingActivity;
 import com.zcy.app.activity.media.CameraActivity;
 import com.zcy.app.activity.network.DownloadActivity;
 import com.zcy.app.activity.network.ImageDownloadActivity;
@@ -57,8 +58,10 @@ public class MainActivity extends AppCompatActivity
     Button toDownloadActivity;
     @BindView(R.id.to_camera_activity)
     Button toCameraActivity;
-    @BindView(R.id.to_preference_activity)
-    Button toPreferenceActivity;
+    @BindView(R.id.to_custom_setting_activity)
+    Button toCustomSettingActivity;
+    @BindView(R.id.to_system_setting_activity)
+    Button toSystemSettingActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -83,14 +86,19 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.to_preference_activity})
+    @OnClick({R.id.to_custom_setting_activity, R.id.to_system_setting_activity})
     public void OnDataClickEvent(View v)
     {
         switch (v.getId())
         {
-            case R.id.to_preference_activity:
+            case R.id.to_custom_setting_activity:
             {
                 startActivity(new Intent(this, CustomSettingActivity.class));
+                break;
+            }
+            case R.id.to_system_setting_activity:
+            {
+                startActivity(new Intent(this, SystemSettingActivity.class));
                 break;
             }
         }
