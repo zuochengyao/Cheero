@@ -10,83 +10,107 @@
     tools:context=".activity.base.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <Button
-        android:id="@+id/to_styled_activity"
+    <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="StyledActivity"/>
+        android:scrollbars="none">
 
-    <Button
-        android:id="@+id/to_custom_view_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CustomViewActivity"/>
-
-    <Button
-        android:id="@+id/to_sections_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SectionsActivity"/>
-
-    <Button
-        android:id="@+id/to_anim_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="AnimActivity"/>
-
-    <Button
-        android:id="@+id/to_dialog_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DialogActivity"/>
-
-    <Button
-        android:id="@+id/to_option_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="OptionActivity"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/to_touch_pan_gesture_scroll_activity"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PanGestureScrollActivity"/>
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/to_touch_pan_scroll_activity"
-            android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/to_styled_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="StyledActivity"/>
+
+            <Button
+                android:id="@+id/to_custom_view_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CustomViewActivity"/>
+
+            <Button
+                android:id="@+id/to_sections_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SectionsActivity"/>
+
+            <Button
+                android:id="@+id/to_anim_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AnimActivity"/>
+
+            <Button
+                android:id="@+id/to_dialog_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DialogActivity"/>
+
+            <Button
+                android:id="@+id/to_option_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OptionActivity"/>
+
+            <Button
+                android:id="@+id/to_touch_pan_gesture_scroll_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PanGestureScrollActivity"/>
+
+            <Button
+                android:id="@+id/to_touch_pan_scroll_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PanScrollActivity"/>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PanScrollActivity"/>
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/to_web_view_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WebViewActivity"/>
 
-    <Button
-        android:id="@+id/to_web_view_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="WebViewActivity"/>
+            <Button
+                android:id="@+id/to_image_download_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ImageDownloadActivity"/>
 
-    <Button
-        android:id="@+id/to_image_download_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ImageDownloadActivity"/>
+            <Button
+                android:id="@+id/to_download_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DownloadActivity"/>
 
-    <Button
-        android:id="@+id/to_download_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DownloadActivity"/>
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <Button
         android:id="@+id/to_camera_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="CameraActivity"/>
+
+    <Button
+        android:id="@+id/to_preference_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PreferenceActivity"/>
 
 </LinearLayout>

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.zcy.app.R;
+import com.zcy.app.activity.data.SettingActivity;
 import com.zcy.app.activity.media.CameraActivity;
 import com.zcy.app.activity.network.DownloadActivity;
 import com.zcy.app.activity.network.ImageDownloadActivity;
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity
     Button toDownloadActivity;
     @BindView(R.id.to_camera_activity)
     Button toCameraActivity;
+    @BindView(R.id.to_preference_activity)
+    Button toPreferenceActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -80,8 +83,59 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.to_camera_activity, R.id.to_download_activity, R.id.to_image_download_activity, R.id.to_web_view_activity, R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity, R.id.to_dialog_activity, R.id.to_option_activity, R.id.to_touch_pan_scroll_activity, R.id.to_touch_pan_gesture_scroll_activity})
-    public void OnClickEvent(View v)
+    @OnClick({R.id.to_preference_activity})
+    public void OnDataClickEvent(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.to_preference_activity:
+            {
+                startActivity(new Intent(this, SettingActivity.class));
+                break;
+            }
+        }
+    }
+
+    @OnClick({R.id.to_camera_activity})
+    public void OnMediaClickEvent(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.to_camera_activity:
+            {
+                Intent intent = new Intent(this, CameraActivity.class);
+                intent.putExtra(CameraActivity.KEY_REQUEST_CODE, ICamera.REQUEST_CODE_VIDEO);
+                startActivity(intent);
+                break;
+            }
+        }
+    }
+
+    @OnClick({R.id.to_download_activity, R.id.to_image_download_activity, R.id.to_web_view_activity})
+    public void OnNetworkClickEvent(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.to_web_view_activity:
+            {
+                startActivity(new Intent(this, WebViewActivity.class));
+                break;
+            }
+            case R.id.to_image_download_activity:
+            {
+                startActivity(new Intent(this, ImageDownloadActivity.class));
+                break;
+            }
+            case R.id.to_download_activity:
+            {
+                startActivity(new Intent(this, DownloadActivity.class));
+                break;
+            }
+        }
+    }
+
+    @OnClick({R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity, R.id.to_dialog_activity, R.id.to_option_activity, R.id.to_touch_pan_scroll_activity, R.id.to_touch_pan_gesture_scroll_activity})
+    public void OnUIClickEvent(View v)
     {
         Intent toActivity = new Intent();
         switch (v.getId())
@@ -132,28 +186,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.to_touch_pan_scroll_activity:
             {
                 startActivity(new Intent(this, PanScrollActivity.class));
-                break;
-            }
-            case R.id.to_web_view_activity:
-            {
-                startActivity(new Intent(this, WebViewActivity.class));
-                break;
-            }
-            case R.id.to_image_download_activity:
-            {
-                startActivity(new Intent(this, ImageDownloadActivity.class));
-                break;
-            }
-            case R.id.to_download_activity:
-            {
-                startActivity(new Intent(this, DownloadActivity.class));
-                break;
-            }
-            case R.id.to_camera_activity:
-            {
-                Intent intent = new Intent(this, CameraActivity.class);
-                intent.putExtra(CameraActivity.KEY_REQUEST_CODE, ICamera.REQUEST_CODE_VIDEO);
-                startActivity(intent);
                 break;
             }
         }
