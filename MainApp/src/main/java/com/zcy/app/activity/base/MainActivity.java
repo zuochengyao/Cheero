@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.zcy.app.R;
-import com.zcy.app.activity.data.SettingActivity;
+import com.zcy.app.activity.data.CustomSettingActivity;
 import com.zcy.app.activity.media.CameraActivity;
 import com.zcy.app.activity.network.DownloadActivity;
 import com.zcy.app.activity.network.ImageDownloadActivity;
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity
         {
             case R.id.to_preference_activity:
             {
-                startActivity(new Intent(this, SettingActivity.class));
+                startActivity(new Intent(this, CustomSettingActivity.class));
                 break;
             }
         }

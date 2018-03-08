@@ -33,7 +33,7 @@
         <activity android:name=".activity.network.ImageDownloadActivity"/>
         <activity android:name=".activity.network.DownloadActivity"/>
         <activity android:name=".activity.media.CameraActivity"/>
-        <activity android:name=".activity.data.SettingActivity"/>
+        <activity android:name=".activity.data.CustomSettingActivity"/>
     </application>
 
 </manifest>
