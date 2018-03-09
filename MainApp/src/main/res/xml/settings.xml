@@ -1,44 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
+        android:defaultValue="Apress"
         android:key="namePref"
-        android:title="Name"
         android:summary="Tell Us Your Name"
-        android:defaultValue="Apress"/>
+        android:title="Name"/>
 
     <CheckBoxPreference
+        android:defaultValue="false"
         android:key="morePref"
-        android:title="Enable More Settings"
-        android:defaultValue="false"/>
+        android:title="Enable More Settings"/>
+
+    <com.zcy.app.custom.widget.ColorPreference
+        android:defaultValue="@android:color/black"
+        android:key="colorPref"
+        android:title="Select Color"/>
 
     <PreferenceScreen
+        android:defaultValue="false"
         android:key="moreScreen"
-        android:title="More Settings"
-        android:defaultValue="false">
+        android:title="More Settings">
 
         <ListPreference
-            android:key="colorPref"
-            android:title="Favorite Color"
-            android:summary="Choose your favorite color"
+            android:defaultValue="GRN"
             android:entries="@array/color_names"
             android:entryValues="@array/color_values"
-            android:defaultValue="GRN"/>
+            android:key="colorPref"
+            android:summary="Choose your favorite color"
+            android:title="Favorite Color"/>
 
         <PreferenceCategory
             android:title="Location Settings">
 
             <CheckBoxPreference
+                android:defaultValue="true"
                 android:key="gpsPref"
-                android:title="Use Gps Location"
                 android:summary="Use Gps To Find You"
-                android:defaultValue="true"/>
+                android:title="Use Gps Location"/>
 
             <CheckBoxPreference
+                android:defaultValue="true"
                 android:key="networkPref"
-                android:title="Use Network Location"
                 android:summary="Use Network To Find You"
-                android:defaultValue="true"/>
+                android:title="Use Network Location"/>
 
         </PreferenceCategory>
     </PreferenceScreen>
+
 </PreferenceScreen>
