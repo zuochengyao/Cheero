@@ -1,4 +1,4 @@
-package com.zcy.sdk.basis.designpattern.composite;
+package com.zcy.sdk.basis.designpattern.composite.idea;
 
 import com.zcy.sdk.util.Log;
 

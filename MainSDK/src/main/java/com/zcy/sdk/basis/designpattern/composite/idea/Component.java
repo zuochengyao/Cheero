@@ -1,4 +1,4 @@
-package com.zcy.sdk.basis.designpattern.composite;
+package com.zcy.sdk.basis.designpattern.composite.idea;
 
 /**
  * 组合中的声明接口，在适当情况下，实现所有类共有接口的默认行为

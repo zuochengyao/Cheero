@@ -1,7 +1,11 @@
 package com.zcy.sdk.basis.designpattern;
 
-import com.zcy.sdk.basis.designpattern.composite.Composite;
-import com.zcy.sdk.basis.designpattern.composite.Leaf;
+import com.zcy.sdk.basis.designpattern.composite.demo.ConcreteCompany;
+import com.zcy.sdk.basis.designpattern.composite.demo.FinanceDepartment;
+import com.zcy.sdk.basis.designpattern.composite.demo.HRDepartment;
+import com.zcy.sdk.basis.designpattern.composite.idea.Composite;
+import com.zcy.sdk.basis.designpattern.composite.idea.Leaf;
+import com.zcy.sdk.util.Log;
 
 /**
  * Created by zuochengyao on 2018/3/19.
@@ -9,7 +13,9 @@ import com.zcy.sdk.basis.designpattern.composite.Leaf;
 
 public class DesignPatternMethods
 {
-    public static void doComposite()
+    private static final Class<DesignPatternMethods> TAG = DesignPatternMethods.class;
+
+    public static void doCompositeIdea()
     {
         Composite root = new Composite("root");
         root.add(new Leaf("Leaf A"));
@@ -31,5 +37,32 @@ public class DesignPatternMethods
         root.add(leaf);
         root.remove(leaf);
         root.display(1);
+    }
+
+    public static void doCompositeDemo()
+    {
+        ConcreteCompany root = new ConcreteCompany("YaoTech-北京总部");
+        root.add(new HRDepartment("总公司人力资源部"));
+        root.add(new FinanceDepartment("总公司财务部"));
+
+        ConcreteCompany compHD = new ConcreteCompany("YaoTech-华东分部（上海）");
+        compHD.add(new HRDepartment("华东分部（上海）人力资源部"));
+        compHD.add(new FinanceDepartment("华东分部（上海）财务部"));
+        root.add(compHD);
+
+        ConcreteCompany compNJC = new ConcreteCompany("YaoTech-南京办事处");
+        compNJC.add(new HRDepartment("南京办事处人力资源部"));
+        compNJC.add(new FinanceDepartment("南京办事处财务部"));
+        compHD.add(compNJC);
+
+        ConcreteCompany compHZC = new ConcreteCompany("YaoTech-杭州办事处");
+        compHZC.add(new HRDepartment("杭州办事处人力资源部"));
+        compHZC.add(new FinanceDepartment("杭州办事处财务部"));
+        compHD.add(compHZC);
+
+        Log.e(TAG, "\n 结构图：");
+        root.display(1);
+        Log.e(TAG, "\n 职责：");
+        root.lineOfDuty();
     }
 }
