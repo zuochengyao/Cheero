@@ -27,6 +27,7 @@ import com.zcy.app.activity.ui.SectionsActivity;
 import com.zcy.app.activity.ui.StyledActivity;
 import com.zcy.app.activity.ui.touch.PanGestureScrollActivity;
 import com.zcy.app.activity.ui.touch.PanScrollActivity;
+import com.zcy.sdk.basis.designpattern.DesignPatternMethods;
 import com.zcy.sdk.interaction.media.ICamera;
 
 import butterknife.BindView;
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity
         slide.setDuration(700);
         getWindow().setExitTransition(slide);
         ButterKnife.bind(this);
+        DesignPatternMethods.doComposite();
     }
 
     @OnClick({R.id.to_custom_setting_activity, R.id.to_system_setting_activity, R.id.to_database_activity})

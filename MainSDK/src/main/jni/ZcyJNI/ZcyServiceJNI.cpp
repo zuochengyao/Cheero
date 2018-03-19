@@ -39,7 +39,7 @@ JNIEXPORT void JNICALL zcy_native_serviceSizeOfDataType(JNIEnv *, jobject)
 
 JNIEXPORT void JNICALL zcy_native_serviceTrace(JNIEnv * env, jobject, jstring tag, jstring log, jint prio)
 {
-    TRACE(__FILE__, __LINE__, "zcy_native_serviceTrace IN\n");
+    // TRACE(__FILE__, __LINE__, "zcy_native_serviceTrace IN\n");
     const char *id = env->GetStringUTFChars(log, NULL);
     const char *_tag = env->GetStringUTFChars(tag, NULL);
     service_trace(_tag, id, prio);
