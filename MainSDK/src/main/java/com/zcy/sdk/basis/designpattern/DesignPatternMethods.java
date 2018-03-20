@@ -5,12 +5,16 @@ import com.zcy.sdk.basis.designpattern.composite.demo.FinanceDepartment;
 import com.zcy.sdk.basis.designpattern.composite.demo.HRDepartment;
 import com.zcy.sdk.basis.designpattern.composite.idea.Composite;
 import com.zcy.sdk.basis.designpattern.composite.idea.Leaf;
+import com.zcy.sdk.basis.designpattern.iterator.ConcreteAggregate;
+import com.zcy.sdk.basis.designpattern.iterator.ConcreteIterator;
+import com.zcy.sdk.basis.designpattern.iterator.Iterator;
 import com.zcy.sdk.util.Log;
 
 /**
  * Created by zuochengyao on 2018/3/19.
  */
 
+@SuppressWarnings("unused")
 public class DesignPatternMethods
 {
     private static final Class<DesignPatternMethods> TAG = DesignPatternMethods.class;
@@ -64,5 +68,21 @@ public class DesignPatternMethods
         root.display(1);
         Log.e(TAG, "\n 职责：");
         root.lineOfDuty();
+    }
+
+    public static void doIterator()
+    {
+        ConcreteAggregate c = new ConcreteAggregate();
+        c.setItem(0, "Rockets");
+        c.setItem(1, "Lakers");
+        c.setItem(2, "Thunder");
+
+        Iterator i = new ConcreteIterator(c);
+        Object item = i.first();
+        while (!i.isFinish())
+        {
+            Log.i(TAG, String.format("%s win!", i.currentItem()));
+            i.next();
+        }
     }
 }
