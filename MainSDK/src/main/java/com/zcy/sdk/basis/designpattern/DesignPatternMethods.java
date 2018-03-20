@@ -1,5 +1,9 @@
 package com.zcy.sdk.basis.designpattern;
 
+import com.zcy.sdk.basis.designpattern.bridge.Abstraction;
+import com.zcy.sdk.basis.designpattern.bridge.ConcreteImpA;
+import com.zcy.sdk.basis.designpattern.bridge.ConcreteImpB;
+import com.zcy.sdk.basis.designpattern.bridge.RefinedAbstruction;
 import com.zcy.sdk.basis.designpattern.composite.demo.ConcreteCompany;
 import com.zcy.sdk.basis.designpattern.composite.demo.FinanceDepartment;
 import com.zcy.sdk.basis.designpattern.composite.demo.HRDepartment;
@@ -84,5 +88,14 @@ public class DesignPatternMethods
             Log.i(TAG, String.format("%s win!", i.currentItem()));
             i.next();
         }
+    }
+
+    public static void doBridge()
+    {
+        Abstraction ab = new RefinedAbstruction();
+        ab.setImplementor(new ConcreteImpA());
+        ab.operation();
+        ab.setImplementor(new ConcreteImpB());
+        ab.operation();
     }
 }
