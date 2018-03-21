@@ -4,6 +4,10 @@ import com.zcy.sdk.basis.designpattern.bridge.Abstraction;
 import com.zcy.sdk.basis.designpattern.bridge.ConcreteImpA;
 import com.zcy.sdk.basis.designpattern.bridge.ConcreteImpB;
 import com.zcy.sdk.basis.designpattern.bridge.RefinedAbstruction;
+import com.zcy.sdk.basis.designpattern.command.Command;
+import com.zcy.sdk.basis.designpattern.command.ConcreteCommand;
+import com.zcy.sdk.basis.designpattern.command.Invoker;
+import com.zcy.sdk.basis.designpattern.command.Receiver;
 import com.zcy.sdk.basis.designpattern.composite.demo.ConcreteCompany;
 import com.zcy.sdk.basis.designpattern.composite.demo.FinanceDepartment;
 import com.zcy.sdk.basis.designpattern.composite.demo.HRDepartment;
@@ -97,5 +101,14 @@ public class DesignPatternMethods
         ab.operation();
         ab.setImplementor(new ConcreteImpB());
         ab.operation();
+    }
+
+    public static void doCommand()
+    {
+        Receiver r = new Receiver();
+        Command c = new ConcreteCommand(r);
+        Invoker i = new Invoker();
+        i.setCommand(c);
+        i.execute();
     }
 }
