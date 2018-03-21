@@ -16,6 +16,9 @@ import com.zcy.sdk.basis.designpattern.composite.idea.Leaf;
 import com.zcy.sdk.basis.designpattern.iterator.ConcreteAggregate;
 import com.zcy.sdk.basis.designpattern.iterator.ConcreteIterator;
 import com.zcy.sdk.basis.designpattern.iterator.Iterator;
+import com.zcy.sdk.basis.designpattern.responsibility.GroupLeader;
+import com.zcy.sdk.basis.designpattern.responsibility.SuperiorLeader;
+import com.zcy.sdk.basis.designpattern.responsibility.WorkRequest;
 import com.zcy.sdk.util.Log;
 
 /**
@@ -110,5 +113,36 @@ public class DesignPatternMethods
         Invoker i = new Invoker();
         i.setCommand(c);
         i.execute();
+    }
+
+    public static void doResponsibilityChain()
+    {
+        GroupLeader gl = new GroupLeader("gl");
+        SuperiorLeader sl = new SuperiorLeader("sl");
+        sl.setLeader(gl);
+
+        WorkRequest requestA = new WorkRequest();
+        requestA.setType(WorkRequest.TYPE_HOLIDAY);
+        requestA.setContent("zcy请假");
+        requestA.setNumber(3);
+        sl.doRequest(requestA);
+
+        WorkRequest requestB = new WorkRequest();
+        requestB.setType(WorkRequest.TYPE_MONEY);
+        requestB.setContent("zcy加薪");
+        requestB.setNumber(500);
+        sl.doRequest(requestB);
+
+        WorkRequest requestC = new WorkRequest();
+        requestC.setType(WorkRequest.TYPE_MONEY);
+        requestC.setContent("zcy加薪");
+        requestC.setNumber(1000);
+        sl.doRequest(requestC);
+
+        WorkRequest requestD = new WorkRequest();
+        requestD.setType(WorkRequest.TYPE_HOLIDAY);
+        requestD.setContent("zcy请假");
+        requestD.setNumber(1);
+        sl.doRequest(requestD);
     }
 }
