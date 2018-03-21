@@ -16,6 +16,9 @@ import com.zcy.sdk.basis.designpattern.composite.idea.Leaf;
 import com.zcy.sdk.basis.designpattern.iterator.ConcreteAggregate;
 import com.zcy.sdk.basis.designpattern.iterator.ConcreteIterator;
 import com.zcy.sdk.basis.designpattern.iterator.Iterator;
+import com.zcy.sdk.basis.designpattern.mediator.Iraq;
+import com.zcy.sdk.basis.designpattern.mediator.SecurityCouncil;
+import com.zcy.sdk.basis.designpattern.mediator.USA;
 import com.zcy.sdk.basis.designpattern.responsibility.GroupLeader;
 import com.zcy.sdk.basis.designpattern.responsibility.SuperiorLeader;
 import com.zcy.sdk.basis.designpattern.responsibility.WorkRequest;
@@ -144,5 +147,16 @@ public class DesignPatternMethods
         requestD.setContent("zcy请假");
         requestD.setNumber(1);
         sl.doRequest(requestD);
+    }
+
+    public static void doMediator()
+    {
+        SecurityCouncil SC = new SecurityCouncil();
+        USA america = new USA(SC);
+        Iraq iraq = new Iraq(SC);
+        SC.setAmerica(america);
+        SC.setIraq(iraq);
+        america.declare("NO ZUO NO DIE!");
+        iraq.declare("CAO LI LIANG!");
     }
 }

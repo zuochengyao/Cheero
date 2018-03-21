@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity
         slide.setDuration(700);
         getWindow().setExitTransition(slide);
         ButterKnife.bind(this);
-        DesignPatternMethods.doResponsibilityChain();
+        DesignPatternMethods.doMediator();
     }
 
     @OnClick({R.id.to_custom_setting_activity, R.id.to_system_setting_activity, R.id.to_database_activity})
