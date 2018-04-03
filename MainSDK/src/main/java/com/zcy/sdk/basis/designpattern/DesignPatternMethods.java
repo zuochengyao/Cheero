@@ -13,6 +13,12 @@ import com.zcy.sdk.basis.designpattern.composite.demo.FinanceDepartment;
 import com.zcy.sdk.basis.designpattern.composite.demo.HRDepartment;
 import com.zcy.sdk.basis.designpattern.composite.idea.Composite;
 import com.zcy.sdk.basis.designpattern.composite.idea.Leaf;
+import com.zcy.sdk.basis.designpattern.flyweight.demo.User;
+import com.zcy.sdk.basis.designpattern.flyweight.demo.WebSite;
+import com.zcy.sdk.basis.designpattern.flyweight.demo.WebSiteFactory;
+import com.zcy.sdk.basis.designpattern.flyweight.idea.Flyweight;
+import com.zcy.sdk.basis.designpattern.flyweight.idea.FlyweightFactory;
+import com.zcy.sdk.basis.designpattern.flyweight.idea.UnsharedConcreteFlyweight;
 import com.zcy.sdk.basis.designpattern.iterator.ConcreteAggregate;
 import com.zcy.sdk.basis.designpattern.iterator.ConcreteIterator;
 import com.zcy.sdk.basis.designpattern.iterator.Iterator;
@@ -158,5 +164,33 @@ public class DesignPatternMethods
         SC.setIraq(iraq);
         america.declare("NO ZUO NO DIE!");
         iraq.declare("CAO LI LIANG!");
+    }
+
+    public static void doFlyWeightIdea()
+    {
+        int extrinsicState = 22;
+        FlyweightFactory f = new FlyweightFactory();
+        Flyweight fwX = f.getFlyweight("X");
+        fwX.operation(--extrinsicState);
+        Flyweight fwY = f.getFlyweight("Y");
+        fwY.operation(--extrinsicState);
+        Flyweight fwZ = f.getFlyweight("Z");
+        fwZ.operation(--extrinsicState);
+        Flyweight fwU = new UnsharedConcreteFlyweight();
+        fwU.operation(--extrinsicState);
+    }
+
+    public static void doFlyWeightDemo()
+    {
+        WebSiteFactory f = new WebSiteFactory();
+        WebSite ws0 = f.getWebSiteCategory("产品展示");
+        ws0.setUser(new User("zcy"));
+        WebSite ws1 = f.getWebSiteCategory("产品展示");
+        ws1.setUser(new User("zjy"));
+        WebSite ws2 = f.getWebSiteCategory("博客");
+        ws2.setUser(new User("zcy"));
+        WebSite ws3 = f.getWebSiteCategory("博客");
+        ws3.setUser(new User("zjy"));
+        Log.i(TAG, "网站分类总数：" + f.getWebSiteCount());
     }
 }
