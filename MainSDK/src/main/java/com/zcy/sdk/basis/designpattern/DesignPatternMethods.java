@@ -19,6 +19,14 @@ import com.zcy.sdk.basis.designpattern.flyweight.demo.WebSiteFactory;
 import com.zcy.sdk.basis.designpattern.flyweight.idea.Flyweight;
 import com.zcy.sdk.basis.designpattern.flyweight.idea.FlyweightFactory;
 import com.zcy.sdk.basis.designpattern.flyweight.idea.UnsharedConcreteFlyweight;
+import com.zcy.sdk.basis.designpattern.interpreter.demo.Expression;
+import com.zcy.sdk.basis.designpattern.interpreter.demo.Note;
+import com.zcy.sdk.basis.designpattern.interpreter.demo.PlayContext;
+import com.zcy.sdk.basis.designpattern.interpreter.demo.Scale;
+import com.zcy.sdk.basis.designpattern.interpreter.idea.AbstractExpression;
+import com.zcy.sdk.basis.designpattern.interpreter.idea.Context;
+import com.zcy.sdk.basis.designpattern.interpreter.idea.NonterminalExpression;
+import com.zcy.sdk.basis.designpattern.interpreter.idea.TerminalExpression;
 import com.zcy.sdk.basis.designpattern.iterator.ConcreteAggregate;
 import com.zcy.sdk.basis.designpattern.iterator.ConcreteIterator;
 import com.zcy.sdk.basis.designpattern.iterator.Iterator;
@@ -29,6 +37,9 @@ import com.zcy.sdk.basis.designpattern.responsibility.GroupLeader;
 import com.zcy.sdk.basis.designpattern.responsibility.SuperiorLeader;
 import com.zcy.sdk.basis.designpattern.responsibility.WorkRequest;
 import com.zcy.sdk.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zuochengyao on 2018/3/19.
@@ -192,5 +203,59 @@ public class DesignPatternMethods
         WebSite ws3 = f.getWebSiteCategory("博客");
         ws3.setUser(new User("zjy"));
         Log.i(TAG, "网站分类总数：" + f.getWebSiteCount());
+    }
+
+    public static void doInterpreterIdea()
+    {
+        Context context = new Context();
+        List<AbstractExpression> list = new ArrayList<>();
+        list.add(new TerminalExpression());
+        list.add(new NonterminalExpression());
+        list.add(new TerminalExpression());
+        list.add(new TerminalExpression());
+        for (AbstractExpression exp : list)
+        {
+            exp.interpret(context);
+        }
+    }
+
+    public static void doInterpreterDemo()
+    {
+        PlayContext context = new PlayContext();
+        Log.i(TAG, "上海滩：");
+        context.setText("O 2 E 0.5 G 0.5 A 3 E 0.5 G 0.5 D 3 E 0.5 G 0.5 A 0.5 A 0.5 O 3 C 1 O 2 A 0.5 G 1 C 0.5 E 0.5 D 3 ");
+        Expression expression;
+        try
+        {
+            while (context.getText().length() > 0)
+            {
+                String str = context.getText().substring(0, 1);
+                switch (str)
+                {
+                    case "O":
+                        expression = new Scale();
+                        break;
+                    case "C":
+                    case "D":
+                    case "E":
+                    case "F":
+                    case "G":
+                    case "A":
+                    case "B":
+                    case "P":
+                        expression = new Note();
+                        break;
+                    default:
+                        expression = null;
+                        break;
+                }
+                if (expression != null)
+                    expression.interpret(context);
+            }
+        }
+        catch (Exception e)
+        {
+            Log.i(TAG, e.toString());
+        }
     }
 }
