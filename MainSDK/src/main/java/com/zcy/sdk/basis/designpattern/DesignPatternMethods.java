@@ -36,6 +36,16 @@ import com.zcy.sdk.basis.designpattern.mediator.USA;
 import com.zcy.sdk.basis.designpattern.responsibility.GroupLeader;
 import com.zcy.sdk.basis.designpattern.responsibility.SuperiorLeader;
 import com.zcy.sdk.basis.designpattern.responsibility.WorkRequest;
+import com.zcy.sdk.basis.designpattern.visitor.demo.Failing;
+import com.zcy.sdk.basis.designpattern.visitor.demo.Man;
+import com.zcy.sdk.basis.designpattern.visitor.demo.PersonStructure;
+import com.zcy.sdk.basis.designpattern.visitor.demo.Success;
+import com.zcy.sdk.basis.designpattern.visitor.demo.Woman;
+import com.zcy.sdk.basis.designpattern.visitor.idea.ConcreteElementA;
+import com.zcy.sdk.basis.designpattern.visitor.idea.ConcreteElementB;
+import com.zcy.sdk.basis.designpattern.visitor.idea.ConcreteVisitorA;
+import com.zcy.sdk.basis.designpattern.visitor.idea.ConcreteVisitorB;
+import com.zcy.sdk.basis.designpattern.visitor.idea.ObjectStructure;
 import com.zcy.sdk.util.Log;
 
 import java.util.ArrayList;
@@ -257,5 +267,27 @@ public class DesignPatternMethods
         {
             Log.i(TAG, e.toString());
         }
+    }
+
+    public static void doVisitorIdea()
+    {
+        ObjectStructure o = new ObjectStructure();
+        o.attach(new ConcreteElementA());
+        o.attach(new ConcreteElementB());
+        ConcreteVisitorA visitorA = new ConcreteVisitorA();
+        ConcreteVisitorB visitorB = new ConcreteVisitorB();
+        o.accept(visitorA);
+        o.accept(visitorB);
+    }
+
+    public static void doVisitorDemo()
+    {
+        PersonStructure p = new PersonStructure();
+        p.attach(new Man());
+        p.attach(new Woman());
+        Failing failing = new Failing();
+        p.accept(failing);
+        Success success = new Success();
+        p.accept(success);
     }
 }
