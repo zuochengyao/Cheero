@@ -3,10 +3,7 @@ package com.zcy.app.application;
 import android.app.Application;
 
 import com.zcy.sdk.ndk.JniNative;
-
-/**
- * Created by zuochengyao on 2018/3/1.
- */
+import com.zcy.sdk.util.Log;
 
 public class MainApplication extends Application
 {
@@ -19,5 +16,12 @@ public class MainApplication extends Application
     {
         super.onCreate();
         JniNative.serviceSetTraceMode(TRACE_MODE_ON_SCREEN);
+    }
+
+    @Override
+    public void onTrimMemory(int level)
+    {
+        super.onTrimMemory(level);
+        Log.e(MainApplication.class, "onTrimMemory level：" + level);
     }
 }
