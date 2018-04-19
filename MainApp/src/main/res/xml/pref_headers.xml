@@ -3,17 +3,17 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
-        android:fragment="com.zcy.app.activity.data.SystemSettingActivity$GeneralPreferenceFragment"
+        android:fragment="com.icheero.app.activity.data.SystemSettingActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_info_black_24dp"
         android:title="@string/pref_header_general"/>
 
     <header
-        android:fragment="com.zcy.app.activity.data.SystemSettingActivity$NotificationPreferenceFragment"
+        android:fragment="com.icheero.app.activity.data.SystemSettingActivity$NotificationPreferenceFragment"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/pref_header_notifications"/>
 
     <header
-        android:fragment="com.zcy.app.activity.data.SystemSettingActivity$DataSyncPreferenceFragment"
+        android:fragment="com.icheero.app.activity.data.SystemSettingActivity$DataSyncPreferenceFragment"
         android:icon="@drawable/ic_sync_black_24dp"
         android:title="@string/pref_header_data_sync"/>
 

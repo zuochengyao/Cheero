@@ -11,7 +11,7 @@
         android:key="morePref"
         android:title="Enable More Settings"/>
 
-    <com.zcy.app.custom.widget.ColorPreference
+    <com.icheero.app.custom.widget.ColorPreference
         android:defaultValue="@android:color/black"
         android:key="colorPref"
         android:title="Select Color"/>

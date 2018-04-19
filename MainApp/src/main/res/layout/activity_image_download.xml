@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zcy.app.activity.network.ImageDownloadActivity">
+    tools:context="com.icheero.app.activity.network.ImageDownloadActivity">
 
-    <com.zcy.app.custom.widget.WebImageView
+    <com.icheero.app.custom.widget.WebImageView
         android:id="@+id/web_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

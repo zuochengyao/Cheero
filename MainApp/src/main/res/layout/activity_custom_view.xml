@@ -19,7 +19,7 @@
 
     </LinearLayout>
 
-    <com.zcy.app.custom.view.BullEyeView
+    <com.icheero.app.custom.view.BullEyeView
         android:id="@+id/bullEye"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
