@@ -11,7 +11,7 @@
 #include "trace.h"
 #include "serviceEngine.h"
 
-#define JNI_PACKAGE_NAME "com/zcy/sdk/"
+#define JNI_PACKAGE_NAME "com/icheero/sdk/"
 #define TAG "ZCY_JNI"
 
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, TAG, __VA_ARGS__)
