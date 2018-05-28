@@ -148,6 +148,12 @@
                 android:layout_height="wrap_content"
                 android:text="DatabaseActivity"/>
 
+            <Button
+                android:id="@+id/to_view_model_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ViewModelActivity"/>
+
         </LinearLayout>
     </HorizontalScrollView>
 

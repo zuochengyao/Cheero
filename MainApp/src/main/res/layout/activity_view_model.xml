@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="user" type="com.icheero.app.model.User"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.name}"/>
+
+        <TextView
+            android:id="@+id/text_user_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.age}"/>
+
+        <TextView
+            android:id="@+id/text_user_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.phoneNumber}"/>
+
+        <Button
+            android:id="@+id/button_user_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update"/>
+
+    </LinearLayout>
+</layout>

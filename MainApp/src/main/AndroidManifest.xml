@@ -38,6 +38,8 @@
             android:name=".activity.data.SystemSettingActivity"
             android:label="@string/title_activity_settings"/>
         <activity android:name=".activity.data.DatabaseActivity"/>
+        <activity android:name=".activity.data.ViewModelActivity">
+        </activity>
     </application>
 
 </manifest>

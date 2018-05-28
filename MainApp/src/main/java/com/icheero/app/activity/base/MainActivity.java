@@ -15,6 +15,7 @@ import com.icheero.app.R;
 import com.icheero.app.activity.data.CustomSettingActivity;
 import com.icheero.app.activity.data.DatabaseActivity;
 import com.icheero.app.activity.data.SystemSettingActivity;
+import com.icheero.app.activity.data.ViewModelActivity;
 import com.icheero.app.activity.media.CameraActivity;
 import com.icheero.app.activity.network.DownloadActivity;
 import com.icheero.app.activity.network.ImageDownloadActivity;
@@ -66,6 +67,8 @@ public class MainActivity extends AppCompatActivity
     Button toSystemSettingActivity;
     @BindView(R.id.to_database_activity)
     Button toDatabaseActivity;
+    @BindView(R.id.to_view_model_activity)
+    Button toViewModelActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -92,7 +95,7 @@ public class MainActivity extends AppCompatActivity
         // DesignPatternMethods.doVisitorDemo();
     }
 
-    @OnClick({R.id.to_custom_setting_activity, R.id.to_system_setting_activity, R.id.to_database_activity})
+    @OnClick({R.id.to_custom_setting_activity, R.id.to_system_setting_activity, R.id.to_database_activity, R.id.to_view_model_activity})
     public void OnDataClickEvent(View v)
     {
         switch (v.getId())
@@ -110,6 +113,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.to_database_activity:
             {
                 startActivity(new Intent(this, DatabaseActivity.class));
+                break;
+            }
+            case R.id.to_view_model_activity:
+            {
+                startActivity(new Intent(this, ViewModelActivity.class));
                 break;
             }
         }
