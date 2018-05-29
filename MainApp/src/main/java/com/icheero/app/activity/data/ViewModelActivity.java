@@ -1,6 +1,5 @@
 package com.icheero.app.activity.data;
 
-import android.annotation.SuppressLint;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.icheero.app.R;
 import com.icheero.app.databinding.ActivityViewModelBinding;
 import com.icheero.app.model.User;
+
+import java.lang.ref.WeakReference;
 
 public class ViewModelActivity extends AppCompatActivity
 {
@@ -31,6 +32,7 @@ public class ViewModelActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_view_model);
+        WeakHandler mHandler = new WeakHandler(this);
         mUser = new User();
         mUser.setAge(10);
         mUser.setName("Cheero");
@@ -39,9 +41,15 @@ public class ViewModelActivity extends AppCompatActivity
         mHandler.sendEmptyMessageDelayed(0, 3000);
     }
 
-    @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler()
+    private static class WeakHandler extends Handler
     {
+        private final WeakReference<ViewModelActivity> mActivity;
+
+        private WeakHandler(ViewModelActivity activity)
+        {
+            mActivity = new WeakReference<>(activity);
+        }
+
         @Override
         public void handleMessage(Message msg)
         {
@@ -50,12 +58,12 @@ public class ViewModelActivity extends AppCompatActivity
             {
                 case 0:
                 {
-                    mUser.setAge(20);
-                    mUser.setName("Zero");
-                    binding.setUser(mUser);
+                    mActivity.get().mUser.setAge(20);
+                    mActivity.get().mUser.setName("Zero");
+                    mActivity.get().binding.setUser(mActivity.get().mUser);
                     break;
                 }
             }
         }
-    };
+    }
 }
