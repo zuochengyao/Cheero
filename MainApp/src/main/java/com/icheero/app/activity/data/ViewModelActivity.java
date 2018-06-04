@@ -26,19 +26,27 @@ public class ViewModelActivity extends AppCompatActivity
     */
     private User mUser;
     private ActivityViewModelBinding binding;
+    private WeakHandler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_view_model);
-        WeakHandler mHandler = new WeakHandler(this);
+        mHandler = new WeakHandler(this);
         mUser = new User();
         mUser.setAge(10);
         mUser.setName("Cheero");
         mUser.setPhoneNumber("18513141213");
         binding.setUser(mUser);
         mHandler.sendEmptyMessageDelayed(0, 3000);
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
     }
 
     private static class WeakHandler extends Handler
