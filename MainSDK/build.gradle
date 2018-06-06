@@ -38,13 +38,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
-    dataBinding {
-        enabled true
-    }
 }
 
 dependencies {
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
     implementation 'com.squareup.okio:okio:1.14.0'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
