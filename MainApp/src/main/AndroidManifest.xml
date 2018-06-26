@@ -40,6 +40,8 @@
         <activity android:name=".activity.data.DatabaseActivity"/>
         <activity android:name=".activity.data.ViewModelActivity">
         </activity>
+        <activity android:name=".activity.network.RequestActivity">
+        </activity>
     </application>
 
 </manifest>

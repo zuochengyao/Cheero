@@ -28,6 +28,7 @@ import com.icheero.app.activity.ui.SectionsActivity;
 import com.icheero.app.activity.ui.StyledActivity;
 import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
+import com.icheero.sdk.control.network.retrofit.RetrofitManager;
 import com.icheero.sdk.interaction.media.ICamera;
 import com.icheero.sdk.ndk.JniNative;
 
@@ -79,20 +80,15 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            }
-        });
+        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show());
         Slide slide = new Slide();
         slide.setDuration(700);
         getWindow().setExitTransition(slide);
         ButterKnife.bind(this);
         JniNative.serviceSizeOfDataType();
+
         // DesignPatternMethods.doVisitorDemo();
+        RetrofitManager.doRequest();
     }
 
     @OnClick({R.id.to_custom_setting_activity, R.id.to_system_setting_activity, R.id.to_database_activity, R.id.to_view_model_activity})
