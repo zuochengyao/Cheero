@@ -70,7 +70,7 @@ void TRACE(const char *fi, int level, const char *chfr, ...)
         }
         va_list ap;
         va_start(ap, chfr);
-        __android_log_vprint(prio, "ZCY_JNI", chfr, ap);
+        __android_log_vprint(prio, "Cheero", chfr, ap);
         va_end(ap);
 #endif
     }

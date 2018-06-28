@@ -38,10 +38,8 @@
             android:name=".activity.data.SystemSettingActivity"
             android:label="@string/title_activity_settings"/>
         <activity android:name=".activity.data.DatabaseActivity"/>
-        <activity android:name=".activity.data.ViewModelActivity">
-        </activity>
-        <activity android:name=".activity.network.RequestActivity">
-        </activity>
+        <activity android:name=".activity.data.ViewModelActivity"/>
+        <activity android:name=".activity.network.RetrofitActivity"/>
     </application>
 
 </manifest>

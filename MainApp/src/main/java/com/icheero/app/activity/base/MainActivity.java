@@ -19,6 +19,7 @@ import com.icheero.app.activity.data.ViewModelActivity;
 import com.icheero.app.activity.media.CameraActivity;
 import com.icheero.app.activity.network.DownloadActivity;
 import com.icheero.app.activity.network.ImageDownloadActivity;
+import com.icheero.app.activity.network.RetrofitActivity;
 import com.icheero.app.activity.network.WebViewActivity;
 import com.icheero.app.activity.ui.AnimActivity;
 import com.icheero.app.activity.ui.CustomViewActivity;
@@ -28,7 +29,6 @@ import com.icheero.app.activity.ui.SectionsActivity;
 import com.icheero.app.activity.ui.StyledActivity;
 import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
-import com.icheero.sdk.control.network.retrofit.RetrofitManager;
 import com.icheero.sdk.interaction.media.ICamera;
 import com.icheero.sdk.ndk.JniNative;
 
@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity
     Button toImageDownloadActivity;
     @BindView(R.id.to_download_activity)
     Button toDownloadActivity;
+    @BindView(R.id.to_retrofit_activity)
+    Button toRetrofitActivity;
     @BindView(R.id.to_camera_activity)
     Button toCameraActivity;
     @BindView(R.id.to_custom_setting_activity)
@@ -86,9 +88,7 @@ public class MainActivity extends AppCompatActivity
         getWindow().setExitTransition(slide);
         ButterKnife.bind(this);
         JniNative.serviceSizeOfDataType();
-
         // DesignPatternMethods.doVisitorDemo();
-        RetrofitManager.doRequest();
     }
 
     @OnClick({R.id.to_custom_setting_activity, R.id.to_system_setting_activity, R.id.to_database_activity, R.id.to_view_model_activity})
@@ -134,26 +134,23 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @OnClick({R.id.to_download_activity, R.id.to_image_download_activity, R.id.to_web_view_activity})
+    @OnClick({R.id.to_download_activity, R.id.to_image_download_activity, R.id.to_web_view_activity, R.id.to_retrofit_activity})
     public void OnNetworkClickEvent(View v)
     {
         switch (v.getId())
         {
             case R.id.to_web_view_activity:
-            {
                 startActivity(new Intent(this, WebViewActivity.class));
                 break;
-            }
             case R.id.to_image_download_activity:
-            {
                 startActivity(new Intent(this, ImageDownloadActivity.class));
                 break;
-            }
             case R.id.to_download_activity:
-            {
                 startActivity(new Intent(this, DownloadActivity.class));
                 break;
-            }
+            case R.id.to_retrofit_activity:
+                startActivity(new Intent(this, RetrofitActivity.class));
+                break;
         }
     }
 

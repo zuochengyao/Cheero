@@ -98,6 +98,12 @@
                 android:layout_height="wrap_content"
                 android:text="DownloadActivity"/>
 
+            <Button
+                android:id="@+id/to_retrofit_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RetrofitActivity"/>
+
         </LinearLayout>
     </HorizontalScrollView>
 
