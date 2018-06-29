@@ -21,6 +21,7 @@ import com.icheero.app.activity.network.DownloadActivity;
 import com.icheero.app.activity.network.ImageDownloadActivity;
 import com.icheero.app.activity.network.RetrofitActivity;
 import com.icheero.app.activity.network.WebViewActivity;
+import com.icheero.app.activity.plugin.LoadPluginActivity;
 import com.icheero.app.activity.ui.AnimActivity;
 import com.icheero.app.activity.ui.CustomViewActivity;
 import com.icheero.app.activity.ui.DialogActivity;
@@ -72,6 +73,8 @@ public class MainActivity extends AppCompatActivity
     Button toDatabaseActivity;
     @BindView(R.id.to_view_model_activity)
     Button toViewModelActivity;
+    @BindView(R.id.to_load_plugin_activity)
+    Button toLoadPluginActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -211,4 +214,14 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    @OnClick({R.id.to_load_plugin_activity})
+    public void OnPluginClickEvent(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.to_load_plugin_activity:
+                startActivity(new Intent(this, LoadPluginActivity.class));
+                break;
+        }
+    }
 }

@@ -2,6 +2,9 @@
 <manifest package="com.icheero.app"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".application.MainApplication"
         android:allowBackup="true"
@@ -40,6 +43,7 @@
         <activity android:name=".activity.data.DatabaseActivity"/>
         <activity android:name=".activity.data.ViewModelActivity"/>
         <activity android:name=".activity.network.RetrofitActivity"/>
+        <activity android:name=".activity.plugin.LoadPluginActivity"/>
     </application>
 
 </manifest>
