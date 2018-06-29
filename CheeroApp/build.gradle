@@ -28,7 +28,7 @@ android {
 }
 
 dependencies {
-    implementation project(':MainSDK')
+    implementation project(':CheeroSDK')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     /* rx-android-java */
     implementation 'io.reactivex.rxjava2:rxjava:2.1.15'

@@ -3,8 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Cheero.iml" filepath="$PROJECT_DIR$/Cheero.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MainApp/MainApp.iml" filepath="$PROJECT_DIR$/MainApp/MainApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MainSDK/MainSDK.iml" filepath="$PROJECT_DIR$/MainSDK/MainSDK.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CheeroApp/CheeroApp.iml" filepath="$PROJECT_DIR$/CheeroApp/CheeroApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CheeroPlugins/CheeroPlugins.iml" filepath="$PROJECT_DIR$/CheeroPlugins/CheeroPlugins.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CheeroSDK/CheeroSDK.iml" filepath="$PROJECT_DIR$/CheeroSDK/CheeroSDK.iml" />
     </modules>
   </component>
 </project>
