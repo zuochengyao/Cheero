@@ -1,0 +1,64 @@
+def build_version = [:]
+build_version.compile_sdk = 27
+build_version.build_tool = '27.0.3'
+build_version.min_sdk = 21
+build_version.target_sdk = 27
+build_version.gradle = '3.1.3'
+
+def dep_version = [:]
+/* RxJava2 */
+dep_version.rxjava2 = "2.1.15"
+dep_version.rxandroid = "2.0.2"
+/* Retrofit */
+dep_version.retrofit = "2.4.0"
+dep_version.gson = "2.8.2"
+/* ButterKnife */
+dep_version.butterknife = "8.8.1"
+/* Android Support */
+dep_version.support = "27.1.1"
+dep_version.constraint = "1.1.2"
+/* Okhttp */
+dep_version.okio = "1.14.0"
+dep_version.okhttp = "3.10.0"
+/* Glide */
+dep_version.glide = "4.7.1"
+
+def retrofit = [:]
+retrofit.runtime = "com.squareup.retrofit2:retrofit:$dep_version.retrofit"
+retrofit.adapter = "com.squareup.retrofit2:adapter-rxjava2:$dep_version.retrofit"
+retrofit.converter_gson = "com.squareup.retrofit2:converter-gson:$dep_version.retrofit"
+retrofit.gson = "com.google.code.gson:gson:$dep_version.gson"
+
+def butterknife = [:]
+butterknife.runtime = "com.jakewharton:butterknife:$dep_version.butterknife"
+butterknife.compiler = "com.jakewharton:butterknife-compiler:$dep_version.butterknife"
+
+def support = [:]
+support.design = "com.android.support:design:$dep_version.support"
+support.v4 = "com.android.support:support-v4:$dep_version.support"
+support.v7 = "com.android.support:appcompat-v7:$dep_version.support"
+support.constraint = "com.android.support.constraint:constraint-layout:$dep_version.constraint"
+
+def deps = [:]
+deps.retrofit = retrofit
+deps.butterknife = butterknife
+deps.support = support
+deps.rxjava2 = "io.reactivex.rxjava2:rxjava:$dep_version.rxjava2"
+deps.rxandroid = "io.reactivex.rxjava2:rxandroid:$dep_version.rxandroid"
+deps.okio = "com.squareup.okio:okio:$dep_version.okio"
+deps.okhttp = "com.squareup.okhttp3:okhttp:$dep_version.okhttp"
+deps.gradle = "com.android.tools.build:gradle:$build_version.gradle"
+
+def static addRepos(RepositoryHandler handler) {
+    handler.maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    handler.google()
+    // jcenter()
+}
+
+ext {
+    isModule = false
+    versions = [:]
+    versions.build = build_version
+    versions.deps = deps
+    addRepositories = this.&addRepos
+}

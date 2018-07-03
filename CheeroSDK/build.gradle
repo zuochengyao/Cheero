@@ -1,4 +1,4 @@
-if (isModule.toBoolean()) {
+if (isModule) {
     apply plugin: 'com.android.application'
 } else {
     apply plugin: 'com.android.library'
@@ -46,17 +46,17 @@ android {
 
 dependencies {
     /* rx-android-java */
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.15'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation versions.deps.rxjava2
+    implementation versions.deps.rxandroid
     /* rotrofit */
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation versions.deps.retrofit.runtime
+    implementation versions.deps.retrofit.adapter
+    implementation versions.deps.retrofit.converter_gson
+    implementation versions.deps.retrofit.gson
     /* okhttp */
-    implementation 'com.squareup.okio:okio:1.14.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation versions.deps.okio
+    implementation versions.deps.okhttp
 
+    implementation versions.deps.support.v7
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
 }
