@@ -1,4 +1,4 @@
-package com.icheero.sdk.util;
+package com.icheero.common.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,9 +8,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 /**
- * Created by zuochengyao on 2018/3/2.
+ * Created by 左程耀 on 2018/3/2.
  */
 
+@SuppressWarnings("unused")
 public class FileUtils
 {
     /**

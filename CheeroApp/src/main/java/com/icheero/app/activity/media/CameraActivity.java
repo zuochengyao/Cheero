@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.icheero.app.R;
 import com.icheero.app.activity.base.BaseActivity;
+import com.icheero.common.util.FileUtils;
 import com.icheero.sdk.interaction.media.ICamera;
-import com.icheero.sdk.util.FileUtils;
 
 import java.io.File;
 

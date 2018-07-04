@@ -1,13 +1,14 @@
-package com.icheero.sdk.util;
+package com.icheero.common.util;
 
 import android.content.Context;
 import android.support.annotation.StringRes;
 import android.widget.Toast;
 
 /**
- * Created by zuochengyao on 2018/2/26.
+ * Created by 左程耀 on 2018/2/26.
  */
 
+@SuppressWarnings("unused")
 public class Common
 {
     public static int dp2px(Context context, float dp)

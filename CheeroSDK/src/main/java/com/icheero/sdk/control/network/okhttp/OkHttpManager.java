@@ -3,7 +3,7 @@ package com.icheero.sdk.control.network.okhttp;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.common.util.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
