@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.icheero.app.R;
 import com.icheero.app.activity.base.BaseActivity;
 import com.icheero.app.custom.widget.WebImageView;
-import com.icheero.sdk.util.Log;
+import com.icheero.common.util.Log;
 
 import butterknife.BindView;
 import io.reactivex.Observable;

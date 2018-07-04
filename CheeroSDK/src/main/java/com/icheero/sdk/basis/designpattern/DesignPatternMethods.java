@@ -1,5 +1,6 @@
 package com.icheero.sdk.basis.designpattern;
 
+import com.icheero.common.util.Log;
 import com.icheero.sdk.basis.designpattern.bridge.Abstraction;
 import com.icheero.sdk.basis.designpattern.bridge.ConcreteImpA;
 import com.icheero.sdk.basis.designpattern.bridge.ConcreteImpB;
@@ -25,7 +26,7 @@ import com.icheero.sdk.basis.designpattern.interpreter.demo.PlayContext;
 import com.icheero.sdk.basis.designpattern.interpreter.demo.Scale;
 import com.icheero.sdk.basis.designpattern.interpreter.idea.AbstractExpression;
 import com.icheero.sdk.basis.designpattern.interpreter.idea.Context;
-import com.icheero.sdk.basis.designpattern.interpreter.idea.NonterminalExpression;
+import com.icheero.sdk.basis.designpattern.interpreter.idea.NonTerminalExpression;
 import com.icheero.sdk.basis.designpattern.interpreter.idea.TerminalExpression;
 import com.icheero.sdk.basis.designpattern.iterator.ConcreteAggregate;
 import com.icheero.sdk.basis.designpattern.iterator.ConcreteIterator;
@@ -46,7 +47,6 @@ import com.icheero.sdk.basis.designpattern.visitor.idea.ConcreteElementB;
 import com.icheero.sdk.basis.designpattern.visitor.idea.ConcreteVisitorA;
 import com.icheero.sdk.basis.designpattern.visitor.idea.ConcreteVisitorB;
 import com.icheero.sdk.basis.designpattern.visitor.idea.ObjectStructure;
-import com.icheero.sdk.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,6 +107,7 @@ public class DesignPatternMethods
 
         Log.e(TAG, "\n 结构图：");
         root.display(1);
+
         Log.e(TAG, "\n 职责：");
         root.lineOfDuty();
     }
@@ -220,7 +221,7 @@ public class DesignPatternMethods
         Context context = new Context();
         List<AbstractExpression> list = new ArrayList<>();
         list.add(new TerminalExpression());
-        list.add(new NonterminalExpression());
+        list.add(new NonTerminalExpression());
         list.add(new TerminalExpression());
         list.add(new TerminalExpression());
         for (AbstractExpression exp : list)

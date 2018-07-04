@@ -31,7 +31,6 @@ import com.icheero.app.activity.ui.StyledActivity;
 import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
 import com.icheero.sdk.interaction.media.ICamera;
-import com.icheero.sdk.ndk.JniNative;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,8 +89,6 @@ public class MainActivity extends AppCompatActivity
         slide.setDuration(700);
         getWindow().setExitTransition(slide);
         ButterKnife.bind(this);
-        JniNative.serviceSizeOfDataType();
-        // DesignPatternMethods.doVisitorDemo();
     }
 
     @OnClick({R.id.to_custom_setting_activity, R.id.to_system_setting_activity, R.id.to_database_activity, R.id.to_view_model_activity})

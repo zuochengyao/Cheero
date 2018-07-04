@@ -1,6 +1,6 @@
 package com.icheero.sdk.basis.designpattern.interpreter.demo;
 
-import com.icheero.sdk.util.Log;
+import com.icheero.common.util.Log;
 
 public class Scale extends Expression
 {

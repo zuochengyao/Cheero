@@ -2,8 +2,9 @@ package com.icheero.app.application;
 
 import android.app.Application;
 
-import com.icheero.sdk.ndk.JniNative;
-import com.icheero.sdk.util.Log;
+import com.icheero.common.base.CheeroNative;
+import com.icheero.common.util.Log;
+
 
 public class MainApplication extends Application
 {
@@ -15,7 +16,7 @@ public class MainApplication extends Application
     public void onCreate()
     {
         super.onCreate();
-        JniNative.serviceSetTraceMode(TRACE_MODE_ON_SCREEN);
+        CheeroNative.nativeSetTraceMode(TRACE_MODE_ON_SCREEN);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.icheero.sdk.basis.designpattern.command;
 
-import com.icheero.sdk.util.Log;
+import com.icheero.common.util.Log;
 
 /**
  * 知道如何实施并执行一个与请求相关的操作，任何类都可能成为一个接收者

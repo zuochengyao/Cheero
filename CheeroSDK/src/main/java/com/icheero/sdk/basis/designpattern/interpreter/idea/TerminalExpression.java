@@ -1,6 +1,6 @@
 package com.icheero.sdk.basis.designpattern.interpreter.idea;
 
-import com.icheero.sdk.util.Log;
+import com.icheero.common.util.Log;
 
 public class TerminalExpression extends AbstractExpression
 {

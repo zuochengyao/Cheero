@@ -1,6 +1,6 @@
 package com.icheero.sdk.basis.designpattern.composite.idea;
 
-import com.icheero.sdk.util.Log;
+import com.icheero.common.util.Log;
 
 /**
  * 在组合中表示叶节点对象，叶节点没有子节点

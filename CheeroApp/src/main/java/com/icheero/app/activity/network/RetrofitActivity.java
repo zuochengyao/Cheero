@@ -10,8 +10,8 @@ import android.widget.Toast;
 import com.icheero.app.R;
 import com.icheero.app.model.Course;
 import com.icheero.app.model.Student;
+import com.icheero.common.util.Log;
 import com.icheero.sdk.control.network.retrofit.RetrofitManager;
-import com.icheero.sdk.util.Log;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;

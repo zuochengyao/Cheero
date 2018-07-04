@@ -1,6 +1,6 @@
 package com.icheero.sdk.basis.designpattern.responsibility;
 
-import com.icheero.sdk.util.Log;
+import com.icheero.common.util.Log;
 
 import java.util.Locale;
 
