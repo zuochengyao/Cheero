@@ -28,4 +28,5 @@ android {
 dependencies {
     implementation project(':CheeroCommon')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:support-v4:27.1.1'
 }

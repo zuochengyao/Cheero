@@ -49,4 +49,9 @@ public class ViewManager
     {
         fragmentList.add(index, fragment);
     }
+
+    public List<BaseFragment> getFragments()
+    {
+        return fragmentList;
+    }
 }

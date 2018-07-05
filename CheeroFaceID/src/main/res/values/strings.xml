@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Cheero</string>
+    <string name="module_name">FaceID</string>
+    <string name="module_faceid_idcard">IDCard</string>
+    <string name="module_faceid_liveness">MegLive</string>
+    <string name="module_faceid_lite">Lite</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
