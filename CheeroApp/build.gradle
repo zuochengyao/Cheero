@@ -28,27 +28,10 @@ android {
 }
 
 dependencies {
-    if (!isModule) {
-        implementation project(':CheeroCommon')
-        implementation project(':CheeroSDK')
-    }
-
-    /* rx-android-java */
-    implementation versions.deps.rxjava2
-    implementation versions.deps.rxandroid
-    /* rotrofit */
-    implementation versions.deps.retrofit.runtime
-    implementation versions.deps.retrofit.adapter
-    implementation versions.deps.retrofit.converter_gson
-    implementation versions.deps.retrofit.gson
-    /* butterknife */
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation versions.deps.butterknife.runtime
     annotationProcessor versions.deps.butterknife.compiler
-
-    implementation versions.deps.support.design
-    implementation versions.deps.support.v4
-    implementation versions.deps.support.v7
-    implementation versions.deps.support.constraint
-
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':CheeroCommon')
+    if (!isModule)
+        implementation project(':CheeroSDK')
 }

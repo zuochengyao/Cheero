@@ -41,15 +41,27 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    // Support libraries
+    api versions.deps.support.design
+    api versions.deps.support.v4
+    api versions.deps.support.v7
+    api versions.deps.support.constraint
+    androidTestImplementation versions.deps.support.test
+    androidTestImplementation versions.deps.support.espresso
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    // RxJava and retrofit
+    api versions.deps.rxjava2
+    api versions.deps.rxandroid
+    api versions.deps.retrofit.runtime
+    api versions.deps.retrofit.adapter
+    api versions.deps.retrofit.converter_gson
+    api versions.deps.retrofit.gson
 
-    implementation versions.deps.retrofit.runtime
-    implementation versions.deps.retrofit.adapter
-    implementation versions.deps.retrofit.converter_gson
-    implementation versions.deps.retrofit.gson
+    // Okhttp
+    api versions.deps.okio
+    api versions.deps.okhttp
+
+    // other
+    testImplementation versions.deps.junit
 }

@@ -16,6 +16,9 @@ dep_version.constraint = "1.1.2"
 dep_version.okio = "1.14.0"
 dep_version.okhttp = "3.10.0"
 dep_version.glide = "4.7.1"
+dep_version.junit = "4.12"
+dep_version.test = "1.0.2"
+dep_version.espresso = "3.0.2"
 
 def retrofit = [:]
 retrofit.runtime = "com.squareup.retrofit2:retrofit:$dep_version.retrofit"
@@ -32,6 +35,8 @@ support.design = "com.android.support:design:$dep_version.support"
 support.v4 = "com.android.support:support-v4:$dep_version.support"
 support.v7 = "com.android.support:appcompat-v7:$dep_version.support"
 support.constraint = "com.android.support.constraint:constraint-layout:$dep_version.constraint"
+support.test = "com.android.support.test:runner:$dep_version.test"
+support.espresso = "com.android.support.test.espresso:espresso-core:$dep_version.espresso"
 
 def deps = [:]
 deps.retrofit = retrofit
@@ -41,6 +46,7 @@ deps.rxjava2 = "io.reactivex.rxjava2:rxjava:$dep_version.rxjava2"
 deps.rxandroid = "io.reactivex.rxjava2:rxandroid:$dep_version.rxandroid"
 deps.okio = "com.squareup.okio:okio:$dep_version.okio"
 deps.okhttp = "com.squareup.okhttp3:okhttp:$dep_version.okhttp"
+deps.junit = "junit:junit:$dep_version.junit"
 deps.gradle = "com.android.tools.build:gradle:$build_version.gradle"
 
 def static addRepos(RepositoryHandler handler) {
