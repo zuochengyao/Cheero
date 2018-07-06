@@ -3,6 +3,7 @@ package com.icheero.faceid.activity;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.icheero.common.base.BaseActivity;
 import com.icheero.common.base.BaseFragment;
 import com.icheero.common.manager.ViewManager;
@@ -15,6 +16,7 @@ import com.icheero.faceid.fragment.MegLiveFragment;
 
 import java.util.List;
 
+@Route(path="/faceid/index")
 public class FaceIDActivity extends BaseActivity
 {
     private BottomNavigationView navigation;

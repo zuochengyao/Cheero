@@ -52,5 +52,6 @@ android {
 
 dependencies {
     implementation project(':CheeroCommon')
+    annotationProcessor versions.deps.arouter_compiler
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 }
