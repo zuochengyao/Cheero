@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import com.icheero.app.R;
-import com.icheero.app.activity.base.BaseActivity;
+import com.icheero.common.base.BaseActivity;
 import com.icheero.sdk.data.db.DBDefine;
 import com.icheero.sdk.data.db.DBHelper;
 

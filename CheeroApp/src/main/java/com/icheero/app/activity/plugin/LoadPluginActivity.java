@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.icheero.app.R;
-import com.icheero.sdk.control.plugin.PluginManager;
+import com.icheero.common.manager.PluginManager;
 
 import java.io.File;
 import java.lang.reflect.Field;

@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.icheero.app.R;
-import com.icheero.app.activity.base.BaseActivity;
+import com.icheero.common.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;

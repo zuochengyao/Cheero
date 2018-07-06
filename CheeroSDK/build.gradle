@@ -30,6 +30,6 @@ android {
 }
 
 dependencies {
-    implementation project(':CheeroCommon')
+    api project(':CheeroCommon')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 }

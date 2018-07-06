@@ -3,8 +3,8 @@ package com.icheero.app.activity.network;
 import android.os.Bundle;
 
 import com.icheero.app.R;
-import com.icheero.app.activity.base.BaseActivity;
 import com.icheero.app.custom.widget.WebImageView;
+import com.icheero.common.base.BaseActivity;
 import com.icheero.common.util.Log;
 
 import butterknife.BindView;

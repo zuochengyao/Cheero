@@ -1,4 +1,4 @@
-package com.icheero.app.activity.base;
+package com.icheero.app.activity;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -30,13 +30,14 @@ import com.icheero.app.activity.ui.SectionsActivity;
 import com.icheero.app.activity.ui.StyledActivity;
 import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
+import com.icheero.common.base.BaseActivity;
 import com.icheero.sdk.interaction.media.ICamera;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
 {
     @BindView(R.id.to_styled_activity)
     Button toStyledActivity;

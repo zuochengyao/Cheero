@@ -10,7 +10,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
-import com.icheero.sdk.control.network.okhttp.OkHttpManager;
+import com.icheero.common.network.okhttp.OkHttpManager;
+
 
 /**
  * Created by zuochengyao on 2018/3/1.

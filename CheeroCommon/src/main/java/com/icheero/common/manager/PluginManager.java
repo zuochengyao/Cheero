@@ -1,4 +1,4 @@
-package com.icheero.sdk.control.plugin;
+package com.icheero.common.manager;
 
 import android.app.Activity;
 import android.content.res.AssetManager;
