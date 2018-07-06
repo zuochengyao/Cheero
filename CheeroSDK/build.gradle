@@ -5,12 +5,12 @@ if (isModule) {
 }
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion versions.build.compile_sdk
+    buildToolsVersion versions.build.build_tool
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 27
+        minSdkVersion versions.build.min_sdk
+        targetSdkVersion versions.build.target_sdk
         versionCode 1
         versionName "1.0"
     }
