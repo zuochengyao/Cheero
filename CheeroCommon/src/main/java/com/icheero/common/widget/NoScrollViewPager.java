@@ -33,6 +33,9 @@ public class NoScrollViewPager extends ViewPager
         return isPageEnabled && super.onInterceptTouchEvent(ev);
     }
 
+    /**
+     * 设置Pager是否可滑动
+     */
     public void setPageEnabled(boolean enabled)
     {
         this.isPageEnabled = enabled;

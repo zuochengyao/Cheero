@@ -15,7 +15,7 @@ import com.icheero.faceid.fragment.MegLiveFragment;
 
 import java.util.List;
 
-public class MainActivity extends BaseActivity
+public class FaceIDActivity extends BaseActivity
 {
     private BottomNavigationView navigation;
     private NoScrollViewPager mViewPager;
@@ -27,7 +27,7 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_faceid);
         doInitView();
     }
 
@@ -35,25 +35,25 @@ public class MainActivity extends BaseActivity
     {
         navigation = $(R.id.bottom_nav);
         navigation.setOnNavigationItemSelectedListener((item) -> {
-            switch (item.getItemId())
+            int i = item.getItemId();
+            if (i == R.id.navigation_idcard)
             {
-                case R.id.navigation_idcard:
-                {
-                    mViewPager.setCurrentItem(0);
-                    return true;
-                }
-                case R.id.navigation_meglive:
-                {
-                    mViewPager.setCurrentItem(1);
-                    return true;
-                }
-                case R.id.navigation_lite:
-                {
-                    mViewPager.setCurrentItem(2);
-                    return true;
-                }
-                default:
-                    return false;
+                mViewPager.setCurrentItem(0);
+                return true;
+            }
+            else if (i == R.id.navigation_meglive)
+            {
+                mViewPager.setCurrentItem(1);
+                return true;
+            }
+            else if (i == R.id.navigation_lite)
+            {
+                mViewPager.setCurrentItem(2);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         });
         mViewPager = $(R.id.container_pager);
@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity
         mFragments.add(megliveFragment);
         mFragments.add(liteFragment);
         mFragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), mFragments);
-        mViewPager.setPageEnabled(true);
+        mViewPager.setPageEnabled(false);
         mViewPager.setAdapter(mFragmentAdapter);
     }
 

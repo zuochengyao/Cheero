@@ -1,12 +1,11 @@
 package com.icheero.app.application;
 
-import android.app.Application;
-
+import com.icheero.common.base.BaseApplication;
 import com.icheero.common.base.CheeroNative;
 import com.icheero.common.util.Log;
 
 
-public class MainApplication extends Application
+public class MainApplication extends BaseApplication
 {
     public static final int TRACE_MODE_ON_SCREEN = 0;
     // public static final int TRACE_MODE_ON_FILE = 1;

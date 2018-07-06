@@ -8,7 +8,7 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_faceid">
 
     <HorizontalScrollView
         android:layout_width="wrap_content"
@@ -181,5 +181,11 @@
 
         </LinearLayout>
     </HorizontalScrollView>
+
+    <Button
+        android:id="@+id/to_faceid_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FaceIDActivity"/>
 
 </LinearLayout>

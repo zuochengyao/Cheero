@@ -1,22 +1,46 @@
-apply plugin: 'com.android.application'
+if (isModule) {
+    apply plugin: 'com.android.library'
+} else {
+    apply plugin: 'com.android.application'
+}
 
 android {
     compileSdkVersion versions.build.compile_sdk
     buildToolsVersion versions.build.build_tool
 
     defaultConfig {
-        applicationId "com.icheero.faceid"
+        if (!isModule) {
+            applicationId "com.icheero.faceid"
+        }
         minSdkVersion versions.build.min_sdk
         targetSdkVersion versions.build.target_sdk
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            if (isModule) {
+                manifest.srcFile 'src/main/module/AndroidManifest.xml'
+                //集成开发模式下排除debug文件夹中的所有Java文件
+                java {
+                    exclude 'application/**'
+                }
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
         }
     }
 

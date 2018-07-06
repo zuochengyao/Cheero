@@ -47,8 +47,8 @@ dependencies {
     api versions.deps.support.v4
     api versions.deps.support.v7
     api versions.deps.support.constraint
-    androidTestImplementation versions.deps.support.test
-    androidTestImplementation versions.deps.support.espresso
+//    androidTestImplementation versions.deps.support.test
+//    androidTestImplementation versions.deps.support.espresso
 
     // RxJava and retrofit
     api versions.deps.rxjava2
@@ -63,5 +63,5 @@ dependencies {
     api versions.deps.okhttp
 
     // other
-    testImplementation versions.deps.junit
+//    testImplementation versions.deps.junit
 }

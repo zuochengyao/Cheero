@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
 import android.view.View;
@@ -31,6 +30,7 @@ import com.icheero.app.activity.ui.StyledActivity;
 import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
 import com.icheero.common.base.BaseActivity;
+import com.icheero.faceid.activity.FaceIDActivity;
 import com.icheero.sdk.interaction.media.ICamera;
 
 import butterknife.BindView;
@@ -75,6 +75,8 @@ public class MainActivity extends BaseActivity
     Button toViewModelActivity;
     @BindView(R.id.to_load_plugin_activity)
     Button toLoadPluginActivity;
+    @BindView(R.id.to_faceid_activity)
+    Button toFaceIDActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -219,6 +221,17 @@ public class MainActivity extends BaseActivity
         {
             case R.id.to_load_plugin_activity:
                 startActivity(new Intent(this, LoadPluginActivity.class));
+                break;
+        }
+    }
+
+    @OnClick({R.id.to_faceid_activity})
+    public void OnModuleClickEvent(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.to_faceid_activity:
+                startActivity(new Intent(this, FaceIDActivity.class));
                 break;
         }
     }
