@@ -1,9 +1,11 @@
 def build_version = [:]
-build_version.compile_sdk = 27
-build_version.build_tool = '27.0.3'
+build_version.compile_sdk = 28
+build_version.build_tool = '28.0.3'
 build_version.min_sdk = 21
-build_version.target_sdk = 27
-build_version.gradle = '3.1.4'
+build_version.target_sdk = 28
+build_version.gradle = '3.2.1'
+build_version.code = 1
+build_version.name = "1.0"
 
 def dep_version = [:]
 dep_version.rxjava2 = "2.1.15"
