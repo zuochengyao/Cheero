@@ -51,7 +51,7 @@ android {
 }
 
 dependencies {
-    implementation project(':CheeroCommon')
+    implementation project(':CheeroSDK')
     implementation versions.deps.faceid_api
     annotationProcessor versions.deps.arouter_compiler
     implementation fileTree(include: ['*.jar'], dir: 'libs')

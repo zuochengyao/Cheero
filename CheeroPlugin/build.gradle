@@ -27,6 +27,6 @@ android {
 }
 
 dependencies {
-    implementation project(':CheeroCommon')
+    implementation project(':CheeroSDK')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 }
