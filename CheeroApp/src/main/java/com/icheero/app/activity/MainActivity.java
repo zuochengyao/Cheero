@@ -31,7 +31,6 @@ import com.icheero.app.activity.ui.StyledActivity;
 import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
 import com.icheero.common.base.BaseActivity;
-import com.icheero.sdk.interaction.media.ICamera;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -130,7 +129,7 @@ public class MainActivity extends BaseActivity
             case R.id.to_camera_activity:
             {
                 Intent intent = new Intent(this, CameraActivity.class);
-                intent.putExtra(CameraActivity.KEY_REQUEST_CODE, ICamera.REQUEST_CODE_VIDEO);
+                intent.putExtra(CameraActivity.KEY_REQUEST_CODE, 1);
                 startActivity(intent);
                 break;
             }

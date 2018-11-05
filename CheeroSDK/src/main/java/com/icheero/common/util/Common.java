@@ -1,6 +1,8 @@
 package com.icheero.common.util;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.annotation.StringRes;
 import android.widget.Toast;
 
@@ -25,5 +27,39 @@ public class Common
     public static void toast(Context context, @StringRes int resID, int duration)
     {
         Toast.makeText(context, resID, duration).show();
+    }
+
+    public String getVersionCode(Context context)
+    {
+        PackageManager packageManager = context.getPackageManager();
+        PackageInfo packageInfo;
+        String versionCode = "1";
+        try
+        {
+            packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+            versionCode = packageInfo.versionCode + "";
+        }
+        catch (PackageManager.NameNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        return versionCode;
+    }
+
+    public static String getVersionName(Context context)
+    {
+        PackageManager packageManager = context.getPackageManager();
+        PackageInfo packageInfo;
+        String versionName = "1.0.0";
+        try
+        {
+            packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+            versionName = packageInfo.versionName;
+        }
+        catch (PackageManager.NameNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        return versionName;
     }
 }

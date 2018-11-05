@@ -1,7 +1,5 @@
 package com.icheero.app.application;
 
-import com.alibaba.android.arouter.launcher.ARouter;
-import com.icheero.app.BuildConfig;
 import com.icheero.common.base.BaseApplication;
 import com.icheero.common.base.CheeroNative;
 import com.icheero.common.util.Log;
@@ -18,12 +16,6 @@ public class MainApplication extends BaseApplication
     {
         super.onCreate();
         CheeroNative.nativeSetTraceMode(TRACE_MODE_ON_SCREEN);
-        if (BuildConfig.DEBUG)
-        {
-            ARouter.openDebug();
-            ARouter.openLog();
-        }
-        ARouter.init(this);
     }
 
     @Override
