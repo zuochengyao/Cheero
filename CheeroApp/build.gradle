@@ -36,7 +36,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation versions.deps.butterknife.runtime
     annotationProcessor versions.deps.butterknife.compiler
-    implementation project(':CheeroSDK')
+    implementation project(':CheeroCommon')
     if (isModule.toBoolean()) {
         implementation project(':CheeroFaceID')
     }

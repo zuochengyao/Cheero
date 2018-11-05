@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.icheero.common.manager.ViewManager;
 
+
 public class BaseActivity extends AppCompatActivity
 {
     // region Activity's Lifecycle
