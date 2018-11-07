@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.icheero.app.R;
-import com.icheero.common.base.BaseActivity;
-import com.icheero.common.util.FileUtils;
-import com.icheero.sdk.interaction.media.ICamera;
+import com.icheero.sdk.base.BaseActivity;
+import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.ICamera;
 
 import java.io.File;
 

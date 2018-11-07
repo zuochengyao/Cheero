@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".activity.FaceIDActivity">
 
-    <com.icheero.common.widget.NoScrollViewPager
+    <com.icheero.sdk.widget.NoScrollViewPager
         android:id="@+id/container_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"

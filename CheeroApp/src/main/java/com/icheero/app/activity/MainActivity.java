@@ -30,7 +30,7 @@ import com.icheero.app.activity.ui.SectionsActivity;
 import com.icheero.app.activity.ui.StyledActivity;
 import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
-import com.icheero.common.base.BaseActivity;
+import com.icheero.sdk.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

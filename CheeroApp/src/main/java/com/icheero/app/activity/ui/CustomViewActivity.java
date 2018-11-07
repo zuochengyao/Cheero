@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import com.icheero.app.R;
 import com.icheero.app.custom.view.BullEyeView;
-import com.icheero.common.base.BaseActivity;
+import com.icheero.sdk.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;

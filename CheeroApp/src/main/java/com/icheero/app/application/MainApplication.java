@@ -1,8 +1,8 @@
 package com.icheero.app.application;
 
-import com.icheero.common.base.BaseApplication;
-import com.icheero.common.base.CheeroNative;
-import com.icheero.common.util.Log;
+import com.icheero.sdk.base.BaseApplication;
+import com.icheero.sdk.base.CheeroNative;
+import com.icheero.sdk.util.Log;
 
 
 public class MainApplication extends BaseApplication

@@ -10,10 +10,12 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.icheero.app.R;
-import com.icheero.common.manager.PluginManager;
+import com.icheero.sdk.manager.AndFixPatchManager;
+import com.icheero.sdk.manager.PluginManager;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -31,6 +33,10 @@ public class LoadPluginActivity extends Activity
     ImageView ivVolumeBigger;
     @BindView(R.id.image_volume_smaller)
     ImageView ivVolumeSmaller;
+    @BindView(R.id.create_bug)
+    Button btCreateBug;
+    @BindView(R.id.fix_bug)
+    Button btFixBug;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,7 +52,7 @@ public class LoadPluginActivity extends Activity
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.image_volume_bigger, R.id.image_volume_smaller})
+    @OnClick({R.id.image_volume_bigger, R.id.image_volume_smaller, R.id.create_bug, R.id.fix_bug})
     public void OnClickEvent(View v)
     {
         switch (v.getId())
@@ -95,7 +101,15 @@ public class LoadPluginActivity extends Activity
                         e.printStackTrace();
                     }
                 }
-                else PluginManager.loadPlugin(this); // 加载插件
+                else
+                    PluginManager.loadPlugin(this); // 加载插件
+                break;
+            case R.id.create_bug:
+                com.icheero.sdk.util.Log.print();
+                break;
+            case R.id.fix_bug:
+                String path = AndFixPatchManager.getInstance().getPatchDir().concat("cheero").concat(AndFixPatchManager.PATCH_EXTENSION);
+                AndFixPatchManager.getInstance().addPatch(path);
                 break;
         }
     }

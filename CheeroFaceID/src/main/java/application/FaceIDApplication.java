@@ -1,6 +1,6 @@
 package application;
 
-import com.icheero.common.base.BaseApplication;
+import com.icheero.sdk.base.BaseApplication;
 
 public class FaceIDApplication extends BaseApplication
 {

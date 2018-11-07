@@ -9,7 +9,7 @@
 #include <android/log.h>
 #include "service_engine.h"
 
-#define JNI_PACKAGE_NAME "com/icheero/common"
+#define JNI_PACKAGE_NAME "com/icheero/sdk"
 #define TAG "Cheero"
 
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, TAG, __VA_ARGS__)

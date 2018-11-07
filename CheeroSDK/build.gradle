@@ -41,13 +41,12 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
+    api fileTree(include: ['*.jar'], dir: 'libs')
     // Support libraries
     api versions.deps.support.design
     api versions.deps.support.v4
     api versions.deps.support.v7
     api versions.deps.support.constraint
-
     // RxJava and retrofit
     api versions.deps.rxjava2
     api versions.deps.rxandroid
@@ -55,14 +54,11 @@ dependencies {
     api versions.deps.retrofit.adapter
     api versions.deps.retrofit.converter_gson
     api versions.deps.retrofit.gson
-
     // Okhttp
     api versions.deps.okio
     api versions.deps.okhttp
-
     // Alibaba ARouter
     api versions.deps.arouter_api
-
     // Alibaba Andfix
     api versions.deps.andfix
     // other

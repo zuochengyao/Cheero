@@ -5,10 +5,10 @@ import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.icheero.common.base.BaseActivity;
-import com.icheero.common.base.BaseFragment;
-import com.icheero.common.manager.ViewManager;
-import com.icheero.common.widget.NoScrollViewPager;
+import com.icheero.sdk.base.BaseActivity;
+import com.icheero.sdk.base.BaseFragment;
+import com.icheero.sdk.manager.ViewManager;
+import com.icheero.sdk.widget.NoScrollViewPager;
 import com.icheero.faceid.R;
 import com.icheero.faceid.adapter.FragmentAdapter;
 import com.icheero.faceid.fragment.IDCardFragment;

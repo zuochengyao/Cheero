@@ -12,10 +12,22 @@ android {
         versionName versions.build.name
     }
 
+    signingConfigs {
+        // 打包签名
+        staging.initWith(signingConfigs.debug)
+        release {
+            storeFile file(project.rootDir.absolutePath + '/cheero_key.jks')
+            storePassword '123456'
+            keyAlias 'icheero'
+            keyPassword '654321'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         debug {
             minifyEnabled false

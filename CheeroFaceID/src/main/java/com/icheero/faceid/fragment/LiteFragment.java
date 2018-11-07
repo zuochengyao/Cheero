@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.icheero.common.base.BaseFragment;
+import com.icheero.sdk.base.BaseFragment;
 import com.icheero.faceid.R;
 
 /**
