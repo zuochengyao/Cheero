@@ -1,4 +1,4 @@
-package com.icheero.sdk.network.retrofit;
+package com.icheero.sdk.core.network.retrofit;
 
 import com.icheero.sdk.util.Log;
 

@@ -23,12 +23,12 @@ static const char *classPathName = JNI_PACKAGE_NAME"/base/CheeroNative";
 extern "C" {
 #endif
 
-JNIEXPORT void JNICALL native_setTraceMode(JNIEnv *, jobject, jint traceMode)
+JNIEXPORT void JNICALL native_SetTraceMode(JNIEnv *, jobject, jint traceMode)
 {
     service_set_trace_mode(traceMode);
 }
 
-JNIEXPORT void JNICALL native_trace(JNIEnv *env, jobject, jstring tag, jstring log, jint prio)
+JNIEXPORT void JNICALL native_Trace(JNIEnv *env, jobject, jstring tag, jstring log, jint prio)
 {
     const char *_tag = env->GetStringUTFChars(tag, NULL);
     const char *_log = env->GetStringUTFChars(log, NULL);
@@ -38,8 +38,8 @@ JNIEXPORT void JNICALL native_trace(JNIEnv *env, jobject, jstring tag, jstring l
 }
 
 static JNINativeMethod methods[] = {
-    {"nativeSetTraceMode", "(I)V", (void *) native_setTraceMode},
-    {"nativeTrace", "(Ljava/lang/String;Ljava/lang/String;I)V", (void *) native_trace}
+    {"nativeSetTraceMode", "(I)V", (void *) native_SetTraceMode},
+    {"nativeTrace", "(Ljava/lang/String;Ljava/lang/String;I)V", (void *) native_Trace}
 };
 
 static int registerNativeMethods(JNIEnv *env)

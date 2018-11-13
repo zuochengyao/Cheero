@@ -1,4 +1,4 @@
-package com.icheero.sdk.network;
+package com.icheero.sdk.core.network;
 
 import java.io.IOException;
 

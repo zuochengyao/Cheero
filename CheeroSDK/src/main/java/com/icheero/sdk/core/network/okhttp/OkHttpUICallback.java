@@ -1,4 +1,4 @@
-package com.icheero.sdk.network.okhttp;
+package com.icheero.sdk.core.network.okhttp;
 
 import java.io.IOException;
 

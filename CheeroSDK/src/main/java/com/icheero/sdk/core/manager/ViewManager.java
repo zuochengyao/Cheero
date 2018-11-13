@@ -1,4 +1,4 @@
-package com.icheero.sdk.manager;
+package com.icheero.sdk.core.manager;
 
 import android.app.Activity;
 

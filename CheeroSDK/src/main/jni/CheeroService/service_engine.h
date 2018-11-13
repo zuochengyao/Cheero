@@ -5,6 +5,9 @@
 #ifndef CHEERO_SERVICE_ENGINE_H
 #define CHEERO_SERVICE_ENGINE_H
 
+#include "os_porting.h"
+#include "trace.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -17,11 +20,7 @@ extern "C" {
 #endif
 
 CHEERO_DLL_IMPORT void service_set_trace_mode(int mode);
-#if defined(ANDROID)
 CHEERO_DLL_IMPORT void service_trace(const char *tag, const char *log, int prio);
-#else
-CHEERO_DLL_IMPORT void service_trace(const char *log);
-#endif
 
 #ifdef __cplusplus
 }

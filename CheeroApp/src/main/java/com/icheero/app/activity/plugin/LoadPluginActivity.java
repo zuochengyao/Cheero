@@ -14,8 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.icheero.app.R;
-import com.icheero.sdk.manager.AndFixPatchManager;
-import com.icheero.sdk.manager.PluginManager;
+import com.icheero.sdk.core.manager.AndFixPatchManager;
+import com.icheero.sdk.core.manager.PluginManager;
 
 import java.io.File;
 import java.lang.reflect.Field;

@@ -1,4 +1,4 @@
-package com.icheero.sdk.database;
+package com.icheero.sdk.core.database;
 
 public class DBDefine
 {

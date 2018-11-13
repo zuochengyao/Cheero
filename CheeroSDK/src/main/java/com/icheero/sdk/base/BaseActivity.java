@@ -5,7 +5,7 @@ import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.icheero.sdk.manager.ViewManager;
+import com.icheero.sdk.core.manager.ViewManager;
 
 
 public class BaseActivity extends AppCompatActivity

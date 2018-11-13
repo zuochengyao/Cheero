@@ -5,23 +5,29 @@ cmake_minimum_required(VERSION 3.4.1)
 project(cheero)
 
 set(_VERSION 1.0.0)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_VERBOSE_MAKEFILE on)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # 设置生成的so动态库最后输出的路径
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../jniLibs/${ANDROID_ABI})
 
 # 向当前目录添加头文件
-include_directories(./Util/inc)
-include_directories(./Service)
+include_directories(CheeroService)
+include_directories(CheeroOS/inc)
+include_directories(Util/inc)
 #当前cmakelists.txt所在目录的所有.c .cpp源文件
 aux_source_directory(. ROOT_LIST)
-aux_source_directory(./Service/api SERVICE_SRC_LIST)
-aux_source_directory(./Util/src UTIL_SRC_LIST)
+aux_source_directory(CheeroService/api SERVICE_SRC_LIST)
+aux_source_directory(CheeroOS/src OS_SRC_LIST)
+aux_source_directory(Util/src UTIL_SRC_LIST)
 
 #增加其他目录的源文件到集合变量中
 list(APPEND ROOT_LIST
-    Native/service_jni.cpp
+    CheeroNative/service_jni.cpp
     ${SERVICE_SRC_LIST}
-    ${UTIL_SRC_LIST})
+    ${UTIL_SRC_LIST}
+    ${OS_SRC_LIST})
 
 # 生成so动态库
 add_library( # 设置so文件名称.

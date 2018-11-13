@@ -7,7 +7,7 @@ import android.util.Log;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.base.BaseFragment;
-import com.icheero.sdk.manager.ViewManager;
+import com.icheero.sdk.core.manager.ViewManager;
 import com.icheero.sdk.widget.NoScrollViewPager;
 import com.icheero.faceid.R;
 import com.icheero.faceid.adapter.FragmentAdapter;

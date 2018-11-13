@@ -5,21 +5,21 @@
 #ifndef CHEERO_TRACE_H
 #define CHEERO_TRACE_H
 
-#if defined(_WIN32) || defined(_WIN32_WCE)
-#define TRACE_FILE_NAME "d:\\CheeroTrace.txt"
-#elif defined(__linux) || defined(ANDROID)
-#define TRACE_FILE_NAME "/sdcard/Cheero/logs/Traces"
-#elif defined(__APPLE__)
-#define TRACE_FILE_NAME "/Users/Shared/CheeroTrace"
-#elif defined(BREW)
-#define TRACE_FILE_NAME "fs:/shared/CheeroTrace"
-#endif
-
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <string.h>
+#include <android/log.h>
+#include "os_porting.h"
 
 #ifdef __cplusplus
 extern "C"
 {
+#endif
+
+
+#if defined(__linux) || defined(ANDROID)
+#define TRACE_FILE_NAME "/sdcard/Cheero/logs/Traces"
 #endif
 
 typedef enum
@@ -30,7 +30,7 @@ typedef enum
 } TRACE_MODE;
 
 void set_trace_mode(int mode);
-
+void set_trace_filepath(char *tracePath);
 void TRACE(const char *fi, int level, const char *chfr, ...);
 
 #ifdef __cplusplus

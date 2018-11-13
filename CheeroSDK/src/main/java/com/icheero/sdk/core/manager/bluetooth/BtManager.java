@@ -1,4 +1,4 @@
-package com.icheero.sdk.manager.bluetooth;
+package com.icheero.sdk.core.manager.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothSocket;

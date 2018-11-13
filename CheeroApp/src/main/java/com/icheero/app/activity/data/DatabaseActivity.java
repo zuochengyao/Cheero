@@ -11,8 +11,8 @@ import android.widget.SimpleCursorAdapter;
 
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
-import com.icheero.sdk.database.DBDefine;
-import com.icheero.sdk.database.DBHelper;
+import com.icheero.sdk.core.database.DBDefine;
+import com.icheero.sdk.core.database.DBHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -2,14 +2,10 @@
 // Created by 左程耀 on 2018/7/4.
 //
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <string.h>
-#include <android/log.h>
-
 #include "trace.h"
 
+FILE *g_trace_file = NULL;
+char *g_trace_file_path = NULL;
 #ifdef TRACE_ON
     int tMode = TRACE_ON_SCREEN;
 #else
@@ -20,6 +16,16 @@ void set_trace_mode(int mode)
 {
     tMode = mode;
     TRACE(__FILE__, __LINE__, "日志模式设置：%u \n", tMode);
+}
+
+void set_trace_filepath(char *tracePath)
+{
+    if (tracePath)
+    {
+        g_trace_file_path = (char *) memMalloc(strlen(tracePath) + 1);
+        memset(g_trace_file_path, 0, strlen(tracePath));
+        sprintf(g_trace_file_path, "%s", tracePath);
+    }
 }
 
 void TRACE(const char *fi, int level, const char *chfr, ...)

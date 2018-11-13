@@ -1,4 +1,4 @@
-package com.icheero.sdk.network.okhttp;
+package com.icheero.sdk.core.network.okhttp;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -21,7 +21,7 @@ import okhttp3.Response;
 public class OkHttpManager
 {
     private static final Class<OkHttpManager> TAG = OkHttpManager.class;
-    private static final MediaType JSON_TYPE = MediaType.parse("application/json; charset=utf-8");
+    private static final MediaType MEDIATYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
     private static volatile OkHttpManager mInstance;
     private Handler mOkHttpHandler;
