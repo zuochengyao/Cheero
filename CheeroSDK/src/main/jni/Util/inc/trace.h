@@ -19,7 +19,7 @@ extern "C"
 
 
 #if defined(__linux) || defined(ANDROID)
-#define TRACE_FILE_NAME "/sdcard/Cheero/logs/Traces"
+#define TRACE_FILE_NAME "/sdcard/Cheero/logs/"
 #endif
 
 typedef enum
@@ -31,7 +31,7 @@ typedef enum
 
 void set_trace_mode(int mode);
 void set_trace_filepath(char *tracePath);
-void TRACE(const char *fi, int level, const char *chfr, ...);
+void TRACE(const char *tag, int level, const char *log, ...);
 
 #ifdef __cplusplus
 }

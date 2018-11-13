@@ -20,15 +20,13 @@ void set_trace_mode(int mode)
 
 void set_trace_filepath(char *tracePath)
 {
-    if (tracePath)
-    {
-        g_trace_file_path = (char *) memMalloc(strlen(tracePath) + 1);
-        memset(g_trace_file_path, 0, strlen(tracePath));
-        sprintf(g_trace_file_path, "%s", tracePath);
-    }
+    char *path = tracePath ? tracePath : TRACE_FILE_NAME;
+    g_trace_file_path = (char *) memMalloc(strlen(path) + 1);
+    memset(g_trace_file_path, 0, strlen(path));
+    sprintf(g_trace_file_path, "%s", path);
 }
 
-void TRACE(const char *fi, int level, const char *chfr, ...)
+void TRACE(const char *tag, int level, const char *log, ...)
 {
     if (tMode == TRACE_ON_SCREEN)
     {
@@ -50,12 +48,46 @@ void TRACE(const char *fi, int level, const char *chfr, ...)
                 break;
         }
         va_list ap;
-        va_start(ap, chfr);
-        __android_log_vprint(prio, fi, chfr, ap);
+        va_start(ap, log);
+        __android_log_vprint(prio, tag, log, ap);
         va_end(ap);
     }
     else if (tMode == TRACE_ON_FILE)
     {
-
+        if (g_trace_file == NULL)
+        {
+            char filename[128];
+            char* time = time_string(0);
+            sprintf(filename, "%s%s", TRACE_FILE_NAME, time);
+            g_trace_file = fopen(filename, "a+");
+            memFree(time);
+        }
+        {
+            va_list ap;
+            struct timeval tv;
+            va_start(ap, log);
+            gettimeofday(&tv, NULL);
+            if (g_trace_file == NULL)
+                return;
+            else
+            {
+                if (tv.tv_usec < 100000)
+                {
+                    char uSecond[7] = {0};
+                    sprintf(uSecond, "%6d", (int) tv.tv_usec);
+                    for (int i = 0; i < 6; ++i)
+                    {
+                        if (uSecond[i] == ' ')
+                            uSecond[i] = '0';
+                    }
+                    fprintf(g_trace_file, "[%d.%s]<%s: %i> ", (int)tv.tv_sec, uSecond, tag, level);
+                }
+                else
+                    fprintf(g_trace_file, "[%d.%s]<%s: %i> ", (int)tv.tv_sec, (char *) tv.tv_usec, tag, level);
+            }
+            vfprintf(g_trace_file, log, ap);
+            fflush(g_trace_file);
+            va_end(ap);
+        }
     }
 }

@@ -44,10 +44,10 @@ public class Log
         CheeroNative.nativeSetTraceMode(mode);
     }
 
-    private static void trace(Class<?> cls, String log, int level)
+    private static void trace(Class<?> cls, String log, int prio)
     {
         log += "\n";
-        CheeroNative.nativeTrace(cls.getName(), log, level);
+        CheeroNative.nativeTrace(cls.getName(), log, prio);
     }
 
     public static void print()

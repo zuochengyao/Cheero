@@ -20,6 +20,7 @@ extern "C" {
 #endif
 
 CHEERO_DLL_IMPORT void service_set_trace_mode(int mode);
+CHEERO_DLL_IMPORT void service_set_trace_filepath(char *path);
 CHEERO_DLL_IMPORT void service_trace(const char *tag, const char *log, int prio);
 
 #ifdef __cplusplus

@@ -10,7 +10,6 @@ import android.transition.Slide;
 import android.view.View;
 import android.widget.Button;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.icheero.app.R;
 import com.icheero.app.activity.data.CustomSettingActivity;
 import com.icheero.app.activity.data.DatabaseActivity;
@@ -31,6 +30,7 @@ import com.icheero.app.activity.ui.StyledActivity;
 import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
 import com.icheero.sdk.base.BaseActivity;
+import com.icheero.sdk.util.Log;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -231,7 +231,8 @@ public class MainActivity extends BaseActivity
         {
             case R.id.to_faceid_activity:
                 // startActivity(new Intent(this, FaceIDActivity.class));
-                ARouter.getInstance().build("/faceid/index").navigation();
+                // ARouter.getInstance().build("/faceid/index").navigation();
+                Log.e(MainActivity.class, "test");
                 break;
         }
     }
