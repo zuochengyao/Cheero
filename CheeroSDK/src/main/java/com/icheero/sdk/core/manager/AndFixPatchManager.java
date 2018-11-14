@@ -1,8 +1,7 @@
 package com.icheero.sdk.core.manager;
 
-import android.content.Context;
-
 import com.alipay.euler.andfix.patch.PatchManager;
+import com.icheero.sdk.base.BaseApplication;
 import com.icheero.sdk.util.Common;
 
 import java.io.File;
@@ -27,6 +26,13 @@ public class AndFixPatchManager
 
     private AndFixPatchManager()
     {
+        mPatchManager = new PatchManager(BaseApplication.getAppInstance());
+        mPatchManager.init(Common.getVersionName());
+        mPatchManager.loadPatch();
+        mPatchDir = BaseApplication.getAppInstance().getExternalCacheDir().getAbsolutePath() + "/apatch/";
+        File file = new File(mPatchDir);
+        if (!file.exists())
+            file.mkdir();
     }
 
     public static AndFixPatchManager getInstance()
@@ -39,22 +45,6 @@ public class AndFixPatchManager
             }
         }
         return mInstance;
-    }
-
-    /**
-     * 初始化AndFix中的PatchManager
-     */
-    public void init(Context context)
-    {
-        mPatchManager = new PatchManager(context.getApplicationContext());
-        mPatchManager.init(Common.getVersionName(context));
-        mPatchManager.loadPatch();
-        mPatchDir = context.getExternalCacheDir().getAbsolutePath() + "/apatch/";
-        File file = new File(mPatchDir);
-        if (!file.exists())
-        {
-            file.mkdir();
-        }
     }
 
     public void addPatch(String path)

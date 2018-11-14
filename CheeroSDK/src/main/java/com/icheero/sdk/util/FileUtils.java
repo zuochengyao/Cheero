@@ -14,14 +14,7 @@ import java.io.FileNotFoundException;
 @SuppressWarnings("unused")
 public class FileUtils
 {
-    /**
-     * 获取文件名
-     */
-    public static String getFileName(String url)
-    {
-        int lastSeparatorIndex = url.lastIndexOf("/");
-        return (lastSeparatorIndex < 0) ? url : url.substring(lastSeparatorIndex + 1, url.length());
-    }
+
 
     public static Bitmap convertToBitmap(File file)
     {

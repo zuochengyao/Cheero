@@ -1,14 +1,14 @@
 package com.icheero.app.activity.data;
 
-import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
 
 import com.icheero.app.R;
+import com.icheero.sdk.base.BaseActivity;
 
-public class CustomSettingActivity extends Activity
+public class CustomSettingActivity extends BaseActivity
 {
 
     @Override

@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.support.annotation.StringRes;
 import android.widget.Toast;
 
+import com.icheero.sdk.base.BaseApplication;
+
 /**
  * Created by 左程耀 on 2018/2/26.
  */
@@ -29,14 +31,14 @@ public class Common
         Toast.makeText(context, resID, duration).show();
     }
 
-    public static String getVersionCode(Context context)
+    public static String getVersionCode()
     {
-        PackageManager packageManager = context.getPackageManager();
+        PackageManager packageManager = BaseApplication.getAppInstance().getPackageManager();
         PackageInfo packageInfo;
         String versionCode = "1";
         try
         {
-            packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+            packageInfo = packageManager.getPackageInfo(BaseApplication.getAppInstance().getPackageName(), 0);
             versionCode = packageInfo.getLongVersionCode() + "";
         }
         catch (PackageManager.NameNotFoundException e)
@@ -46,14 +48,14 @@ public class Common
         return versionCode;
     }
 
-    public static String getVersionName(Context context)
+    public static String getVersionName()
     {
-        PackageManager packageManager = context.getPackageManager();
+        PackageManager packageManager = BaseApplication.getAppInstance().getPackageManager();
         PackageInfo packageInfo;
         String versionName = "1.0.0";
         try
         {
-            packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+            packageInfo = packageManager.getPackageInfo(BaseApplication.getAppInstance().getPackageName(), 0);
             versionName = packageInfo.versionName;
         }
         catch (PackageManager.NameNotFoundException e)
@@ -61,6 +63,15 @@ public class Common
             e.printStackTrace();
         }
         return versionName;
+    }
+
+    /**
+     * 根据url地址 获取文件名
+     */
+    public static String getFileName(String url)
+    {
+        int lastSeparatorIndex = url.lastIndexOf("/");
+        return (lastSeparatorIndex < 0) ? url : url.substring(lastSeparatorIndex + 1, url.length());
     }
 
 }

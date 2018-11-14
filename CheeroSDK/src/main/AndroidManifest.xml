@@ -2,9 +2,15 @@
 <manifest package="com.icheero.sdk"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application>
-        <activity android:name="com.icheero.sdk.base.BaseActivity">
-        </activity>
+        <activity android:name="com.icheero.sdk.base.BaseActivity" />
     </application>
 
 </manifest>

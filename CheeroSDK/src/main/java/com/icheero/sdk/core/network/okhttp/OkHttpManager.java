@@ -3,7 +3,7 @@ package com.icheero.sdk.core.network.okhttp;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.Common;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,7 +48,7 @@ public class OkHttpManager
 
     public void downloadAsync(final String url, final String destFileDir, final OkHttpUICallback callback) throws IOException
     {
-        File file = new File(destFileDir, FileUtils.getFileName(url));
+        File file = new File(destFileDir, Common.getFileName(url));
         if (!file.exists())
             file.createNewFile();
         downloadAsync(url, file, callback);

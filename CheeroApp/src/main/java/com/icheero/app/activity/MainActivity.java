@@ -1,5 +1,6 @@
 package com.icheero.app.activity;
 
+import android.Manifest;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
@@ -91,6 +92,13 @@ public class MainActivity extends BaseActivity
         slide.setDuration(700);
         getWindow().setExitTransition(slide);
         ButterKnife.bind(this);
+        mPermissionManager.permissionRequestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.SEND_SMS);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
     }
 
     @OnClick({R.id.to_custom_setting_activity, R.id.to_system_setting_activity, R.id.to_database_activity, R.id.to_view_model_activity})

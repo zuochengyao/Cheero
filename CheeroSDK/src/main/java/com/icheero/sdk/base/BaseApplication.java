@@ -8,10 +8,13 @@ import com.icheero.sdk.core.manager.AndFixPatchManager;
 
 public class BaseApplication extends Application
 {
+    private static BaseApplication mInstance;
+
     @Override
     public void onCreate()
     {
         super.onCreate();
+        mInstance = this;
         // 初始化ARouter
         if (BuildConfig.DEBUG)
         {
@@ -20,7 +23,11 @@ public class BaseApplication extends Application
         }
         ARouter.init(this);
         // 初始化AndFix
-        AndFixPatchManager.getInstance().init(this);
+        AndFixPatchManager.getInstance();
     }
 
+    public static BaseApplication getAppInstance()
+    {
+        return mInstance;
+    }
 }
