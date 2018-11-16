@@ -47,12 +47,6 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
     // endregion
 
     // region 权限管理相关
-
-    protected void permissionRequest()
-    {
-
-    }
-
     /**
      * 权限申请回调
      * @param permission 权限名称

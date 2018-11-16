@@ -14,7 +14,7 @@ void service_set_trace_filepath(char *path)
     set_trace_filepath(path);
 }
 
-void service_trace(const char *tag, const char *log, int prio)
+void service_trace(const char *tag, int prio, const char *log)
 {
     TRACE(tag, prio, log);
 }

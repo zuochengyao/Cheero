@@ -31,6 +31,7 @@ import com.icheero.app.activity.ui.StyledActivity;
 import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
 import com.icheero.sdk.base.BaseActivity;
+import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.util.Log;
 
 import butterknife.BindView;
@@ -92,7 +93,9 @@ public class MainActivity extends BaseActivity
         slide.setDuration(700);
         getWindow().setExitTransition(slide);
         ButterKnife.bind(this);
-        mPermissionManager.permissionRequestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.SEND_SMS);
+        IOManager.getInstance().createRootFolder();
+        if (!mPermissionManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            mPermissionManager.permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     @Override
@@ -243,5 +246,13 @@ public class MainActivity extends BaseActivity
                 Log.e(MainActivity.class, "test");
                 break;
         }
+    }
+
+    @Override
+    public void onPermissionRequest(boolean isGranted, String permission)
+    {
+        super.onPermissionRequest(isGranted, permission);
+        if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            IOManager.getInstance().createRootFolder();
     }
 }

@@ -32,7 +32,7 @@ JNIEXPORT void JNICALL native_Trace(JNIEnv *env, jobject, jstring tag, jstring l
 {
     const char *_tag = env->GetStringUTFChars(tag, NULL);
     const char *_log = env->GetStringUTFChars(log, NULL);
-    service_trace(_tag, _log, prio);
+    service_trace(_tag, prio, _log);
     env->ReleaseStringUTFChars(tag, _tag);
     env->ReleaseStringUTFChars(log, _log);
 }

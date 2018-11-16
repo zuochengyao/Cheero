@@ -38,18 +38,18 @@ void TRACE(const char *tag, int level, const char *log, ...)
                 prio = ANDROID_LOG_INFO;
                 break;
             case 1:
-                prio = ANDROID_LOG_INFO;
+                prio = ANDROID_LOG_ERROR;
                 break;
             case 2:
-                prio = ANDROID_LOG_INFO;
+                prio = ANDROID_LOG_DEBUG;
                 break;
             case 3:
-                prio = ANDROID_LOG_INFO;
+                prio = ANDROID_LOG_WARN;
                 break;
         }
         va_list ap;
         va_start(ap, log);
-        __android_log_vprint(prio, tag, log, ap);
+        __android_log_vprint(prio, "Cheero", log, ap);
         va_end(ap);
     }
     else if (tMode == TRACE_ON_FILE)

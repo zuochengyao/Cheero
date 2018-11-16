@@ -36,7 +36,7 @@ public class PermissionManager
      * 检测单个权限是否已授权
      * @param permission 权限名称
      */
-    public boolean checkAppPermission(final String permission)
+    public boolean checkPermission(final String permission)
     {
         return isGranted(permission);
     }
@@ -63,8 +63,8 @@ public class PermissionManager
      */
     public String[] getAppPermissions()
     {
-        PackageManager packageManager = BaseApplication.getAppInstance().getPackageManager();
-        String packageName = BaseApplication.getAppInstance().getPackageName();
+        PackageManager packageManager = mActivity.getPackageManager();
+        String packageName = mActivity.getPackageName();
         String[] permissions = null;
         try
         {

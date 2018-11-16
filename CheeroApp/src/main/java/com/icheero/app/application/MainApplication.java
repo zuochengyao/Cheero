@@ -10,7 +10,6 @@ public class MainApplication extends BaseApplication
     public void onCreate()
     {
         super.onCreate();
-        Log.traceMode(Log.TRACE_MODE_ON_SCREEN);
     }
 
     @Override
