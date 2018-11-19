@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.AndFixPatchManager;
 import com.icheero.plugins.R;
+import com.icheero.sdk.core.manager.IOManager;
 
 public class MainActivity extends BaseActivity
 {
@@ -48,7 +49,7 @@ public class MainActivity extends BaseActivity
 
     private void fixBug()
     {
-        String path = AndFixPatchManager.getInstance().getPatchDir().concat("cheero").concat(AndFixPatchManager.PATCH_EXTENSION);
+        String path = IOManager.DIR_PATH_CHEERO_PATCHES.concat("cheero").concat(AndFixPatchManager.PATCH_EXTENSION);
         AndFixPatchManager.getInstance().addPatch(path);
     }
 }

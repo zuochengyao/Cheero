@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.icheero.app.R;
 import com.icheero.app.activity.data.CustomSettingActivity;
@@ -32,6 +33,7 @@ import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.IOManager;
+import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.Log;
 
 import butterknife.BindView;
@@ -253,6 +255,11 @@ public class MainActivity extends BaseActivity
     {
         super.onPermissionRequest(isGranted, permission);
         if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            IOManager.getInstance().createRootFolder();
+        {
+            if (isGranted)
+                IOManager.getInstance().createRootFolder();
+            else
+                Common.toast(this, "请打开读写权限！", Toast.LENGTH_SHORT);
+        }
     }
 }

@@ -19,7 +19,7 @@ extern "C"
 
 
 #if defined(__linux) || defined(ANDROID)
-#define TRACE_FILE_NAME "/sdcard/Cheero/logs/"
+    #define TRACE_FILE_NAME "/sdcard/Cheero/logs/"
 #endif
 
 typedef enum

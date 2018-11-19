@@ -58,7 +58,7 @@ void TRACE(const char *tag, int level, const char *log, ...)
         {
             char filename[128];
             char* time = time_string(0);
-            sprintf(filename, "%s%s", TRACE_FILE_NAME, time);
+            sprintf(filename, "%s%s.%s", TRACE_FILE_NAME, time, "txt");
             g_trace_file = fopen(filename, "a+");
             memFree(time);
         }
@@ -67,9 +67,7 @@ void TRACE(const char *tag, int level, const char *log, ...)
             struct timeval tv;
             va_start(ap, log);
             gettimeofday(&tv, NULL);
-            if (g_trace_file == NULL)
-                return;
-            else
+            if (g_trace_file)
             {
                 if (tv.tv_usec < 100000)
                 {
@@ -83,7 +81,7 @@ void TRACE(const char *tag, int level, const char *log, ...)
                     fprintf(g_trace_file, "[%d.%s]<%s: %i> ", (int)tv.tv_sec, uSecond, tag, level);
                 }
                 else
-                    fprintf(g_trace_file, "[%d.%s]<%s: %i> ", (int)tv.tv_sec, (char *) tv.tv_usec, tag, level);
+                    fprintf(g_trace_file, "[%d.%d]<%s: %i> ", (int)tv.tv_sec, (int) tv.tv_usec, tag, level);
             }
             vfprintf(g_trace_file, log, ap);
             fflush(g_trace_file);

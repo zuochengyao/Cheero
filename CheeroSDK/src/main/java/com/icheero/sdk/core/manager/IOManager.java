@@ -16,11 +16,10 @@ public class IOManager
     private static final Class TAG = IOManager.class;
 
     public static final String DIR_PATH_BASE = Environment.getExternalStorageDirectory().getPath();
-    public static final String DIR_PATH_DATA = Environment.getDataDirectory().getPath();
-    public static final String DIR_PATH_CACHE = Environment.getDownloadCacheDirectory().getPath();
     public static final String DIR_PATH_CHEERO_ROOT = DIR_PATH_BASE + "/Cheero";
-    public static final String DIR_PATH_CHEERO_IMAGES = DIR_PATH_CHEERO_ROOT + "/images";
-    public static final String DIR_PATH_CHEERO_LOGS = DIR_PATH_CHEERO_ROOT + "/logs";
+    public static final String DIR_PATH_CHEERO_IMAGES = DIR_PATH_CHEERO_ROOT + "/images/";
+    public static final String DIR_PATH_CHEERO_LOGS = DIR_PATH_CHEERO_ROOT + "/logs/";
+    public static final String DIR_PATH_CHEERO_PATCHES = DIR_PATH_CHEERO_ROOT + "/patches/";
 
     private Context mContext;
     private ThreadPoolExecutor mThreadPool;
@@ -49,11 +48,13 @@ public class IOManager
 
     public void createRootFolder()
     {
-        mThreadPool.execute(new Runnable() {
-            @Override
-            public void run()
+        mThreadPool.execute(() -> {
+            if ((FileUtils.createDir(DIR_PATH_CHEERO_ROOT) || FileUtils.exists(DIR_PATH_CHEERO_ROOT)))
             {
-                Log.i(TAG, "Create root folder " + (FileUtils.createDir(DIR_PATH_CHEERO_ROOT) || FileUtils.exists(DIR_PATH_CHEERO_ROOT)));
+                Log.i(TAG, "Create folder root: true");
+                Log.i(TAG, "Create folder images: " + (FileUtils.createDir(DIR_PATH_CHEERO_IMAGES) || FileUtils.exists(DIR_PATH_CHEERO_IMAGES)));
+                Log.i(TAG, "Create folder logs: " + (FileUtils.createDir(DIR_PATH_CHEERO_LOGS) || FileUtils.exists(DIR_PATH_CHEERO_LOGS)));
+                Log.i(TAG, "Create folder patches: " + (FileUtils.createDir(DIR_PATH_CHEERO_PATCHES) || FileUtils.exists(DIR_PATH_CHEERO_PATCHES)));
             }
         });
     }

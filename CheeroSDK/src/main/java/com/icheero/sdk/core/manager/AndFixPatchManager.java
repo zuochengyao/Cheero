@@ -4,8 +4,6 @@ import com.alipay.euler.andfix.patch.PatchManager;
 import com.icheero.sdk.base.BaseApplication;
 import com.icheero.sdk.util.Common;
 
-import java.io.File;
-
 /**
  * @author 左程耀 2018年11月05日
  *
@@ -14,25 +12,15 @@ import java.io.File;
 public class AndFixPatchManager
 {
     public static final String PATCH_EXTENSION = ".apatch";
-    private String mPatchDir; // patch文件路径
 
     private static volatile AndFixPatchManager mInstance;
     private PatchManager mPatchManager;
-
-    public String getPatchDir()
-    {
-        return mPatchDir;
-    }
 
     private AndFixPatchManager()
     {
         mPatchManager = new PatchManager(BaseApplication.getAppInstance());
         mPatchManager.init(Common.getVersionName());
         mPatchManager.loadPatch();
-        mPatchDir = BaseApplication.getAppInstance().getExternalCacheDir().getAbsolutePath() + "/apatch/";
-        File file = new File(mPatchDir);
-        if (!file.exists())
-            file.mkdir();
     }
 
     public static AndFixPatchManager getInstance()

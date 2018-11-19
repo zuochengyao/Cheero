@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.icheero.app.R;
 import com.icheero.sdk.core.manager.AndFixPatchManager;
+import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.core.manager.PluginManager;
 
 import java.io.File;
@@ -108,7 +109,7 @@ public class LoadPluginActivity extends Activity
                 com.icheero.sdk.util.Log.print();
                 break;
             case R.id.fix_bug:
-                String path = AndFixPatchManager.getInstance().getPatchDir().concat("cheero").concat(AndFixPatchManager.PATCH_EXTENSION);
+                String path = IOManager.DIR_PATH_CHEERO_PATCHES.concat("cheero").concat(AndFixPatchManager.PATCH_EXTENSION);
                 AndFixPatchManager.getInstance().addPatch(path);
                 break;
         }
@@ -119,8 +120,10 @@ public class LoadPluginActivity extends Activity
         AnimationDrawable animationDrawable = (AnimationDrawable) v.getBackground();
         if (animationDrawable != null)
         {
-            if (animationDrawable.isRunning()) animationDrawable.stop();
-            else animationDrawable.start();
+            if (animationDrawable.isRunning())
+                animationDrawable.stop();
+            else
+                animationDrawable.start();
         }
     }
 }

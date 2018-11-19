@@ -15,8 +15,6 @@ import java.io.FileNotFoundException;
 @SuppressWarnings("unused")
 public class FileUtils
 {
-
-
     public static Bitmap convertToBitmap(File file)
     {
         Bitmap bitmap = null;

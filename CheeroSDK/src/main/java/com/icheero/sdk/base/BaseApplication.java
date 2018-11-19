@@ -17,7 +17,7 @@ public class BaseApplication extends Application
     {
         super.onCreate();
         mInstance = this;
-        Log.traceMode(Log.TRACE_MODE_ON_SCREEN);
+        Log.traceMode(Log.TRACE_MODE_ON_FILE);
         // 初始化ARouter
         if (BuildConfig.DEBUG)
         {
