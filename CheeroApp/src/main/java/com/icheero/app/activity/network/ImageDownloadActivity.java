@@ -1,13 +1,21 @@
 package com.icheero.app.activity.network;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.icheero.app.R;
 import com.icheero.app.custom.widget.WebImageView;
 import com.icheero.sdk.base.BaseActivity;
+import com.icheero.sdk.core.network.listener.IDownloadListener;
+import com.icheero.sdk.core.network.okhttp.OkHttpManager;
+import com.icheero.sdk.core.network.okhttp.OkHttpRequest;
+import com.icheero.sdk.util.FileUtils;
 import com.icheero.sdk.util.Log;
 
+import java.io.File;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
@@ -24,10 +32,38 @@ public class ImageDownloadActivity extends BaseActivity
     {
         setContentView(R.layout.activity_image_download);
         super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
         mWebImage.setPlaceholder(R.mipmap.ic_launcher);
-        mWebImage.setImageUrl("http://lorempixel.com/400/200");
-        rxJava();
+        // mWebImage.setImageUrl("http://149.129.240.18/common/picView?fileName=qsd_01_fd4c5b3b3cad412a8bfe39810ba6db24_20181120.jpg");
+        // rxJava()
+
+        OkHttpManager.getInstance().async(OkHttpRequest.createGetRequest("http://149.129.240.18/common/picView?fileName=qsd_01_fd4c5b3b3cad412a8bfe39810ba6db24_20181120.jpg"), new IDownloadListener()
+        {
+            @Override
+            public void onSuccess(File downloadFile)
+            {
+                Log.d(TAG, "success: " + downloadFile.getAbsolutePath());
+                Bitmap bitmap = FileUtils.convertToBitmap(downloadFile);
+                runOnUiThread(() -> {
+                    mWebImage.setImageBitmap(bitmap);
+                });
+            }
+
+            @Override
+            public void onFailure(int errorCode, String errorMsg)
+            {
+                Log.e(TAG, "error: " +  errorCode + ":" + errorMsg);
+            }
+
+            @Override
+            public void onProgress(int progress)
+            {
+                Log.d(TAG, "progress: " + progress);
+            }
+        });
     }
+
+
 
     private void rxJava()
     {

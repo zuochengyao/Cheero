@@ -60,7 +60,6 @@ void TRACE(const char *tag, int level, const char *log, ...)
             char* time = time_string(0);
             sprintf(filename, "%s%s.%s", TRACE_FILE_NAME, time, "txt");
             g_trace_file = fopen(filename, "a+");
-            memFree(time);
         }
         {
             va_list ap;
@@ -82,9 +81,9 @@ void TRACE(const char *tag, int level, const char *log, ...)
                 }
                 else
                     fprintf(g_trace_file, "[%d.%d]<%s: %i> ", (int)tv.tv_sec, (int) tv.tv_usec, tag, level);
+                vfprintf(g_trace_file, log, ap);
+                fflush(g_trace_file);
             }
-            vfprintf(g_trace_file, log, ap);
-            fflush(g_trace_file);
             va_end(ap);
         }
     }

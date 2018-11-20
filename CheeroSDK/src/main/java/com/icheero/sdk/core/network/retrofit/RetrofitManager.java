@@ -23,10 +23,23 @@ public class RetrofitManager
     private static final String URL_BAST_CLOUD = "https://www.icheero.com/";
     private static final String URL_BAST_LOCAL = "http://10.155.2.171:8080/";
 
+    private Retrofit mRetrofit;
     private static volatile RetrofitManager mInstance;
 
     private RetrofitManager()
-    { }
+    {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .hostnameVerifier((hostname, session) -> true);
+        mRetrofit = new Retrofit.Builder()
+                .baseUrl(URL_BAST_LOCAL)
+                .client(builder.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+    }
 
     public static RetrofitManager getInstance()
     {
@@ -41,70 +54,54 @@ public class RetrofitManager
         return mInstance;
     }
 
-    private Retrofit create(String baseUrl)
-    {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.readTimeout(10, TimeUnit.SECONDS);
-        builder.connectTimeout(9, TimeUnit.SECONDS);
-        return new Retrofit.Builder().baseUrl(baseUrl)
-                .client(builder.build())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-    }
-
     public void callGetResult()
     {
-        Retrofit retrofit = create(URL_BAST_LOCAL);
-        RetrofitHttpService api = retrofit.create(RetrofitHttpService.class);
-        api.callGetResult("faceid", "get_result.action")
-        .subscribeOn(Schedulers.io())
-        .unsubscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Observer<Response<ResponseBody>>()
-        {
-            @Override
-            public void onSubscribe(Disposable d)
-            {
-                Log.d(TAG, "onSubscribe");
-            }
+        mRetrofit.create(RetrofitHttpService.class)
+                 .callGetResult("faceid", "get_result.action")
+                 .subscribeOn(Schedulers.io())
+                 .unsubscribeOn(Schedulers.io())
+                 .observeOn(AndroidSchedulers.mainThread())
+                 .subscribe(new Observer<Response<ResponseBody>>()
+                 {
+                     @Override
+                     public void onSubscribe(Disposable d)
+                     {
+                         Log.d(TAG, "onSubscribe");
+                     }
 
-            @Override
-            public void onNext(Response<ResponseBody> response)
-            {
-                Log.d(TAG, "onNext");
-                ResponseBody body = response.body();
-                try
-                {
-                    String str = body.string();
-                    Log.i(RetrofitManager.class, str);
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
+                     @Override
+                     public void onNext(Response<ResponseBody> response)
+                     {
+                         Log.d(TAG, "onNext");
+                         ResponseBody body = response.body();
+                         try
+                         {
+                             String str = body.string();
+                             Log.i(RetrofitManager.class, str);
+                         }
+                         catch (IOException e)
+                         {
+                             e.printStackTrace();
+                         }
+                     }
 
-            @Override
-            public void onError(Throwable e)
-            {
-                Log.d(TAG, "onError");
-            }
+                     @Override
+                     public void onError(Throwable e)
+                     {
+                         Log.d(TAG, "onError");
+                     }
 
-            @Override
-            public void onComplete()
-            {
-                Log.d(TAG, "onComplete");
-            }
-        });
+                     @Override
+                     public void onComplete()
+                     {
+                         Log.d(TAG, "onComplete");
+                     }
+                 });
     }
 
-    public static void doNotify()
+    public void doNotify()
     {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(5, TimeUnit.SECONDS);
-        Retrofit retrofit = new Retrofit.Builder().client(builder.build()).addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).baseUrl(URL_BAST_LOCAL).build();
-        RetrofitHttpService httpService = retrofit.create(RetrofitHttpService.class);
+        RetrofitHttpService httpService = mRetrofit.create(RetrofitHttpService.class);
         Observable<ResponseBody> observable = httpService.callNotify("","");
         observable.unsubscribeOn(Schedulers.io()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResponseBody>()
         {

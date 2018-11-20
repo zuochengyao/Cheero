@@ -4,9 +4,13 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.annotation.StringRes;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.icheero.sdk.base.BaseApplication;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by 左程耀 on 2018/2/26.
@@ -66,12 +70,31 @@ public class Common
     }
 
     /**
-     * 根据url地址 获取文件名
+     * 生成一个MD5加密串
+     * @param str 待加密串
      */
-    public static String getFileName(String url)
+    public static String md5(String str)
     {
-        int lastSeparatorIndex = url.lastIndexOf("/");
-        return (lastSeparatorIndex < 0) ? url : url.substring(lastSeparatorIndex + 1, url.length());
+        StringBuilder builder = new StringBuilder();
+        if (TextUtils.isEmpty(str))
+            return null;
+        try
+        {
+            MessageDigest digest = MessageDigest.getInstance("md5");
+            digest.update(str.getBytes());
+            byte[] cipher = digest.digest();
+
+            for (byte b : cipher)
+            {
+                String hexStr = Integer.toHexString(b & 0xff);
+                builder.append(hexStr.length() == 1 ? "0" + hexStr : hexStr);
+            }
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        return builder.toString();
     }
 
 }
