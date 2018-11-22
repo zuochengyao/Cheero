@@ -6,9 +6,11 @@ import android.os.Environment;
 
 import com.alibaba.android.arouter.thread.DefaultPoolExecutor;
 import com.icheero.sdk.base.BaseApplication;
+import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.FileUtils;
 import com.icheero.sdk.util.Log;
 
+import java.io.File;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -66,4 +68,12 @@ public class IOManager
         });
     }
 
+    /**
+     * 根据url获取缓存文件，若不存在则创建
+     * @param url 资源url地址
+     */
+    public File getCacheFileByName(String url)
+    {
+        return FileUtils.createFile(DIR_PATH_CHEERO_CACHE + Common.md5(url));
+    }
 }

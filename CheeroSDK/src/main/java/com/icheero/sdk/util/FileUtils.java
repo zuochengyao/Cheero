@@ -1,6 +1,5 @@
 package com.icheero.sdk.util;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -51,24 +50,14 @@ public class FileUtils
         return flag;
     }
 
-    public static boolean deleteFile(String filePath)
-    {
-        return new File(filePath).delete();
-    }
-
-    public static boolean exists(String filePath)
-    {
-        return new File(filePath).exists();
-    }
-
     /**
-     * 根据url，创建文件
-     * @param url url地址
+     * 创建文件
+     * @param filePath 文件路径
      * @return file
      */
-    public static File getFileByUrl(Context context, final String url)
+    public static File createFile(String filePath)
     {
-        File file = new File(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED) ? context.getExternalCacheDir() : context.getCacheDir(), Common.md5(url));
+        File file = new File(filePath);
         if (!file.exists())
         {
             try
@@ -81,6 +70,16 @@ public class FileUtils
             }
         }
         return file;
+    }
+
+    public static boolean deleteFile(String filePath)
+    {
+        return new File(filePath).delete();
+    }
+
+    public static boolean exists(String filePath)
+    {
+        return new File(filePath).exists();
     }
 
     /**

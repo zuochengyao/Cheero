@@ -12,6 +12,8 @@ import android.util.AttributeSet;
 
 import com.icheero.sdk.core.network.okhttp.OkHttpManager;
 
+import java.io.IOException;
+
 
 /**
  * Created by zuochengyao on 2018/3/1.
@@ -59,7 +61,15 @@ public class WebImageView extends AppCompatImageView
         @Override
         protected Bitmap doInBackground(String... strings)
         {
-            byte[] data = OkHttpManager.getInstance().downloadSync(strings[0]);
+            byte[] data = new byte[0];
+            try
+            {
+                data = OkHttpManager.getInstance().syncDownload(strings[0]).body().bytes();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
             return BitmapFactory.decodeByteArray(data, 0, data.length);
         }
 

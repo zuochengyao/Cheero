@@ -6,9 +6,8 @@ import android.os.Bundle;
 import com.icheero.app.R;
 import com.icheero.app.custom.widget.WebImageView;
 import com.icheero.sdk.base.BaseActivity;
+import com.icheero.sdk.core.network.download.DownloadManager;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
-import com.icheero.sdk.core.network.okhttp.OkHttpManager;
-import com.icheero.sdk.core.network.okhttp.OkHttpRequest;
 import com.icheero.sdk.util.FileUtils;
 import com.icheero.sdk.util.Log;
 
@@ -37,16 +36,14 @@ public class ImageDownloadActivity extends BaseActivity
         // mWebImage.setImageUrl("http://149.129.240.18/common/picView?fileName=qsd_01_fd4c5b3b3cad412a8bfe39810ba6db24_20181120.jpg");
         // rxJava()
 
-        OkHttpManager.getInstance().async(OkHttpRequest.createGetRequest("http://149.129.240.18/common/picView?fileName=qsd_01_fd4c5b3b3cad412a8bfe39810ba6db24_20181120.jpg"), new IDownloadListener()
+        DownloadManager.getInstance().download("https://www.icheero.com/blog/articles/6b68fde8/img_head.jpg", new IDownloadListener()
         {
             @Override
             public void onSuccess(File downloadFile)
             {
                 Log.d(TAG, "success: " + downloadFile.getAbsolutePath());
                 Bitmap bitmap = FileUtils.convertToBitmap(downloadFile);
-                runOnUiThread(() -> {
-                    mWebImage.setImageBitmap(bitmap);
-                });
+                runOnUiThread(() -> mWebImage.setImageBitmap(bitmap));
             }
 
             @Override
@@ -58,7 +55,7 @@ public class ImageDownloadActivity extends BaseActivity
             @Override
             public void onProgress(int progress)
             {
-                Log.d(TAG, "progress: " + progress);
+                Log.d(TAG, " progress: " + progress + "-----" + Thread.currentThread().getName());
             }
         });
     }
