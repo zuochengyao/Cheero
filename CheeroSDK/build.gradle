@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion versions.build.compile_sdk
@@ -64,5 +65,7 @@ dependencies {
     api versions.deps.rx.java
     api versions.deps.rx.android
     api versions.deps.rx.permission
+    // greendao
+    implementation versions.deps.greendao.impl
     // other
 }

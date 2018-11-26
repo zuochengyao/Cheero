@@ -3,6 +3,7 @@ buildscript {
     addRepositories(repositories)
     dependencies {
         classpath versions.deps.gradle
+        classpath versions.deps.greendao.classpath
     }
     repositories {
         google()

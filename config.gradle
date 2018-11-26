@@ -28,6 +28,7 @@ dep_version.faceid_api = "1.0.0"
 dep_version.rxjava = "2.2.3"
 dep_version.rxandroid = "2.1.0"
 dep_version.rxpermission = "0.10.2"
+dep_version.greendao = "3.2.2"
 
 def retrofit = [:]
 retrofit.runtime = "com.squareup.retrofit2:retrofit:$dep_version.retrofit"
@@ -52,6 +53,10 @@ rx.java = "io.reactivex.rxjava2:rxjava:$dep_version.rxjava"
 rx.android = "io.reactivex.rxjava2:rxandroid:$dep_version.rxandroid"
 rx.permission = "com.github.tbruyelle:rxpermissions:$dep_version.rxpermission"
 
+def greendao = [:]
+greendao.classpath = "org.greenrobot:greendao-gradle-plugin:$dep_version.greendao"
+greendao.impl = "org.greenrobot:greendao:$dep_version.greendao"
+
 def deps = [:]
 deps.retrofit = retrofit
 deps.butterknife = butterknife
@@ -66,6 +71,7 @@ deps.arouter_api = "com.alibaba:arouter-api:$dep_version.arouter_api"
 deps.arouter_compiler = "com.alibaba:arouter-compiler:$dep_version.arouter_compiler"
 deps.andfix = "com.alipay.euler:andfix:$dep_version.andfix"
 deps.rx = rx
+deps.greendao = greendao
 deps.faceid_api = "com.megvii.api:faceid:$dep_version.faceid_api"
 
 def static addRepos(RepositoryHandler handler) {
@@ -73,6 +79,7 @@ def static addRepos(RepositoryHandler handler) {
     handler.maven { url "https://jitpack.io" }
     handler.google()
     handler.jcenter()
+    handler.mavenCentral()
 }
 
 ext {
