@@ -7,6 +7,7 @@ import com.icheero.sdk.core.network.okhttp.OkHttpManager;
 import com.icheero.sdk.core.network.okhttp.OkHttpRequest;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -24,6 +25,7 @@ public class DownloadManager
     private final static int THREAD_ALIVE_TIME = 60;
 
     private ThreadPoolExecutor mThreadPool;
+    private HashSet<DownloadTask> mDownloadTaskSet;
     private static volatile DownloadManager mInstance;
 
     private DownloadManager()
@@ -37,6 +39,7 @@ public class DownloadManager
                 return new Thread(r, "Download Thread #" + mInteger.getAndIncrement());
             }
         });
+        mDownloadTaskSet = new HashSet<>();
     }
 
     public static DownloadManager getInstance()
@@ -54,28 +57,38 @@ public class DownloadManager
 
     public void download(String url, @NonNull IDownloadListener listener)
     {
-        OkHttpManager.getInstance().asyncDownload(OkHttpRequest.createGetRequest(url), new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e)
-            {
-                listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_TIMEOUT, OkHttpManager.NETWORK_ERROR_MSG_TIMEOUT);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException
-            {
-                if (!response.isSuccessful())
-                    listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_ERROR, OkHttpManager.NETWORK_ERROR);
-                else
+        final DownloadTask task = new DownloadTask(url, listener);
+        if (mDownloadTaskSet.contains(task))
+            listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_TASK_RUNNING, OkHttpManager.NETWORK_ERROR_MSG_TASK_RUNNING);
+        else
+        {
+            mDownloadTaskSet.add(task);
+            OkHttpManager.getInstance().asyncDownload(OkHttpRequest.createGetRequest(url), new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e)
                 {
-                    long contentLength = response.body() != null ? response.body().contentLength() : -1;
-                    if (contentLength == -1)
-                        listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_ERROR, OkHttpManager.NETWORK_ERROR_MSG_CONTENT_LENGTH);
-                    else
-                        processDownload(url, contentLength, listener);
+                    listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_TIMEOUT, OkHttpManager.NETWORK_ERROR_MSG_TIMEOUT);
+                    mDownloadTaskSet.remove(task);
                 }
-            }
-        });
+
+                @Override
+                public void onResponse(Call call, Response response)
+                {
+                    if (!response.isSuccessful())
+                        listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_ERROR, OkHttpManager.NETWORK_ERROR);
+                    else
+                    {
+                        long contentLength = response.body() != null ? response.body().contentLength() : -1;
+                        if (contentLength == -1)
+                            listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_ERROR, OkHttpManager.NETWORK_ERROR_MSG_CONTENT_LENGTH);
+                        else
+                            processDownload(url, contentLength, listener);
+                    }
+                    mDownloadTaskSet.remove(task);
+                }
+            });
+        }
+
     }
 
     private void processDownload(String url, long length, IDownloadListener listener)

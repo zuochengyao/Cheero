@@ -11,8 +11,8 @@ import android.widget.SimpleCursorAdapter;
 
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
-import com.icheero.sdk.core.database.DBDefine;
 import com.icheero.sdk.core.database.DBHelper;
+import com.icheero.sdk.core.database.dao.UserDao;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,16 +40,16 @@ public class DatabaseActivity extends BaseActivity
     {
         setContentView(R.layout.activity_database);
         super.onCreate(savedInstanceState);
-        mHelper = new DBHelper(this);
-        db = mHelper.getDatabase();
+        mHelper = DBHelper.getInstance();
+        db = mHelper.getWritableDatabase();
     }
 
     @Override
     protected void onResume()
     {
         super.onResume();
-        mCursor = db.rawQuery("select u_id as _id, * from " + DBDefine.DB_USER, null);
-        mAdapter = new SimpleCursorAdapter(this, android.R.layout.two_line_list_item, mCursor, new String[]{DBDefine.t_user.NAME, DBDefine.t_user.DATE}, new int[]{android.R.id.text1, android.R.id.text2});
+        mCursor = db.rawQuery("select u_id as _id, * from " + UserDao.DB_USER, null);
+        mAdapter = new SimpleCursorAdapter(this, android.R.layout.two_line_list_item, mCursor, new String[]{UserDao.t_user.NAME, UserDao.t_user.DATE}, new int[]{android.R.id.text1, android.R.id.text2});
         mList.setAdapter(mAdapter);
     }
 
@@ -65,9 +65,9 @@ public class DatabaseActivity extends BaseActivity
     public void OnClickEvent()
     {
         ContentValues cv = new ContentValues(2);
-        cv.put(DBDefine.t_user.NAME, mText.getText().toString());
-        cv.put(DBDefine.t_user.DATE, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-        db.insert(DBDefine.DB_USER, null, cv);
+        cv.put(UserDao.t_user.NAME, mText.getText().toString());
+        cv.put(UserDao.t_user.DATE, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        db.insert(UserDao.DB_USER, null, cv);
         mCursor.requery();
         mAdapter.notifyDataSetChanged();
         mText.setText(null);
@@ -78,7 +78,7 @@ public class DatabaseActivity extends BaseActivity
     {
         mCursor.moveToPosition(position);
         String rowId = mCursor.getString(0);
-        db.delete(DBDefine.DB_USER, "_id = ? ", new String[]{rowId});
+        db.delete(UserDao.DB_USER, "_id = ? ", new String[]{rowId});
         mCursor.requery();
         mAdapter.notifyDataSetChanged();
     }
