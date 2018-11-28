@@ -1,4 +1,4 @@
-package com.icheero.sdk.base;
+package com.icheero.sdk.core.engine;
 
 public class CheeroNative
 {

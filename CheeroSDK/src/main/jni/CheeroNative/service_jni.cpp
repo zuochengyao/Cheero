@@ -17,7 +17,7 @@
 
 // jvm obj
 static JavaVM *mJVM = NULL;
-static const char *classPathName = JNI_PACKAGE_NAME"/base/CheeroNative";
+static const char *classPathName = JNI_PACKAGE_NAME"/core/engine/CheeroNative";
 
 #ifdef __cplusplus
 extern "C" {

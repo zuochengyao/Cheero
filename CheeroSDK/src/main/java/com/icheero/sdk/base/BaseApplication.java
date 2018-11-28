@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.alibaba.android.arouter.BuildConfig;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.facebook.stetho.Stetho;
 import com.icheero.sdk.core.database.DBHelper;
 import com.icheero.sdk.core.manager.AndFixPatchManager;
 import com.icheero.sdk.core.manager.IOManager;
@@ -21,7 +22,6 @@ public class BaseApplication extends Application
         Log.traceMode(Log.TRACE_MODE_ON_SCREEN);
         // 初始化 IO管理器
         IOManager.getInstance();
-
         // 初始化 ARouter
         if (BuildConfig.DEBUG)
         {
@@ -31,6 +31,8 @@ public class BaseApplication extends Application
         ARouter.init(this);
         // 初始化 AndFix
         AndFixPatchManager.getInstance();
+        // 初始化 stetho
+        Stetho.initializeWithDefaults(this);
         // 初始化 数据库
         DBHelper.getInstance();
     }

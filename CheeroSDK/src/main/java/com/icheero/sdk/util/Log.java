@@ -1,6 +1,6 @@
 package com.icheero.sdk.util;
 
-import com.icheero.sdk.base.CheeroNative;
+import com.icheero.sdk.core.engine.CheeroNative;
 
 /**
  * Created by zuochengyao on 2018/3/1.

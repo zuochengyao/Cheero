@@ -1,5 +1,6 @@
 package com.icheero.sdk.core.network.download;
 
+import com.icheero.sdk.core.database.entity.Download;
 import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
 import com.icheero.sdk.core.network.okhttp.OkHttpManager;
@@ -21,14 +22,16 @@ public class DownloadRunnable implements Runnable
     private long mStart;
     private long mEnd;
     private long mContentLength;
+    private Download mEntity;
     private IDownloadListener mListener;
 
-    DownloadRunnable(String url, long contentLength, long start, long end, IDownloadListener listener)
+    DownloadRunnable(String url, long contentLength, long start, long end, Download entity, IDownloadListener listener)
     {
         this.mUrl = url;
         this.mStart = start;
         this.mEnd = end;
         this.mContentLength = contentLength;
+        this.mEntity = entity;
         this.mListener = listener;
     }
 
@@ -46,23 +49,27 @@ public class DownloadRunnable implements Runnable
                 RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rwd");
                 randomAccessFile.seek(mStart);
                 byte[] buffer = new byte[500 * 1024];
-                int len;
-                int progress = 0;
+                long len;
+                long progress = 0;
                 InputStream in = response.body().byteStream();
                 Log.d(TAG, String.format(Locale.getDefault(), "Thread-%s, from %d bytes to %d bytes, contentLength: %d", Thread.currentThread().getName(), mStart, mEnd, mContentLength));
                 while ((len = in.read(buffer, 0, buffer.length)) != -1)
                 {
-                    randomAccessFile.write(buffer, 0, len);
+                    randomAccessFile.write(buffer, 0, (int) len);
+                    progress += len;
+                    mEntity.setProgress(progress);
                     if (mContentLength > 0)
-                    {
                         mListener.onProgress((int) (file.length() / mContentLength));
-                    }
                 }
                 mListener.onSuccess(file);
             }
             catch (IOException e)
             {
                 e.printStackTrace();
+            }
+            finally
+            {
+                DownloadManager.getInstance().insert(mEntity);
             }
         }
 

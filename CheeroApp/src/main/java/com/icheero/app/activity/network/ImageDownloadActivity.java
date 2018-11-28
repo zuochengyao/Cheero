@@ -26,6 +26,8 @@ public class ImageDownloadActivity extends BaseActivity
     @BindView(R.id.web_image)
     WebImageView mWebImage;
 
+    private int mCount = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -41,9 +43,15 @@ public class ImageDownloadActivity extends BaseActivity
             @Override
             public void onSuccess(File downloadFile)
             {
-                Log.d(TAG, "success: " + downloadFile.getAbsolutePath());
-                Bitmap bitmap = FileUtils.convertToBitmap(downloadFile);
-                runOnUiThread(() -> mWebImage.setImageBitmap(bitmap));
+                if (mCount < 2)
+                    mCount++;
+                else
+                {
+                    Log.d(TAG, "success: " + downloadFile.getAbsolutePath());
+                    mCount = 0;
+                    Bitmap bitmap = FileUtils.convertToBitmap(downloadFile);
+                    runOnUiThread(() -> mWebImage.setImageBitmap(bitmap));
+                }
             }
 
             @Override
@@ -55,7 +63,7 @@ public class ImageDownloadActivity extends BaseActivity
             @Override
             public void onProgress(int progress)
             {
-                Log.d(TAG, " progress: " + progress + "-----" + Thread.currentThread().getName());
+                //Log.d(TAG, " progress: " + progress + "-----" + Thread.currentThread().getName());
             }
         });
     }

@@ -2,12 +2,15 @@ package com.icheero.sdk.core.network.download;
 
 import android.support.annotation.NonNull;
 
+import com.icheero.sdk.core.database.DBHelper;
+import com.icheero.sdk.core.database.entity.Download;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
 import com.icheero.sdk.core.network.okhttp.OkHttpManager;
 import com.icheero.sdk.core.network.okhttp.OkHttpRequest;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -19,13 +22,15 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class DownloadManager
-{ 
+{
     private final static int THREAD_COUNT_CORE = 3;
     private final static int THREAD_COUNT_MAX = 3;
     private final static int THREAD_ALIVE_TIME = 60;
 
     private ThreadPoolExecutor mThreadPool;
     private HashSet<DownloadTask> mDownloadTaskSet;
+    private List<Download> mDownloadCaches;
+    private long mLength;
     private static volatile DownloadManager mInstance;
 
     private DownloadManager()
@@ -63,32 +68,50 @@ public class DownloadManager
         else
         {
             mDownloadTaskSet.add(task);
-            OkHttpManager.getInstance().asyncDownload(OkHttpRequest.createGetRequest(url), new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e)
+            mDownloadCaches = DBHelper.getInstance().getAllDownloadByUrl(url);
+            if (mDownloadCaches.size() > 0) // mDownloadCaches != null &&
+            {
+                // 有下载
+                for (int i = 0; i < mDownloadCaches.size(); i++)
                 {
-                    listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_TIMEOUT, OkHttpManager.NETWORK_ERROR_MSG_TIMEOUT);
-                    mDownloadTaskSet.remove(task);
-                }
-
-                @Override
-                public void onResponse(Call call, Response response)
-                {
-                    if (!response.isSuccessful())
-                        listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_ERROR, OkHttpManager.NETWORK_ERROR);
-                    else
-                    {
-                        long contentLength = response.body() != null ? response.body().contentLength() : -1;
-                        if (contentLength == -1)
-                            listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_ERROR, OkHttpManager.NETWORK_ERROR_MSG_CONTENT_LENGTH);
-                        else
-                            processDownload(url, contentLength, listener);
+                    Download entity = mDownloadCaches.get(i);
+                    if (i == mDownloadCaches.size() - 1) {
+                        mLength = entity.getEnd() + 1;
                     }
-                    mDownloadTaskSet.remove(task);
+                    long startSize = entity.getStart() + entity.getProgress();
+                    long endSize = entity.getEnd();
+                    // mThreadPool.execute(new DownloadRunnable(url, startSize, endSize, entity, listener));
                 }
-            });
-        }
+            }
+            else
+            {
+                // 没有下载过
+                OkHttpManager.getInstance().asyncDownload(OkHttpRequest.createGetRequest(url), new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e)
+                    {
+                        listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_TIMEOUT, OkHttpManager.NETWORK_ERROR_MSG_TIMEOUT);
+                        mDownloadTaskSet.remove(task);
+                    }
 
+                    @Override
+                    public void onResponse(Call call, Response response)
+                    {
+                        if (!response.isSuccessful())
+                            listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_ERROR, OkHttpManager.NETWORK_ERROR);
+                        else
+                        {
+                            long contentLength = response.body() != null ? response.body().contentLength() : -1;
+                            if (contentLength == -1)
+                                listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_ERROR, OkHttpManager.NETWORK_ERROR_MSG_CONTENT_LENGTH);
+                            else
+                                processDownload(url, contentLength, listener);
+                        }
+                        mDownloadTaskSet.remove(task);
+                    }
+                });
+            }
+        }
     }
 
     private void processDownload(String url, long length, IDownloadListener listener)
@@ -99,7 +122,21 @@ public class DownloadManager
         {
             long start = i * threadDownloadSize;
             long end = (i == THREAD_COUNT_MAX - 1) ? length - 1 : (i + 1) * threadDownloadSize - 1;
-            mThreadPool.execute(new DownloadRunnable(url, length, start, end, listener));
+            Download entity = new Download();
+            entity.setDownloadUrl(url);
+            entity.setStart(start);
+            entity.setEnd(end);
+            entity.setThreadId(i + 1);
+            mThreadPool.execute(new DownloadRunnable(url, length, start, end, entity, listener));
         }
+    }
+
+    /**
+     * 插入到数据库中
+     * @param entity 实体数据
+     */
+    void insert(Download entity)
+    {
+        DBHelper.getInstance().insertDownload(entity);
     }
 }
