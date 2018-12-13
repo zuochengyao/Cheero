@@ -21,16 +21,14 @@ public class DownloadRunnable implements Runnable
     private String mUrl;
     private long mStart;
     private long mEnd;
-    private long mContentLength;
     private Download mEntity;
     private IDownloadListener mListener;
 
-    DownloadRunnable(String url, long contentLength, long start, long end, Download entity, IDownloadListener listener)
+    DownloadRunnable(String url, long start, long end, Download entity, IDownloadListener listener)
     {
         this.mUrl = url;
         this.mStart = start;
         this.mEnd = end;
-        this.mContentLength = contentLength;
         this.mEntity = entity;
         this.mListener = listener;
     }
@@ -49,17 +47,15 @@ public class DownloadRunnable implements Runnable
                 RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rwd");
                 randomAccessFile.seek(mStart);
                 byte[] buffer = new byte[500 * 1024];
-                long len;
-                long progress = 0;
+                int len;
+                long progress = mEntity.getProgress();
                 InputStream in = response.body().byteStream();
-                Log.d(TAG, String.format(Locale.getDefault(), "Thread-%s, from %d bytes to %d bytes, contentLength: %d", Thread.currentThread().getName(), mStart, mEnd, mContentLength));
+                Log.d(TAG, String.format(Locale.getDefault(), "Thread-%s, from %d bytes to %d bytes", Thread.currentThread().getName(), mStart, mEnd));
                 while ((len = in.read(buffer, 0, buffer.length)) != -1)
                 {
-                    randomAccessFile.write(buffer, 0, (int) len);
+                    randomAccessFile.write(buffer, 0, len);
                     progress += len;
                     mEntity.setProgress(progress);
-                    if (mContentLength > 0)
-                        mListener.onProgress((int) (file.length() / mContentLength));
                 }
                 mListener.onSuccess(file);
             }
@@ -69,7 +65,7 @@ public class DownloadRunnable implements Runnable
             }
             finally
             {
-                DownloadManager.getInstance().insert(mEntity);
+                DownloadManager.getInstance().insertToDb(mEntity);
             }
         }
 

@@ -36,8 +36,8 @@ public class DBHelper implements IDownloadService, IUserService
 
     private DBHelper()
     {
-        // super(BaseApplication.getAppInstance(), DB_NAME, null, DB_VERSION);
         mSqliteDB = new DaoMaster.DevOpenHelper(BaseApplication.getAppInstance(), DB_NAME, null).getWritableDatabase();
+        Log.i(TAG, "Database create: " + (mSqliteDB != null));
         mDaoMaster = new DaoMaster(mSqliteDB);
         mDaoSession = mDaoMaster.newSession();
         mDownloadDao = mDaoSession.getDownloadDao();

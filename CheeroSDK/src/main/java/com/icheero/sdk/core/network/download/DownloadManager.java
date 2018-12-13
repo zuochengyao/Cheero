@@ -4,10 +4,12 @@ import android.support.annotation.NonNull;
 
 import com.icheero.sdk.core.database.DBHelper;
 import com.icheero.sdk.core.database.entity.Download;
+import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
 import com.icheero.sdk.core.network.okhttp.OkHttpManager;
 import com.icheero.sdk.core.network.okhttp.OkHttpRequest;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
@@ -80,7 +82,7 @@ public class DownloadManager
                     }
                     long startSize = entity.getStart() + entity.getProgress();
                     long endSize = entity.getEnd();
-                    // mThreadPool.execute(new DownloadRunnable(url, startSize, endSize, entity, listener));
+                    mThreadPool.execute(new DownloadRunnable(url, startSize, endSize, entity, listener));
                 }
             }
             else
@@ -101,16 +103,17 @@ public class DownloadManager
                             listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_ERROR, OkHttpManager.NETWORK_ERROR);
                         else
                         {
-                            long contentLength = response.body() != null ? response.body().contentLength() : -1;
-                            if (contentLength == -1)
+                            mLength = response.body() != null ? response.body().contentLength() : -1;
+                            if (mLength == -1)
                                 listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_ERROR, OkHttpManager.NETWORK_ERROR_MSG_CONTENT_LENGTH);
                             else
-                                processDownload(url, contentLength, listener);
+                                processDownload(url, mLength, listener);
                         }
                         mDownloadTaskSet.remove(task);
                     }
                 });
             }
+            onProgressCallback(url, listener);
         }
     }
 
@@ -127,16 +130,61 @@ public class DownloadManager
             entity.setStart(start);
             entity.setEnd(end);
             entity.setThreadId(i + 1);
-            mThreadPool.execute(new DownloadRunnable(url, length, start, end, entity, listener));
+            mThreadPool.execute(new DownloadRunnable(url, start, end, entity, listener));
         }
+    }
+
+    private void onProgressCallback(String url, IDownloadListener listener)
+    {
+        new ProgressThread(url, listener).start();
     }
 
     /**
      * 插入到数据库中
      * @param entity 实体数据
      */
-    void insert(Download entity)
+    void insertToDb(Download entity)
     {
         DBHelper.getInstance().insertDownload(entity);
+    }
+
+    /**
+     * 下载进度回调线程
+     */
+    private class ProgressThread extends Thread
+    {
+        private String mUrl;
+        private IDownloadListener mListener;
+
+        public ProgressThread(String url, IDownloadListener listener)
+        {
+            this.mUrl = url;
+            this.mListener = listener;
+        }
+
+        @Override
+        public void run()
+        {
+            while (true)
+            {
+                try
+                {
+                    File file = IOManager.getInstance().getCacheFileByName(mUrl);
+                    long fileSize = file.length();
+                    int progress = (int) (fileSize * 100.0 / mLength);
+                    if (progress >= 100)
+                    {
+                        mListener.onProgress(progress);
+                        return;
+                    }
+                    mListener.onProgress(progress);
+                    Thread.sleep(200);
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

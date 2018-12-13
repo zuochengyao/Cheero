@@ -1,6 +1,5 @@
 package com.icheero.app.activity.network;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.icheero.app.R;
@@ -8,7 +7,6 @@ import com.icheero.app.custom.widget.WebImageView;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.network.download.DownloadManager;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
-import com.icheero.sdk.util.FileUtils;
 import com.icheero.sdk.util.Log;
 
 import java.io.File;
@@ -38,7 +36,7 @@ public class ImageDownloadActivity extends BaseActivity
         // mWebImage.setImageUrl("http://149.129.240.18/common/picView?fileName=qsd_01_fd4c5b3b3cad412a8bfe39810ba6db24_20181120.jpg");
         // rxJava()
 
-        DownloadManager.getInstance().download("https://www.icheero.com/blog/articles/6b68fde8/img_head.jpg", new IDownloadListener()
+        DownloadManager.getInstance().download("https://poc.10086.cn/app/poc-cmcc-V1.3.0-R20180330.apk", new IDownloadListener()
         {
             @Override
             public void onSuccess(File downloadFile)
@@ -49,8 +47,8 @@ public class ImageDownloadActivity extends BaseActivity
                 {
                     Log.d(TAG, "success: " + downloadFile.getAbsolutePath());
                     mCount = 0;
-                    Bitmap bitmap = FileUtils.convertToBitmap(downloadFile);
-                    runOnUiThread(() -> mWebImage.setImageBitmap(bitmap));
+//                    Bitmap bitmap = FileUtils.convertToBitmap(downloadFile);
+//                    runOnUiThread(() -> mWebImage.setImageBitmap(bitmap));
                 }
             }
 
@@ -63,7 +61,7 @@ public class ImageDownloadActivity extends BaseActivity
             @Override
             public void onProgress(int progress)
             {
-                //Log.d(TAG, " progress: " + progress + "-----" + Thread.currentThread().getName());
+                Log.d(TAG, " progress: " + progress + "-----" + Thread.currentThread().getName());
             }
         });
     }
