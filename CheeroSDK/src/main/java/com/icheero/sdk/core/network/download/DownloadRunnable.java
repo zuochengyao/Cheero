@@ -1,9 +1,11 @@
 package com.icheero.sdk.core.network.download;
 
+import android.os.Process;
+
 import com.icheero.sdk.core.database.entity.Download;
 import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
-import com.icheero.sdk.core.network.okhttp.OkHttpManager;
+import com.icheero.sdk.core.network.framework.okhttp.OkHttpManager;
 import com.icheero.sdk.util.Log;
 
 import java.io.File;
@@ -36,6 +38,8 @@ public class DownloadRunnable implements Runnable
     @Override
     public void run()
     {
+        // 后台优先级
+        Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
         Response response = OkHttpManager.getInstance().syncDownloadByRange(mUrl, mStart, mEnd);
         if (response == null && mListener != null)
             mListener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_ERROR, OkHttpManager.NETWORK_ERROR);

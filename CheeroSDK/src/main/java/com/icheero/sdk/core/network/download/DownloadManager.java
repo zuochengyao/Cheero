@@ -6,8 +6,8 @@ import com.icheero.sdk.core.database.DBHelper;
 import com.icheero.sdk.core.database.entity.Download;
 import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
-import com.icheero.sdk.core.network.okhttp.OkHttpManager;
-import com.icheero.sdk.core.network.okhttp.OkHttpRequest;
+import com.icheero.sdk.core.network.framework.okhttp.OkHttpManager;
+import com.icheero.sdk.core.network.framework.okhttp.OkHttpRequest;
 
 import java.io.File;
 import java.io.IOException;

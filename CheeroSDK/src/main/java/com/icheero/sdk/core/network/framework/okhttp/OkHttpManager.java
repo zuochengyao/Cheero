@@ -1,4 +1,4 @@
-package com.icheero.sdk.core.network.okhttp;
+package com.icheero.sdk.core.network.framework.okhttp;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;

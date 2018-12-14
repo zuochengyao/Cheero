@@ -1,4 +1,4 @@
-package com.icheero.sdk.core.network.okhttp;
+package com.icheero.sdk.core.network.framework.okhttp;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;

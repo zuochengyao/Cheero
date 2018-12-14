@@ -1,4 +1,4 @@
-package com.icheero.sdk.core.network.retrofit;
+package com.icheero.sdk.core.network.framework.retrofit;
 
 
 import io.reactivex.Observable;
