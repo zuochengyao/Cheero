@@ -25,27 +25,15 @@ import okhttp3.Response;
 
 public class DownloadManager
 {
-    private final static int THREAD_COUNT_CORE = 3;
-    private final static int THREAD_COUNT_MAX = 3;
-    private final static int THREAD_ALIVE_TIME = 60;
-
     private ThreadPoolExecutor mThreadPool;
     private HashSet<DownloadTask> mDownloadTaskSet;
     private List<Download> mDownloadCaches;
+    private DownloadConfig mDownloadConfig;
     private long mLength;
     private static volatile DownloadManager mInstance;
 
     private DownloadManager()
     {
-        mThreadPool = new ThreadPoolExecutor(THREAD_COUNT_CORE, THREAD_COUNT_MAX, THREAD_ALIVE_TIME, TimeUnit.SECONDS, new SynchronousQueue<>(), new ThreadFactory()
-        {
-            private AtomicInteger mInteger = new AtomicInteger(1);
-            @Override
-            public Thread newThread(Runnable r)
-            {
-                return new Thread(r, "Download Thread #" + mInteger.getAndIncrement());
-            }
-        });
         mDownloadTaskSet = new HashSet<>();
     }
 
@@ -60,6 +48,20 @@ public class DownloadManager
             }
         }
         return mInstance;
+    }
+
+    public void init(DownloadConfig config)
+    {
+        this.mDownloadConfig = config;
+        mThreadPool = new ThreadPoolExecutor(config.getThreadCoreCount(), config.getThreadMaxCount(), config.getThreadAliveTime(), TimeUnit.SECONDS, new SynchronousQueue<>(), new ThreadFactory()
+        {
+            private AtomicInteger mInteger = new AtomicInteger(1);
+            @Override
+            public Thread newThread(Runnable r)
+            {
+                return new Thread(r, "Download Thread #" + mInteger.getAndIncrement());
+            }
+        });
     }
 
     public void download(String url, @NonNull IDownloadListener listener)
@@ -120,11 +122,12 @@ public class DownloadManager
     private void processDownload(String url, long length, IDownloadListener listener)
     {
         // 120 3 40 0~39 40~79 80~119
-        long threadDownloadSize = length / THREAD_COUNT_MAX; // 每个线程所需下载的字节数
-        for (int i = 0; i < THREAD_COUNT_MAX; i++)
+        int maxThreadCount = mDownloadConfig.getThreadMaxCount();
+        long threadDownloadSize = length / maxThreadCount; // 每个线程所需下载的字节数
+        for (int i = 0; i < maxThreadCount; i++)
         {
             long start = i * threadDownloadSize;
-            long end = (i == THREAD_COUNT_MAX - 1) ? length - 1 : (i + 1) * threadDownloadSize - 1;
+            long end = (i == maxThreadCount - 1) ? length - 1 : (i + 1) * threadDownloadSize - 1;
             Download entity = new Download();
             entity.setDownloadUrl(url);
             entity.setStart(start);

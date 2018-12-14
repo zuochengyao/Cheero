@@ -8,6 +8,8 @@ import com.facebook.stetho.Stetho;
 import com.icheero.sdk.core.database.DBHelper;
 import com.icheero.sdk.core.manager.AndFixPatchManager;
 import com.icheero.sdk.core.manager.IOManager;
+import com.icheero.sdk.core.network.download.DownloadConfig;
+import com.icheero.sdk.core.network.download.DownloadManager;
 import com.icheero.sdk.util.Log;
 
 public class BaseApplication extends Application
@@ -22,6 +24,12 @@ public class BaseApplication extends Application
         Log.traceMode(Log.TRACE_MODE_ON_SCREEN);
         // 初始化 IO管理器
         IOManager.getInstance();
+        DownloadConfig config = new DownloadConfig.Builder()
+                .setThreadCoreCount(3)
+                .setThreadMaxCount(3)
+                .setThreadAliveTime(60)
+                .build();
+        DownloadManager.getInstance().init(config);
         // 初始化 ARouter
         if (BuildConfig.DEBUG)
         {

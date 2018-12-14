@@ -28,16 +28,22 @@ android {
         }
     }
 
-    greendao {
-        schemaVersion 1
-        daoPackage 'com.icheero.sdk.core.database.greendao'
-        targetGenDir 'src/main/java'
+    repositories{
+        flatDir{
+            dirs 'libs'
+        }
     }
 
     externalNativeBuild {
         cmake {
             path 'src/main/jni/CMakeLists.txt'
         }
+    }
+
+    greendao {
+        schemaVersion 1
+        daoPackage 'com.icheero.sdk.core.database.greendao'
+        targetGenDir 'src/main/java'
     }
 
     compileOptions {
