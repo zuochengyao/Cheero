@@ -1,4 +1,4 @@
-package com.icheero.sdk.core.network.http;
+package com.icheero.sdk.core.network.http.encapsulation;
 
 import java.util.Map;
 

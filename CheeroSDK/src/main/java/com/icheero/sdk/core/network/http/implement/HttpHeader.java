@@ -1,13 +1,20 @@
-package com.icheero.sdk.core.network.http;
+package com.icheero.sdk.core.network.http.implement;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.icheero.sdk.core.network.http.encapsulation.IHttpMap;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * @author 左程耀
+ *
+ * 封装Http请求头
+ */
 public class HttpHeader implements IHttpMap<String, String>
 {
     public final static String HEADER_ACCEPT = "Accept";
@@ -28,7 +35,7 @@ public class HttpHeader implements IHttpMap<String, String>
         mMap = new HashMap<>();
     }
 
-    // region Getter and Setter for HttpHeader
+    // region Getter and Setter for IHttpHeader
 
     public String getAccept()
     {

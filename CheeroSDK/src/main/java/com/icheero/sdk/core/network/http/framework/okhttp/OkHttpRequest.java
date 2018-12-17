@@ -1,11 +1,16 @@
-package com.icheero.sdk.core.network.framework.okhttp;
+package com.icheero.sdk.core.network.http.framework.okhttp;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.icheero.sdk.core.network.http.IHttpRequest;
+import com.icheero.sdk.core.network.http.implement.BufferHttpRequest;
+import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
+import com.icheero.sdk.core.network.http.implement.HttpHeader;
+import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 import java.util.Map;
 
 import okhttp3.FormBody;
@@ -14,19 +19,22 @@ import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 @SuppressWarnings("all")
-public class OkHttpRequest implements IHttpRequest
+public class OkHttpRequest extends BufferHttpRequest
 {
     private OkHttpClient mClient;
-    private IHttpRequest.HttpMethod mMethod;
+    private HttpMethod mMethod;
     private String mUrl;
+    private String mMimeType;
 
-    public OkHttpRequest(OkHttpClient mClient, IHttpRequest.HttpMethod mMethod, String mUrl)
+    public OkHttpRequest(OkHttpClient client, HttpMethod method, String url, String mimeType)
     {
-        this.mClient = mClient;
-        this.mMethod = mMethod;
-        this.mUrl = mUrl;
+        this.mClient = client;
+        this.mMethod = method;
+        this.mUrl = url;
+        this.mMimeType = mimeType;
     }
 
     /**
@@ -99,5 +107,31 @@ public class OkHttpRequest implements IHttpRequest
                 builder.addFormDataPart(entry.getKey(), value.toString());
         }
         return new Request.Builder().url(baseUrl).post(builder.build()).build();
+    }
+
+    @Override
+    protected IHttpResponse execute(HttpHeader header, byte[] data) throws IOException
+    {
+        boolean isBody = mMethod == HttpMethod.POST;
+        RequestBody requestBody = null;
+        if (isBody)
+            requestBody = RequestBody.create(MediaType.parse(mMimeType), data);
+        Request.Builder builder = new Request.Builder().url(mUrl).method(mMethod.name(), requestBody);
+        for (Map.Entry<String, String> entry : header.entrySet())
+            builder.addHeader(entry.getKey(), entry.getValue());
+        Response response = mClient.newCall(builder.build()).execute();
+        return new OkHttpResponse(response);
+    }
+
+    @Override
+    public HttpMethod getMethod()
+    {
+        return mMethod;
+    }
+
+    @Override
+    public URI getUri()
+    {
+        return URI.create(mUrl);
     }
 }

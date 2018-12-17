@@ -5,7 +5,7 @@ import android.os.Process;
 import com.icheero.sdk.core.database.entity.Download;
 import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
-import com.icheero.sdk.core.network.framework.okhttp.OkHttpManager;
+import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpManager;
 import com.icheero.sdk.util.Log;
 
 import java.io.File;

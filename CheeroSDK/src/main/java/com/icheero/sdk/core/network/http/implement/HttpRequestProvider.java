@@ -1,6 +1,9 @@
-package com.icheero.sdk.core.network.http;
+package com.icheero.sdk.core.network.http.implement;
 
-import com.icheero.sdk.core.network.framework.okhttp.OkHttpRequestFactory;
+import com.icheero.sdk.core.network.http.IHttpRequestFactory;
+import com.icheero.sdk.core.network.http.encapsulation.IHttpRequest;
+import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
+import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpRequestFactory;
 import com.icheero.sdk.util.Common;
 
 import java.net.URI;
@@ -21,9 +24,9 @@ public class HttpRequestProvider
             mHttpRequestFactory = new OkHttpRequestFactory();
     }
 
-    public IHttpRequest getHttpRequest(URI uri, IHttpRequest.HttpMethod method)
+    public IHttpRequest getHttpRequest(URI uri, HttpMethod method, String mimeType)
     {
-        return mHttpRequestFactory.createHttpRequest(uri, method);
+        return mHttpRequestFactory.createHttpRequest(uri, method, mimeType);
     }
 
     public IHttpRequestFactory getHttpRequestFactory()
