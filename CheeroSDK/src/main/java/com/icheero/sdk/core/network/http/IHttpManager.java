@@ -1,4 +1,4 @@
-package com.icheero.sdk.core.network;
+package com.icheero.sdk.core.network.http;
 
 import android.support.annotation.NonNull;
 

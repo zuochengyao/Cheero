@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 
 import com.icheero.sdk.core.manager.IOManager;
-import com.icheero.sdk.core.network.IHttpManager;
+import com.icheero.sdk.core.network.http.IHttpManager;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
 import com.icheero.sdk.core.network.listener.IResponseListener;
 

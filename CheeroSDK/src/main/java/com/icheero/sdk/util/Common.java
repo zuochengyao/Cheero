@@ -76,8 +76,7 @@ public class Common
     public static String md5(String str)
     {
         StringBuilder builder = new StringBuilder();
-        if (TextUtils.isEmpty(str))
-            return null;
+        if (TextUtils.isEmpty(str)) return null;
         try
         {
             MessageDigest digest = MessageDigest.getInstance("md5");
@@ -95,6 +94,20 @@ public class Common
             e.printStackTrace();
         }
         return builder.toString();
+    }
+
+    public static boolean isClassExist(String className, ClassLoader loader)
+    {
+        boolean flag = true;
+        try
+        {
+            Class.forName(className);
+        }
+        catch (ClassNotFoundException e)
+        {
+            flag = false;
+        }
+        return flag;
     }
 
 }

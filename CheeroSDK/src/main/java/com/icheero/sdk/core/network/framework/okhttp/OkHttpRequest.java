@@ -3,18 +3,32 @@ package com.icheero.sdk.core.network.framework.okhttp;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.icheero.sdk.core.network.http.IHttpRequest;
+
 import java.io.File;
 import java.util.Map;
 
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
 @SuppressWarnings("all")
-public class OkHttpRequest
+public class OkHttpRequest implements IHttpRequest
 {
+    private OkHttpClient mClient;
+    private IHttpRequest.HttpMethod mMethod;
+    private String mUrl;
+
+    public OkHttpRequest(OkHttpClient mClient, IHttpRequest.HttpMethod mMethod, String mUrl)
+    {
+        this.mClient = mClient;
+        this.mMethod = mMethod;
+        this.mUrl = mUrl;
+    }
+
     /**
      * generate a get request
      * @param fullUrl like: https://www.icheero.com?key1=val1&key2=val2&...

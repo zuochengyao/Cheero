@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.manager;
 
-import com.icheero.sdk.core.network.IHttpManager;
+import com.icheero.sdk.core.network.http.IHttpManager;
 import com.icheero.sdk.core.network.framework.okhttp.OkHttpManager;
 
 public class HttpManager
