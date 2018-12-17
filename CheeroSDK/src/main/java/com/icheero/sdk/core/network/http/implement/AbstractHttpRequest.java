@@ -2,6 +2,7 @@ package com.icheero.sdk.core.network.http.implement;
 
 import com.icheero.sdk.core.network.http.encapsulation.IHttpRequest;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
+import com.icheero.sdk.core.network.listener.IResponseListener;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -38,6 +39,12 @@ public abstract class AbstractHttpRequest implements IHttpRequest
         IHttpResponse response = executeRequest(mHttpHeader);
         isExecuted = true;
         return response;
+    }
+
+    @Override
+    public void enqueue(IResponseListener listener)
+    {
+        // TODO
     }
 
     private boolean isGzip()

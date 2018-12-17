@@ -10,7 +10,6 @@ public abstract class BufferHttpRequest extends AbstractHttpRequest
 {
     private ByteArrayOutputStream mByteArray = new ByteArrayOutputStream();
 
-
     protected OutputStream getBodyOutputStream()
     {
         return mByteArray;

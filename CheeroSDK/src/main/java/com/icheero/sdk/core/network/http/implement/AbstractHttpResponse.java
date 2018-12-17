@@ -40,7 +40,7 @@ public abstract class AbstractHttpResponse implements IHttpResponse
         return this.mGzipInStream;
     }
 
-    protected abstract InputStream getBodyStream();
+    protected abstract InputStream getBodyStream() throws IOException;
 
     protected abstract void closeBodyStream();
 }

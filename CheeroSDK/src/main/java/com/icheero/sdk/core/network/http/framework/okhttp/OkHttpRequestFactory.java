@@ -1,7 +1,7 @@
 package com.icheero.sdk.core.network.http.framework.okhttp;
 
 import com.icheero.sdk.core.network.http.encapsulation.IHttpRequest;
-import com.icheero.sdk.core.network.http.IHttpRequestFactory;
+import com.icheero.sdk.core.network.http.encapsulation.IHttpRequestFactory;
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 
 import java.net.URI;
@@ -28,6 +28,7 @@ public class OkHttpRequestFactory implements IHttpRequestFactory
         this.mClient = client;
     }
 
+    @Override
     public void setReadTimeout(int readTimeout)
     {
         this.mClient = mClient.newBuilder().readTimeout(readTimeout, TimeUnit.MILLISECONDS).build();
@@ -38,6 +39,7 @@ public class OkHttpRequestFactory implements IHttpRequestFactory
         this.mClient = mClient.newBuilder().writeTimeout(writeTimeout, TimeUnit.MILLISECONDS).build();
     }
 
+    @Override
     public void setConnectionTimeout(int connectionTimeout)
     {
         this.mClient = mClient.newBuilder().connectTimeout(connectionTimeout, TimeUnit.MILLISECONDS).build();

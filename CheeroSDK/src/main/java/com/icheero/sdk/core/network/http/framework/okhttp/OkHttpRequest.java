@@ -3,10 +3,11 @@ package com.icheero.sdk.core.network.http.framework.okhttp;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.icheero.sdk.core.network.http.implement.BufferHttpRequest;
-import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
-import com.icheero.sdk.core.network.http.implement.HttpHeader;
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
+import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
+import com.icheero.sdk.core.network.http.implement.BufferHttpRequest;
+import com.icheero.sdk.core.network.http.implement.HttpHeader;
+import com.icheero.sdk.core.network.listener.IResponseListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +22,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-@SuppressWarnings("all")
 public class OkHttpRequest extends BufferHttpRequest
 {
     private OkHttpClient mClient;
@@ -133,5 +133,11 @@ public class OkHttpRequest extends BufferHttpRequest
     public URI getUri()
     {
         return URI.create(mUrl);
+    }
+
+    @Override
+    public void enqueue(IResponseListener listener)
+    {
+        // TODO 异步处理
     }
 }
