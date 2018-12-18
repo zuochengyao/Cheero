@@ -7,7 +7,9 @@ public interface IHttpRequestFactory
 {
     void setReadTimeout(int readTimeout);
 
+    void setWriteTimeout(int readTimeout);
+
     void setConnectionTimeout(int connectionTimeout);
 
-    IHttpRequest createHttpRequest(URI uri, HttpMethod method, String mimeType) throws IOException;
+    IHttpRequest createHttpRequest(URI uri, HttpMethod method, String mediaType) throws IOException;
 }

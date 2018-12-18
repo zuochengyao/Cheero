@@ -82,7 +82,6 @@ public class Common
             MessageDigest digest = MessageDigest.getInstance("md5");
             digest.update(str.getBytes());
             byte[] cipher = digest.digest();
-
             for (byte b : cipher)
             {
                 String hexStr = Integer.toHexString(b & 0xff);

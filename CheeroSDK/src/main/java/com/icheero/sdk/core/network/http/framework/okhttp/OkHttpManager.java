@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 
 import com.icheero.sdk.core.manager.IOManager;
-import com.icheero.sdk.core.network.http.IHttpManager;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
 import com.icheero.sdk.core.network.listener.IResponseListener;
 
@@ -13,7 +12,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.SecureRandom;
-import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -31,7 +29,7 @@ import okhttp3.Response;
  * OkHttp 工具类
  * Created by zuochengyao on 2018/3/1.
  */
-public class OkHttpManager implements IHttpManager
+public class OkHttpManager //implements IHttpManager
 {
     private static final Class<OkHttpManager> TAG = OkHttpManager.class;
 
@@ -55,9 +53,6 @@ public class OkHttpManager implements IHttpManager
     private OkHttpManager()
     {
         this.mOkHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
                 .hostnameVerifier((hostname, session) -> true)
                 .sslSocketFactory(initSSLSocketFactory(), initX509TrustManager()) // 支持https
                 .build();
@@ -76,7 +71,11 @@ public class OkHttpManager implements IHttpManager
         return mInstance;
     }
 
-    @Override
+    OkHttpClient getOkHttpClient()
+    {
+        return mOkHttpClient;
+    }
+
     public Response syncRequest(@NonNull Request request)
     {
         try
@@ -90,7 +89,6 @@ public class OkHttpManager implements IHttpManager
         return null;
     }
 
-    @Override
     public Response syncDownload(String url)
     {
         try
@@ -105,7 +103,6 @@ public class OkHttpManager implements IHttpManager
         return null;
     }
 
-    @Override
     public void asyncRequest(@NonNull Request request, @NonNull IResponseListener listener)
     {
         mOkHttpClient.newCall(request).enqueue(new Callback()
@@ -132,7 +129,6 @@ public class OkHttpManager implements IHttpManager
         mOkHttpClient.newCall(request).enqueue(callback);
     }
 
-    @Override
     public void asyncDownload(@NonNull Request request, @NonNull IDownloadListener listener)
     {
         asyncDownload(request, new Callback()
@@ -171,7 +167,6 @@ public class OkHttpManager implements IHttpManager
         });
     }
 
-    @Override
     public Response syncDownloadByRange(String url, long start, long end)
     {
         Request request = new Request.Builder().url(url).addHeader("Range", "bytes=" + start + "-" + end).build();

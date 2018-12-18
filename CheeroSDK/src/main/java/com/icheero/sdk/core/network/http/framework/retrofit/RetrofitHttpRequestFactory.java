@@ -1,42 +1,44 @@
-package com.icheero.sdk.core.network.http.framework.origin;
+package com.icheero.sdk.core.network.http.framework.retrofit;
 
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpRequest;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpRequestFactory;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URI;
 
-public class OriginHttpRequestFactory implements IHttpRequestFactory
-{
-    private HttpURLConnection mConnection;
+import retrofit2.Retrofit;
 
-    public OriginHttpRequestFactory()
+public class RetrofitHttpRequestFactory implements IHttpRequestFactory
+{
+    private Retrofit mRetrofit;
+
+    public RetrofitHttpRequestFactory()
     {
+        mRetrofit = RetrofitManager.getInstance().getRetrofit();
     }
 
     @Override
     public void setReadTimeout(int readTimeout)
     {
-        mConnection.setReadTimeout(readTimeout);
+
     }
 
     @Override
     public void setWriteTimeout(int readTimeout)
     {
+
     }
 
     @Override
     public void setConnectionTimeout(int connectionTimeout)
     {
-        mConnection.setConnectTimeout(connectionTimeout);
+
     }
 
     @Override
     public IHttpRequest createHttpRequest(URI uri, HttpMethod method, String mediaType) throws IOException
     {
-        mConnection = (HttpURLConnection) uri.toURL().openConnection();
-        return new OriginHttpRequest(mConnection, method, uri.toString());
+        return null;
     }
 }

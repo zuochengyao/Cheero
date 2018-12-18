@@ -83,4 +83,5 @@ dependencies {
     // facebook stetho
     implementation versions.deps.stetho
     // other
+    testImplementation versions.deps.junit
 }

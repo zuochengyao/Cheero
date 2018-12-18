@@ -20,12 +20,7 @@ public class OkHttpRequestFactory implements IHttpRequestFactory
 
     public OkHttpRequestFactory()
     {
-        this.mClient = new OkHttpClient();
-    }
-
-    public OkHttpRequestFactory(OkHttpClient client)
-    {
-        this.mClient = client;
+        this.mClient = OkHttpManager.getInstance().getOkHttpClient();
     }
 
     @Override
@@ -46,8 +41,8 @@ public class OkHttpRequestFactory implements IHttpRequestFactory
     }
 
     @Override
-    public IHttpRequest createHttpRequest(URI uri, HttpMethod method, String mimeType)
+    public IHttpRequest createHttpRequest(URI uri, HttpMethod method, String mediaType)
     {
-        return new OkHttpRequest(mClient, method, uri.toString(), mimeType);
+        return new OkHttpRequest(mClient, method, uri.toString(), mediaType);
     }
 }

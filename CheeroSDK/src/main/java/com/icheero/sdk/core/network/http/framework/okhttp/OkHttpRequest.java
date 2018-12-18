@@ -27,14 +27,46 @@ public class OkHttpRequest extends BufferHttpRequest
     private OkHttpClient mClient;
     private HttpMethod mMethod;
     private String mUrl;
-    private String mMimeType;
+    private String mMediaType;
 
-    public OkHttpRequest(OkHttpClient client, HttpMethod method, String url, String mimeType)
+    public OkHttpRequest(OkHttpClient client, HttpMethod method, String url, String mediaType)
     {
         this.mClient = client;
         this.mMethod = method;
         this.mUrl = url;
-        this.mMimeType = mimeType;
+        this.mMediaType = mediaType;
+    }
+
+    @Override
+    protected IHttpResponse execute(HttpHeader header, byte[] data) throws IOException
+    {
+        boolean isBody = mMethod == HttpMethod.POST;
+        RequestBody requestBody = null;
+        if (isBody)
+            requestBody = RequestBody.create(MediaType.parse(mMediaType), data);
+        Request.Builder builder = new Request.Builder().url(mUrl).method(mMethod.name(), requestBody);
+        for (Map.Entry<String, String> entry : header.entrySet())
+            builder.addHeader(entry.getKey(), entry.getValue());
+        Response response = mClient.newCall(builder.build()).execute();
+        return new OkHttpResponse(response);
+    }
+
+    @Override
+    public void enqueue(IResponseListener listener)
+    {
+        // TODO 异步处理
+    }
+
+    @Override
+    public HttpMethod getMethod()
+    {
+        return mMethod;
+    }
+
+    @Override
+    public URI getUri()
+    {
+        return URI.create(mUrl);
     }
 
     /**
@@ -107,37 +139,5 @@ public class OkHttpRequest extends BufferHttpRequest
                 builder.addFormDataPart(entry.getKey(), value.toString());
         }
         return new Request.Builder().url(baseUrl).post(builder.build()).build();
-    }
-
-    @Override
-    protected IHttpResponse execute(HttpHeader header, byte[] data) throws IOException
-    {
-        boolean isBody = mMethod == HttpMethod.POST;
-        RequestBody requestBody = null;
-        if (isBody)
-            requestBody = RequestBody.create(MediaType.parse(mMimeType), data);
-        Request.Builder builder = new Request.Builder().url(mUrl).method(mMethod.name(), requestBody);
-        for (Map.Entry<String, String> entry : header.entrySet())
-            builder.addHeader(entry.getKey(), entry.getValue());
-        Response response = mClient.newCall(builder.build()).execute();
-        return new OkHttpResponse(response);
-    }
-
-    @Override
-    public HttpMethod getMethod()
-    {
-        return mMethod;
-    }
-
-    @Override
-    public URI getUri()
-    {
-        return URI.create(mUrl);
-    }
-
-    @Override
-    public void enqueue(IResponseListener listener)
-    {
-        // TODO 异步处理
     }
 }

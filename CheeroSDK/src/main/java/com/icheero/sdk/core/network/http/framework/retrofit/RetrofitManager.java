@@ -54,6 +54,11 @@ public class RetrofitManager
         return mInstance;
     }
 
+    public Retrofit getRetrofit()
+    {
+        return mRetrofit;
+    }
+
     public void callGetResult()
     {
         mRetrofit.create(RetrofitHttpService.class)

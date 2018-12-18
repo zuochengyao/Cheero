@@ -34,6 +34,12 @@ public class OkHttpResponse extends AbstractHttpResponse
     }
 
     @Override
+    public long getContentLength()
+    {
+        return mResponse.body() != null ? mResponse.body().contentLength() : 0;
+    }
+
+    @Override
     public HttpStatus getStatus()
     {
         return HttpStatus.getValue(mResponse.code());

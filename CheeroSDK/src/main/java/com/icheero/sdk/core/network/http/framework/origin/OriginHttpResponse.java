@@ -37,6 +37,12 @@ public class OriginHttpResponse extends AbstractHttpResponse
     }
 
     @Override
+    public long getContentLength()
+    {
+        return mConnection.getContentLength();
+    }
+
+    @Override
     public HttpStatus getStatus()
     {
         try

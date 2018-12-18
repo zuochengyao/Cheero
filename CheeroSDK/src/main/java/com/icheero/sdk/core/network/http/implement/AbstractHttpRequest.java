@@ -36,7 +36,7 @@ public abstract class AbstractHttpRequest implements IHttpRequest
     {
         if (mZipOutStream != null)
             mZipOutStream.close();
-        IHttpResponse response = executeRequest(mHttpHeader);
+        IHttpResponse response = execute(mHttpHeader);
         isExecuted = true;
         return response;
     }
@@ -62,5 +62,5 @@ public abstract class AbstractHttpRequest implements IHttpRequest
 
     protected abstract OutputStream getBodyOutputStream();
 
-    protected abstract IHttpResponse executeRequest(HttpHeader header) throws IOException;
+    protected abstract IHttpResponse execute(HttpHeader header) throws IOException;
 }

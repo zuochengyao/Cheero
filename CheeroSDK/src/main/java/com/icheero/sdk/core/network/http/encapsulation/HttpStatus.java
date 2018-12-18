@@ -66,4 +66,9 @@ public enum HttpStatus
         }
         return null;
     }
+
+    public boolean isSuccess()
+    {
+        return mStatusCode / 100 == 2;
+    }
 }

@@ -7,6 +7,8 @@ import java.io.InputStream;
 
 public interface IHttpResponse extends IHttpHeader, Closeable
 {
+    long getContentLength();
+
     HttpStatus getStatus();
 
     String getStatusMessage();

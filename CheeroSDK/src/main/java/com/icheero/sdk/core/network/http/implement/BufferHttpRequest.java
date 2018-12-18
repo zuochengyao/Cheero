@@ -15,7 +15,8 @@ public abstract class BufferHttpRequest extends AbstractHttpRequest
         return mByteArray;
     }
 
-    protected IHttpResponse executeRequest(HttpHeader header) throws IOException
+    @Override
+    protected IHttpResponse execute(HttpHeader header) throws IOException
     {
         byte[] data = mByteArray.toByteArray();
         return execute(header, data);
