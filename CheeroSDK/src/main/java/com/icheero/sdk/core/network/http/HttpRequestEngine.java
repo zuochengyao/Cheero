@@ -48,13 +48,14 @@ public class HttpRequestEngine
         {
             synchronized (HttpRequestEngine.class)
             {
-                if (mInstance == null) mInstance = new HttpRequestEngine();
+                if (mInstance == null)
+                    mInstance = new HttpRequestEngine();
             }
         }
         return mInstance;
     }
 
-    public void enqueue(CheeroRequest cheeroRequest)
+    public void add(CheeroRequest cheeroRequest)
     {
         if (mRunningQueue.size() > REQUEST_SIZE_MAX)
             mCacheQueue.add(cheeroRequest);
@@ -62,7 +63,7 @@ public class HttpRequestEngine
             doRequest(cheeroRequest);
     }
 
-    public void finish(CheeroRequest cheeroRequest)
+    void finish(CheeroRequest cheeroRequest)
     {
         mRunningQueue.remove(cheeroRequest);
         if (mRunningQueue.size() <= REQUEST_SIZE_MAX && mCacheQueue.size() > 0)

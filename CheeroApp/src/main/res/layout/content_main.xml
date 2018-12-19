@@ -104,6 +104,11 @@
                 android:layout_height="wrap_content"
                 android:text="RetrofitActivity"/>
 
+            <Button
+                android:id="@+id/to_request_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RequestActivity"/>
         </LinearLayout>
     </HorizontalScrollView>
 

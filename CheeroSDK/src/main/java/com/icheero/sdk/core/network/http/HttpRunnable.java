@@ -1,18 +1,21 @@
 package com.icheero.sdk.core.network.http;
 
 import com.icheero.sdk.core.network.http.api.CheeroRequest;
+import com.icheero.sdk.core.network.http.encapsulation.HttpStatus;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpRequest;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.SocketTimeoutException;
 
 public class HttpRunnable implements Runnable
 {
     private IHttpRequest mHttpRequest;
     private CheeroRequest mCheeroRequest;
 
-    public HttpRunnable(IHttpRequest httpRequest, CheeroRequest cheeroRequest)
+    HttpRunnable(IHttpRequest httpRequest, CheeroRequest cheeroRequest)
     {
         this.mHttpRequest = httpRequest;
         this.mCheeroRequest = cheeroRequest;
@@ -23,24 +26,34 @@ public class HttpRunnable implements Runnable
     {
         try
         {
-            mHttpRequest.getBody().write(mCheeroRequest.getData());
+            OutputStream outputStream = mHttpRequest.getBody();
+            if (outputStream != null)
+                outputStream.write(mCheeroRequest.getData());
             IHttpResponse response = mHttpRequest.execute();
-            if (response.getStatus().isSuccess())
+            if (mCheeroRequest.getResponse() != null)
             {
-                if (mCheeroRequest.getResponse() != null)
+                if (response.getStatus().isSuccess())
                     mCheeroRequest.getResponse().success(mCheeroRequest, new String(getData(response)));
+                else
+                    mCheeroRequest.getResponse().failure(response.getStatus().getStatusCode(), response.getStatus().getMessage());
             }
         }
         catch (IOException e)
         {
             e.printStackTrace();
+            if (e instanceof SocketTimeoutException)
+                mCheeroRequest.getResponse().failure(HttpStatus.REQUEST_TIMEOUT.getStatusCode(), HttpStatus.REQUEST_TIMEOUT.getMessage());
+        }
+        finally
+        {
+            HttpRequestEngine.getInstance().finish(mCheeroRequest);
         }
     }
 
     /**
      * 获取响应body数据
      */
-    public byte[] getData(IHttpResponse response)
+    private byte[] getData(IHttpResponse response)
     {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream((int) response.getContentLength());
         int length;

@@ -20,6 +20,7 @@ import com.icheero.app.activity.data.ViewModelActivity;
 import com.icheero.app.activity.media.CameraActivity;
 import com.icheero.app.activity.network.DownloadActivity;
 import com.icheero.app.activity.network.ImageDownloadActivity;
+import com.icheero.app.activity.network.RequestActivity;
 import com.icheero.app.activity.network.RetrofitActivity;
 import com.icheero.app.activity.network.WebViewActivity;
 import com.icheero.app.activity.plugin.LoadPluginActivity;
@@ -66,6 +67,8 @@ public class MainActivity extends BaseActivity
     Button toDownloadActivity;
     @BindView(R.id.to_retrofit_activity)
     Button toRetrofitActivity;
+    @BindView(R.id.to_request_activity)
+    Button toRequestActivtiy;
     @BindView(R.id.to_camera_activity)
     Button toCameraActivity;
     @BindView(R.id.to_custom_setting_activity)
@@ -149,7 +152,7 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @OnClick({R.id.to_download_activity, R.id.to_image_download_activity, R.id.to_web_view_activity, R.id.to_retrofit_activity})
+    @OnClick({R.id.to_download_activity, R.id.to_image_download_activity, R.id.to_web_view_activity, R.id.to_retrofit_activity, R.id.to_request_activity})
     public void OnNetworkClickEvent(View v)
     {
         switch (v.getId())
@@ -165,6 +168,9 @@ public class MainActivity extends BaseActivity
                 break;
             case R.id.to_retrofit_activity:
                 startActivity(new Intent(this, RetrofitActivity.class));
+                break;
+            case R.id.to_request_activity:
+                startActivity(new Intent(this, RequestActivity.class));
                 break;
         }
     }

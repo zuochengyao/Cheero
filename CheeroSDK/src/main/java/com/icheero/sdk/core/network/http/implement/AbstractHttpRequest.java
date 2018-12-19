@@ -26,16 +26,19 @@ public abstract class AbstractHttpRequest implements IHttpRequest
     public OutputStream getBody()
     {
         OutputStream body = getBodyOutputStream();
-        if (isGzip())
-            return getGzipOutputStream(body);
-        return null;
+        if (isGzip()) return getGzipOutputStream(body);
+        return body;
     }
 
     @Override
     public IHttpResponse execute() throws IOException
     {
-        if (mZipOutStream != null)
-            mZipOutStream.close();
+        synchronized (this)
+        {
+            if (isExecuted) throw new IllegalStateException("The Request Already Executed");
+            isExecuted = true;
+        }
+        if (mZipOutStream != null) mZipOutStream.close();
         IHttpResponse response = execute(mHttpHeader);
         isExecuted = true;
         return response;
@@ -45,6 +48,11 @@ public abstract class AbstractHttpRequest implements IHttpRequest
     public void enqueue(IResponseListener listener)
     {
         // TODO
+        synchronized (this)
+        {
+            if (isExecuted) throw new IllegalStateException("The Request Already Executed");
+            isExecuted = true;
+        }
     }
 
     private boolean isGzip()
@@ -55,8 +63,7 @@ public abstract class AbstractHttpRequest implements IHttpRequest
 
     private OutputStream getGzipOutputStream(OutputStream body)
     {
-        if (this.mZipOutStream == null)
-            this.mZipOutStream = new ZipOutputStream(body);
+        if (this.mZipOutStream == null) this.mZipOutStream = new ZipOutputStream(body);
         return this.mZipOutStream;
     }
 

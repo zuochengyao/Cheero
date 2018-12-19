@@ -37,6 +37,15 @@ public class OkHttpRequest extends BufferHttpRequest
         this.mMediaType = mediaType;
     }
 
+    public static Request createPostRequest(@NonNull final String baseUrl, @NonNull Map<String, String> paramMap)
+    {
+        FormBody.Builder builder = new FormBody.Builder();
+        for (Map.Entry<String, String> entry : paramMap.entrySet())
+            builder.add(entry.getKey(), entry.getValue());
+        FormBody formBody = builder.build();
+        return new Request.Builder().url(baseUrl).post(formBody).build();
+    }
+
     @Override
     protected IHttpResponse execute(HttpHeader header, byte[] data) throws IOException
     {
@@ -110,14 +119,7 @@ public class OkHttpRequest extends BufferHttpRequest
         return createGetRequest(baseUrl);
     }
 
-    public static Request createPostRequest(@NonNull final String baseUrl, @NonNull Map<String, String> paramMap)
-    {
-        FormBody.Builder builder = new FormBody.Builder();
-        for (Map.Entry<String, String> entry : paramMap.entrySet())
-            builder.add(entry.getKey(), entry.getValue());
-        FormBody formBody = builder.build();
-        return new Request.Builder().url(baseUrl).post(formBody).build();
-    }
+
 
     public static Request createFilePostRequest(@NonNull final String baseUrl, @NonNull Map<String, Object> paramMap, String contentType)
     {

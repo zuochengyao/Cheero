@@ -13,10 +13,11 @@
         android:theme="@style/AppTheme.ActionBar"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:theme">
+
         <!-- region Activities -->
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/cheero_title_activity_main"
+            android:label="@string/cheero_app_title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -39,12 +40,13 @@
         <activity android:name=".activity.data.CustomSettingActivity"/>
         <activity
             android:name=".activity.data.SystemSettingActivity"
-            android:label="@string/title_activity_settings"/>
+            android:label="@string/cheero_app_title_activity_settings"/>
         <activity android:name=".activity.data.DatabaseActivity"/>
         <activity android:name=".activity.data.ViewModelActivity"/>
         <activity android:name=".activity.network.RetrofitActivity"/>
         <activity android:name=".activity.plugin.LoadPluginActivity"/>
         <!-- endregion -->
+
 
         <!-- region Services -->
         <service
@@ -56,6 +58,8 @@
             </intent-filter>
         </service>
         <!-- endregion -->
+        <activity android:name=".activity.network.RequestActivity">
+        </activity>
     </application>
 
 </manifest>

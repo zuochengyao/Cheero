@@ -37,7 +37,7 @@ public enum HttpStatus
     LENGTH_REQUIRED(411, "Length Required"),
     PAYLOAD_TOO_LARGE(413, "Payload Too Large"),
     URI_TOO_LONG(414, "URI Too Long"),
-    UNSUPPORTED_MEDIA_TYPE(415, "Unsupported Media Type  Server Error"),
+    UNSUPPORTED_MEDIA_TYPE(415, "Unsupported Media Type Server Error"),
     FAILED(417, "Failed Server Error"),
     UPGRADE_REQUIRED(426, "Upgrade Required"),
 
@@ -55,6 +55,16 @@ public enum HttpStatus
     {
         this.mStatusCode = statusCode;
         this.mMessage = message;
+    }
+
+    public int getStatusCode()
+    {
+        return mStatusCode;
+    }
+
+    public String getMessage()
+    {
+        return mMessage;
     }
 
     public static HttpStatus getValue(int value)

@@ -20,7 +20,6 @@ import javax.net.ssl.X509TrustManager;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -32,8 +31,6 @@ import okhttp3.Response;
 public class OkHttpManager //implements IHttpManager
 {
     private static final Class<OkHttpManager> TAG = OkHttpManager.class;
-
-    private static final MediaType MEDIATYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
     public static final int NETWORK_STATUS_CODE_SUCCESS = 200;
     public static final int NETWORK_STATUS_CODE_ERROR = 400;
