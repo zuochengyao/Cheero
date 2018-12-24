@@ -1,6 +1,7 @@
 package com.icheero.sdk.core.network.http.api;
 
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
+import com.icheero.sdk.core.network.listener.IResponseListener;
 
 /**
  * @author 左程耀
@@ -13,7 +14,7 @@ public class CheeroRequest
     private byte[] mData;
     private String mMediaType;
     private String mContentType;
-    private CheeroResponse mResponse;
+    private IResponseListener mResponse;
 
     public String getUrl()
     {
@@ -65,12 +66,12 @@ public class CheeroRequest
         this.mContentType = contentType;
     }
 
-    public CheeroResponse getResponse()
+    public IResponseListener getResponse()
     {
         return mResponse;
     }
 
-    public void setResponse(CheeroResponse response)
+    public void setResponse(IResponseListener response)
     {
         this.mResponse = response;
     }

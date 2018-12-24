@@ -114,7 +114,8 @@ public class OkHttpManager //implements IHttpManager
             public void onResponse(Call call, Response response)
             {
                 if (response.isSuccessful())
-                    listener.onSuccess(response.message());
+                    // TODO : Request is null
+                    listener.onSuccess(null, response.message());
                 else
                     listener.onFailure(response.code(), response.message());
             }

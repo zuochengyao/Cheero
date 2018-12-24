@@ -2,9 +2,13 @@ package com.icheero.sdk.core.network.http.api;
 
 import com.icheero.sdk.core.network.http.HttpRequestEngine;
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
+import com.icheero.sdk.core.network.http.encapsulation.IConvert;
+import com.icheero.sdk.core.network.listener.IResponseListener;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class CheeroApi
@@ -26,7 +30,9 @@ public class CheeroApi
     public static final String MEDIA_TYPE_TEXT = "text/plain;charset=utf-8";
     public static final String MEDIA_TYPE_JSON = "application/json;charset=utf-8";
 
-    public static void helloWorld(String url, Map<String, String> value, CheeroResponse<String> response)
+    private static final List<IConvert> mConvertList = new ArrayList<>();
+
+    public static void helloWorld(String url, Map<String, String> value, IResponseListener<String> response)
     {
         CheeroRequest request = new CheeroRequest();
         request.setUrl(url);

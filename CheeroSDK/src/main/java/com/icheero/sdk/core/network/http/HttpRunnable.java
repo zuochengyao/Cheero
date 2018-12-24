@@ -34,16 +34,16 @@ public class HttpRunnable implements Runnable
             if (mCheeroRequest.getResponse() != null)
             {
                 if (response.getStatus().isSuccess())
-                    mCheeroRequest.getResponse().success(mCheeroRequest, new String(getData(response)));
+                    mCheeroRequest.getResponse().onSuccess(mCheeroRequest, new String(getData(response)));
                 else
-                    mCheeroRequest.getResponse().failure(response.getStatus().getStatusCode(), response.getStatus().getMessage());
+                    mCheeroRequest.getResponse().onFailure(response.getStatus().getStatusCode(), response.getStatus().getMessage());
             }
         }
         catch (IOException e)
         {
             e.printStackTrace();
             if (e instanceof SocketTimeoutException)
-                mCheeroRequest.getResponse().failure(HttpStatus.REQUEST_TIMEOUT.getStatusCode(), HttpStatus.REQUEST_TIMEOUT.getMessage());
+                mCheeroRequest.getResponse().onFailure(HttpStatus.REQUEST_TIMEOUT.getStatusCode(), HttpStatus.REQUEST_TIMEOUT.getMessage());
         }
         finally
         {
