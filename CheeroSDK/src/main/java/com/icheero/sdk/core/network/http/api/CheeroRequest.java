@@ -12,6 +12,7 @@ public class CheeroRequest
     private HttpMethod mMethod;
     private byte[] mData;
     private String mMediaType;
+    private String mContentType;
     private CheeroResponse mResponse;
 
     public String getUrl()
@@ -52,6 +53,16 @@ public class CheeroRequest
     public void setMediaType(String mediaType)
     {
         this.mMediaType = mediaType;
+    }
+
+    public String getContentType()
+    {
+        return mContentType;
+    }
+
+    public void setContentType(String contentType)
+    {
+        this.mContentType = contentType;
     }
 
     public CheeroResponse getResponse()

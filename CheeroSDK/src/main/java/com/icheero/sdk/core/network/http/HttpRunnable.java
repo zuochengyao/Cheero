@@ -30,6 +30,7 @@ public class HttpRunnable implements Runnable
             if (outputStream != null)
                 outputStream.write(mCheeroRequest.getData());
             IHttpResponse response = mHttpRequest.execute();
+            mCheeroRequest.setContentType(response.getHeaders().getContentType());
             if (mCheeroRequest.getResponse() != null)
             {
                 if (response.getStatus().isSuccess())

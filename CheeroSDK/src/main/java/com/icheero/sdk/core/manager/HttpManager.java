@@ -5,6 +5,7 @@ import com.icheero.sdk.core.network.http.HttpRequestProvider;
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpRequest;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpRequestFactory;
+import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpRequestFactory;
 
 import java.io.IOException;
 import java.net.URI;
@@ -36,7 +37,12 @@ public class HttpManager
     {
         mHttpRequestFactory.setConnectionTimeout(config.getConnectTimeout());
         mHttpRequestFactory.setReadTimeout(config.getReadTimeout());
-        mHttpRequestFactory.setWriteTimeout(config.getWriteTimeout());
+        if (mHttpRequestFactory instanceof OkHttpRequestFactory)
+        {
+
+            ((OkHttpRequestFactory) mHttpRequestFactory).setWriteTimeout(config.getWriteTimeout());
+            ((OkHttpRequestFactory) mHttpRequestFactory).setRetryOnConnectionFailure(config.isRetryOnConnectionFailure());
+        }
     }
 
     public IHttpRequest getHttpRequest(URI uri, HttpMethod method, String mediaType)

@@ -2,14 +2,13 @@ package com.icheero.sdk.core.network.http.framework.retrofit;
 
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpRequest;
-import com.icheero.sdk.core.network.http.encapsulation.IHttpRequestFactory;
 
 import java.io.IOException;
 import java.net.URI;
 
 import retrofit2.Retrofit;
 
-public class RetrofitHttpRequestFactory implements IHttpRequestFactory
+public class RetrofitHttpRequestFactory implements IRetrofitRequestFactory
 {
     private Retrofit mRetrofit;
 
@@ -21,7 +20,6 @@ public class RetrofitHttpRequestFactory implements IHttpRequestFactory
     @Override
     public void setReadTimeout(int readTimeout)
     {
-
     }
 
     @Override
@@ -32,6 +30,12 @@ public class RetrofitHttpRequestFactory implements IHttpRequestFactory
 
     @Override
     public void setConnectionTimeout(int connectionTimeout)
+    {
+
+    }
+
+    @Override
+    public void setRetryOnConnectionFailure(boolean retry)
     {
 
     }

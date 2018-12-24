@@ -14,17 +14,13 @@ public class OriginHttpRequestFactory implements IHttpRequestFactory
 
     public OriginHttpRequestFactory()
     {
+        // TODO : init mConnection
     }
 
     @Override
     public void setReadTimeout(int readTimeout)
     {
         mConnection.setReadTimeout(readTimeout);
-    }
-
-    @Override
-    public void setWriteTimeout(int readTimeout)
-    {
     }
 
     @Override

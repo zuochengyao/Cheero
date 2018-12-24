@@ -12,7 +12,7 @@ import java.net.URI;
 
 public class HttpRequestProvider
 {
-    private static final String CLASSNAME_OKHTTP3_OKHTTPCLIENT = "okhttp3.OkHttpClient";
+    private static final String CLASSNAME_OKHTTP3_OKHTTP_CLIENT = "okhttp3.OkHttpClient";
 
     private IHttpRequestFactory mHttpRequestFactory;
 
@@ -21,7 +21,7 @@ public class HttpRequestProvider
     private HttpRequestProvider()
     {
         // 是否支持okhttp3
-        boolean isOkHttpSupport = Common.isClassExist(CLASSNAME_OKHTTP3_OKHTTPCLIENT, HttpRequestProvider.class.getClassLoader());
+        boolean isOkHttpSupport = Common.isClassExist(CLASSNAME_OKHTTP3_OKHTTP_CLIENT, HttpRequestProvider.class.getClassLoader());
         if (isOkHttpSupport)
             mHttpRequestFactory = new OkHttpRequestFactory();
         else

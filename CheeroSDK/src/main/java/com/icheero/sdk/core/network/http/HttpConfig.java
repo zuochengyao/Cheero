@@ -8,12 +8,15 @@ public class HttpConfig
     private int mReadTimeout;
     /** 写 超时时长 单位：秒 */
     private int mWriteTimeout;
+    /** 是否自动重连 */
+    private boolean mRetryOnConnectionFailure;
 
     private HttpConfig(Builder builder)
     {
         this.mConnectTimeout = builder.connectTimeout;
         this.mReadTimeout = builder.readTimeout;
         this.mWriteTimeout = builder.writeTimeout;
+        this.mRetryOnConnectionFailure = builder.retryOnConnectionFailure;
     }
 
     public int getConnectTimeout()
@@ -31,11 +34,17 @@ public class HttpConfig
         return mWriteTimeout;
     }
 
+    public boolean isRetryOnConnectionFailure()
+    {
+        return mRetryOnConnectionFailure;
+    }
+
     public static class Builder
     {
         private int connectTimeout = 60;
         private int readTimeout = 30;
         private int writeTimeout = 30;
+        private boolean retryOnConnectionFailure = true;
 
         public Builder setConnectTimeout(int timeout)
         {
@@ -52,6 +61,12 @@ public class HttpConfig
         public Builder setWriteTimeout(int timeout)
         {
             this.writeTimeout = timeout;
+            return this;
+        }
+
+        public Builder setRetryOnConnectionFailure(boolean retry)
+        {
+            this.retryOnConnectionFailure = retry;
             return this;
         }
 
