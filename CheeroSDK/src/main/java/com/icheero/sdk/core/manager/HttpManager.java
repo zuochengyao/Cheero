@@ -39,7 +39,6 @@ public class HttpManager
         mHttpRequestFactory.setReadTimeout(config.getReadTimeout());
         if (mHttpRequestFactory instanceof OkHttpRequestFactory)
         {
-
             ((OkHttpRequestFactory) mHttpRequestFactory).setWriteTimeout(config.getWriteTimeout());
             ((OkHttpRequestFactory) mHttpRequestFactory).setRetryOnConnectionFailure(config.isRetryOnConnectionFailure());
         }

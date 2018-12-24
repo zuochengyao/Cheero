@@ -3,6 +3,7 @@ package com.icheero.sdk.core.network.http.api;
 import com.icheero.sdk.core.network.http.HttpRequestEngine;
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 import com.icheero.sdk.core.network.http.encapsulation.IConvert;
+import com.icheero.sdk.core.network.http.implement.JsonConvert;
 import com.icheero.sdk.core.network.listener.IResponseListener;
 
 import java.io.UnsupportedEncodingException;
@@ -32,13 +33,19 @@ public class CheeroApi
 
     private static final List<IConvert> mConvertList = new ArrayList<>();
 
-    public static void helloWorld(String url, Map<String, String> value, IResponseListener<String> response)
+    static
+    {
+        mConvertList.add(new JsonConvert());
+    }
+
+    public static void helloWorld(String url, Map<String, String> value, IResponseListener response)
     {
         CheeroRequest request = new CheeroRequest();
+        CheeroResponse cheeroResponse = new CheeroResponse(response, mConvertList);
         request.setUrl(url);
         request.setMethod(HttpMethod.POST);
         request.setData(encodeParam(value));
-        request.setResponse(response);
+        request.setResponse(cheeroResponse);
         request.setMediaType(MEDIA_TYPE_NORMAL);
         HttpRequestEngine.getInstance().add(request);
     }

@@ -8,4 +8,6 @@ public interface IConvert
     Object parse(Reader reader, Type type);
 
     Object parse(String content, Type type);
+
+    boolean isSupportParse(String contentType);
 }

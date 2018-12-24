@@ -21,14 +21,14 @@ public class RequestActivity extends BaseActivity
         setContentView(R.layout.activity_request);
         Map<String, String> map = new HashMap<>();
         map.put("username", "Cheero");
-        map.put("age", "28");
+        map.put("password", "123456");
 
-        findViewById(R.id.request_btn).setOnClickListener(v -> CheeroApi.helloWorld("http://10.155.2.130:8080/cheero/hello.action", map, new IResponseListener<String>()
+        findViewById(R.id.request_btn).setOnClickListener(v -> CheeroApi.helloWorld("http://10.155.2.130:8080/cheero/hello.action", map, new IResponseListener<Person>()
         {
             @Override
-            public void onSuccess(CheeroRequest request, String data)
+            public void onSuccess(CheeroRequest request, Person data)
             {
-                Log.i(TAG, "success:[" + data + "]");
+                Log.i(TAG, "success:[" + data.toString() + "]");
             }
 
             @Override
@@ -37,5 +37,24 @@ public class RequestActivity extends BaseActivity
                 Log.i(TAG, "error:[" + errorCode + ":" + errorMessage + "]");
             }
         }));
+    }
+
+    class Person
+    {
+        public int id;
+        public String username;
+        public String password;
+        public short type;
+
+        @Override
+        public String toString()
+        {
+            return "Person{" +
+                    "id=" + id + "," +
+                    "username=" + username + "," +
+                    "password=" + password + "," +
+                    "type=" + type +
+                    "}";
+        }
     }
 }

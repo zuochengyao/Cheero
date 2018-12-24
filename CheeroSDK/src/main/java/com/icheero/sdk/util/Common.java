@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import com.icheero.sdk.base.BaseApplication;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -109,4 +111,16 @@ public class Common
         return flag;
     }
 
+    public static Type getGenericInterfaceType(Class interfaceObj)
+    {
+        Type[] types = interfaceObj.getGenericInterfaces();
+        ParameterizedType parameterized = (ParameterizedType) types[0];
+        return parameterized.getActualTypeArguments()[0];
+    }
+
+    public static Type getGenericClassType(Class classObj)
+    {
+        Type type = classObj.getGenericSuperclass();
+        return type != null ? ((ParameterizedType) type).getActualTypeArguments()[0] : null;
+    }
 }

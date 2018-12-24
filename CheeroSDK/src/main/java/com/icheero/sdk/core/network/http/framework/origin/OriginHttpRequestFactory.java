@@ -20,13 +20,13 @@ public class OriginHttpRequestFactory implements IHttpRequestFactory
     @Override
     public void setReadTimeout(int readTimeout)
     {
-        mConnection.setReadTimeout(readTimeout);
+        mConnection.setReadTimeout(readTimeout * 1000);
     }
 
     @Override
     public void setConnectionTimeout(int connectionTimeout)
     {
-        mConnection.setConnectTimeout(connectionTimeout);
+        mConnection.setConnectTimeout(connectionTimeout * 1000);
     }
 
     @Override

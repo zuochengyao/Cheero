@@ -25,18 +25,18 @@ public class OkHttpRequestFactory implements IOkHttpRequestFactory
     @Override
     public void setReadTimeout(int readTimeout)
     {
-        this.mClient = mClient.newBuilder().readTimeout(readTimeout, TimeUnit.MILLISECONDS).build();
+        this.mClient = mClient.newBuilder().readTimeout(readTimeout, TimeUnit.SECONDS).build();
     }
 
     public void setWriteTimeout(int writeTimeout)
     {
-        this.mClient = mClient.newBuilder().writeTimeout(writeTimeout, TimeUnit.MILLISECONDS).build();
+        this.mClient = mClient.newBuilder().writeTimeout(writeTimeout, TimeUnit.SECONDS).build();
     }
 
     @Override
     public void setConnectionTimeout(int connectionTimeout)
     {
-        this.mClient = mClient.newBuilder().connectTimeout(connectionTimeout, TimeUnit.MILLISECONDS).build();
+        this.mClient = mClient.newBuilder().connectTimeout(connectionTimeout, TimeUnit.SECONDS).build();
     }
 
     @Override

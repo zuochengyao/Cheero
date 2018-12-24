@@ -2,15 +2,16 @@ package com.icheero.sdk.core.network.http.api;
 
 import com.icheero.sdk.core.network.http.encapsulation.IConvert;
 import com.icheero.sdk.core.network.listener.IResponseListener;
+import com.icheero.sdk.util.Common;
 
 import java.util.List;
 
-public abstract class WrapperResponse implements IResponseListener<String>
+public class CheeroResponse implements IResponseListener<String>
 {
     private IResponseListener mResponse;
     private List<IConvert> mConvertList;
 
-    public WrapperResponse(IResponseListener response, List<IConvert> convertList)
+    public CheeroResponse(IResponseListener response, List<IConvert> convertList)
     {
         this.mResponse = response;
         this.mConvertList = convertList;
@@ -19,7 +20,15 @@ public abstract class WrapperResponse implements IResponseListener<String>
     @Override
     public void onSuccess(CheeroRequest request, String data)
     {
-
+        for (IConvert convert : mConvertList)
+        {
+            if (convert.isSupportParse(request.getContentType()))
+            {
+                Object obj = convert.parse(data, Common.getGenericInterfaceType(mResponse.getClass()));
+                mResponse.onSuccess(request, obj);
+                break;
+            }
+        }
     }
 
     @Override
