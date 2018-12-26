@@ -1,12 +1,12 @@
 package com.icheero.sdk.core.network.http.framework.origin;
 
-import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
-import com.icheero.sdk.core.network.http.encapsulation.IHttpRequest;
+import com.icheero.sdk.core.network.http.HttpRequest;
+import com.icheero.sdk.core.network.http.encapsulation.IHttpCall;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpRequestFactory;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.URI;
+import java.net.URL;
 
 public class OriginHttpRequestFactory implements IHttpRequestFactory
 {
@@ -30,9 +30,16 @@ public class OriginHttpRequestFactory implements IHttpRequestFactory
     }
 
     @Override
-    public IHttpRequest createHttpRequest(URI uri, HttpMethod method, String mediaType) throws IOException
+    public IHttpCall getHttpCall(HttpRequest request)
     {
-        mConnection = (HttpURLConnection) uri.toURL().openConnection();
-        return new OriginHttpRequest(mConnection, method, uri.toString());
+        try
+        {
+            mConnection = (HttpURLConnection) new URL(request.getUrl()).openConnection();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return new OriginHttpCall(mConnection, request.getMethod(), request.getUrl());
     }
 }

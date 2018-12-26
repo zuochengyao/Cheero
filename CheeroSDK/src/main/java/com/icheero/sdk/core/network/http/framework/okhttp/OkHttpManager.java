@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 
 import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
-import com.icheero.sdk.core.network.listener.IResponseListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,7 +27,7 @@ import okhttp3.Response;
  * OkHttp 工具类
  * Created by zuochengyao on 2018/3/1.
  */
-public class OkHttpManager //implements IHttpManager
+public class OkHttpManager
 {
     private static final Class<OkHttpManager> TAG = OkHttpManager.class;
 
@@ -98,28 +97,6 @@ public class OkHttpManager //implements IHttpManager
             e.printStackTrace();
         }
         return null;
-    }
-
-    public void asyncRequest(@NonNull Request request, @NonNull IResponseListener listener)
-    {
-        mOkHttpClient.newCall(request).enqueue(new Callback()
-        {
-            @Override
-            public void onFailure(Call call, IOException e)
-            {
-                listener.onFailure(408, e.toString());
-            }
-
-            @Override
-            public void onResponse(Call call, Response response)
-            {
-                if (response.isSuccessful())
-                    // TODO : Request is null
-                    listener.onSuccess(null, response.message());
-                else
-                    listener.onFailure(response.code(), response.message());
-            }
-        });
     }
 
     public void asyncDownload(@NonNull Request request, @NonNull Callback callback)

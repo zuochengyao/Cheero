@@ -46,12 +46,14 @@ public enum HttpStatus
     BAD_GATEWAY(502, "Bad_Gateway"),
     SERVICE_UNAVAILABLE(503, "Service Unavailable"),
     GATEWAY_TIMEOUT(504, "Gateway Timeout"),
-    HTTP_VERSION_NOT_SUPPORTED(505, "HTTP Version Not Supported");
+    HTTP_VERSION_NOT_SUPPORTED(505, "HTTP Version Not Supported"),
+
+    UNKNOWN(-1, "Unknown error");
 
     private int mStatusCode;
     private String mMessage;
 
-    private HttpStatus(int statusCode, String message)
+    HttpStatus(int statusCode, String message)
     {
         this.mStatusCode = statusCode;
         this.mMessage = message;
@@ -74,7 +76,7 @@ public enum HttpStatus
             if (value == httpStatus.mStatusCode)
                 return httpStatus;
         }
-        return null;
+        return UNKNOWN;
     }
 
     public boolean isSuccess()

@@ -7,11 +7,11 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.facebook.stetho.Stetho;
 import com.icheero.sdk.core.database.DBHelper;
 import com.icheero.sdk.core.manager.AndFixPatchManager;
-import com.icheero.sdk.core.manager.HttpManager;
 import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.core.network.download.DownloadConfig;
 import com.icheero.sdk.core.network.download.DownloadManager;
 import com.icheero.sdk.core.network.http.HttpConfig;
+import com.icheero.sdk.core.network.http.HttpRequestEngine;
 import com.icheero.sdk.util.Log;
 
 public class BaseApplication extends Application
@@ -26,8 +26,15 @@ public class BaseApplication extends Application
         Log.traceMode(Log.TRACE_MODE_ON_SCREEN);
         // 初始化 IO管理器
         IOManager.getInstance();
-        HttpConfig httpConfig = new HttpConfig.Builder().build();
-        HttpManager.getInstance().init(httpConfig);
+        // 初始化 网络请求
+        HttpConfig httpConfig = new HttpConfig.Builder()
+                .setConnectTimeout(60)
+                .setReadTimeout(30)
+                .setWriteTimeout(30)
+                .setRetryOnConnectionFailure(true)
+                .build();
+        HttpRequestEngine.getInstance().init(httpConfig);
+        // 初始化 下载管理
         DownloadConfig downloadConfig = new DownloadConfig.Builder()
                 .setThreadCoreCount(3)
                 .setThreadMaxCount(3)

@@ -14,6 +14,4 @@ public interface IDownloadListener
     void onFailure(int errorCode, String errorMsg);
 
     void onProgress(int progress);
-
-    // void onProgress(long byteRW, long contentLength, boolean done);
 }

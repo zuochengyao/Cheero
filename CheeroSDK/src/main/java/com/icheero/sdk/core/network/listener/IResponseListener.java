@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.network.listener;
 
-import com.icheero.sdk.core.network.http.api.CheeroRequest;
+import com.icheero.sdk.core.network.http.HttpRequest;
 
 /**
  * Created by zuochengyao on 2018/3/6.
@@ -8,7 +8,7 @@ import com.icheero.sdk.core.network.http.api.CheeroRequest;
 
 public interface IResponseListener<T>
 {
-    void onSuccess(CheeroRequest request, T data);
+    void onSuccess(HttpRequest request, T data);
 
     void onFailure(int errorCode, String errorMessage);
 }

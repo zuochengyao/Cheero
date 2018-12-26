@@ -7,7 +7,7 @@ import com.icheero.sdk.core.database.entity.Download;
 import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
 import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpManager;
-import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpRequest;
+import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpCall;
 
 import java.io.File;
 import java.io.IOException;
@@ -90,7 +90,7 @@ public class DownloadManager
             else
             {
                 // 没有下载过
-                OkHttpManager.getInstance().asyncDownload(OkHttpRequest.createGetRequest(url), new Callback() {
+                OkHttpManager.getInstance().asyncDownload(OkHttpCall.createGetRequest(url), new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e)
                     {

@@ -4,8 +4,8 @@ import android.os.Bundle;
 
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
+import com.icheero.sdk.core.network.http.HttpRequest;
 import com.icheero.sdk.core.network.http.api.CheeroApi;
-import com.icheero.sdk.core.network.http.api.CheeroRequest;
 import com.icheero.sdk.core.network.listener.IResponseListener;
 import com.icheero.sdk.util.Log;
 
@@ -26,7 +26,7 @@ public class RequestActivity extends BaseActivity
         findViewById(R.id.request_btn).setOnClickListener(v -> CheeroApi.helloWorld("http://10.155.2.130:8080/cheero/hello.action", map, new IResponseListener<Person>()
         {
             @Override
-            public void onSuccess(CheeroRequest request, Person data)
+            public void onSuccess(HttpRequest request, Person data)
             {
                 Log.i(TAG, "success:[" + data.toString() + "]");
             }

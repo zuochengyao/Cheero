@@ -69,6 +69,8 @@ dependencies {
     // Okhttp
     api versions.deps.okio
     api versions.deps.okhttp
+    // Volley
+    api versions.deps.volley
     // Alibaba ARouter
     api versions.deps.arouter_api
     // Alibaba Andfix

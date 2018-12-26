@@ -1,9 +1,8 @@
 package com.icheero.sdk.core.network.http.framework.okhttp;
 
-import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
-import com.icheero.sdk.core.network.http.encapsulation.IHttpRequest;
+import com.icheero.sdk.core.network.http.HttpRequest;
+import com.icheero.sdk.core.network.http.encapsulation.IHttpCall;
 
-import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -11,7 +10,7 @@ import okhttp3.OkHttpClient;
 /**
  * @author 左程耀
  *
- * OkHttpRequest 工厂类
+ * OkHttpCall 工厂类
  */
 public class OkHttpRequestFactory implements IOkHttpRequestFactory
 {
@@ -46,8 +45,8 @@ public class OkHttpRequestFactory implements IOkHttpRequestFactory
     }
 
     @Override
-    public IHttpRequest createHttpRequest(URI uri, HttpMethod method, String mediaType)
+    public IHttpCall getHttpCall(HttpRequest request)
     {
-        return new OkHttpRequest(mClient, method, uri.toString(), mediaType);
+        return new OkHttpCall(mClient, request);
     }
 }

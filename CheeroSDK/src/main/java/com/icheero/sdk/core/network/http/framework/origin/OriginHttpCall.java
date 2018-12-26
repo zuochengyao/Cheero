@@ -2,7 +2,7 @@ package com.icheero.sdk.core.network.http.framework.origin;
 
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
-import com.icheero.sdk.core.network.http.implement.BufferHttpRequest;
+import com.icheero.sdk.core.network.http.implement.BufferHttpCall;
 import com.icheero.sdk.core.network.http.implement.HttpHeader;
 
 import java.io.IOException;
@@ -11,13 +11,13 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.Map;
 
-public class OriginHttpRequest extends BufferHttpRequest
+public class OriginHttpCall extends BufferHttpCall
 {
     private HttpURLConnection mConnection;
     private HttpMethod mMethod;
     private String mUrl;
 
-    public OriginHttpRequest(HttpURLConnection connection, HttpMethod method, String url)
+    public OriginHttpCall(HttpURLConnection connection, HttpMethod method, String url)
     {
         this.mConnection = connection;
         this.mMethod = method;
@@ -39,8 +39,13 @@ public class OriginHttpRequest extends BufferHttpRequest
             out.write(data, 0, data.length);
             out.close();
         }
-        OriginHttpResponse response = new OriginHttpResponse(mConnection);
-        return response;
+        return new OriginHttpResponse(mConnection);
+    }
+
+    @Override
+    protected void enqueue(HttpHeader header, byte[] data)
+    {
+        // TODO
     }
 
     @Override

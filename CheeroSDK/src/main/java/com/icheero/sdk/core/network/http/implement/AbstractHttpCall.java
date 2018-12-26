@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.network.http.implement;
 
-import com.icheero.sdk.core.network.http.encapsulation.IHttpRequest;
+import com.icheero.sdk.core.network.http.encapsulation.IHttpCall;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
 import com.icheero.sdk.core.network.listener.IResponseListener;
 
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.zip.ZipOutputStream;
 
-public abstract class AbstractHttpRequest implements IHttpRequest
+public abstract class AbstractHttpCall implements IHttpCall
 {
     private static final String GZIP = "gzip";
 
@@ -26,7 +26,8 @@ public abstract class AbstractHttpRequest implements IHttpRequest
     public OutputStream getBody()
     {
         OutputStream body = getBodyOutputStream();
-        if (isGzip()) return getGzipOutputStream(body);
+        if (isGzip())
+            return getGzipOutputStream(body);
         return body;
     }
 
@@ -38,21 +39,25 @@ public abstract class AbstractHttpRequest implements IHttpRequest
             if (isExecuted) throw new IllegalStateException("The Request Already Executed");
             isExecuted = true;
         }
-        if (mZipOutStream != null) mZipOutStream.close();
+        if (mZipOutStream != null)
+            mZipOutStream.close();
         IHttpResponse response = execute(mHttpHeader);
         isExecuted = true;
         return response;
     }
 
     @Override
-    public void enqueue(IResponseListener listener)
+    public void enqueue() throws IOException
     {
-        // TODO
         synchronized (this)
         {
-            if (isExecuted) throw new IllegalStateException("The Request Already Executed");
+            if (isExecuted)
+                throw new IllegalStateException("The Request Already Executed");
             isExecuted = true;
         }
+        if (mZipOutStream != null)
+            mZipOutStream.close();
+        enqueue(mHttpHeader);
     }
 
     private boolean isGzip()
@@ -63,11 +68,14 @@ public abstract class AbstractHttpRequest implements IHttpRequest
 
     private OutputStream getGzipOutputStream(OutputStream body)
     {
-        if (this.mZipOutStream == null) this.mZipOutStream = new ZipOutputStream(body);
+        if (this.mZipOutStream == null)
+            this.mZipOutStream = new ZipOutputStream(body);
         return this.mZipOutStream;
     }
 
     protected abstract OutputStream getBodyOutputStream();
 
     protected abstract IHttpResponse execute(HttpHeader header) throws IOException;
+
+    protected abstract void enqueue(HttpHeader header);
 }

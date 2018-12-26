@@ -19,7 +19,7 @@ public class OriginHttpResponse extends AbstractHttpResponse
 {
     private HttpURLConnection mConnection;
 
-    public OriginHttpResponse(HttpURLConnection connection)
+    OriginHttpResponse(HttpURLConnection connection)
     {
         this.mConnection = connection;
     }

@@ -1,11 +1,12 @@
 package com.icheero.sdk.core.network.http;
 
-import com.icheero.sdk.core.network.http.api.CheeroRequest;
-import com.icheero.sdk.core.network.http.encapsulation.IHttpRequest;
+import com.icheero.sdk.core.network.http.encapsulation.IHttpCall;
+import com.icheero.sdk.core.network.http.encapsulation.IHttpRequestFactory;
+import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
+import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpRequestFactory;
 import com.icheero.sdk.util.Log;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
@@ -18,7 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class HttpRequestEngine
 {
     private static final Class TAG = HttpRequestEngine.class;
-    private static final int REQUEST_SIZE_MAX = 60;
+    private static final int REQUEST_SIZE_MAX = 64;
 
     private static final ThreadPoolExecutor mThreadPool = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60, TimeUnit.SECONDS, new SynchronousQueue<>(), new ThreadFactory()
     {
@@ -31,8 +32,9 @@ public class HttpRequestEngine
         }
     });
 
-    private Deque<CheeroRequest> mRunningQueue;
-    private Deque<CheeroRequest> mCacheQueue;
+    private Deque<HttpRequest> mRunningQueue;
+    private Deque<HttpRequest> mCacheQueue;
+    private IHttpRequestFactory mHttpRequestFactory;
 
     private static volatile HttpRequestEngine mInstance;
 
@@ -40,6 +42,7 @@ public class HttpRequestEngine
     {
         mRunningQueue = new ArrayDeque<>();
         mCacheQueue = new ArrayDeque<>();
+        mHttpRequestFactory = HttpRequestProvider.getInstance().getHttpRequestFactory();
     }
 
     public static HttpRequestEngine getInstance()
@@ -55,23 +58,65 @@ public class HttpRequestEngine
         return mInstance;
     }
 
-    public void add(CheeroRequest cheeroRequest)
+    public void init(HttpConfig config)
     {
-        if (mRunningQueue.size() > REQUEST_SIZE_MAX)
-            mCacheQueue.add(cheeroRequest);
-        else
-            doRequest(cheeroRequest);
+        mHttpRequestFactory.setConnectionTimeout(config.getConnectTimeout());
+        mHttpRequestFactory.setReadTimeout(config.getReadTimeout());
+        if (mHttpRequestFactory instanceof OkHttpRequestFactory)
+        {
+            ((OkHttpRequestFactory) mHttpRequestFactory).setWriteTimeout(config.getWriteTimeout());
+            ((OkHttpRequestFactory) mHttpRequestFactory).setRetryOnConnectionFailure(config.isRetryOnConnectionFailure());
+        }
     }
 
-    void finish(CheeroRequest cheeroRequest)
+    /**
+     * 同步请求：直接执行，等待结果
+     */
+    public IHttpResponse execute(HttpRequest request)
     {
-        mRunningQueue.remove(cheeroRequest);
+        try
+        {
+            return HttpRequestProvider.getInstance().getHttpCall(request).execute();
+        }
+        catch (IOException e)
+        {
+            Log.e(TAG, "HttpRequest Execute Failed!");
+        }
+        return null;
+    }
+
+    /**
+     * 异步请求：将请求添加到请求队列中，通过回调获取结果
+     */
+    public void enqueue(HttpRequest request)
+    {
+        if (mRunningQueue.size() > REQUEST_SIZE_MAX)
+            mCacheQueue.add(request);
+        else
+            doRequest(request);
+        // TODO --------------------------------------------------
+        try
+        {
+            HttpRequestProvider.getInstance().getHttpCall(request).enqueue();
+        }
+        catch (IOException e)
+        {
+            Log.e(TAG, "HttpRequest Enqueue Failed!");
+        }
+    }
+
+    /**
+     * 异步请求完成后调用
+     */
+    void finish(HttpRequest request)
+    {
+        mRunningQueue.remove(request);
         if (mRunningQueue.size() <= REQUEST_SIZE_MAX && mCacheQueue.size() > 0)
         {
-            Iterator<CheeroRequest> iterator = mCacheQueue.iterator();
+            Iterator<HttpRequest> iterator = mCacheQueue.iterator();
             while (iterator.hasNext())
             {
-                CheeroRequest next = iterator.next();
+                HttpRequest next = iterator.next();
                 mRunningQueue.add(next);
                 iterator.remove();
                 doRequest(next);
@@ -79,16 +124,13 @@ public class HttpRequestEngine
         }
     }
 
-    private void doRequest(CheeroRequest cheeroRequest)
+    private void doRequest(HttpRequest request)
     {
-        try
+        IHttpCall httpRequest = HttpRequestProvider.getInstance().getHttpCall(request);
+        if (httpRequest != null)
         {
-            IHttpRequest httpRequest = HttpRequestProvider.getInstance().getHttpRequest(URI.create(cheeroRequest.getUrl()), cheeroRequest.getMethod(), cheeroRequest.getMediaType());
-            mThreadPool.execute(new HttpRunnable(httpRequest, cheeroRequest));
-        }
-        catch (IOException e)
-        {
-            Log.e(TAG, "Http request enqueue failed!");
+            mRunningQueue.add(request);
+            mThreadPool.execute(new HttpRunnable(httpRequest, request));
         }
     }
 }

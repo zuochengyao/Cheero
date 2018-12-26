@@ -11,6 +11,4 @@ public class CheeroService extends Service
     {
         return null;
     }
-
-
 }

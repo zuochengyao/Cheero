@@ -1,13 +1,14 @@
 package com.icheero.sdk.core.network.http.api;
 
+import com.icheero.sdk.core.network.http.HttpRequest;
+import com.icheero.sdk.core.network.http.HttpResponse;
 import com.icheero.sdk.core.network.http.HttpRequestEngine;
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 import com.icheero.sdk.core.network.http.encapsulation.IConvert;
 import com.icheero.sdk.core.network.http.implement.JsonConvert;
 import com.icheero.sdk.core.network.listener.IResponseListener;
+import com.icheero.sdk.util.Common;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,37 +41,15 @@ public class CheeroApi
 
     public static void helloWorld(String url, Map<String, String> value, IResponseListener response)
     {
-        CheeroRequest request = new CheeroRequest();
-        CheeroResponse cheeroResponse = new CheeroResponse(response, mConvertList);
+        HttpResponse cheeroResponse = new HttpResponse(response, mConvertList);
+        HttpRequest request = new HttpRequest();
         request.setUrl(url);
         request.setMethod(HttpMethod.POST);
-        request.setData(encodeParam(value));
+        request.setData(Common.encodeParam(value, ENCODE_UTF8));
         request.setResponse(cheeroResponse);
         request.setMediaType(MEDIA_TYPE_NORMAL);
-        HttpRequestEngine.getInstance().add(request);
-    }
 
-    private static byte[] encodeParam(Map<String, String> value)
-    {
-        if (value != null && value.size() > 0)
-        {
-            StringBuilder sb = new StringBuilder();
-            int index = 0;
-            for (Map.Entry<String, String> entry : value.entrySet())
-            {
-                try
-                {
-                    sb.append(URLEncoder.encode(entry.getKey(), ENCODE_UTF8)).append("=").append(URLEncoder.encode(entry.getValue(), ENCODE_UTF8));
-                    if (index != value.size() - 1) sb.append("&");
-                    index++;
-                }
-                catch (UnsupportedEncodingException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            return sb.toString().getBytes();
-        }
-        return null;
+        HttpRequestEngine.getInstance().enqueue(request);
+        HttpRequestEngine.getInstance().execute(request);
     }
 }

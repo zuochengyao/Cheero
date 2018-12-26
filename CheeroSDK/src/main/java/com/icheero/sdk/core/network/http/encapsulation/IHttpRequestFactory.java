@@ -1,7 +1,6 @@
 package com.icheero.sdk.core.network.http.encapsulation;
 
-import java.io.IOException;
-import java.net.URI;
+import com.icheero.sdk.core.network.http.HttpRequest;
 
 public interface IHttpRequestFactory
 {
@@ -9,5 +8,5 @@ public interface IHttpRequestFactory
 
     void setConnectionTimeout(int connectionTimeout);
 
-    IHttpRequest createHttpRequest(URI uri, HttpMethod method, String mediaType) throws IOException;
+    IHttpCall getHttpCall(HttpRequest request);
 }

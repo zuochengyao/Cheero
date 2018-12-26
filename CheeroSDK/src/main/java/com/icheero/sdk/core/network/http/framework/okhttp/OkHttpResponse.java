@@ -14,7 +14,7 @@ public class OkHttpResponse extends AbstractHttpResponse
     private Response mResponse;
     private HttpHeader mHttpHeader;
 
-    public OkHttpResponse(Response response)
+    OkHttpResponse(Response response)
     {
         this.mResponse = response;
     }

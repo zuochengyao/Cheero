@@ -1,8 +1,7 @@
 package com.icheero.sdk.core.network.http;
 
-import com.icheero.sdk.core.network.http.api.CheeroRequest;
 import com.icheero.sdk.core.network.http.encapsulation.HttpStatus;
-import com.icheero.sdk.core.network.http.encapsulation.IHttpRequest;
+import com.icheero.sdk.core.network.http.encapsulation.IHttpCall;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
 
 import java.io.ByteArrayOutputStream;
@@ -12,13 +11,13 @@ import java.net.SocketTimeoutException;
 
 public class HttpRunnable implements Runnable
 {
-    private IHttpRequest mHttpRequest;
-    private CheeroRequest mCheeroRequest;
+    private IHttpCall mHttpRequest;
+    private HttpRequest mBaseRequest;
 
-    HttpRunnable(IHttpRequest httpRequest, CheeroRequest cheeroRequest)
+    HttpRunnable(IHttpCall httpRequest, HttpRequest baseRequest)
     {
         this.mHttpRequest = httpRequest;
-        this.mCheeroRequest = cheeroRequest;
+        this.mBaseRequest = baseRequest;
     }
 
     @Override
@@ -28,26 +27,26 @@ public class HttpRunnable implements Runnable
         {
             OutputStream outputStream = mHttpRequest.getBody();
             if (outputStream != null)
-                outputStream.write(mCheeroRequest.getData());
+                outputStream.write(mBaseRequest.getData());
             IHttpResponse response = mHttpRequest.execute();
-            mCheeroRequest.setContentType(response.getHeaders().getContentType());
-            if (mCheeroRequest.getResponse() != null)
+            mBaseRequest.setContentType(response.getHeaders().getContentType());
+            if (mBaseRequest.getResponse() != null)
             {
                 if (response.getStatus().isSuccess())
-                    mCheeroRequest.getResponse().onSuccess(mCheeroRequest, new String(getData(response)));
+                    mBaseRequest.getResponse().onSuccess(mBaseRequest, new String(getData(response)));
                 else
-                    mCheeroRequest.getResponse().onFailure(response.getStatus().getStatusCode(), response.getStatus().getMessage());
+                    mBaseRequest.getResponse().onFailure(response.getStatus().getStatusCode(), response.getStatus().getMessage());
             }
         }
         catch (IOException e)
         {
             e.printStackTrace();
             if (e instanceof SocketTimeoutException)
-                mCheeroRequest.getResponse().onFailure(HttpStatus.REQUEST_TIMEOUT.getStatusCode(), HttpStatus.REQUEST_TIMEOUT.getMessage());
+                mBaseRequest.getResponse().onFailure(HttpStatus.REQUEST_TIMEOUT.getStatusCode(), HttpStatus.REQUEST_TIMEOUT.getMessage());
         }
         finally
         {
-            HttpRequestEngine.getInstance().finish(mCheeroRequest);
+            HttpRequestEngine.getInstance().finish(mBaseRequest);
         }
     }
 

@@ -9,10 +9,13 @@ import android.widget.Toast;
 
 import com.icheero.sdk.base.BaseApplication;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 
 /**
  * Created by 左程耀 on 2018/2/26.
@@ -95,6 +98,30 @@ public class Common
             e.printStackTrace();
         }
         return builder.toString();
+    }
+
+    public static byte[] encodeParam(Map<String, String> value, String encoding)
+    {
+        if (value != null && value.size() > 0)
+        {
+            StringBuilder sb = new StringBuilder();
+            int index = 0;
+            for (Map.Entry<String, String> entry : value.entrySet())
+            {
+                try
+                {
+                    sb.append(URLEncoder.encode(entry.getKey(), encoding)).append("=").append(URLEncoder.encode(entry.getValue(), encoding));
+                    if (index != value.size() - 1) sb.append("&");
+                    index++;
+                }
+                catch (UnsupportedEncodingException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            return sb.toString().getBytes();
+        }
+        return null;
     }
 
     public static boolean isClassExist(String className, ClassLoader loader)

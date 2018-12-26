@@ -1,4 +1,4 @@
-package com.icheero.sdk.core.network.http.api;
+package com.icheero.sdk.core.network.http;
 
 import com.icheero.sdk.core.network.http.encapsulation.IConvert;
 import com.icheero.sdk.core.network.listener.IResponseListener;
@@ -6,19 +6,19 @@ import com.icheero.sdk.util.Common;
 
 import java.util.List;
 
-public class CheeroResponse implements IResponseListener<String>
+public class HttpResponse implements IResponseListener<String>
 {
     private IResponseListener mResponse;
     private List<IConvert> mConvertList;
 
-    public CheeroResponse(IResponseListener response, List<IConvert> convertList)
+    public HttpResponse(IResponseListener response, List<IConvert> convertList)
     {
         this.mResponse = response;
         this.mConvertList = convertList;
     }
 
     @Override
-    public void onSuccess(CheeroRequest request, String data)
+    public void onSuccess(HttpRequest request, String data)
     {
         for (IConvert convert : mConvertList)
         {
@@ -26,7 +26,7 @@ public class CheeroResponse implements IResponseListener<String>
             {
                 Object obj = convert.parse(data, Common.getGenericInterfaceType(mResponse.getClass()));
                 mResponse.onSuccess(request, obj);
-                break;
+                return;
             }
         }
     }
@@ -34,6 +34,6 @@ public class CheeroResponse implements IResponseListener<String>
     @Override
     public void onFailure(int errorCode, String errorMessage)
     {
-
+        mResponse.onFailure(errorCode, errorMessage);
     }
 }
