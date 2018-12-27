@@ -6,11 +6,14 @@ import android.os.Environment;
 
 import com.alibaba.android.arouter.thread.DefaultPoolExecutor;
 import com.icheero.sdk.base.BaseApplication;
+import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
 import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.FileUtils;
 import com.icheero.sdk.util.Log;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -75,5 +78,25 @@ public class IOManager
     public File getCacheFileByName(String url)
     {
         return FileUtils.createFile(DIR_PATH_CHEERO_CACHE + Common.md5(url));
+    }
+
+    /**
+     * 获取响应body数据
+     */
+    public byte[] getResponseData(IHttpResponse response)
+    {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream((int) response.getContentLength());
+        int length;
+        byte[] data = new byte[1024];
+        try
+        {
+            while ((length = response.getBody().read(data)) != -1)
+                outputStream.write(data, 0, length);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return outputStream.toByteArray();
     }
 }

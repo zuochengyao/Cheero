@@ -2,7 +2,6 @@ package com.icheero.sdk.core.network.http;
 
 import com.icheero.sdk.core.network.http.encapsulation.IHttpCall;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpRequestFactory;
-import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
 import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpRequestFactory;
 import com.icheero.sdk.util.Log;
 
@@ -70,34 +69,18 @@ public class HttpRequestEngine
     }
 
     /**
-     * 同步请求：直接执行，等待结果
-     */
-    public IHttpResponse execute(HttpRequest request)
-    {
-        try
-        {
-            return HttpRequestProvider.getInstance().getHttpCall(request).execute();
-        }
-        catch (IOException e)
-        {
-            Log.e(TAG, "HttpRequest Execute Failed!");
-        }
-        return null;
-    }
-
-    /**
      * 异步请求：将请求添加到请求队列中，通过回调获取结果
      */
     public void enqueue(HttpRequest request)
     {
-        if (mRunningQueue.size() > REQUEST_SIZE_MAX)
-            mCacheQueue.add(request);
-        else
-            doRequest(request);
+//        if (mRunningQueue.size() > REQUEST_SIZE_MAX)
+//            mCacheQueue.add(request);
+//        else
+//            doRequest(request);
         // TODO --------------------------------------------------
         try
         {
-            HttpRequestProvider.getInstance().getHttpCall(request).enqueue();
+             HttpRequestProvider.getInstance().getHttpCall(request).enqueue(request);
         }
         catch (IOException e)
         {
@@ -126,11 +109,11 @@ public class HttpRequestEngine
 
     private void doRequest(HttpRequest request)
     {
-        IHttpCall httpRequest = HttpRequestProvider.getInstance().getHttpCall(request);
-        if (httpRequest != null)
+        IHttpCall httpCall = HttpRequestProvider.getInstance().getHttpCall(request);
+        if (httpCall != null)
         {
             mRunningQueue.add(request);
-            mThreadPool.execute(new HttpRunnable(httpRequest, request));
+            mThreadPool.execute(new HttpRunnable(httpCall, request));
         }
     }
 }

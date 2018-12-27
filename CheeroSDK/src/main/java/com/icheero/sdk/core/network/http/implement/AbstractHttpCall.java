@@ -1,8 +1,8 @@
 package com.icheero.sdk.core.network.http.implement;
 
+import com.icheero.sdk.core.network.http.HttpRequest;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpCall;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
-import com.icheero.sdk.core.network.listener.IResponseListener;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -32,22 +32,7 @@ public abstract class AbstractHttpCall implements IHttpCall
     }
 
     @Override
-    public IHttpResponse execute() throws IOException
-    {
-        synchronized (this)
-        {
-            if (isExecuted) throw new IllegalStateException("The Request Already Executed");
-            isExecuted = true;
-        }
-        if (mZipOutStream != null)
-            mZipOutStream.close();
-        IHttpResponse response = execute(mHttpHeader);
-        isExecuted = true;
-        return response;
-    }
-
-    @Override
-    public void enqueue() throws IOException
+    public IHttpResponse execute(HttpRequest request) throws IOException
     {
         synchronized (this)
         {
@@ -57,6 +42,24 @@ public abstract class AbstractHttpCall implements IHttpCall
         }
         if (mZipOutStream != null)
             mZipOutStream.close();
+        writeData(request.getData());
+        IHttpResponse response = execute(mHttpHeader);
+        isExecuted = true;
+        return response;
+    }
+
+    @Override
+    public void enqueue(HttpRequest request) throws IOException
+    {
+        synchronized (this)
+        {
+            if (isExecuted)
+                throw new IllegalStateException("The Request Already Executed");
+            isExecuted = true;
+        }
+        if (mZipOutStream != null)
+            mZipOutStream.close();
+        writeData(request.getData());
         enqueue(mHttpHeader);
     }
 
@@ -71,6 +74,13 @@ public abstract class AbstractHttpCall implements IHttpCall
         if (this.mZipOutStream == null)
             this.mZipOutStream = new ZipOutputStream(body);
         return this.mZipOutStream;
+    }
+
+    private void writeData(byte[] data) throws IOException
+    {
+        OutputStream outputStream = getBody();
+        if (outputStream != null)
+            outputStream.write(data);
     }
 
     protected abstract OutputStream getBodyOutputStream();

@@ -48,8 +48,6 @@ public class CheeroApi
         request.setData(Common.encodeParam(value, ENCODE_UTF8));
         request.setResponse(cheeroResponse);
         request.setMediaType(MEDIA_TYPE_NORMAL);
-
         HttpRequestEngine.getInstance().enqueue(request);
-        HttpRequestEngine.getInstance().execute(request);
     }
 }

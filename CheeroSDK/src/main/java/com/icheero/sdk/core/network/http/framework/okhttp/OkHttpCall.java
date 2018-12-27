@@ -4,12 +4,13 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.icheero.sdk.core.network.http.HttpRequest;
+import com.icheero.sdk.core.network.http.HttpResponse;
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 import com.icheero.sdk.core.network.http.encapsulation.HttpStatus;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
 import com.icheero.sdk.core.network.http.implement.BufferHttpCall;
 import com.icheero.sdk.core.network.http.implement.HttpHeader;
-import com.icheero.sdk.core.network.listener.IResponseListener;
+import com.icheero.sdk.util.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.Map;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -28,12 +30,14 @@ import okhttp3.Response;
 
 public class OkHttpCall extends BufferHttpCall
 {
+    private static final Class TAG = OkHttpCall.class;
+
     private OkHttpClient mClient;
     private HttpRequest mRequest;
     private HttpMethod mMethod;
     private String mUrl;
     private String mMediaType;
-    private IResponseListener mListener;
+    private HttpResponse mListener;
 
     public OkHttpCall(OkHttpClient client, HttpRequest request)
     {
@@ -55,17 +59,22 @@ public class OkHttpCall extends BufferHttpCall
     @Override
     protected void enqueue(HttpHeader header, byte[] data)
     {
+        Log.d(TAG, Thread.currentThread().getId() + ":" + Thread.currentThread().getName());
         newCall(header, data).enqueue(new Callback()
         {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e)
             {
+                Log.d(TAG, Thread.currentThread().getId() + ":" + Thread.currentThread().getName());
                 mListener.onFailure(HttpStatus.REQUEST_TIMEOUT.getStatusCode(), HttpStatus.REQUEST_TIMEOUT.getMessage());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException
             {
+                Log.d(TAG, Thread.currentThread().getId() + ":" + Thread.currentThread().getName());
+                Headers headers = response.headers();
+                mRequest.setContentType(response.header("Content-Type"));
                 if (response.body() != null)
                 {
                     if (response.isSuccessful())
@@ -94,11 +103,16 @@ public class OkHttpCall extends BufferHttpCall
         boolean isBody = mMethod == HttpMethod.POST;
         RequestBody requestBody = null;
         if (isBody)
-            requestBody = RequestBody.create(MediaType.parse(mMediaType), data);
+            requestBody = RequestBody.create(MediaType.parse(mMediaType), mRequest.getData());
         Request.Builder builder = new Request.Builder().url(mUrl).method(mMethod.name(), requestBody);
         for (Map.Entry<String, String> entry : header.entrySet())
             builder.addHeader(entry.getKey(), entry.getValue());
         return mClient.newCall(builder.build());
+    }
+
+    private Call newMulityPartCall()
+    {
+        return null;
     }
 
     /**

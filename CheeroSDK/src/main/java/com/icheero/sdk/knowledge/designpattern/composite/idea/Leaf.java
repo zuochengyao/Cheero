@@ -19,7 +19,7 @@ public class Leaf extends Component
     @Override
     public void add(Component component)
     {
-        Log.i(TAG, "Cannot enqueue to a leaf");
+        Log.i(TAG, "Cannot add to a leaf");
     }
 
     @Override
