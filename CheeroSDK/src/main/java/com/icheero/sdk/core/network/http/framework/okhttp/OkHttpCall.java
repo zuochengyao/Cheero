@@ -10,7 +10,6 @@ import com.icheero.sdk.core.network.http.encapsulation.HttpStatus;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
 import com.icheero.sdk.core.network.http.implement.BufferHttpCall;
 import com.icheero.sdk.core.network.http.implement.HttpHeader;
-import com.icheero.sdk.util.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +19,6 @@ import java.util.Map;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -30,8 +28,6 @@ import okhttp3.Response;
 
 public class OkHttpCall extends BufferHttpCall
 {
-    private static final Class TAG = OkHttpCall.class;
-
     private OkHttpClient mClient;
     private HttpRequest mRequest;
     private HttpMethod mMethod;
@@ -59,22 +55,18 @@ public class OkHttpCall extends BufferHttpCall
     @Override
     protected void enqueue(HttpHeader header, byte[] data)
     {
-        Log.d(TAG, Thread.currentThread().getId() + ":" + Thread.currentThread().getName());
         newCall(header, data).enqueue(new Callback()
         {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e)
             {
-                Log.d(TAG, Thread.currentThread().getId() + ":" + Thread.currentThread().getName());
                 mListener.onFailure(HttpStatus.REQUEST_TIMEOUT.getStatusCode(), HttpStatus.REQUEST_TIMEOUT.getMessage());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException
             {
-                Log.d(TAG, Thread.currentThread().getId() + ":" + Thread.currentThread().getName());
-                Headers headers = response.headers();
-                mRequest.setContentType(response.header("Content-Type"));
+                mRequest.setContentType(response.header(HttpHeader.HEADER_CONTENT_TYPE));
                 if (response.body() != null)
                 {
                     if (response.isSuccessful())
