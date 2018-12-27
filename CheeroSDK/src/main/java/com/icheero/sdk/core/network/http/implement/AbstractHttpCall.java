@@ -3,6 +3,7 @@ package com.icheero.sdk.core.network.http.implement;
 import com.icheero.sdk.core.network.http.HttpRequest;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpCall;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
+import com.icheero.sdk.core.network.listener.IResponseListener;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -60,6 +61,22 @@ public abstract class AbstractHttpCall implements IHttpCall
         if (mZipOutStream != null)
             mZipOutStream.close();
         writeData(request.getData());
+        isExecuted = true;
+        enqueue(mHttpHeader);
+    }
+
+    @Override
+    public void enqueue(IResponseListener listener) throws IOException
+    {
+        synchronized (this)
+        {
+            if (isExecuted)
+                throw new IllegalStateException("The Request Already Executed");
+            isExecuted = true;
+        }
+        if (mZipOutStream != null)
+            mZipOutStream.close();
+        isExecuted = true;
         enqueue(mHttpHeader);
     }
 

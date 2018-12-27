@@ -29,6 +29,7 @@ public class HttpResponse implements IResponseListener<String>
                 return;
             }
         }
+        mResponse.onSuccess(request, data);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.icheero.sdk.core.network.http.encapsulation;
 
 import com.icheero.sdk.core.network.http.HttpRequest;
+import com.icheero.sdk.core.network.listener.IResponseListener;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -17,4 +18,6 @@ public interface IHttpCall extends IHttpHeader
     IHttpResponse execute(HttpRequest request) throws IOException;
 
     void enqueue(HttpRequest request) throws IOException;
+
+    void enqueue(IResponseListener listener) throws IOException;
 }
