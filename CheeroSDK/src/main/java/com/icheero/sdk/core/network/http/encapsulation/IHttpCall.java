@@ -1,23 +1,17 @@
 package com.icheero.sdk.core.network.http.encapsulation;
 
-import com.icheero.sdk.core.network.http.HttpRequest;
-import com.icheero.sdk.core.network.listener.IResponseListener;
-
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URI;
 
-public interface IHttpCall extends IHttpHeader
+public interface IHttpCall// extends IHttpHeader
 {
     HttpMethod getMethod();
 
     URI getUri();
 
-    OutputStream getBody();
+//    OutputStream getBody();
 
-    IHttpResponse execute(HttpRequest request) throws IOException;
+    IHttpResponse execute() throws IOException;
 
-    void enqueue(HttpRequest request) throws IOException;
-
-    void enqueue(IResponseListener listener) throws IOException;
+    void enqueue() throws IOException;
 }

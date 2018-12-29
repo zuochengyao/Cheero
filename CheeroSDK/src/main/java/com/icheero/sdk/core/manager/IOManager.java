@@ -2,6 +2,7 @@ package com.icheero.sdk.core.manager;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Environment;
 
 import com.alibaba.android.arouter.thread.DefaultPoolExecutor;
@@ -98,5 +99,12 @@ public class IOManager
             e.printStackTrace();
         }
         return outputStream.toByteArray();
+    }
+
+    public byte[] bitmapToByte(Bitmap bitmap)
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        return baos.toByteArray();
     }
 }

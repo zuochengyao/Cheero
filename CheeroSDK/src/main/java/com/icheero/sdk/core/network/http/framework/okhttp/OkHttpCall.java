@@ -3,13 +3,16 @@ package com.icheero.sdk.core.network.http.framework.okhttp;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.icheero.sdk.core.network.http.HttpRequest;
+import com.icheero.sdk.base.BaseApi;
 import com.icheero.sdk.core.network.http.HttpResponse;
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 import com.icheero.sdk.core.network.http.encapsulation.HttpStatus;
+import com.icheero.sdk.core.network.http.encapsulation.IHttpCall;
+import com.icheero.sdk.core.network.http.encapsulation.AbstractHttpEntity;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
-import com.icheero.sdk.core.network.http.implement.BufferHttpCall;
 import com.icheero.sdk.core.network.http.implement.HttpHeader;
+import com.icheero.sdk.core.network.http.implement.entity.FormEntity;
+import com.icheero.sdk.core.network.http.implement.entity.MultipartEntity;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,56 +29,35 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class OkHttpCall extends BufferHttpCall
+public class OkHttpCall implements IHttpCall
 {
     private OkHttpClient mClient;
-    private HttpRequest mRequest;
-    private HttpMethod mMethod;
     private String mUrl;
+    private HttpMethod mMethod;
     private String mMediaType;
+    private HttpHeader mHeader;
+    private AbstractHttpEntity mData;
     private HttpResponse mListener;
 
-    public OkHttpCall(OkHttpClient client, HttpRequest request)
+    private Request.Builder mRequestBuilder;
+
+    OkHttpCall(String url, HttpMethod method, String mediaType, HttpHeader header, AbstractHttpEntity data, HttpResponse listener)
     {
-        this.mClient = client;
-        this.mRequest = request;
-        this.mMethod = request.getMethod();
-        this.mUrl = request.getUrl();
-        this.mMediaType = request.getMediaType();
-        this.mListener = request.getResponse();
+        this.mClient = OkHttpManager.getInstance().getOkHttpClient();
+        this.mUrl = url;
+        this.mMethod = method;
+        this.mMediaType = mediaType;
+        this.mHeader = header;
+        this.mData = data;
+        this.mListener = listener;
+        init();
     }
 
-    @Override
-    protected IHttpResponse execute(HttpHeader header, byte[] data) throws IOException
+    private void init()
     {
-        Response response = newCall(header, data).execute();
-        return new OkHttpResponse(response);
-    }
-
-    @Override
-    protected void enqueue(HttpHeader header, byte[] data)
-    {
-        newCall(header, data).enqueue(new Callback()
-        {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e)
-            {
-                mListener.onFailure(HttpStatus.REQUEST_TIMEOUT.getStatusCode(), HttpStatus.REQUEST_TIMEOUT.getMessage());
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException
-            {
-                mRequest.setContentType(response.header(HttpHeader.HEADER_CONTENT_TYPE));
-                if (response.body() != null)
-                {
-                    if (response.isSuccessful())
-                        mListener.onSuccess(mRequest, response.body().string());
-                    else
-                        mListener.onFailure(response.code(), response.body().string());
-                }
-            }
-        });
+        this.mRequestBuilder = new Request.Builder().url(mUrl);
+        for (Map.Entry<String, String> entry : mHeader.entrySet())
+            mRequestBuilder.addHeader(entry.getKey(), entry.getValue());
     }
 
     @Override
@@ -90,21 +72,86 @@ public class OkHttpCall extends BufferHttpCall
         return URI.create(mUrl);
     }
 
-    private Call newCall(HttpHeader header, byte[] data)
+    @Override
+    public IHttpResponse execute() throws IOException
     {
-        boolean isBody = mMethod == HttpMethod.POST;
-        RequestBody requestBody = null;
-        if (isBody)
-            requestBody = RequestBody.create(MediaType.parse(mMediaType), mRequest.getData());
-        Request.Builder builder = new Request.Builder().url(mUrl).method(mMethod.name(), requestBody);
-        for (Map.Entry<String, String> entry : header.entrySet())
-            builder.addHeader(entry.getKey(), entry.getValue());
-        return mClient.newCall(builder.build());
+        Response response = newCall().execute();
+        mHeader.setContentType(response.header(HttpHeader.HEADER_CONTENT_TYPE));
+        return new OkHttpResponse(response);
     }
 
-    private Call newMulityPartCall()
+    @Override
+    public void enqueue()
     {
-        return null;
+        newCall().enqueue(new Callback()
+        {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e)
+            {
+                mListener.onFailure(HttpStatus.REQUEST_TIMEOUT.getStatusCode(), HttpStatus.REQUEST_TIMEOUT.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException
+            {
+                if (response.body() != null)
+                {
+                    if (response.isSuccessful())
+                        mListener.onSuccess(response.header(HttpHeader.HEADER_CONTENT_TYPE), response.body().string());
+                    else
+                        mListener.onFailure(response.code(), response.body().string());
+                }
+            }
+        });
+    }
+
+    private Call newCall()
+    {
+        if (mMethod == HttpMethod.POST)
+        {
+            if (mData != null)
+            {
+                if (mData instanceof FormEntity)
+                {
+                    FormBody.Builder builder = new FormBody.Builder();
+                    for (Object obj : mData.entrySet())
+                    {
+                        Map.Entry<String, String> entry = (Map.Entry<String, String>) obj;
+                        builder.add(entry.getKey(), entry.getValue());
+                    }
+                    mRequestBuilder.post(builder.build());
+                }
+                else if (mData instanceof MultipartEntity)
+                {
+                    MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                    for (Object obj : mData.entrySet())
+                    {
+                        Map.Entry<String, Object> entry = (Map.Entry<String, Object>) obj;
+                        Object value = entry.getValue();
+                        if (value instanceof File)
+                        {
+                            File file = (File) value;
+                            builder.addFormDataPart(entry.getKey(), file.getName(), RequestBody.create(MediaType.parse(BaseApi.MEDIA_TYPE_MULTIPART), file));
+                        }
+                        else if (value instanceof byte[])
+                        {
+                            byte[] data = (byte[]) value;
+                            builder.addFormDataPart(entry.getKey(), "faceid_image", RequestBody.create(MediaType.parse(BaseApi.MEDIA_TYPE_MULTIPART), data));
+                        }
+                        else builder.addFormDataPart(entry.getKey(), value.toString());
+                    }
+                    mRequestBuilder.post(builder.build());
+                }
+                else
+                {
+                    RequestBody requestBody = RequestBody.create(MediaType.parse(mMediaType), mData.getBytes());
+                    mRequestBuilder.method(mMethod.name(), requestBody);
+                }
+            }
+            else
+                mRequestBuilder.post(RequestBody.create(MediaType.parse(mMediaType), ""));
+        }
+        return mClient.newCall(mRequestBuilder.build());
     }
 
     /**
@@ -147,8 +194,6 @@ public class OkHttpCall extends BufferHttpCall
             baseUrl += ("?" + paramStr);
         return createGetRequest(baseUrl);
     }
-
-
 
     public static Request createFilePostRequest(@NonNull final String baseUrl, @NonNull Map<String, Object> paramMap, String contentType)
     {

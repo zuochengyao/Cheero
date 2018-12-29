@@ -3,8 +3,6 @@ package com.icheero.sdk.core.network.http.implement;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.icheero.sdk.core.network.http.encapsulation.IHttpMap;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +13,7 @@ import java.util.Set;
  *
  * 封装Http请求头
  */
-public class HttpHeader implements IHttpMap<String, String>
+public class HttpHeader implements Map<String, String>
 {
     public final static String HEADER_ACCEPT = "Accept";
     public final static String HEADER_PRAGMA = "Pragma";
@@ -44,7 +42,7 @@ public class HttpHeader implements IHttpMap<String, String>
 
     public void setAccept(String value)
     {
-        set(HEADER_ACCEPT, value);
+        put(HEADER_ACCEPT, value);
     }
 
     public String getPragma()
@@ -54,7 +52,7 @@ public class HttpHeader implements IHttpMap<String, String>
 
     public void setPragma(String value)
     {
-        set(HEADER_PRAGMA, value);
+        put(HEADER_PRAGMA, value);
     }
 
     public String getUserAgent()
@@ -64,7 +62,7 @@ public class HttpHeader implements IHttpMap<String, String>
 
     public void setUserAgent(String value)
     {
-        set(HEADER_USER_AGENT, value);
+        put(HEADER_USER_AGENT, value);
     }
 
     public String getProxyConnection()
@@ -74,7 +72,7 @@ public class HttpHeader implements IHttpMap<String, String>
 
     public void setProxyConnection(String value)
     {
-        set(HEADER_PROXY_CONNECTION, value);
+        put(HEADER_PROXY_CONNECTION, value);
     }
 
     public String getAcceptEncoding()
@@ -84,7 +82,7 @@ public class HttpHeader implements IHttpMap<String, String>
 
     public void setAcceptEncoding(String value)
     {
-        set(HEADER_ACCEPT_ENCODING, value);
+        put(HEADER_ACCEPT_ENCODING, value);
     }
 
     public String getCacheControl()
@@ -94,7 +92,7 @@ public class HttpHeader implements IHttpMap<String, String>
 
     public void setCacheControl(String value)
     {
-        set(HEADER_CACHE_CONTROL, value);
+        put(HEADER_CACHE_CONTROL, value);
     }
 
     public String getContentEncoding()
@@ -104,7 +102,7 @@ public class HttpHeader implements IHttpMap<String, String>
 
     public void setContentEncoding(String value)
     {
-        set(HEADER_CONTENT_ENCODING, value);
+        put(HEADER_CONTENT_ENCODING, value);
     }
 
     public String getConnection()
@@ -114,7 +112,7 @@ public class HttpHeader implements IHttpMap<String, String>
 
     public void setConnection(String value)
     {
-        set(HEADER_CONNECTION, value);
+        put(HEADER_CONNECTION, value);
     }
 
     public String getContentLength()
@@ -124,7 +122,7 @@ public class HttpHeader implements IHttpMap<String, String>
 
     public void setContentLength(String value)
     {
-        set(HEADER_CONTENT_LENGTH, value);
+        put(HEADER_CONTENT_LENGTH, value);
     }
 
     public String getContentType()
@@ -134,29 +132,7 @@ public class HttpHeader implements IHttpMap<String, String>
 
     public void setContentType(String value)
     {
-        set(HEADER_CONTENT_TYPE, value);
-    }
-
-    // endregion
-
-    // region implements IHttpMap
-
-    @Override
-    public String get(String key)
-    {
-        return mMap.get(key);
-    }
-
-    @Override
-    public void set(String key, String value)
-    {
-        put(key, value);
-    }
-
-    @Override
-    public void setAll(Map<String, String> map)
-    {
-        putAll(map);
+        put(HEADER_CONTENT_TYPE, value);
     }
 
     // endregion

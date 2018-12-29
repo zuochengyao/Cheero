@@ -2,7 +2,7 @@ package com.icheero.sdk.core.network.http.framework.origin;
 
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
-import com.icheero.sdk.core.network.http.implement.BufferHttpCall;
+import com.icheero.sdk.core.network.http.implement.AbstractBufferHttpCall;
 import com.icheero.sdk.core.network.http.implement.HttpHeader;
 
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.Map;
 
-public class OriginHttpCall extends BufferHttpCall
+public class OriginHttpCall extends AbstractBufferHttpCall
 {
     private HttpURLConnection mConnection;
     private HttpMethod mMethod;

@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.SecureRandom;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -70,6 +71,26 @@ public class OkHttpManager
     OkHttpClient getOkHttpClient()
     {
         return mOkHttpClient;
+    }
+
+    public void setReadTimeout(int readTimeout)
+    {
+        this.mOkHttpClient = mOkHttpClient.newBuilder().readTimeout(readTimeout, TimeUnit.SECONDS).build();
+    }
+
+    public void setWriteTimeout(int writeTimeout)
+    {
+        this.mOkHttpClient = mOkHttpClient.newBuilder().writeTimeout(writeTimeout, TimeUnit.SECONDS).build();
+    }
+
+    public void setConnectionTimeout(int connectionTimeout)
+    {
+        this.mOkHttpClient = mOkHttpClient.newBuilder().connectTimeout(connectionTimeout, TimeUnit.SECONDS).build();
+    }
+
+    public void setRetryOnConnectionFailure(boolean retry)
+    {
+        this.mOkHttpClient = mOkHttpClient.newBuilder().retryOnConnectionFailure(retry).build();
     }
 
     public Response syncRequest(@NonNull Request request)

@@ -2,8 +2,8 @@
     <string name="cheero_app_title_activity_main">MainActivity</string>
     <string name="cheero_app_title_activity_settings">Settings</string>
     <!-- RequestActivity -->
-    <string name="cheero_app_request">Send http request</string>
-
+    <string name="cheero_app_request_hello">Send Hello</string>
+    <string name="cheero_app_request_ocr_idcard">Send IDCardOCR</string>
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
     <string name="pref_title_social_recommendations">Enable social recommendations</string>

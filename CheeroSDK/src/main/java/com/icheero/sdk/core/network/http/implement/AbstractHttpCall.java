@@ -1,39 +1,31 @@
 package com.icheero.sdk.core.network.http.implement;
 
-import com.icheero.sdk.core.network.http.HttpRequest;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpCall;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
-import com.icheero.sdk.core.network.listener.IResponseListener;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.zip.ZipOutputStream;
 
 public abstract class AbstractHttpCall implements IHttpCall
 {
-    private static final String GZIP = "gzip";
+    protected static final String GZIP = "gzip";
 
-    private HttpHeader mHttpHeader = new HttpHeader();
-    private ZipOutputStream mZipOutStream;
     private boolean isExecuted = false;
 
     @Override
-    public HttpHeader getHeaders()
+    public IHttpResponse execute() throws IOException
     {
-        return mHttpHeader;
+        checkExecuted();
+        return execute(getHeaders());
     }
 
     @Override
-    public OutputStream getBody()
+    public void enqueue() throws IOException
     {
-        OutputStream body = getBodyOutputStream();
-        if (isGzip())
-            return getGzipOutputStream(body);
-        return body;
+        checkExecuted();
+        enqueue(getHeaders());
     }
 
-    @Override
-    public IHttpResponse execute(HttpRequest request) throws IOException
+    protected void checkExecuted() throws IOException
     {
         synchronized (this)
         {
@@ -41,66 +33,9 @@ public abstract class AbstractHttpCall implements IHttpCall
                 throw new IllegalStateException("The Request Already Executed");
             isExecuted = true;
         }
-        if (mZipOutStream != null)
-            mZipOutStream.close();
-        writeData(request.getData());
-        IHttpResponse response = execute(mHttpHeader);
-        isExecuted = true;
-        return response;
     }
 
-    @Override
-    public void enqueue(HttpRequest request) throws IOException
-    {
-        synchronized (this)
-        {
-            if (isExecuted)
-                throw new IllegalStateException("The Request Already Executed");
-            isExecuted = true;
-        }
-        if (mZipOutStream != null)
-            mZipOutStream.close();
-        writeData(request.getData());
-        isExecuted = true;
-        enqueue(mHttpHeader);
-    }
-
-    @Override
-    public void enqueue(IResponseListener listener) throws IOException
-    {
-        synchronized (this)
-        {
-            if (isExecuted)
-                throw new IllegalStateException("The Request Already Executed");
-            isExecuted = true;
-        }
-        if (mZipOutStream != null)
-            mZipOutStream.close();
-        isExecuted = true;
-        enqueue(mHttpHeader);
-    }
-
-    private boolean isGzip()
-    {
-        String contentEncoding = getHeaders().getContentEncoding();
-        return GZIP.equals(contentEncoding);
-    }
-
-    private OutputStream getGzipOutputStream(OutputStream body)
-    {
-        if (this.mZipOutStream == null)
-            this.mZipOutStream = new ZipOutputStream(body);
-        return this.mZipOutStream;
-    }
-
-    private void writeData(byte[] data) throws IOException
-    {
-        OutputStream outputStream = getBody();
-        if (outputStream != null)
-            outputStream.write(data);
-    }
-
-    protected abstract OutputStream getBodyOutputStream();
+    protected abstract HttpHeader getHeaders();
 
     protected abstract IHttpResponse execute(HttpHeader header) throws IOException;
 

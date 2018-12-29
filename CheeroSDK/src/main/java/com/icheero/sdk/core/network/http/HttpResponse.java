@@ -4,35 +4,34 @@ import com.icheero.sdk.core.network.http.encapsulation.IConvert;
 import com.icheero.sdk.core.network.listener.IResponseListener;
 import com.icheero.sdk.util.Common;
 
-import java.util.List;
+import java.lang.reflect.Type;
 
-public class HttpResponse implements IResponseListener<String>
+public class HttpResponse// implements IResponseListener<String>
 {
     private IResponseListener mResponse;
-    private List<IConvert> mConvertList;
+    private IConvert mConvert;
 
-    public HttpResponse(IResponseListener response, List<IConvert> convertList)
+    public HttpResponse(IResponseListener response, IConvert convert)
     {
         this.mResponse = response;
-        this.mConvertList = convertList;
+        this.mConvert = convert;
     }
 
-    @Override
-    public void onSuccess(HttpRequest request, String data)
+    public void onSuccess(String contentType, String data)
     {
-        for (IConvert convert : mConvertList)
+        if (mConvert != null && mConvert.isSupportParse(contentType))
         {
-            if (convert.isSupportParse(request.getContentType()))
+            Type type = Common.getGenericInterfaceType(mResponse.getClass());
+            if (type != null)
             {
-                Object obj = convert.parse(data, Common.getGenericInterfaceType(mResponse.getClass()));
-                mResponse.onSuccess(request, obj);
-                return;
+                Object obj = mConvert.parse(data, type);
+                mResponse.onSuccess(obj);
             }
         }
-        mResponse.onSuccess(request, data);
+        else
+            mResponse.onSuccess(data);
     }
 
-    @Override
     public void onFailure(int errorCode, String errorMessage)
     {
         mResponse.onFailure(errorCode, errorMessage);

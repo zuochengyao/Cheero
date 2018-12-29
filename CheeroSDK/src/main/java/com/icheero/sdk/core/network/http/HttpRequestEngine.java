@@ -2,7 +2,6 @@ package com.icheero.sdk.core.network.http;
 
 import com.icheero.sdk.core.network.http.encapsulation.IHttpCall;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpRequestFactory;
-import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpCall;
 import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpRequestFactory;
 import com.icheero.sdk.util.Log;
 
@@ -81,9 +80,7 @@ public class HttpRequestEngine
         // TODO --------------------------------------------------
         try
         {
-             OkHttpCall call = (OkHttpCall) HttpRequestProvider.getInstance().getHttpCall(request);
-             if (call != null)
-                 call.enqueue(request.getResponse());
+            HttpRequestProvider.getInstance().getHttpCall(request).enqueue();
         }
         catch (IOException e)
         {

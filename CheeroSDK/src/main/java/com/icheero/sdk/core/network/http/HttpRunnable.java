@@ -24,12 +24,11 @@ public class HttpRunnable implements Runnable
     {
         try
         {
-            IHttpResponse response = mHttpCall.execute(mRequest);
-            mRequest.setContentType(response.getHeaders().getContentType());
+            IHttpResponse response = mHttpCall.execute();
             if (mRequest.getResponse() != null)
             {
                 if (response.getStatus().isSuccess())
-                    mRequest.getResponse().onSuccess(mRequest, new String(IOManager.getInstance().getResponseData(response)));
+                    mRequest.getResponse().onSuccess(response.getHeaders().getContentType(), new String(IOManager.getInstance().getResponseData(response)));
                 else
                     mRequest.getResponse().onFailure(response.getStatus().getStatusCode(), response.getStatus().getMessage());
             }
@@ -39,6 +38,8 @@ public class HttpRunnable implements Runnable
             e.printStackTrace();
             if (e instanceof SocketTimeoutException)
                 mRequest.getResponse().onFailure(HttpStatus.REQUEST_TIMEOUT.getStatusCode(), HttpStatus.REQUEST_TIMEOUT.getMessage());
+            else
+                mRequest.getResponse().onFailure(HttpStatus.UNKNOWN.getStatusCode(), HttpStatus.UNKNOWN.getMessage());
         }
         finally
         {

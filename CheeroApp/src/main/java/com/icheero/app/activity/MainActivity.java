@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity
     @BindView(R.id.to_retrofit_activity)
     Button toRetrofitActivity;
     @BindView(R.id.to_request_activity)
-    Button toRequestActivtiy;
+    Button toRequestActivity;
     @BindView(R.id.to_camera_activity)
     Button toCameraActivity;
     @BindView(R.id.to_custom_setting_activity)
@@ -98,9 +98,10 @@ public class MainActivity extends BaseActivity
         slide.setDuration(700);
         getWindow().setExitTransition(slide);
         ButterKnife.bind(this);
-        IOManager.getInstance().createRootFolder();
         if (!mPermissionManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
             mPermissionManager.permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        else
+            IOManager.getInstance().createRootFolder();
     }
 
     @Override

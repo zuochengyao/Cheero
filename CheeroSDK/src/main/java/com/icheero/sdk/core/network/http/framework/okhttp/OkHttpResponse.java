@@ -57,7 +57,7 @@ public class OkHttpResponse extends AbstractHttpResponse
         if (mHttpHeader == null)
             mHttpHeader = new HttpHeader();
         for (String name : mResponse.headers().names())
-            mHttpHeader.set(name, mResponse.headers().get(name));
+            mHttpHeader.put(name, mResponse.headers().get(name));
         return mHttpHeader;
     }
 }

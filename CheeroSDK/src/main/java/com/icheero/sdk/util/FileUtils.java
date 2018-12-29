@@ -44,8 +44,7 @@ public class FileUtils
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_REMOVED))
         {
             File file = new File(dirPath);
-            if (!file.exists())
-                flag = file.mkdir();
+            if (!file.exists()) flag = file.mkdir();
         }
         return flag;
     }

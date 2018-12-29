@@ -1,6 +1,8 @@
 package com.icheero.sdk.core.network.http;
 
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
+import com.icheero.sdk.core.network.http.encapsulation.AbstractHttpEntity;
+import com.icheero.sdk.core.network.http.implement.HttpHeader;
 
 /**
  * @author 左程耀
@@ -10,9 +12,9 @@ public class HttpRequest
 {
     private String mUrl;
     private HttpMethod mMethod;
-    private byte[] mData;
+    private AbstractHttpEntity mData;
     private String mMediaType;
-    private String mContentType;
+    private HttpHeader mHeader = new HttpHeader();
     private HttpResponse mResponse;
 
     public String getUrl()
@@ -35,12 +37,12 @@ public class HttpRequest
         this.mMethod = method;
     }
 
-    public byte[] getData()
+    public AbstractHttpEntity getData()
     {
         return mData;
     }
 
-    public void setData(byte[] data)
+    public void setData(AbstractHttpEntity data)
     {
         this.mData = data;
     }
@@ -55,14 +57,9 @@ public class HttpRequest
         this.mMediaType = mediaType;
     }
 
-    public String getContentType()
+    public HttpHeader getHeader()
     {
-        return mContentType;
-    }
-
-    public void setContentType(String contentType)
-    {
-        this.mContentType = contentType;
+        return mHeader;
     }
 
     public HttpResponse getResponse()

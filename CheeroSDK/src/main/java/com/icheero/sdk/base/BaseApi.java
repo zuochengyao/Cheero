@@ -1,14 +1,18 @@
 package com.icheero.sdk.base;
 
+import com.icheero.sdk.core.network.http.HttpRequest;
+import com.icheero.sdk.core.network.http.HttpResponse;
+import com.icheero.sdk.core.network.http.encapsulation.AbstractHttpEntity;
+import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 import com.icheero.sdk.core.network.http.encapsulation.IConvert;
-import com.icheero.sdk.core.network.http.implement.JsonConvert;
+import com.icheero.sdk.core.network.http.implement.convert.JsonConvert;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BaseApi
 {
-    public static final String ENCODE_UTF8 = "utf-8";
+    public static final String ENCODING_UTF8 = "utf-8";
     /**
      * "application/x-www-form-urlencoded"，是默认的MIME内容编码类型，一般可以用于所有的情况，但是在传输比较大的二进制或者文本数据时效率低。
      * 这时候应该使用"multipart/form-data"。如上传文件或者二进制数据和非ASCII数据。
@@ -30,5 +34,16 @@ public class BaseApi
     static
     {
         mConvertList.add(new JsonConvert());
+    }
+
+    protected static HttpRequest newRequest(String url, HttpMethod method, AbstractHttpEntity entity, String mediaType, HttpResponse response)
+    {
+        HttpRequest request = new HttpRequest();
+        request.setUrl(url);
+        request.setMethod(method);
+        request.setData(entity);
+        request.setMediaType(mediaType);
+        request.setResponse(response);
+        return request;
     }
 }
