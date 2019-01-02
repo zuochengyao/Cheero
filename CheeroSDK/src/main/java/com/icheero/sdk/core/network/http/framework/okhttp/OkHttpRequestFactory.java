@@ -22,9 +22,9 @@ public class OkHttpRequestFactory implements IOkHttpRequestFactory
     }
 
     @Override
-    public void setConnectionTimeout(int connectionTimeout)
+    public void setConnectTimeout(int connectTimeout)
     {
-        OkHttpManager.getInstance().setConnectionTimeout(connectionTimeout);
+        OkHttpManager.getInstance().setConnectionTimeout(connectTimeout);
     }
 
     @Override

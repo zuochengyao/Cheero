@@ -6,7 +6,7 @@ public interface IHttpRequestFactory
 {
     void setReadTimeout(int readTimeout);
 
-    void setConnectionTimeout(int connectionTimeout);
+    void setConnectTimeout(int connectTimeout);
 
     IHttpCall getHttpCall(HttpRequest request);
 }

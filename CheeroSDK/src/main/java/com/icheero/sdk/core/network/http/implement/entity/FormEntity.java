@@ -20,7 +20,7 @@ public class FormEntity extends AbstractHttpEntity<String>
     @Override
     public byte[] getBytes()
     {
-        return Common.encodeParam(mMap, BaseApi.ENCODING_UTF8);
+        return mMap.size() > 0 ? Common.encodeParam(mMap, BaseApi.ENCODING_UTF8) : null;
     }
 
     @Override

@@ -34,7 +34,7 @@ public class RetrofitHttpRequestFactory implements IRetrofitRequestFactory
     }
 
     @Override
-    public void setConnectionTimeout(int connectionTimeout)
+    public void setConnectTimeout(int connectTimeout)
     {
 
     }

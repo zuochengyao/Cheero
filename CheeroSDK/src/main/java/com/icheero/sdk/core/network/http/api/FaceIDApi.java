@@ -40,4 +40,18 @@ public class FaceIDApi extends BaseApi
         // Do request
         HttpRequestEngine.getInstance().enqueue(request);
     }
+
+    public static void detect(String url, String key, String secret, byte[] image, String multiOrientedDetection, IResponseListener response)
+    {
+        // Create MultipartEntity
+        MultipartEntity entity = new MultipartEntity();
+        entity.addString("api_key", key);
+        entity.addString("api_secret", secret);
+        entity.addBinaryPart("image", image);
+        entity.addString("multi_oriented_detection", multiOrientedDetection);
+        // Create HttpRequest
+        HttpRequest request = newRequest(url, HttpMethod.POST, entity, MEDIA_TYPE_NORMAL, new HttpResponse(response, new JsonConvert()));
+        // Do request
+        HttpRequestEngine.getInstance().enqueue(request);
+    }
 }

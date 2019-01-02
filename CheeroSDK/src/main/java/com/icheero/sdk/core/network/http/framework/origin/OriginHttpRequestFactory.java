@@ -10,36 +10,39 @@ import java.net.URL;
 
 public class OriginHttpRequestFactory implements IHttpRequestFactory
 {
-    private HttpURLConnection mConnection;
+    private int mReadTimeout;
+    private int mConnectTimeout;
 
     public OriginHttpRequestFactory()
     {
-        // TODO : init mConnection
     }
 
     @Override
     public void setReadTimeout(int readTimeout)
     {
-        mConnection.setReadTimeout(readTimeout * 1000);
+        mReadTimeout = readTimeout * 1000;
     }
 
     @Override
-    public void setConnectionTimeout(int connectionTimeout)
+    public void setConnectTimeout(int connectTimeout)
     {
-        mConnection.setConnectTimeout(connectionTimeout * 1000);
+        mConnectTimeout = connectTimeout * 1000;
     }
 
     @Override
     public IHttpCall getHttpCall(HttpRequest request)
     {
+        HttpURLConnection connection = null;
         try
         {
-            mConnection = (HttpURLConnection) new URL(request.getUrl()).openConnection();
+            connection = (HttpURLConnection) new URL(request.getUrl()).openConnection();
+            connection.setReadTimeout(mReadTimeout);
+            connection.setConnectTimeout(mConnectTimeout);
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
-        return new OriginHttpCall(mConnection, request.getMethod(), request.getUrl());
+        return new OriginHttpCall(connection, request.getMethod(), request.getUrl());
     }
 }

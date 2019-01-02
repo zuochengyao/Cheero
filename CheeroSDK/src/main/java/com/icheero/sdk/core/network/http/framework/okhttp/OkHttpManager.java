@@ -78,17 +78,17 @@ public class OkHttpManager
         this.mOkHttpClient = mOkHttpClient.newBuilder().readTimeout(readTimeout, TimeUnit.SECONDS).build();
     }
 
-    public void setWriteTimeout(int writeTimeout)
+    void setWriteTimeout(int writeTimeout)
     {
         this.mOkHttpClient = mOkHttpClient.newBuilder().writeTimeout(writeTimeout, TimeUnit.SECONDS).build();
     }
 
-    public void setConnectionTimeout(int connectionTimeout)
+    void setConnectionTimeout(int connectionTimeout)
     {
         this.mOkHttpClient = mOkHttpClient.newBuilder().connectTimeout(connectionTimeout, TimeUnit.SECONDS).build();
     }
 
-    public void setRetryOnConnectionFailure(boolean retry)
+    void setRetryOnConnectionFailure(boolean retry)
     {
         this.mOkHttpClient = mOkHttpClient.newBuilder().retryOnConnectionFailure(retry).build();
     }

@@ -59,7 +59,7 @@ public class HttpRequestEngine
 
     public void init(HttpConfig config)
     {
-        mHttpRequestFactory.setConnectionTimeout(config.getConnectTimeout());
+        mHttpRequestFactory.setConnectTimeout(config.getConnectTimeout());
         mHttpRequestFactory.setReadTimeout(config.getReadTimeout());
         if (mHttpRequestFactory instanceof OkHttpRequestFactory)
         {

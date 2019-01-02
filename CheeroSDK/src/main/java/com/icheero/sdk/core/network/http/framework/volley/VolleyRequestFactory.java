@@ -14,7 +14,7 @@ public class VolleyRequestFactory implements IHttpRequestFactory
     }
 
     @Override
-    public void setConnectionTimeout(int connectionTimeout)
+    public void setConnectTimeout(int connectTimeout)
     {
 
     }
