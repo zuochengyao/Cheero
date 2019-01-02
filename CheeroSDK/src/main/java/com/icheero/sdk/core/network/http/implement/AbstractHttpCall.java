@@ -1,29 +1,19 @@
 package com.icheero.sdk.core.network.http.implement;
 
 import com.icheero.sdk.core.network.http.encapsulation.IHttpCall;
-import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.util.zip.ZipOutputStream;
 
 public abstract class AbstractHttpCall implements IHttpCall
 {
-    protected static final String GZIP = "gzip";
+    private static final String GZIP = "gzip";
+    private ZipOutputStream mZipOutStream;
+    private ByteArrayOutputStream mByteArray = new ByteArrayOutputStream();
 
     private boolean isExecuted = false;
-
-    @Override
-    public IHttpResponse execute() throws IOException
-    {
-        checkExecuted();
-        return execute(getHeaders());
-    }
-
-    @Override
-    public void enqueue() throws IOException
-    {
-        checkExecuted();
-        enqueue(getHeaders());
-    }
 
     protected void checkExecuted() throws IOException
     {
@@ -33,11 +23,35 @@ public abstract class AbstractHttpCall implements IHttpCall
                 throw new IllegalStateException("The Request Already Executed");
             isExecuted = true;
         }
+        if (mZipOutStream != null)
+            mZipOutStream.close();
+    }
+
+    public OutputStream getBody()
+    {
+        OutputStream body = getBodyOutputStream();
+        if (isGzip())
+            return getGzipOutputStream(body);
+        return body;
+    }
+
+    protected OutputStream getBodyOutputStream()
+    {
+        return mByteArray;
+    }
+
+    private boolean isGzip()
+    {
+        String contentEncoding = getHeaders().getContentEncoding();
+        return GZIP.equals(contentEncoding);
+    }
+
+    private OutputStream getGzipOutputStream(OutputStream body)
+    {
+        if (this.mZipOutStream == null)
+            this.mZipOutStream = new ZipOutputStream(body);
+        return this.mZipOutStream;
     }
 
     protected abstract HttpHeader getHeaders();
-
-    protected abstract IHttpResponse execute(HttpHeader header) throws IOException;
-
-    protected abstract void enqueue(HttpHeader header);
 }

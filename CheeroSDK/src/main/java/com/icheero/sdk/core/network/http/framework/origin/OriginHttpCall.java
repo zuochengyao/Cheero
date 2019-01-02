@@ -1,8 +1,10 @@
 package com.icheero.sdk.core.network.http.framework.origin;
 
+import com.icheero.sdk.core.network.http.HttpResponse;
+import com.icheero.sdk.core.network.http.encapsulation.AbstractHttpEntity;
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
-import com.icheero.sdk.core.network.http.implement.AbstractBufferHttpCall;
+import com.icheero.sdk.core.network.http.implement.AbstractHttpCall;
 import com.icheero.sdk.core.network.http.implement.HttpHeader;
 
 import java.io.IOException;
@@ -11,41 +13,54 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.Map;
 
-public class OriginHttpCall extends AbstractBufferHttpCall
+public class OriginHttpCall extends AbstractHttpCall
 {
     private HttpURLConnection mConnection;
-    private HttpMethod mMethod;
     private String mUrl;
+    private HttpMethod mMethod;
+    private HttpHeader mHeader;
+    private AbstractHttpEntity mData;
+    private HttpResponse mListener;
 
-    public OriginHttpCall(HttpURLConnection connection, HttpMethod method, String url)
+    OriginHttpCall(HttpURLConnection connection, String url, HttpMethod method, HttpHeader header, AbstractHttpEntity data, HttpResponse listener)
     {
         this.mConnection = connection;
-        this.mMethod = method;
         this.mUrl = url;
+        this.mMethod = method;
+        this.mHeader = header;
+        this.mData = data;
+        this.mListener = listener;
+    }
+
+    public HttpResponse getListener()
+    {
+        return mListener;
     }
 
     @Override
-    protected IHttpResponse execute(HttpHeader header, byte[] data) throws IOException
+    public IHttpResponse execute() throws IOException
     {
-        for (Map.Entry<String, String> entry : header.entrySet())
+        checkExecuted();
+        for (Map.Entry<String, String> entry : mHeader.entrySet())
             mConnection.addRequestProperty(entry.getKey(), entry.getValue());
         mConnection.setDoOutput(true);
         mConnection.setDoInput(true);
         mConnection.setRequestMethod(mMethod.name());
         mConnection.connect();
-        if (data != null && data.length > 0)
+        if (mData != null && mData.getBytes().length > 0)
         {
             OutputStream out = mConnection.getOutputStream();
-            out.write(data, 0, data.length);
+            out.write(mData.getBytes(), 0, mData.getBytes().length);
             out.close();
         }
         return new OriginHttpResponse(mConnection);
     }
 
     @Override
-    protected void enqueue(HttpHeader header, byte[] data)
+    public void enqueue()  throws IOException
     {
-        // TODO
+        checkExecuted();
+        OriginHttpManager.getInstance().enqueue(this);
     }
 
     @Override
@@ -58,5 +73,11 @@ public class OriginHttpCall extends AbstractBufferHttpCall
     public URI getUri()
     {
         return URI.create(mUrl);
+    }
+
+    @Override
+    protected HttpHeader getHeaders()
+    {
+        return null;
     }
 }

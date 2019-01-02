@@ -13,10 +13,6 @@ public class OriginHttpRequestFactory implements IHttpRequestFactory
     private int mReadTimeout;
     private int mConnectTimeout;
 
-    public OriginHttpRequestFactory()
-    {
-    }
-
     @Override
     public void setReadTimeout(int readTimeout)
     {
@@ -43,6 +39,6 @@ public class OriginHttpRequestFactory implements IHttpRequestFactory
         {
             e.printStackTrace();
         }
-        return new OriginHttpCall(connection, request.getMethod(), request.getUrl());
+        return new OriginHttpCall(connection, request.getUrl(), request.getMethod(), request.getHeader(), request.getData(), request.getResponse());
     }
 }

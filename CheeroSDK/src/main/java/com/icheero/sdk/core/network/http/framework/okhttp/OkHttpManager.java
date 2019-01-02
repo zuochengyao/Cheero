@@ -177,6 +177,11 @@ public class OkHttpManager
         return null;
     }
 
+    public Request createGetRequest(String url)
+    {
+        return new Request.Builder().url(url).build();
+    }
+
     private SSLSocketFactory initSSLSocketFactory()
     {
         SSLSocketFactory ssfFactory = null;
