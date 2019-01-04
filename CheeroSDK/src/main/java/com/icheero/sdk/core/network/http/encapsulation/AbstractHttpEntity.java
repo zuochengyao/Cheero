@@ -1,27 +1,53 @@
 package com.icheero.sdk.core.network.http.encapsulation;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 /**
  * @author 左程耀
  * 封装http请求数据
  */
-public abstract class AbstractHttpEntity<T>
+public abstract class AbstractHttpEntity
 {
-    protected HashMap<String, T> mMap = new HashMap<>();
+    private final static char[] MULTIPART_CHARS = "-_1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+
+    protected String mBoundary;
+    protected HashMap<String, Object> mMap;
+
+    protected AbstractHttpEntity()
+    {
+        this.mMap = new HashMap<>();
+        this.mBoundary = genBoundary();
+    }
+
+    public String getBoundary()
+    {
+        return mBoundary;
+    }
+
+    private String genBoundary()
+    {
+        StringBuilder builder = new StringBuilder();
+        Random rand = new Random();
+        for (int i = 0; i < 32; i++)
+            builder.append(MULTIPART_CHARS[rand.nextInt(MULTIPART_CHARS.length)]);
+        return builder.toString();
+    }
 
     public void addString(String key, String value)
     {
-        mMap.put(key, (T) value);
+        mMap.put(key, value);
     }
 
-    public abstract Set<Map.Entry<String, T>> entrySet();
+    public Set<Map.Entry<String, Object>> entrySet()
+    {
+        return mMap.entrySet();
+    }
 
-    public abstract byte[] getBytes();
+    public abstract byte[] getBytes() throws IOException;
 
-    public abstract void write(OutputStream out) throws IOException;
+
 }

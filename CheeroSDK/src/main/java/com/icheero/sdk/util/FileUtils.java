@@ -4,10 +4,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by 左程耀 on 2018/3/2.
@@ -88,5 +90,33 @@ public class FileUtils
     {
         int lastSeparatorIndex = url.lastIndexOf("/");
         return (lastSeparatorIndex < 0) ? url : url.substring(lastSeparatorIndex + 1, url.length());
+    }
+
+    /**
+     * 获取文件数据流
+     * @param file
+     */
+    public static byte[] getFileBytes(File file)
+    {
+        byte[] data = null;
+        if (file != null && file.exists())
+        {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            try
+            {
+                InputStream in = new FileInputStream(file);
+                byte[] buffer = new byte[4 * 1024];
+                int len;
+                while ((len = in.read(buffer)) != -1)
+                    out.write(buffer, 0, len);
+                data = out.toByteArray();
+                out.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return data;
     }
 }

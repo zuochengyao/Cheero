@@ -3,7 +3,7 @@ package com.icheero.sdk.knowledge.designpattern;
 import com.icheero.sdk.knowledge.designpattern.bridge.Abstraction;
 import com.icheero.sdk.knowledge.designpattern.bridge.ConcreteImpA;
 import com.icheero.sdk.knowledge.designpattern.bridge.ConcreteImpB;
-import com.icheero.sdk.knowledge.designpattern.bridge.RefinedAbstruction;
+import com.icheero.sdk.knowledge.designpattern.bridge.RefinedAbstraction;
 import com.icheero.sdk.knowledge.designpattern.command.Command;
 import com.icheero.sdk.knowledge.designpattern.command.ConcreteCommand;
 import com.icheero.sdk.knowledge.designpattern.command.Invoker;
@@ -129,7 +129,7 @@ public class DesignPatternMethods
 
     public static void doBridge()
     {
-        Abstraction ab = new RefinedAbstruction();
+        Abstraction ab = new RefinedAbstraction();
         ab.setImplementor(new ConcreteImpA());
         ab.operation();
         ab.setImplementor(new ConcreteImpB());

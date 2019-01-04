@@ -30,7 +30,7 @@ public class OriginHttpRunnable implements Runnable
                 if (response.getStatus().isSuccess())
                     mResponse.onSuccess(response.getHeaders().getContentType(), new String(IOManager.getInstance().getResponseData(response)));
                 else
-                    mResponse.onFailure(response.getStatus().getStatusCode(), response.getStatus().getMessage());
+                    mResponse.onFailure(response.getStatus().getStatusCode(), response.getStatusMessage());
             }
         }
         catch (IOException e)

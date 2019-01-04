@@ -80,7 +80,7 @@ public class OkHttpCall implements IHttpCall
     }
 
     @Override
-    public void enqueue()
+    public void enqueue() throws IOException
     {
         newCall().enqueue(new Callback()
         {
@@ -104,7 +104,7 @@ public class OkHttpCall implements IHttpCall
         });
     }
 
-    private Call newCall()
+    private Call newCall() throws IOException
     {
         if (mMethod == HttpMethod.POST)
         {
@@ -137,7 +137,8 @@ public class OkHttpCall implements IHttpCall
                             byte[] data = (byte[]) value;
                             builder.addFormDataPart(entry.getKey(), "data", RequestBody.create(MediaType.parse(BaseApi.MEDIA_TYPE_MULTIPART), data));
                         }
-                        else builder.addFormDataPart(entry.getKey(), value.toString());
+                        else
+                            builder.addFormDataPart(entry.getKey(), value.toString());
                     }
                     mRequestBuilder.post(builder.build());
                 }

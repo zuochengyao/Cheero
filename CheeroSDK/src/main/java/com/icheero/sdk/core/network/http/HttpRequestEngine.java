@@ -9,13 +9,14 @@ import java.io.IOException;
 public class HttpRequestEngine
 {
     private static final Class TAG = HttpRequestEngine.class;
-    private IHttpRequestFactory mHttpRequestFactory;
 
+    private HttpRequestProvider mHttpRequestProvider;
+    private IHttpRequestFactory mHttpRequestFactory;
     private static volatile HttpRequestEngine mInstance;
 
     private HttpRequestEngine()
     {
-        mHttpRequestFactory = HttpRequestProvider.getInstance().getHttpRequestFactory();
+        mHttpRequestProvider = HttpRequestProvider.getInstance();
     }
 
     public static HttpRequestEngine getInstance()
@@ -33,6 +34,7 @@ public class HttpRequestEngine
 
     public void init(HttpConfig config)
     {
+        mHttpRequestFactory = mHttpRequestProvider.getHttpRequestFactory(config.getHttpClassName());
         mHttpRequestFactory.setConnectTimeout(config.getConnectTimeout());
         mHttpRequestFactory.setReadTimeout(config.getReadTimeout());
         if (mHttpRequestFactory instanceof OkHttpRequestFactory)

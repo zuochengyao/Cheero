@@ -2,14 +2,14 @@ package com.icheero.sdk.core.network.http;
 
 import com.icheero.sdk.core.network.http.encapsulation.IHttpCall;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpRequestFactory;
+import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpRequestFactory;
 import com.icheero.sdk.core.network.http.framework.origin.OriginHttpRequestFactory;
+import com.icheero.sdk.core.network.http.framework.volley.VolleyRequestFactory;
+import com.icheero.sdk.util.Common;
 
 public class HttpRequestProvider
 {
     private static final Class TAG = HttpRequestProvider.class;
-
-    private static final String CLASSNAME_OKHTTP = "okhttp3.OkHttpClient";
-    private static final String CLASSNAME_VOLLEY = "com.android.volley.toolbox.Volley";
 
     private IHttpRequestFactory mHttpRequestFactory;
 
@@ -17,15 +17,6 @@ public class HttpRequestProvider
 
     private HttpRequestProvider()
     {
-//        // 是否支持okhttp3
-//        if (Common.isClassExist(CLASSNAME_OKHTTP, TAG.getClassLoader()))
-//            mHttpRequestFactory = new OkHttpRequestFactory();
-//        // 是否支持volley
-//        else if (Common.isClassExist(CLASSNAME_VOLLEY, TAG.getClassLoader()))
-//            mHttpRequestFactory = new VolleyRequestFactory();
-//        // 若都不支持，则使用android自带的
-//        else
-            mHttpRequestFactory = new OriginHttpRequestFactory();
     }
 
     public static HttpRequestProvider getInstance()
@@ -47,8 +38,17 @@ public class HttpRequestProvider
         return mHttpRequestFactory.getHttpCall(request);
     }
 
-    IHttpRequestFactory getHttpRequestFactory()
+    IHttpRequestFactory getHttpRequestFactory(String className)
     {
+        // 是否支持okhttp3
+        if (HttpConfig.CLASSNAME_OKHTTP.equals(className) && Common.isClassExist(HttpConfig.CLASSNAME_OKHTTP, TAG.getClassLoader()))
+            mHttpRequestFactory = new OkHttpRequestFactory();
+            // 是否支持volley
+        else if (HttpConfig.CLASSNAME_VOLLEY.equals(className) && Common.isClassExist(HttpConfig.CLASSNAME_VOLLEY, TAG.getClassLoader()))
+            mHttpRequestFactory = new VolleyRequestFactory();
+            // 若都不支持，则使用android自带的
+        else
+            mHttpRequestFactory = new OriginHttpRequestFactory();
         return mHttpRequestFactory;
     }
 }

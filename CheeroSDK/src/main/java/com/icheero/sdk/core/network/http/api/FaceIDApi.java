@@ -36,7 +36,11 @@ public class FaceIDApi extends BaseApi
         entity.addFilePart("image", image);
         entity.addString("multi_oriented_detection", multiOrientedDetection);
         // Create HttpRequest
-        HttpRequest request = newRequest(url, HttpMethod.POST, entity, MEDIA_TYPE_NORMAL, new HttpResponse(response, new JsonConvert()));
+        HttpRequest request = newRequest(url, HttpMethod.POST, entity, MEDIA_TYPE_STREAM, new HttpResponse(response, new JsonConvert()));
+        // Create HttpHeader
+        request.getHeader().setConnection("Keep-Alive");
+        request.getHeader().setUserAgent("Mozilla/5.0 (Windows; U; Windows NT 6.1; zh-CN; rv:1.9.2.6)");
+        request.getHeader().setContentType("multipart/form-data; boundary=" + entity.getBoundary());
         // Do request
         HttpRequestEngine.getInstance().enqueue(request);
     }
@@ -50,7 +54,11 @@ public class FaceIDApi extends BaseApi
         entity.addBinaryPart("image", image);
         entity.addString("multi_oriented_detection", multiOrientedDetection);
         // Create HttpRequest
-        HttpRequest request = newRequest(url, HttpMethod.POST, entity, MEDIA_TYPE_NORMAL, new HttpResponse(response, new JsonConvert()));
+        HttpRequest request = newRequest(url, HttpMethod.POST, entity, MEDIA_TYPE_STREAM, new HttpResponse(response, new JsonConvert()));
+        // Create HttpHeader
+        request.getHeader().setConnection("Keep-Alive");
+        request.getHeader().setUserAgent("Mozilla/5.0 (Windows; U; Windows NT 6.1; zh-CN; rv:1.9.2.6)");
+        request.getHeader().setContentType("multipart/form-data; boundary=" + entity.getBoundary());
         // Do request
         HttpRequestEngine.getInstance().enqueue(request);
     }

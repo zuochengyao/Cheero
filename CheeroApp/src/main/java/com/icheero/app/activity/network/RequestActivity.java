@@ -90,7 +90,7 @@ public class RequestActivity extends BaseActivity
                 File file = new File(PATH_DETECT);
                 if (file.exists())
                 {
-                    FaceIDApi.detect("https://api.faceid.com/faceid/v1/detect", mFaceIDConfig.key, mFaceIDConfig.secret, imageRef, "1", new IResponseListener()
+                    FaceIDApi.detect("https://api.faceid.com/faceid/v1/detect", mFaceIDConfig.key, mFaceIDConfig.secret, file, "1", new IResponseListener()
                     {
                         @Override
                         public void onSuccess(Object data)

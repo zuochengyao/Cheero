@@ -47,7 +47,7 @@ public class OriginHttpManager
         return mInstance;
     }
 
-    public void enqueue(OriginHttpCall httpCall)
+    void enqueue(OriginHttpCall httpCall)
     {
         if (mRunningQueue.size() > REQUEST_SIZE_MAX)
             mCacheQueue.add(httpCall);

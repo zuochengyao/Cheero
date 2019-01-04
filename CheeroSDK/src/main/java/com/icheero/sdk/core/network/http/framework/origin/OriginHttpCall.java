@@ -42,7 +42,7 @@ public class OriginHttpCall extends AbstractHttpCall
     {
         checkExecuted();
         for (Map.Entry<String, String> entry : mHeader.entrySet())
-            mConnection.addRequestProperty(entry.getKey(), entry.getValue());
+            mConnection.setRequestProperty(entry.getKey(), entry.getValue());
         mConnection.setDoOutput(true);
         mConnection.setDoInput(true);
         mConnection.setRequestMethod(mMethod.name());
@@ -50,16 +50,15 @@ public class OriginHttpCall extends AbstractHttpCall
         if (mData != null && mData.getBytes().length > 0)
         {
             OutputStream out = mConnection.getOutputStream();
-            out.write(mData.getBytes(), 0, mData.getBytes().length);
+            out.write(mData.getBytes());
             out.close();
         }
         return new OriginHttpResponse(mConnection);
     }
 
     @Override
-    public void enqueue()  throws IOException
+    public void enqueue()
     {
-        checkExecuted();
         OriginHttpManager.getInstance().enqueue(this);
     }
 
@@ -79,5 +78,10 @@ public class OriginHttpCall extends AbstractHttpCall
     protected HttpHeader getHeaders()
     {
         return null;
+    }
+
+    private void doExecute()
+    {
+
     }
 }

@@ -4,8 +4,10 @@ import com.icheero.sdk.core.network.http.encapsulation.HttpStatus;
 import com.icheero.sdk.core.network.http.implement.AbstractHttpResponse;
 import com.icheero.sdk.core.network.http.implement.HttpHeader;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +63,18 @@ public class OriginHttpResponse extends AbstractHttpResponse
     {
         try
         {
-            return mConnection.getResponseMessage();
+            if (getStatus().isSuccess())
+                return mConnection.getResponseMessage();
+            else
+            {
+                StringBuilder error = new StringBuilder();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(mConnection.getErrorStream(), "UTF-8"));
+                String line;
+                while ((line = bufferedReader.readLine()) != null)
+                    error.append(line);
+                bufferedReader.close();
+                return error.toString();
+            }
         }
         catch (IOException e)
         {
