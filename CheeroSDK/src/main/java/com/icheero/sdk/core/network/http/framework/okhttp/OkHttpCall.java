@@ -133,7 +133,7 @@ public class OkHttpCall implements IHttpCall
                         else if (value instanceof byte[])
                         {
                             byte[] data = (byte[]) value;
-                            builder.addFormDataPart(entry.getKey(), "data", RequestBody.create(MediaType.parse(BaseApi.MEDIA_TYPE_MULTIPART), data));
+                            builder.addFormDataPart(entry.getKey(), entry.getKey(), RequestBody.create(MediaType.parse(BaseApi.MEDIA_TYPE_MULTIPART), data));
                         }
                         else
                             builder.addFormDataPart(entry.getKey(), value.toString());

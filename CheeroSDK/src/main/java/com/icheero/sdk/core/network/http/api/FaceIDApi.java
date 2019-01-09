@@ -41,6 +41,7 @@ public class FaceIDApi extends BaseApi
         request.getHeader().setConnection("Keep-Alive");
         request.getHeader().setUserAgent("Mozilla/5.0 (Windows; U; Windows NT 6.1; zh-CN; rv:1.9.2.6)");
         request.getHeader().setContentType("multipart/form-data; boundary=" + entity.getBoundary());
+        request.getHeader().setCharset("UTF-8");
         // Do request
         HttpRequestEngine.getInstance().enqueue(request);
     }

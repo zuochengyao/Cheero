@@ -32,7 +32,7 @@ public class BaseApplication extends Application
                 .setReadTimeout(30)
                 .setWriteTimeout(30)
                 .setRetryOnConnectionFailure(true)
-                .setHttpClassName(HttpConfig.CLASSNAME_OKHTTP)
+                .setHttpClassName(HttpConfig.CLASSNAME_ORIGIN)
                 .build();
         HttpRequestEngine.getInstance().init(httpConfig);
         // 初始化 下载管理

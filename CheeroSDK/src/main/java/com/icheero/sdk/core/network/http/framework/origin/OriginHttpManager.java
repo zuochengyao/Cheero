@@ -37,14 +37,7 @@ public class OriginHttpManager
     {
         mRunningQueue = new ArrayDeque<>();
         mCacheQueue = new ArrayDeque<>();
-        try
-        {
-            ignoreSsl();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        ignoreSsl();
     }
 
     public static OriginHttpManager getInstance()

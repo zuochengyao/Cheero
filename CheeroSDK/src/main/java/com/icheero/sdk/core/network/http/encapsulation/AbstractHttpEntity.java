@@ -1,5 +1,7 @@
 package com.icheero.sdk.core.network.http.encapsulation;
 
+import android.text.TextUtils;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +14,7 @@ import java.util.Set;
  */
 public abstract class AbstractHttpEntity
 {
-    private final static char[] MULTIPART_CHARS = "-_1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+    private final static char[] MULTIPART_CHARS = "-1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 
     protected String mBoundary;
     protected HashMap<String, Object> mMap;
@@ -32,13 +34,15 @@ public abstract class AbstractHttpEntity
     {
         StringBuilder builder = new StringBuilder();
         Random rand = new Random();
-        for (int i = 0; i < 32; i++)
+        for (int i = 0; i < 36; i++)
             builder.append(MULTIPART_CHARS[rand.nextInt(MULTIPART_CHARS.length)]);
         return builder.toString();
     }
 
     public void addString(String key, String value)
     {
+        if (TextUtils.isEmpty(value))
+            return;
         mMap.put(key, value);
     }
 
@@ -53,6 +57,5 @@ public abstract class AbstractHttpEntity
     }
 
     public abstract byte[] getBytes() throws IOException;
-
 
 }

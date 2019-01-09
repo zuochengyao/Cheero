@@ -44,12 +44,12 @@ public class OriginHttpCall extends AbstractHttpCall
         checkExecuted();
         if (mData != null)
             getBody().write(mData.getBytes());
-        for (Map.Entry<String, String> entry : mHeader.entrySet())
-            mConnection.setRequestProperty(entry.getKey(), entry.getValue());
         mConnection.setUseCaches(false);
         mConnection.setDoOutput(true);
         mConnection.setDoInput(true);
         mConnection.setRequestMethod(mMethod.name());
+        for (Map.Entry<String, String> entry : mHeader.entrySet())
+            mConnection.setRequestProperty(entry.getKey(), entry.getValue());
         mConnection.connect();
         if (getBodyData() != null && getBodyData().length > 0)
         {
