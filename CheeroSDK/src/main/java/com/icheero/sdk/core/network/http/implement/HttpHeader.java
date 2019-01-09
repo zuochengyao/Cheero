@@ -25,6 +25,7 @@ public class HttpHeader implements Map<String, String>
     public final static String HEADER_CONNECTION = "Connection";
     public final static String HEADER_CONTENT_LENGTH = "Content-length";
     public final static String HEADER_CONTENT_TYPE = "Content-Type";
+    public final static String HEADER_CHARSET = "Charset";
 
     private Map<String, String> mMap;
 
@@ -133,6 +134,16 @@ public class HttpHeader implements Map<String, String>
     public void setContentType(String value)
     {
         put(HEADER_CONTENT_TYPE, value);
+    }
+
+    public String getCharset()
+    {
+        return get(HEADER_CHARSET);
+    }
+
+    public void setCharset(String charset)
+    {
+        put(HEADER_CHARSET, charset);
     }
 
     // endregion

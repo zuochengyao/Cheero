@@ -113,19 +113,17 @@ public class OkHttpCall implements IHttpCall
                 if (mData instanceof FormEntity)
                 {
                     FormBody.Builder builder = new FormBody.Builder();
-                    for (Object obj : mData.entrySet())
+                    for (Map.Entry<String, Object> entry : mData.entrySet())
                     {
-                        Map.Entry<String, String> entry = (Map.Entry<String, String>) obj;
-                        builder.add(entry.getKey(), entry.getValue());
+                        builder.add(entry.getKey(), entry.getValue().toString());
                     }
                     mRequestBuilder.post(builder.build());
                 }
                 else if (mData instanceof MultipartEntity)
                 {
                     MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-                    for (Object obj : mData.entrySet())
+                    for (Map.Entry<String, Object> entry : mData.entrySet())
                     {
-                        Map.Entry<String, Object> entry = (Map.Entry<String, Object>) obj;
                         Object value = entry.getValue();
                         if (value instanceof File)
                         {

@@ -7,6 +7,7 @@ import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
 import com.icheero.sdk.core.network.http.implement.AbstractHttpCall;
 import com.icheero.sdk.core.network.http.implement.HttpHeader;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -41,16 +42,19 @@ public class OriginHttpCall extends AbstractHttpCall
     public IHttpResponse execute() throws IOException
     {
         checkExecuted();
+        if (mData != null)
+            getBody().write(mData.getBytes());
         for (Map.Entry<String, String> entry : mHeader.entrySet())
             mConnection.setRequestProperty(entry.getKey(), entry.getValue());
+        mConnection.setUseCaches(false);
         mConnection.setDoOutput(true);
         mConnection.setDoInput(true);
         mConnection.setRequestMethod(mMethod.name());
         mConnection.connect();
-        if (mData != null && mData.getBytes().length > 0)
+        if (getBodyData() != null && getBodyData().length > 0)
         {
-            OutputStream out = mConnection.getOutputStream();
-            out.write(mData.getBytes());
+            OutputStream out = new DataOutputStream(mConnection.getOutputStream());
+            out.write(getBodyData());
             out.close();
         }
         return new OriginHttpResponse(mConnection);
@@ -77,11 +81,6 @@ public class OriginHttpCall extends AbstractHttpCall
     @Override
     protected HttpHeader getHeaders()
     {
-        return null;
-    }
-
-    private void doExecute()
-    {
-
+        return mHeader;
     }
 }

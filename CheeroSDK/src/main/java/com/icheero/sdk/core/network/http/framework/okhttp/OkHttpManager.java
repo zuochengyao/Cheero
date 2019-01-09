@@ -1,22 +1,16 @@
 package com.icheero.sdk.core.network.http.framework.okhttp;
 
-import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 
 import com.icheero.sdk.core.manager.IOManager;
+import com.icheero.sdk.core.network.http.HttpSecure;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.SecureRandom;
 import java.util.concurrent.TimeUnit;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -50,8 +44,8 @@ public class OkHttpManager
     private OkHttpManager()
     {
         this.mOkHttpClient = new OkHttpClient.Builder()
-                .hostnameVerifier((hostname, session) -> true)
-                .sslSocketFactory(initSSLSocketFactory(), initX509TrustManager()) // 支持https
+                .hostnameVerifier(HttpSecure.hv)
+                .sslSocketFactory(HttpSecure.getSocketFactory(), HttpSecure.initX509TrustManager()) // 支持https
                 .build();
     }
 
@@ -180,45 +174,5 @@ public class OkHttpManager
     public Request createGetRequest(String url)
     {
         return new Request.Builder().url(url).build();
-    }
-
-    private SSLSocketFactory initSSLSocketFactory()
-    {
-        SSLSocketFactory ssfFactory = null;
-        try
-        {
-            SSLContext sc = SSLContext.getInstance("SSL");
-            sc.init(null, new TrustManager[]{initX509TrustManager()}, new SecureRandom());
-            ssfFactory = sc.getSocketFactory();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        return ssfFactory;
-    }
-
-    @SuppressLint("TrustAllX509TrustManager")
-    private X509TrustManager initX509TrustManager()
-    {
-        return new X509TrustManager()
-        {
-            @Override
-            public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType)
-            {
-            }
-
-            @Override
-            public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType)
-            {
-            }
-
-            @Override
-            public java.security.cert.X509Certificate[] getAcceptedIssuers()
-            {
-                return new java.security.cert.X509Certificate[]{ };
-            }
-        };
     }
 }

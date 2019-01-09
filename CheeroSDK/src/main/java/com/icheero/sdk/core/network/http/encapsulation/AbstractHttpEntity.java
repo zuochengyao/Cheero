@@ -42,6 +42,11 @@ public abstract class AbstractHttpEntity
         mMap.put(key, value);
     }
 
+    public Object get(String key)
+    {
+        return mMap.get(key);
+    }
+
     public Set<Map.Entry<String, Object>> entrySet()
     {
         return mMap.entrySet();

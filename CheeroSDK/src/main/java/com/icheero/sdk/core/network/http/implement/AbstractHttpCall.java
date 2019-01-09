@@ -19,8 +19,7 @@ public abstract class AbstractHttpCall implements IHttpCall
     {
         synchronized (this)
         {
-            if (isExecuted)
-                throw new IllegalStateException("The Request Already Executed");
+            if (isExecuted) throw new IllegalStateException("The Request Already Executed");
             isExecuted = true;
         }
         if (mZipOutStream != null)
@@ -38,6 +37,11 @@ public abstract class AbstractHttpCall implements IHttpCall
     protected OutputStream getBodyOutputStream()
     {
         return mByteArray;
+    }
+
+    protected byte[] getBodyData()
+    {
+        return mByteArray.toByteArray();
     }
 
     private boolean isGzip()

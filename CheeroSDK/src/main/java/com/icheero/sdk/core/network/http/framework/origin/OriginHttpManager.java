@@ -1,5 +1,7 @@
 package com.icheero.sdk.core.network.http.framework.origin;
 
+import com.icheero.sdk.core.network.http.HttpSecure;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
@@ -8,6 +10,8 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class OriginHttpManager
 {
@@ -33,6 +37,14 @@ public class OriginHttpManager
     {
         mRunningQueue = new ArrayDeque<>();
         mCacheQueue = new ArrayDeque<>();
+        try
+        {
+            ignoreSsl();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public static OriginHttpManager getInstance()
@@ -41,7 +53,8 @@ public class OriginHttpManager
         {
             synchronized (OriginHttpManager.class)
             {
-                if (mInstance == null) mInstance = new OriginHttpManager();
+                if (mInstance == null)
+                    mInstance = new OriginHttpManager();
             }
         }
         return mInstance;
@@ -50,9 +63,13 @@ public class OriginHttpManager
     void enqueue(OriginHttpCall httpCall)
     {
         if (mRunningQueue.size() > REQUEST_SIZE_MAX)
+        {
             mCacheQueue.add(httpCall);
+        }
         else
+        {
             doRequest(httpCall);
+        }
     }
 
     /**
@@ -81,5 +98,14 @@ public class OriginHttpManager
             mRunningQueue.add(httpCall);
             mThreadPool.execute(new OriginHttpRunnable(httpCall, httpCall.getListener()));
         }
+    }
+
+    /**
+     * 忽略HTTPS请求的SSL证书，必须在openConnection之前调用
+     */
+    private void ignoreSsl()
+    {
+        HttpsURLConnection.setDefaultSSLSocketFactory(HttpSecure.getSocketFactory());
+        HttpsURLConnection.setDefaultHostnameVerifier(HttpSecure.hv);
     }
 }
