@@ -2,7 +2,7 @@ package com.icheero.sdk.core.network.http.api;
 
 import com.icheero.sdk.base.BaseApi;
 import com.icheero.sdk.core.network.http.HttpRequest;
-import com.icheero.sdk.core.network.http.HttpRequestEngine;
+import com.icheero.sdk.core.manager.HttpManager;
 import com.icheero.sdk.core.network.http.HttpResponse;
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 import com.icheero.sdk.core.network.http.implement.HttpHeader;
@@ -24,7 +24,7 @@ public class CheeroApi extends BaseApi
         HttpHeader header = request.getHeader();
         header.put("CheeroHeader", "Cheero");
         // Do request
-        HttpRequestEngine.getInstance().enqueue(request);
+        HttpManager.getInstance().enqueue(request);
     }
 
     public static void getFaceIDConfig(String url, IResponseListener response)
@@ -35,6 +35,6 @@ public class CheeroApi extends BaseApi
         HttpHeader header = request.getHeader();
         header.put("CheeroHeader", "Cheero");
         // Do request
-        HttpRequestEngine.getInstance().enqueue(request);
+        HttpManager.getInstance().enqueue(request);
     }
 }

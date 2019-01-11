@@ -56,6 +56,11 @@ public abstract class AbstractHttpEntity
         return mMap.entrySet();
     }
 
+    public int size()
+    {
+        return mMap.size();
+    }
+
     public abstract byte[] getBytes() throws IOException;
 
 }

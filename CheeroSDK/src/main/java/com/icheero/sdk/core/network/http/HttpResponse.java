@@ -27,6 +27,8 @@ public class HttpResponse// implements IResponseListener<String>
                 Object obj = mConvert.parse(data, type);
                 mResponse.onSuccess(obj);
             }
+            else
+                mResponse.onSuccess(data);
         }
         else
             mResponse.onSuccess(data);

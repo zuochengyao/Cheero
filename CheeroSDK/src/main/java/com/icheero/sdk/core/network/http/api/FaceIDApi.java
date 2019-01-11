@@ -2,7 +2,7 @@ package com.icheero.sdk.core.network.http.api;
 
 import com.icheero.sdk.base.BaseApi;
 import com.icheero.sdk.core.network.http.HttpRequest;
-import com.icheero.sdk.core.network.http.HttpRequestEngine;
+import com.icheero.sdk.core.manager.HttpManager;
 import com.icheero.sdk.core.network.http.HttpResponse;
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 import com.icheero.sdk.core.network.http.implement.convert.JsonConvert;
@@ -24,7 +24,7 @@ public class FaceIDApi extends BaseApi
         // Create HttpRequest
         HttpRequest request = newRequest(url, HttpMethod.POST, entity, MEDIA_TYPE_MULTIPART, new HttpResponse(response, new JsonConvert()));
         // Do request
-        HttpRequestEngine.getInstance().enqueue(request);
+        HttpManager.getInstance().enqueue(request);
     }
 
     public static void detect(String url, String key, String secret, File image, String multiOrientedDetection, IResponseListener response)
@@ -43,7 +43,7 @@ public class FaceIDApi extends BaseApi
         request.getHeader().setContentType("multipart/form-data; boundary=" + entity.getBoundary());
         request.getHeader().setCharset("UTF-8");
         // Do request
-        HttpRequestEngine.getInstance().enqueue(request);
+        HttpManager.getInstance().enqueue(request);
     }
 
     public static void detect(String url, String key, String secret, byte[] image, String multiOrientedDetection, IResponseListener response)
@@ -62,6 +62,6 @@ public class FaceIDApi extends BaseApi
         request.getHeader().setContentType("multipart/form-data; boundary=" + entity.getBoundary());
         request.getHeader().setCharset("UTF-8");
         // Do request
-        HttpRequestEngine.getInstance().enqueue(request);
+        HttpManager.getInstance().enqueue(request);
     }
 }

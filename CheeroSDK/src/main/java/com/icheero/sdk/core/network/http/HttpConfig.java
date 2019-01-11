@@ -4,6 +4,7 @@ public class HttpConfig
 {
     public static final String CLASSNAME_OKHTTP = "okhttp3.OkHttpClient";
     public static final String CLASSNAME_VOLLEY = "com.android.volley.toolbox.Volley";
+    public static final String CLASSNAME_APACHE = "org.apache.http.client.HttpClient";
     public static final String CLASSNAME_ORIGIN = "java.net.HttpURLConnection";
 
     /** 连接超时时长 单位：秒 */

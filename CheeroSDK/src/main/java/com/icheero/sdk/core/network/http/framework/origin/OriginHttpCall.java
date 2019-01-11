@@ -4,7 +4,7 @@ import com.icheero.sdk.core.network.http.HttpResponse;
 import com.icheero.sdk.core.network.http.encapsulation.AbstractHttpEntity;
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
-import com.icheero.sdk.core.network.http.implement.AbstractHttpCall;
+import com.icheero.sdk.core.network.http.implement.AbstractAsyncHttpCall;
 import com.icheero.sdk.core.network.http.implement.HttpHeader;
 
 import java.io.DataOutputStream;
@@ -14,7 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.Map;
 
-public class OriginHttpCall extends AbstractHttpCall
+public class OriginHttpCall extends AbstractAsyncHttpCall
 {
     private HttpURLConnection mConnection;
     private String mUrl;
@@ -31,11 +31,6 @@ public class OriginHttpCall extends AbstractHttpCall
         this.mHeader = header;
         this.mData = data;
         this.mListener = listener;
-    }
-
-    public HttpResponse getListener()
-    {
-        return mListener;
     }
 
     @Override
@@ -61,12 +56,6 @@ public class OriginHttpCall extends AbstractHttpCall
     }
 
     @Override
-    public void enqueue()
-    {
-        OriginHttpManager.getInstance().enqueue(this);
-    }
-
-    @Override
     public HttpMethod getMethod()
     {
         return mMethod;
@@ -82,5 +71,11 @@ public class OriginHttpCall extends AbstractHttpCall
     protected HttpHeader getHeaders()
     {
         return mHeader;
+    }
+
+    @Override
+    public HttpResponse getListener()
+    {
+        return mListener;
     }
 }

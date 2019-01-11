@@ -1,21 +1,21 @@
-package com.icheero.sdk.core.network.http.framework.origin;
+package com.icheero.sdk.core.network.http;
 
 import com.icheero.sdk.core.manager.IOManager;
-import com.icheero.sdk.core.network.http.HttpResponse;
 import com.icheero.sdk.core.network.http.encapsulation.HttpStatus;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
+import com.icheero.sdk.core.network.http.implement.AbstractAsyncHttpCall;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 
-public class OriginHttpRunnable implements Runnable
+public class HttpRunnable implements Runnable
 {
-    private OriginHttpCall mOriginHttpCall;
+    private AbstractAsyncHttpCall mHttpCall;
     private HttpResponse mResponse;
 
-    OriginHttpRunnable(OriginHttpCall originHttpCall, HttpResponse response)
+    HttpRunnable(AbstractAsyncHttpCall httpCall, HttpResponse response)
     {
-        this.mOriginHttpCall = originHttpCall;
+        this.mHttpCall = httpCall;
         this.mResponse = response;
     }
 
@@ -24,7 +24,7 @@ public class OriginHttpRunnable implements Runnable
     {
         try
         {
-            IHttpResponse response = mOriginHttpCall.execute();
+            IHttpResponse response = mHttpCall.execute();
             if (mResponse != null)
             {
                 if (response.getStatus().isSuccess())
@@ -43,7 +43,7 @@ public class OriginHttpRunnable implements Runnable
         }
         finally
         {
-            OriginHttpManager.getInstance().finish(mOriginHttpCall);
+            HttpThreadPool.getInstance().finish(mHttpCall);
         }
     }
 }

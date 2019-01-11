@@ -2,6 +2,7 @@ package com.icheero.sdk.core.network.http;
 
 import com.icheero.sdk.core.network.http.encapsulation.IHttpCall;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpRequestFactory;
+import com.icheero.sdk.core.network.http.framework.apache.HttpClientRequestFactory;
 import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpRequestFactory;
 import com.icheero.sdk.core.network.http.framework.origin.OriginHttpRequestFactory;
 import com.icheero.sdk.core.network.http.framework.volley.VolleyRequestFactory;
@@ -32,22 +33,24 @@ public class HttpRequestProvider
         return mInstance;
     }
 
-    IHttpCall getHttpCall(HttpRequest request)
+    public IHttpCall getHttpCall(HttpRequest request)
     {
         // URI.create(request.getUrl()), request.getMethod(), request.getMediaType(), request.getResponse()
         return mHttpRequestFactory.getHttpCall(request);
     }
 
-    IHttpRequestFactory getHttpRequestFactory(String className)
+    public IHttpRequestFactory getHttpRequestFactory(String className)
     {
         // 是否支持okhttp3
         if (HttpConfig.CLASSNAME_OKHTTP.equals(className) && Common.isClassExist(HttpConfig.CLASSNAME_OKHTTP, TAG.getClassLoader()))
             mHttpRequestFactory = new OkHttpRequestFactory();
-            // 是否支持volley
+        // 是否支持volley
         else if (HttpConfig.CLASSNAME_VOLLEY.equals(className) && Common.isClassExist(HttpConfig.CLASSNAME_VOLLEY, TAG.getClassLoader()))
             mHttpRequestFactory = new VolleyRequestFactory();
-            // 若都不支持，则使用android自带的
-        else
+        // 是否支持HttpClient
+        else if (HttpConfig.CLASSNAME_APACHE.equals(className) && Common.isClassExist(HttpConfig.CLASSNAME_APACHE, TAG.getClassLoader()))
+            mHttpRequestFactory = new HttpClientRequestFactory();
+        else // 若都不支持，则使用android自带的
             mHttpRequestFactory = new OriginHttpRequestFactory();
         return mHttpRequestFactory;
     }

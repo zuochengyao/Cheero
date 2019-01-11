@@ -31,6 +31,7 @@ dep_version.rxandroid = "2.1.0"
 dep_version.rxpermission = "0.10.2"
 dep_version.greendao = "3.2.2"
 dep_version.stetho = "1.5.0"
+dep_version.httpclient = "4.5.6"
 
 def retrofit = [:]
 retrofit.runtime = "com.squareup.retrofit2:retrofit:$dep_version.retrofit"
@@ -77,6 +78,7 @@ deps.andfix = "com.alipay.euler:andfix:$dep_version.andfix"
 deps.rx = rx
 deps.greendao = greendao
 deps.stetho = "com.facebook.stetho:stetho:$dep_version.stetho"
+deps.httpclient = "org.apache.httpcomponents:httpmime:$dep_version.httpclient"
 deps.faceid_api = "com.megvii.api:faceid:$dep_version.faceid_api"
 
 def static addRepos(RepositoryHandler handler) {

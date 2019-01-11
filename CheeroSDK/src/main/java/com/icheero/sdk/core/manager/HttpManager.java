@@ -1,32 +1,35 @@
-package com.icheero.sdk.core.network.http;
+package com.icheero.sdk.core.manager;
 
+import com.icheero.sdk.core.network.http.HttpConfig;
+import com.icheero.sdk.core.network.http.HttpRequest;
+import com.icheero.sdk.core.network.http.HttpRequestProvider;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpRequestFactory;
 import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpRequestFactory;
 import com.icheero.sdk.util.Log;
 
 import java.io.IOException;
 
-public class HttpRequestEngine
+public class HttpManager
 {
-    private static final Class TAG = HttpRequestEngine.class;
+    private static final Class TAG = HttpManager.class;
 
     private HttpRequestProvider mHttpRequestProvider;
     private IHttpRequestFactory mHttpRequestFactory;
-    private static volatile HttpRequestEngine mInstance;
+    private static volatile HttpManager mInstance;
 
-    private HttpRequestEngine()
+    private HttpManager()
     {
         mHttpRequestProvider = HttpRequestProvider.getInstance();
     }
 
-    public static HttpRequestEngine getInstance()
+    public static HttpManager getInstance()
     {
         if (mInstance == null)
         {
-            synchronized (HttpRequestEngine.class)
+            synchronized (HttpManager.class)
             {
                 if (mInstance == null)
-                    mInstance = new HttpRequestEngine();
+                    mInstance = new HttpManager();
             }
         }
         return mInstance;
