@@ -82,7 +82,7 @@ public class HttpClientCall extends AbstractAsyncHttpCall
 
     private HttpUriRequest getHttpMethod() throws IOException
     {
-        HttpUriRequest request = null;
+        HttpUriRequest request;
         switch (mMethod)
         {
             default:

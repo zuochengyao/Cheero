@@ -31,7 +31,8 @@ dep_version.rxandroid = "2.1.0"
 dep_version.rxpermission = "0.10.2"
 dep_version.greendao = "3.2.2"
 dep_version.stetho = "1.5.0"
-dep_version.httpclient = "4.5.6"
+dep_version.httpmime = "4.3.6"
+dep_version.httpcore = "4.4.10"
 
 def retrofit = [:]
 retrofit.runtime = "com.squareup.retrofit2:retrofit:$dep_version.retrofit"
@@ -61,10 +62,18 @@ greendao.classpath = "org.greenrobot:greendao-gradle-plugin:$dep_version.greenda
 greendao.impl = "org.greenrobot:greendao:$dep_version.greendao"
 greendao.generator = "org.greenrobot:greendao-generator:$dep_version.greendao"
 
+def apache = [:]
+apache.httpcore = "org.apache.httpcomponents:httpcore:$dep_version.httpcore"
+apache.httpmime = "org.apache.httpcomponents:httpmime:$dep_version.httpmime"
+
+
 def deps = [:]
 deps.retrofit = retrofit
 deps.butterknife = butterknife
 deps.support = support
+deps.rx = rx
+deps.greendao = greendao
+deps.apache = apache
 deps.gradle = "com.android.tools.build:gradle:$build_version.gradle"
 deps.rxjava2 = "io.reactivex.rxjava2:rxjava:$dep_version.rxjava2"
 deps.rxandroid = "io.reactivex.rxjava2:rxandroid:$dep_version.rxandroid"
@@ -75,10 +84,7 @@ deps.junit = "junit:junit:$dep_version.junit"
 deps.arouter_api = "com.alibaba:arouter-api:$dep_version.arouter_api"
 deps.arouter_compiler = "com.alibaba:arouter-compiler:$dep_version.arouter_compiler"
 deps.andfix = "com.alipay.euler:andfix:$dep_version.andfix"
-deps.rx = rx
-deps.greendao = greendao
 deps.stetho = "com.facebook.stetho:stetho:$dep_version.stetho"
-deps.httpclient = "org.apache.httpcomponents:httpmime:$dep_version.httpclient"
 deps.faceid_api = "com.megvii.api:faceid:$dep_version.faceid_api"
 
 def static addRepos(RepositoryHandler handler) {

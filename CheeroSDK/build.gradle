@@ -46,7 +46,7 @@ android {
         targetGenDir 'src/main/java'
     }
 
-    // useLibrary 'org.apache.http.legacy'
+//    useLibrary 'org.apache.http.legacy'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -87,7 +87,8 @@ dependencies {
     // facebook stetho
     implementation versions.deps.stetho
     // apache HttpClient
-    api versions.deps.httpclient
+    api versions.deps.apache.httpmime
+    api versions.deps.apache.httpcore
     // other
     testImplementation versions.deps.junit
 }

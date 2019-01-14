@@ -28,7 +28,8 @@ public class HttpClientManager
         {
             synchronized (HttpClientManager.class)
             {
-                if (mInstance == null) mInstance = new HttpClientManager();
+                if (mInstance == null)
+                    mInstance = new HttpClientManager();
             }
         }
         return mInstance;
@@ -43,4 +44,6 @@ public class HttpClientManager
     {
         HttpConnectionParams.setConnectionTimeout(mHttpParams, connectTimeout * 1000);
     }
+
+
 }
