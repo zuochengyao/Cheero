@@ -55,8 +55,11 @@ public class OkHttpCall implements IHttpCall
     private void init()
     {
         this.mRequestBuilder = new Request.Builder().url(mUrl);
-        for (Map.Entry<String, String> entry : mHeader.entrySet())
-            mRequestBuilder.addHeader(entry.getKey(), entry.getValue());
+        if (mHeader != null && mHeader.size() > 0)
+        {
+            for (Map.Entry<String, String> entry : mHeader.entrySet())
+                mRequestBuilder.addHeader(entry.getKey(), entry.getValue());
+        }
     }
 
     @Override

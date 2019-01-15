@@ -39,14 +39,13 @@ public class OkHttpManager
     public static final String NETWORK_ERROR_MSG_TASK_RUNNING = "Task Running";
 
     private static volatile OkHttpManager mInstance;
-    private OkHttpClient mOkHttpClient;
+    private OkHttpClient.Builder mBuilder;
 
     private OkHttpManager()
     {
-        this.mOkHttpClient = new OkHttpClient.Builder()
+        this.mBuilder = new OkHttpClient.Builder()
                 .hostnameVerifier(HttpSecure.hv)
-                .sslSocketFactory(HttpSecure.getSocketFactory(), HttpSecure.initX509TrustManager()) // 支持https
-                .build();
+                .sslSocketFactory(HttpSecure.getSocketFactory(), HttpSecure.initX509TrustManager()); // 支持https
     }
 
     public static OkHttpManager getInstance()
@@ -64,34 +63,34 @@ public class OkHttpManager
 
     OkHttpClient getOkHttpClient()
     {
-        return mOkHttpClient;
+        return mBuilder.build();
     }
 
     public void setReadTimeout(int readTimeout)
     {
-        this.mOkHttpClient = mOkHttpClient.newBuilder().readTimeout(readTimeout, TimeUnit.SECONDS).build();
+        this.mBuilder.readTimeout(readTimeout, TimeUnit.SECONDS).build();
     }
 
     void setWriteTimeout(int writeTimeout)
     {
-        this.mOkHttpClient = mOkHttpClient.newBuilder().writeTimeout(writeTimeout, TimeUnit.SECONDS).build();
+        this.mBuilder.writeTimeout(writeTimeout, TimeUnit.SECONDS).build();
     }
 
     void setConnectionTimeout(int connectionTimeout)
     {
-        this.mOkHttpClient = mOkHttpClient.newBuilder().connectTimeout(connectionTimeout, TimeUnit.SECONDS).build();
+        this.mBuilder.connectTimeout(connectionTimeout, TimeUnit.SECONDS).build();
     }
 
     void setRetryOnConnectionFailure(boolean retry)
     {
-        this.mOkHttpClient = mOkHttpClient.newBuilder().retryOnConnectionFailure(retry).build();
+        this.mBuilder.retryOnConnectionFailure(retry).build();
     }
 
     public Response syncRequest(@NonNull Request request)
     {
         try
         {
-            return mOkHttpClient.newCall(request).execute();
+            return getOkHttpClient().newCall(request).execute();
         }
         catch (IOException e)
         {
@@ -105,7 +104,7 @@ public class OkHttpManager
         try
         {
             Request request = new Request.Builder().url(url).build();
-            return mOkHttpClient.newCall(request).execute();
+            return getOkHttpClient().newCall(request).execute();
         }
         catch (IOException e)
         {
@@ -116,7 +115,7 @@ public class OkHttpManager
 
     public void asyncDownload(@NonNull Request request, @NonNull Callback callback)
     {
-        mOkHttpClient.newCall(request).enqueue(callback);
+        getOkHttpClient().newCall(request).enqueue(callback);
     }
 
     public void asyncDownload(@NonNull Request request, @NonNull IDownloadListener listener)
@@ -162,7 +161,7 @@ public class OkHttpManager
         Request request = new Request.Builder().url(url).addHeader("Range", "bytes=" + start + "-" + end).build();
         try
         {
-            return mOkHttpClient.newCall(request).execute();
+            return getOkHttpClient().newCall(request).execute();
         }
         catch (IOException e)
         {

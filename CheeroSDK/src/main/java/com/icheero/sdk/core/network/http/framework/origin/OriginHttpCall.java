@@ -31,6 +31,11 @@ public class OriginHttpCall extends AbstractAsyncHttpCall
         this.mHeader = header;
         this.mData = data;
         this.mListener = listener;
+        if (mHeader != null && mHeader.size() > 0)
+        {
+            for (Map.Entry<String, String> entry : mHeader.entrySet())
+                mConnection.setRequestProperty(entry.getKey(), entry.getValue());
+        }
     }
 
     @Override
@@ -43,8 +48,6 @@ public class OriginHttpCall extends AbstractAsyncHttpCall
         mConnection.setDoOutput(true);
         mConnection.setDoInput(true);
         mConnection.setRequestMethod(mMethod.name());
-        for (Map.Entry<String, String> entry : mHeader.entrySet())
-            mConnection.setRequestProperty(entry.getKey(), entry.getValue());
         mConnection.connect();
         if (getBodyData() != null && getBodyData().length > 0)
         {

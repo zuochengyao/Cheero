@@ -1,6 +1,9 @@
 package com.icheero.sdk.core.network.http.framework.apache;
 
 import org.apache.http.HttpVersion;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -9,17 +12,18 @@ import org.apache.http.protocol.HTTP;
 
 public class HttpClientManager
 {
-    private HttpParams mHttpParams = new BasicHttpParams();
     private static volatile HttpClientManager mInstance;
+    private RequestConfig.Builder mBuilder;
 
     private HttpClientManager()
     {
-        HttpConnectionParams.setTcpNoDelay(mHttpParams, true);
-        HttpProtocolParams.setVersion(mHttpParams, HttpVersion.HTTP_1_1);
-        HttpProtocolParams.setContentCharset(mHttpParams, HTTP.UTF_8);
+        HttpParams httpParams = new BasicHttpParams();
+        HttpConnectionParams.setTcpNoDelay(httpParams, true);
+        HttpProtocolParams.setVersion(httpParams, HttpVersion.HTTP_1_1);
+        HttpProtocolParams.setContentCharset(httpParams, HTTP.UTF_8);
         //持续握手
-        HttpProtocolParams.setUseExpectContinue(mHttpParams, true);
-        // RequestConfig config = RequestConfig.custom().setSocketTimeout(1).build();
+        HttpProtocolParams.setUseExpectContinue(httpParams, true);
+        mBuilder = RequestConfig.custom();
     }
 
     public static HttpClientManager getInstance()
@@ -35,15 +39,26 @@ public class HttpClientManager
         return mInstance;
     }
 
+    /**
+     * 等待服务器响应 timeout
+     * @param readTimeout second
+     */
     void setSoTimeout(int readTimeout)
     {
-        HttpConnectionParams.setSoTimeout(mHttpParams, readTimeout * 1000);
+        mBuilder.setSocketTimeout(readTimeout * 1000);
     }
 
+    /**
+     * 建立连接 & 获取连接池连接 timeout
+     * @param connectTimeout second
+     */
     void setConnectTimeout(int connectTimeout)
     {
-        HttpConnectionParams.setConnectionTimeout(mHttpParams, connectTimeout * 1000);
+        mBuilder.setSocketTimeout(connectTimeout * 1000).setConnectionRequestTimeout(connectTimeout * 1000);
     }
 
-
+    HttpClient newHttpClient()
+    {
+        return HttpClientBuilder.create().setDefaultRequestConfig(mBuilder.build()).build();
+    }
 }

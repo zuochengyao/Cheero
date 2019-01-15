@@ -4,8 +4,6 @@ import com.icheero.sdk.core.network.http.HttpRequest;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpCall;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpRequestFactory;
 
-import org.apache.http.impl.client.DefaultHttpClient;
-
 public class HttpClientRequestFactory implements IHttpRequestFactory
 {
     @Override
@@ -23,6 +21,6 @@ public class HttpClientRequestFactory implements IHttpRequestFactory
     @Override
     public IHttpCall getHttpCall(HttpRequest request)
     {
-        return new HttpClientCall(new DefaultHttpClient(), request.getUrl(), request.getMethod(), request.getHeader(), request.getData(), request.getResponse());
+        return new HttpClientCall(HttpClientManager.getInstance().newHttpClient(), request.getUrl(), request.getMethod(), request.getHeader(), request.getData(), request.getResponse());
     }
 }

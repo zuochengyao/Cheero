@@ -140,6 +140,11 @@ public class HttpClientCall extends AbstractAsyncHttpCall
                 request = new HttpOptions(mUrl);
                 break;
         }
+        if (mHeader != null && mHeader.size() > 0)
+        {
+            for (Map.Entry<String, String> entry : mHeader.entrySet())
+                request.addHeader(entry.getKey(), entry.getValue());
+        }
         return request;
     }
 }
