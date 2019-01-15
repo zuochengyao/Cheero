@@ -4,6 +4,7 @@ import android.os.Process;
 
 import com.icheero.sdk.core.database.entity.Download;
 import com.icheero.sdk.core.manager.IOManager;
+import com.icheero.sdk.core.network.http.encapsulation.HttpStatus;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
 import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpManager;
 import com.icheero.sdk.util.Log;
@@ -42,7 +43,7 @@ public class DownloadRunnable implements Runnable
         Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
         Response response = OkHttpManager.getInstance().syncDownloadByRange(mUrl, mStart, mEnd);
         if (response == null && mListener != null)
-            mListener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_ERROR, OkHttpManager.NETWORK_ERROR);
+            mListener.onFailure(HttpStatus.NETWORK_ERROR.getStatusCode(), HttpStatus.NETWORK_ERROR.getMessage());
         else
         {
             File file = IOManager.getInstance().getCacheFileByName(mUrl);

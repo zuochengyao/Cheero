@@ -12,7 +12,7 @@ public enum HttpStatus
 
     OK(200, "OK"),
     CREATED(201, "Created"),
-    Accepted(202, "Accepted"),
+    ACCEPTED(202, "Accepted"),
     NON_AUTHORITATIVE_INFORMATION(203, "Non-Authoritative Information"),
     NO_CONTENT(204, "No Content"),
     RESET_CONTENT(205, "Reset Content"),
@@ -26,9 +26,12 @@ public enum HttpStatus
     TEMPORARY_REDIRECT(307, "Temporary Redirect"),
 
     BAD_REQUEST(400, "Bad Request"),
+    NETWORK_ERROR(400, "Network Error"),
+    TASK_RUNNING(400, "Task Running"),
+    CONTENT_LENGTH(400, "Content Length -1"),
     PAYMENT_REQUIRED(402, "Payment Required"),
     FORBIDDEN(403, "Forbidden"),
-    NOT_FOUND(404, "Not_Found"),
+    NOT_FOUND(404, "API Not_Found"),
     METHOD_NOT_ALLOWED(405, "Method Not Allowed"),
     NOT_ACCEPTABLE(406, "Not Acceptable"),
     REQUEST_TIMEOUT(408, "Request Timeout"),

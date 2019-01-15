@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.icheero.sdk.core.database.DBHelper;
 import com.icheero.sdk.core.database.entity.Download;
 import com.icheero.sdk.core.manager.IOManager;
+import com.icheero.sdk.core.network.http.encapsulation.HttpStatus;
 import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpManager;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
 
@@ -67,7 +68,7 @@ public class DownloadManager
     {
         final DownloadTask task = new DownloadTask(url, listener);
         if (mDownloadTaskSet.contains(task))
-            listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_TASK_RUNNING, OkHttpManager.NETWORK_ERROR_MSG_TASK_RUNNING);
+            listener.onFailure(HttpStatus.TASK_RUNNING.getStatusCode(), HttpStatus.TASK_RUNNING.getMessage());
         else
         {
             mDownloadTaskSet.add(task);
@@ -93,7 +94,7 @@ public class DownloadManager
                     @Override
                     public void onFailure(Call call, IOException e)
                     {
-                        listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_TIMEOUT, OkHttpManager.NETWORK_ERROR_MSG_TIMEOUT);
+                        listener.onFailure(HttpStatus.REQUEST_TIMEOUT.getStatusCode(), HttpStatus.REQUEST_TIMEOUT.getMessage());
                         mDownloadTaskSet.remove(task);
                     }
 
@@ -101,12 +102,12 @@ public class DownloadManager
                     public void onResponse(Call call, Response response)
                     {
                         if (!response.isSuccessful())
-                            listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_ERROR, OkHttpManager.NETWORK_ERROR);
+                            listener.onFailure(HttpStatus.NETWORK_ERROR.getStatusCode(), HttpStatus.NETWORK_ERROR.getMessage());
                         else
                         {
                             mLength = response.body() != null ? response.body().contentLength() : -1;
                             if (mLength == -1)
-                                listener.onFailure(OkHttpManager.NETWORK_STATUS_CODE_ERROR, OkHttpManager.NETWORK_ERROR_MSG_CONTENT_LENGTH);
+                                listener.onFailure(HttpStatus.CONTENT_LENGTH.getStatusCode(), HttpStatus.CONTENT_LENGTH.getMessage());
                             else
                                 processDownload(url, mLength, listener);
                         }

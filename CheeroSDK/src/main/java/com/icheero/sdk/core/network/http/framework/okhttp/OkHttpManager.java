@@ -26,18 +26,6 @@ public class OkHttpManager
 {
     private static final Class<OkHttpManager> TAG = OkHttpManager.class;
 
-    public static final int NETWORK_STATUS_CODE_SUCCESS = 200;
-    public static final int NETWORK_STATUS_CODE_ERROR = 400;
-    public static final int NETWORK_STATUS_CODE_TASK_RUNNING = 400;
-    public static final int NETWORK_STATUS_CODE_NOT_FOUND = 404;
-    public static final int NETWORK_STATUS_CODE_TIMEOUT = 408;
-
-    public static final String NETWORK_ERROR = "Network Error";
-    public static final String NETWORK_ERROR_MSG_NOT_FOUND = "API NOT FOUND";
-    public static final String NETWORK_ERROR_MSG_TIMEOUT = "Request TIMEOUT";
-    public static final String NETWORK_ERROR_MSG_CONTENT_LENGTH = "Content length -1";
-    public static final String NETWORK_ERROR_MSG_TASK_RUNNING = "Task Running";
-
     private static volatile OkHttpManager mInstance;
     private OkHttpClient.Builder mBuilder;
 
@@ -68,17 +56,17 @@ public class OkHttpManager
 
     public void setReadTimeout(int readTimeout)
     {
-        this.mBuilder.readTimeout(readTimeout, TimeUnit.SECONDS).build();
+        this.mBuilder.readTimeout(readTimeout, TimeUnit.SECONDS);
     }
 
     void setWriteTimeout(int writeTimeout)
     {
-        this.mBuilder.writeTimeout(writeTimeout, TimeUnit.SECONDS).build();
+        this.mBuilder.writeTimeout(writeTimeout, TimeUnit.SECONDS);
     }
 
     void setConnectionTimeout(int connectionTimeout)
     {
-        this.mBuilder.connectTimeout(connectionTimeout, TimeUnit.SECONDS).build();
+        this.mBuilder.connectTimeout(connectionTimeout, TimeUnit.SECONDS);
     }
 
     void setRetryOnConnectionFailure(boolean retry)
