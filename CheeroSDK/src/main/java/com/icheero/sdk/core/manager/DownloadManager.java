@@ -1,13 +1,19 @@
-package com.icheero.sdk.core.network.download;
+package com.icheero.sdk.core.manager;
 
 import android.support.annotation.NonNull;
 
 import com.icheero.sdk.core.database.DBHelper;
 import com.icheero.sdk.core.database.entity.Download;
-import com.icheero.sdk.core.manager.IOManager;
+import com.icheero.sdk.core.network.download.DownloadConfig;
+import com.icheero.sdk.core.network.download.DownloadRunnable;
+import com.icheero.sdk.core.network.download.DownloadTask;
+import com.icheero.sdk.core.network.http.HttpRequest;
+import com.icheero.sdk.core.network.http.HttpRequestProvider;
+import com.icheero.sdk.core.network.http.HttpResponse;
+import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 import com.icheero.sdk.core.network.http.encapsulation.HttpStatus;
-import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpManager;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
+import com.icheero.sdk.core.network.listener.IResponseListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,10 +24,6 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class DownloadManager
 {
@@ -79,41 +81,45 @@ public class DownloadManager
                 for (int i = 0; i < mDownloadCaches.size(); i++)
                 {
                     Download entity = mDownloadCaches.get(i);
-                    if (i == mDownloadCaches.size() - 1) {
+                    if (i == mDownloadCaches.size() - 1)
                         mLength = entity.getEnd() + 1;
-                    }
                     long startSize = entity.getStart() + entity.getProgress();
                     long endSize = entity.getEnd();
                     mThreadPool.execute(new DownloadRunnable(url, startSize, endSize, entity, listener));
                 }
             }
-            else
+            else // 没有下载过
             {
-                // 没有下载过
-                OkHttpManager.getInstance().asyncDownload(OkHttpManager.getInstance().createGetRequest(url), new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e)
+                try
+                {
+                    HttpRequest request = new HttpRequest();
+                    request.setUrl(url);
+                    request.setMethod(HttpMethod.GET);
+                    request.setResponse(new HttpResponse(new IResponseListener<Long>()
                     {
-                        listener.onFailure(HttpStatus.REQUEST_TIMEOUT.getStatusCode(), HttpStatus.REQUEST_TIMEOUT.getMessage());
-                        mDownloadTaskSet.remove(task);
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response)
-                    {
-                        if (!response.isSuccessful())
-                            listener.onFailure(HttpStatus.NETWORK_ERROR.getStatusCode(), HttpStatus.NETWORK_ERROR.getMessage());
-                        else
+                        @Override
+                        public void onSuccess(Long data)
                         {
-                            mLength = response.body() != null ? response.body().contentLength() : -1;
                             if (mLength == -1)
                                 listener.onFailure(HttpStatus.CONTENT_LENGTH.getStatusCode(), HttpStatus.CONTENT_LENGTH.getMessage());
                             else
                                 processDownload(url, mLength, listener);
+                            mDownloadTaskSet.remove(task);
                         }
-                        mDownloadTaskSet.remove(task);
-                    }
-                });
+
+                        @Override
+                        public void onFailure(int errorCode, String errorMessage)
+                        {
+                            listener.onFailure(errorCode, errorMessage);
+                            mDownloadTaskSet.remove(task);
+                        }
+                    }, null));
+                    HttpRequestProvider.getInstance().getHttpCall(request).download();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
             }
             onProgressCallback(url, listener);
         }
@@ -146,7 +152,7 @@ public class DownloadManager
      * 插入到数据库中
      * @param entity 实体数据
      */
-    void insertToDb(Download entity)
+    public void insertToDb(Download entity)
     {
         DBHelper.getInstance().insertDownload(entity);
     }
@@ -159,7 +165,7 @@ public class DownloadManager
         private String mUrl;
         private IDownloadListener mListener;
 
-        public ProgressThread(String url, IDownloadListener listener)
+        ProgressThread(String url, IDownloadListener listener)
         {
             this.mUrl = url;
             this.mListener = listener;

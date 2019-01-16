@@ -107,50 +107,86 @@ public class OkHttpCall implements IHttpCall
         });
     }
 
-    private Call newCall() throws IOException
+    @Override
+    public void download() throws IOException
     {
-        if (mMethod == HttpMethod.POST)
+        newCall().enqueue(new Callback()
         {
-            if (mData != null)
+            @Override
+            public void onFailure(Call call, IOException e)
             {
-                if (mData instanceof FormEntity)
-                {
-                    FormBody.Builder builder = new FormBody.Builder();
-                    for (Map.Entry<String, Object> entry : mData.entrySet())
-                    {
-                        builder.add(entry.getKey(), entry.getValue().toString());
-                    }
-                    mRequestBuilder.post(builder.build());
-                }
-                else if (mData instanceof MultipartEntity)
-                {
-                    MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-                    for (Map.Entry<String, Object> entry : mData.entrySet())
-                    {
-                        Object value = entry.getValue();
-                        if (value instanceof File)
-                        {
-                            File file = (File) value;
-                            builder.addFormDataPart(entry.getKey(), file.getName(), RequestBody.create(MediaType.parse(BaseApi.MEDIA_TYPE_MULTIPART), file));
-                        }
-                        else if (value instanceof byte[])
-                        {
-                            byte[] data = (byte[]) value;
-                            builder.addFormDataPart(entry.getKey(), entry.getKey(), RequestBody.create(MediaType.parse(BaseApi.MEDIA_TYPE_MULTIPART), data));
-                        }
-                        else
-                            builder.addFormDataPart(entry.getKey(), value.toString());
-                    }
-                    mRequestBuilder.post(builder.build());
-                }
+                mListener.onFailure(HttpStatus.NETWORK_ERROR.getStatusCode(), HttpStatus.NETWORK_ERROR.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response)
+            {
+                if (!response.isSuccessful())
+                    mListener.onFailure(HttpStatus.NETWORK_ERROR.getStatusCode(), HttpStatus.NETWORK_ERROR.getMessage());
                 else
                 {
-                    RequestBody requestBody = RequestBody.create(MediaType.parse(mMediaType), mData.getBytes());
-                    mRequestBuilder.method(mMethod.name(), requestBody);
+                    long contentLength = response.body() != null ? response.body().contentLength() : -1;
+                    mListener.onSuccess(response.header(HttpHeader.HEADER_CONTENT_TYPE), contentLength + "");
                 }
             }
-            else
-                mRequestBuilder.post(RequestBody.create(MediaType.parse(mMediaType), ""));
+        });
+    }
+
+    private Call newCall() throws IOException
+    {
+        switch (mMethod)
+        {
+            case POST:
+            {
+                if (mData != null)
+                {
+                    if (mData instanceof FormEntity)
+                    {
+                        FormBody.Builder builder = new FormBody.Builder();
+                        for (Map.Entry<String, Object> entry : mData.entrySet())
+                        {
+                            builder.add(entry.getKey(), entry.getValue().toString());
+                        }
+                        mRequestBuilder.post(builder.build());
+                    }
+                    else if (mData instanceof MultipartEntity)
+                    {
+                        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+                        for (Map.Entry<String, Object> entry : mData.entrySet())
+                        {
+                            Object value = entry.getValue();
+                            if (value instanceof File)
+                            {
+                                File file = (File) value;
+                                builder.addFormDataPart(entry.getKey(), file.getName(), RequestBody.create(MediaType.parse(BaseApi.MEDIA_TYPE_MULTIPART), file));
+                            }
+                            else if (value instanceof byte[])
+                            {
+                                byte[] data = (byte[]) value;
+                                builder.addFormDataPart(entry.getKey(), entry.getKey(), RequestBody.create(MediaType.parse(BaseApi.MEDIA_TYPE_MULTIPART), data));
+                            }
+                            else
+                                builder.addFormDataPart(entry.getKey(), value.toString());
+                        }
+                        mRequestBuilder.post(builder.build());
+                    }
+                    else
+                    {
+                        RequestBody requestBody = RequestBody.create(MediaType.parse(mMediaType), mData.getBytes());
+                        mRequestBuilder.method(mMethod.name(), requestBody);
+                    }
+                }
+                else
+                    mRequestBuilder.post(RequestBody.create(MediaType.parse(mMediaType), ""));
+                break;
+            }
+            case GET:
+            {
+                mRequestBuilder.get();
+                break;
+            }
+            default:
+                break;
         }
         return mClient.newCall(mRequestBuilder.build());
     }

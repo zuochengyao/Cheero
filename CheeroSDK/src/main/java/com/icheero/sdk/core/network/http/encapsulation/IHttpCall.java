@@ -3,15 +3,15 @@ package com.icheero.sdk.core.network.http.encapsulation;
 import java.io.IOException;
 import java.net.URI;
 
-public interface IHttpCall// extends IHttpHeader
+public interface IHttpCall
 {
     HttpMethod getMethod();
 
     URI getUri();
 
-//    OutputStream getBody();
-
     IHttpResponse execute() throws IOException;
 
     void enqueue() throws IOException;
+
+    void download() throws IOException;
 }

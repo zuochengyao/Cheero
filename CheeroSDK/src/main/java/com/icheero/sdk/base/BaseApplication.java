@@ -9,7 +9,7 @@ import com.icheero.sdk.core.database.DBHelper;
 import com.icheero.sdk.core.manager.AndFixPatchManager;
 import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.core.network.download.DownloadConfig;
-import com.icheero.sdk.core.network.download.DownloadManager;
+import com.icheero.sdk.core.manager.DownloadManager;
 import com.icheero.sdk.core.network.http.HttpConfig;
 import com.icheero.sdk.core.manager.HttpManager;
 import com.icheero.sdk.util.Log;

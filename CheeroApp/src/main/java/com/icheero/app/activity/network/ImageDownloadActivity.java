@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.icheero.app.R;
 import com.icheero.app.custom.widget.WebImageView;
 import com.icheero.sdk.base.BaseActivity;
-import com.icheero.sdk.core.network.download.DownloadManager;
+import com.icheero.sdk.core.manager.DownloadManager;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
 import com.icheero.sdk.util.Log;
 

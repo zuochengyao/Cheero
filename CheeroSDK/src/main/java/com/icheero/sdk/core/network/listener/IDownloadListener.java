@@ -7,11 +7,9 @@ import java.io.File;
  *
  * 下载监听器
  */
-public interface IDownloadListener
+public interface IDownloadListener extends IBaseListener
 {
     void onSuccess(File downloadFile);
-
-    void onFailure(int errorCode, String errorMsg);
 
     void onProgress(int progress);
 }

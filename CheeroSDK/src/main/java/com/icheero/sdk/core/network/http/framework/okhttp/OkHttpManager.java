@@ -101,7 +101,7 @@ public class OkHttpManager
         return null;
     }
 
-    public void asyncDownload(@NonNull Request request, @NonNull Callback callback)
+    public void  asyncDownload(@NonNull Request request, @NonNull Callback callback)
     {
         getOkHttpClient().newCall(request).enqueue(callback);
     }

@@ -3,6 +3,7 @@ package com.icheero.sdk.core.network.download;
 import android.os.Process;
 
 import com.icheero.sdk.core.database.entity.Download;
+import com.icheero.sdk.core.manager.DownloadManager;
 import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.core.network.http.encapsulation.HttpStatus;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
@@ -27,7 +28,7 @@ public class DownloadRunnable implements Runnable
     private Download mEntity;
     private IDownloadListener mListener;
 
-    DownloadRunnable(String url, long start, long end, Download entity, IDownloadListener listener)
+    public DownloadRunnable(String url, long start, long end, Download entity, IDownloadListener listener)
     {
         this.mUrl = url;
         this.mStart = start;

@@ -4,9 +4,7 @@ package com.icheero.sdk.core.network.listener;
  * Created by zuochengyao on 2018/3/6.
  */
 
-public interface IResponseListener<T>
+public interface IResponseListener<T> extends IBaseListener
 {
     void onSuccess(T data);
-
-    void onFailure(int errorCode, String errorMessage);
 }

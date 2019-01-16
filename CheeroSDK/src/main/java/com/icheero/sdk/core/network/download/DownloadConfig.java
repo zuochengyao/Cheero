@@ -17,17 +17,17 @@ public class DownloadConfig
         this.mThreadAliveTime = builder.threadAliveTime;
     }
 
-    int getThreadCoreCount()
+    public int getThreadCoreCount()
     {
         return mThreadCoreCount;
     }
 
-    int getThreadMaxCount()
+    public int getThreadMaxCount()
     {
         return mThreadMaxCount;
     }
 
-    int getThreadAliveTime()
+    public int getThreadAliveTime()
     {
         return mThreadAliveTime;
     }
