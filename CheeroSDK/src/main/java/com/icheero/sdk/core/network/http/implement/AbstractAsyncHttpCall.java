@@ -11,5 +11,12 @@ public abstract class AbstractAsyncHttpCall extends AbstractHttpCall
         HttpThreadPool.getInstance().enqueue(this);
     }
 
+    @Override
+    public void download()
+    {
+        // TODO
+        // HttpThreadPool.getInstance().enqueue(this);
+    }
+
     public abstract HttpResponse getListener();
 }

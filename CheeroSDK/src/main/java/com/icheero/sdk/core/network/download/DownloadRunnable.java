@@ -5,9 +5,12 @@ import android.os.Process;
 import com.icheero.sdk.core.database.entity.Download;
 import com.icheero.sdk.core.manager.DownloadManager;
 import com.icheero.sdk.core.manager.IOManager;
+import com.icheero.sdk.core.network.http.HttpRequest;
+import com.icheero.sdk.core.network.http.HttpRequestProvider;
+import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 import com.icheero.sdk.core.network.http.encapsulation.HttpStatus;
+import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
-import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpManager;
 import com.icheero.sdk.util.Log;
 
 import java.io.File;
@@ -15,8 +18,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.util.Locale;
-
-import okhttp3.Response;
 
 public class DownloadRunnable implements Runnable
 {
@@ -42,20 +43,27 @@ public class DownloadRunnable implements Runnable
     {
         // 后台优先级
         Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-        Response response = OkHttpManager.getInstance().syncDownloadByRange(mUrl, mStart, mEnd);
-        if (response == null && mListener != null)
-            mListener.onFailure(HttpStatus.NETWORK_ERROR.getStatusCode(), HttpStatus.NETWORK_ERROR.getMessage());
-        else
+        HttpRequest request = new HttpRequest();
+        request.setUrl(mUrl);
+        request.setMethod(HttpMethod.GET);
+        request.getHeader().put("Range", "bytes=" + mStart + "-" + mEnd);
+        try
         {
-            File file = IOManager.getInstance().getCacheFileByName(mUrl);
-            try
+            IHttpResponse httpResponse = HttpRequestProvider.getInstance().getHttpCall(request).execute();
+            if (httpResponse == null)
             {
+                if (mListener != null)
+                    mListener.onFailure(HttpStatus.NETWORK_ERROR.getStatusCode(), HttpStatus.NETWORK_ERROR.getMessage());
+            }
+            else
+            {
+                File file = IOManager.getInstance().getCacheFileByName(mEntity.getDownloadUrl());
                 RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rwd");
                 randomAccessFile.seek(mStart);
                 byte[] buffer = new byte[500 * 1024];
                 int len;
                 long progress = mEntity.getProgress();
-                InputStream in = response.body().byteStream();
+                InputStream in = httpResponse.getBody();
                 Log.d(TAG, String.format(Locale.getDefault(), "Thread-%s, from %d bytes to %d bytes", Thread.currentThread().getName(), mStart, mEnd));
                 while ((len = in.read(buffer, 0, buffer.length)) != -1)
                 {
@@ -64,16 +72,12 @@ public class DownloadRunnable implements Runnable
                     mEntity.setProgress(progress);
                 }
                 mListener.onSuccess(file);
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-            finally
-            {
                 DownloadManager.getInstance().insertToDb(mEntity);
             }
         }
-
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

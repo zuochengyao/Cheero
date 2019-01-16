@@ -95,11 +95,12 @@ public class DownloadManager
                     HttpRequest request = new HttpRequest();
                     request.setUrl(url);
                     request.setMethod(HttpMethod.GET);
-                    request.setResponse(new HttpResponse(new IResponseListener<Long>()
+                    request.setResponse(new HttpResponse(new IResponseListener<String>()
                     {
                         @Override
-                        public void onSuccess(Long data)
+                        public void onSuccess(String data)
                         {
+                            mLength = Long.parseLong(data);
                             if (mLength == -1)
                                 listener.onFailure(HttpStatus.CONTENT_LENGTH.getStatusCode(), HttpStatus.CONTENT_LENGTH.getMessage());
                             else
