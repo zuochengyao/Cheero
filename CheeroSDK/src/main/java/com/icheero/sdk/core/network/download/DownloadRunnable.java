@@ -73,14 +73,11 @@ public class DownloadRunnable implements Runnable
                     mEntity.setProgress(progress);
                     DownloadManager.getInstance().updateToDb(mEntity);
                 }
-                mListener.onSuccess(file);
             }
         }
         catch (IOException e)
         {
             DownloadManager.getInstance().stopProgress();
-
-            e.printStackTrace();
         }
     }
 }

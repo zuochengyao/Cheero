@@ -1,6 +1,7 @@
 package com.icheero.app.activity.network;
 
 import android.os.Bundle;
+import android.widget.ProgressBar;
 
 import com.icheero.app.R;
 import com.icheero.app.custom.widget.WebImageView;
@@ -23,8 +24,8 @@ public class ImageDownloadActivity extends BaseActivity
     private static final Class<ImageDownloadActivity> TAG = ImageDownloadActivity.class;
     @BindView(R.id.web_image)
     WebImageView mWebImage;
-
-    private int mCount = 0;
+    @BindView(R.id.progress)
+    ProgressBar mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -32,6 +33,7 @@ public class ImageDownloadActivity extends BaseActivity
         setContentView(R.layout.activity_image_download);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        mProgress.setMax(100);
         mWebImage.setPlaceholder(R.mipmap.ic_launcher);
         // mWebImage.setImageUrl("http://149.129.240.18/common/picView?fileName=qsd_01_fd4c5b3b3cad412a8bfe39810ba6db24_20181120.jpg");
         // rxJava()
@@ -41,15 +43,7 @@ public class ImageDownloadActivity extends BaseActivity
             @Override
             public void onSuccess(File downloadFile)
             {
-                if (mCount < 2)
-                    mCount++;
-                else
-                {
-                    Log.d(TAG, "success: " + downloadFile.getAbsolutePath());
-                    mCount = 0;
-//                    Bitmap bitmap = FileUtils.convertToBitmap(downloadFile);
-//                    runOnUiThread(() -> mWebImage.setImageBitmap(bitmap));
-                }
+                Log.d(TAG, "success: " + downloadFile.getAbsolutePath());
             }
 
             @Override
@@ -61,7 +55,7 @@ public class ImageDownloadActivity extends BaseActivity
             @Override
             public void onProgress(int progress)
             {
-                Log.d(TAG, " progress: " + progress + "-----" + Thread.currentThread().getName());
+                runOnUiThread(() -> mProgress.setProgress(progress));
             }
         });
     }

@@ -18,8 +18,8 @@ import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.FileUtils;
 import com.icheero.sdk.util.Log;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.SynchronousQueue;
@@ -43,6 +43,7 @@ public class DownloadManager
     private DownloadManager()
     {
         mDownloadTaskSet = new HashSet<>();
+        mDownloadCaches = new ArrayList<>();
     }
 
     public static DownloadManager getInstance()
@@ -161,6 +162,7 @@ public class DownloadManager
             entity.setStart(start);
             entity.setEnd(end);
             entity.setThreadId(i + 1);
+            mDownloadCaches.add(entity);
             mThreadPool.execute(new DownloadRunnable(url, start, end, entity, listener));
         }
         mProgressThread = onProgressCallback(url, listener);
@@ -169,7 +171,8 @@ public class DownloadManager
 
     public void stopProgress()
     {
-        mProgressThread.stopProgress();
+        if (mProgressThread != null)
+            mProgressThread.stopProgress();
     }
 
     private ProgressThread onProgressCallback(String url, IDownloadListener listener)
@@ -222,17 +225,22 @@ public class DownloadManager
             {
                 while (mProgressFlag)
                 {
-
-                    File file = IOManager.getInstance().getCacheFileByName(mUrl);
-                    long fileSize = file.length();
+                    long fileSize = 0;
+                    if (mDownloadCaches.size() > 0)
+                    {
+                        for (Download download : mDownloadCaches)
+                            fileSize += download.getProgress();
+                    }
                     int progress = (int) (fileSize * 100.0 / mLength);
                     if (progress >= 100)
                     {
-                        mListener.onProgress(progress);
+                        mListener.onProgress(100);
+                        mListener.onSuccess(IOManager.getInstance().getCacheFileByName(mUrl));
+                        mDownloadCaches.clear();
                         return;
                     }
                     mListener.onProgress(progress);
-                    // Thread.sleep(200);
+                    Thread.sleep(200);
                 }
             }
             catch (Exception e)
