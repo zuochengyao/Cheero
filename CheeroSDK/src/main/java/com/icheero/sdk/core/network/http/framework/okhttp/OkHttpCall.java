@@ -99,7 +99,10 @@ public class OkHttpCall implements IHttpCall
                 if (response.body() != null)
                 {
                     if (response.isSuccessful())
-                        mListener.onSuccess(response.header(HttpHeader.HEADER_CONTENT_TYPE), response.body().string());
+                    {
+                        mHeader.setContentType(response.header(HttpHeader.HEADER_CONTENT_TYPE));
+                        mListener.onSuccess(mHeader.getContentType(), response.body().string());
+                    }
                     else
                         mListener.onFailure(response.code(), response.body().string());
                 }

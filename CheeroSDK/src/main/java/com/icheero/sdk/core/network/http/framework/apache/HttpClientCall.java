@@ -71,7 +71,9 @@ public class HttpClientCall extends AbstractAsyncHttpCall
     @Override
     public IHttpResponse execute() throws IOException
     {
-        return new HttpClientResponse(mHttpClient.execute(getHttpMethod()));
+        org.apache.http.HttpResponse response = mHttpClient.execute(getHttpMethod());
+        mHeader.setContentType(response.getFirstHeader(HttpHeader.HEADER_CONTENT_TYPE).getValue());
+        return new HttpClientResponse(response);
     }
 
     @Override

@@ -57,6 +57,7 @@ public class DownloadRunnable implements Runnable
             }
             else
             {
+                DownloadManager.getInstance().insertToDb(mEntity);
                 File file = IOManager.getInstance().getCacheFileByName(mEntity.getDownloadUrl());
                 RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rwd");
                 randomAccessFile.seek(mStart);
@@ -70,13 +71,15 @@ public class DownloadRunnable implements Runnable
                     randomAccessFile.write(buffer, 0, len);
                     progress += len;
                     mEntity.setProgress(progress);
+                    DownloadManager.getInstance().updateToDb(mEntity);
                 }
                 mListener.onSuccess(file);
-                DownloadManager.getInstance().insertToDb(mEntity);
             }
         }
         catch (IOException e)
         {
+            DownloadManager.getInstance().stopProgress();
+
             e.printStackTrace();
         }
     }

@@ -8,5 +8,7 @@ public interface IDownloadService
 {
     void insertDownload(Download entity);
 
+    void updateDownload(Download entity);
+
     List<Download> getAllDownloadByUrl(String url);
 }

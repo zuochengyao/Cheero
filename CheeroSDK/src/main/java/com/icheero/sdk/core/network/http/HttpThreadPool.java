@@ -81,7 +81,7 @@ public class HttpThreadPool
         if (httpCall != null)
         {
             mRunningQueue.add(httpCall);
-            mThreadPool.execute(new HttpRunnable(httpCall, httpCall.getListener()));
+            mThreadPool.execute(new HttpRunnable(httpCall, httpCall.getCallback()));
         }
     }
 }

@@ -7,6 +7,7 @@ public enum HttpMethod
     TRACE,
     PUT,
     DELETE,
+    HEAD,
     CONNECTION,
     OPTIONS
 }

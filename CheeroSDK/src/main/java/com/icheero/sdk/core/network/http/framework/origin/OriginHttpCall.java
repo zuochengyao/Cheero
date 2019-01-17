@@ -45,8 +45,11 @@ public class OriginHttpCall extends AbstractAsyncHttpCall
         if (mData != null)
             getBody().write(mData.getBytes());
         mConnection.setUseCaches(false);
-        mConnection.setDoOutput(true);
-        mConnection.setDoInput(true);
+        if (mMethod == HttpMethod.POST)
+        {
+            mConnection.setDoOutput(true);
+            mConnection.setDoInput(true);
+        }
         mConnection.setRequestMethod(mMethod.name());
         mConnection.connect();
         if (getBodyData() != null && getBodyData().length > 0)
@@ -55,6 +58,7 @@ public class OriginHttpCall extends AbstractAsyncHttpCall
             out.write(getBodyData());
             out.close();
         }
+        mHeader.setContentType(mConnection.getHeaderField(HttpHeader.HEADER_CONTENT_TYPE));
         return new OriginHttpResponse(mConnection);
     }
 

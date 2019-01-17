@@ -14,6 +14,9 @@ import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
 import com.icheero.sdk.core.network.http.encapsulation.HttpStatus;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
 import com.icheero.sdk.core.network.listener.IResponseListener;
+import com.icheero.sdk.util.Common;
+import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,10 +30,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class DownloadManager
 {
+    private static final Class TAG = DownloadManager.class;
+
     private ThreadPoolExecutor mThreadPool;
     private HashSet<DownloadTask> mDownloadTaskSet;
     private List<Download> mDownloadCaches;
     private DownloadConfig mDownloadConfig;
+    private ProgressThread mProgressThread;
     private long mLength;
     private static volatile DownloadManager mInstance;
 
@@ -75,26 +81,15 @@ public class DownloadManager
         {
             mDownloadTaskSet.add(task);
             mDownloadCaches = DBHelper.getInstance().getAllDownloadByUrl(url);
-            if (mDownloadCaches.size() > 0) // mDownloadCaches != null &&
-            {
-                // 有下载
-                for (int i = 0; i < mDownloadCaches.size(); i++)
-                {
-                    Download entity = mDownloadCaches.get(i);
-                    if (i == mDownloadCaches.size() - 1)
-                        mLength = entity.getEnd() + 1;
-                    long startSize = entity.getStart() + entity.getProgress();
-                    long endSize = entity.getEnd();
-                    mThreadPool.execute(new DownloadRunnable(url, startSize, endSize, entity, listener));
-                }
-            }
+            if (mDownloadCaches.size() > 0) // db有下载记录
+                processDownload(url, listener);
             else // 没有下载过
             {
                 try
                 {
                     HttpRequest request = new HttpRequest();
                     request.setUrl(url);
-                    request.setMethod(HttpMethod.GET);
+                    request.setMethod(HttpMethod.HEAD);
                     request.setResponse(new HttpResponse(new IResponseListener<String>()
                     {
                         @Override
@@ -122,8 +117,34 @@ public class DownloadManager
                     e.printStackTrace();
                 }
             }
-            onProgressCallback(url, listener);
         }
+    }
+
+    private void processDownload(String url, IDownloadListener listener)
+    {
+        for (int i = 0; i < mDownloadCaches.size(); i++)
+        {
+            Download entity = mDownloadCaches.get(i);
+            if (i == mDownloadCaches.size() - 1)
+                mLength = entity.getEnd() + 1;
+            long start;
+            long end;
+            // 如果文件存在，则继续下载
+            if (FileUtils.exists(IOManager.DIR_PATH_CHEERO_CACHE + Common.md5(url)))
+            {
+                start = entity.getStart() + entity.getProgress();
+                end = entity.getEnd();
+            }
+            else // 否则重新下载
+            {
+                start = entity.getStart();
+                end = entity.getEnd();
+                entity.setProgress(0);
+            }
+            mThreadPool.execute(new DownloadRunnable(url, start, end, entity, listener));
+        }
+        mProgressThread = onProgressCallback(url, listener);
+        mProgressThread.start();
     }
 
     private void processDownload(String url, long length, IDownloadListener listener)
@@ -142,11 +163,18 @@ public class DownloadManager
             entity.setThreadId(i + 1);
             mThreadPool.execute(new DownloadRunnable(url, start, end, entity, listener));
         }
+        mProgressThread = onProgressCallback(url, listener);
+        mProgressThread.start();
     }
 
-    private void onProgressCallback(String url, IDownloadListener listener)
+    public void stopProgress()
     {
-        new ProgressThread(url, listener).start();
+        mProgressThread.stopProgress();
+    }
+
+    private ProgressThread onProgressCallback(String url, IDownloadListener listener)
+    {
+        return new ProgressThread(url, listener);
     }
 
     /**
@@ -159,12 +187,22 @@ public class DownloadManager
     }
 
     /**
+     * 更新数据
+     * @param entity 实体数据
+     */
+    public void updateToDb(Download entity)
+    {
+        DBHelper.getInstance().updateDownload(entity);
+    }
+
+    /**
      * 下载进度回调线程
      */
     private class ProgressThread extends Thread
     {
         private String mUrl;
         private IDownloadListener mListener;
+        private boolean mProgressFlag = true;
 
         ProgressThread(String url, IDownloadListener listener)
         {
@@ -172,13 +210,19 @@ public class DownloadManager
             this.mListener = listener;
         }
 
+        private void stopProgress()
+        {
+            mProgressFlag = false;
+        }
+
         @Override
         public void run()
         {
-            while (true)
+            try
             {
-                try
+                while (mProgressFlag)
                 {
+
                     File file = IOManager.getInstance().getCacheFileByName(mUrl);
                     long fileSize = file.length();
                     int progress = (int) (fileSize * 100.0 / mLength);
@@ -188,13 +232,14 @@ public class DownloadManager
                         return;
                     }
                     mListener.onProgress(progress);
-                    Thread.sleep(200);
-                }
-                catch (InterruptedException e)
-                {
-                    e.printStackTrace();
+                    // Thread.sleep(200);
                 }
             }
+            catch (Exception e)
+            {
+                Log.e(TAG, "ProgressThread Exception!");
+            }
+            Log.i(TAG, "ProgressThread exit!");
         }
     }
 }

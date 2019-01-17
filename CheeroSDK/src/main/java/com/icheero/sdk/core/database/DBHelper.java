@@ -96,6 +96,12 @@ public class DBHelper implements IDownloadService, IUserService
     }
 
     @Override
+    public void updateDownload(Download entity)
+    {
+        mDaoSession.update(entity);
+    }
+
+    @Override
     public List<Download> getAllDownloadByUrl(String url)
     {
         return mDownloadDao.queryBuilder().where(DownloadDao.Properties.DownloadUrl.eq(url)).orderAsc(DownloadDao.Properties.ThreadId).list();

@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import javax.net.ssl.HttpsURLConnection;
-
 public class OriginHttpRequestFactory implements IHttpRequestFactory
 {
     private int mReadTimeout;
@@ -34,7 +32,7 @@ public class OriginHttpRequestFactory implements IHttpRequestFactory
         try
         {
             if (request.getUrl().startsWith("https://"))
-                connection = (HttpsURLConnection) new URL(request.getUrl()).openConnection();
+                connection = (HttpURLConnection) new URL(request.getUrl()).openConnection();
             else
                 connection = (HttpURLConnection) new URL(request.getUrl()).openConnection();
             connection.setReadTimeout(mReadTimeout);
