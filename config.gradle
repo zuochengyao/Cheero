@@ -31,7 +31,7 @@ dep_version.rxandroid = "2.1.0"
 dep_version.rxpermission = "0.10.2"
 dep_version.greendao = "3.2.2"
 dep_version.stetho = "1.5.0"
-dep_version.httpmime = "4.3.1"
+dep_version.httpmime = "4.3.6"
 dep_version.httpandroid = "4.3.5.1"
 
 def retrofit = [:]
