@@ -1,5 +1,8 @@
 package com.icheero.sdk.core.network.http.framework.apache;
 
+import com.icheero.sdk.core.network.http.HttpSecure;
+
+import org.apache.http.HttpHost;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
@@ -24,6 +27,7 @@ public class HttpClientManager
         //持续握手
         HttpProtocolParams.setUseExpectContinue(httpParams, true);
         mBuilder = RequestConfig.custom();
+        mBuilder.setProxy(new HttpHost("10.155.2.130", 8880));
     }
 
     public static HttpClientManager getInstance()
@@ -59,6 +63,10 @@ public class HttpClientManager
 
     HttpClient newHttpClient()
     {
-        return HttpClientBuilder.create().setDefaultRequestConfig(mBuilder.build()).build();
+        return HttpClientBuilder
+                .create()
+                .setSSLSocketFactory(HttpSecure.getApacheSocketFactory())
+                .setDefaultRequestConfig(mBuilder.build())
+                .build();
     }
 }

@@ -108,21 +108,22 @@ public class HttpClientCall extends AbstractAsyncHttpCall
                     else if (mData instanceof MultipartEntity)
                     {
                         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+                        builder.setBoundary(mData.getBoundary());
                         for (Map.Entry<String, Object> entry : mData.entrySet())
                         {
                             Object value = entry.getValue();
                             if (value instanceof File)
                             {
                                 File file = (File) value;
-                                builder.addBinaryBody(entry.getKey(), file, ContentType.MULTIPART_FORM_DATA, file.getName());
+                                builder.addBinaryBody(entry.getKey(), file, ContentType.parse(BaseApi.MEDIA_TYPE_MULTIPART), entry.getKey());
                             }
                             else if (value instanceof byte[])
                             {
                                 byte[] data = (byte[]) value;
-                                builder.addBinaryBody(entry.getKey(), data, ContentType.MULTIPART_FORM_DATA, entry.getKey());
+                                builder.addBinaryBody(entry.getKey(), data, ContentType.parse(BaseApi.MEDIA_TYPE_MULTIPART), entry.getKey());
                             }
                             else
-                                builder.addTextBody(entry.getKey(), value.toString(), ContentType.MULTIPART_FORM_DATA);
+                                builder.addTextBody(entry.getKey(), value.toString(), ContentType.parse(BaseApi.MEDIA_TYPE_TEXT));
                         }
                         ((HttpPost) request).setEntity(builder.build());
                     }
