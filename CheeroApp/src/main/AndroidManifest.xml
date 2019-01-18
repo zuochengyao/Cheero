@@ -45,8 +45,8 @@
         <activity android:name=".activity.data.ViewModelActivity"/>
         <activity android:name=".activity.network.RetrofitActivity"/>
         <activity android:name=".activity.plugin.LoadPluginActivity"/>
+        <activity android:name=".activity.network.RequestActivity"/>
         <!-- endregion -->
-
 
         <!-- region Services -->
         <service
@@ -58,8 +58,6 @@
             </intent-filter>
         </service>
         <!-- endregion -->
-        <activity android:name=".activity.network.RequestActivity">
-        </activity>
     </application>
 
 </manifest>

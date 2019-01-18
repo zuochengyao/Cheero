@@ -21,6 +21,6 @@
         </activity>
 
         <activity android:name=".activity.PluginActivity"/>
-    </application>
+    <service android:name=".service.AndFixService"/></application>
 
 </manifest>

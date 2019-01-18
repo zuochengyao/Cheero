@@ -29,7 +29,8 @@ public class AndFixPatchManager
         {
             synchronized (AndFixPatchManager.class)
             {
-                if (mInstance == null) mInstance = new AndFixPatchManager();
+                if (mInstance == null)
+                    mInstance = new AndFixPatchManager();
             }
         }
         return mInstance;
@@ -40,9 +41,7 @@ public class AndFixPatchManager
         try
         {
             if (mPatchManager != null)
-            {
                 mPatchManager.addPatch(path);
-            }
         }
         catch (Exception e)
         {

@@ -1,17 +1,17 @@
 package com.icheero.plugins.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.icheero.plugins.R;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.AndFixPatchManager;
-import com.icheero.plugins.R;
 import com.icheero.sdk.core.manager.IOManager;
+import com.icheero.sdk.util.Log;
 
 public class MainActivity extends BaseActivity
 {
-    private static final String TAG = "MainActivity";
+    private static final Class TAG = MainActivity.class;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -44,7 +44,7 @@ public class MainActivity extends BaseActivity
 
     private void createBug()
     {
-        com.icheero.sdk.util.Log.print();
+        Log.print();
     }
 
     private void fixBug()
