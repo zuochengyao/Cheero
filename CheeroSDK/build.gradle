@@ -28,8 +28,8 @@ android {
         }
     }
 
-    repositories{
-        flatDir{
+    repositories {
+        flatDir {
             dirs 'libs'
         }
     }
@@ -67,7 +67,6 @@ dependencies {
     api versions.deps.retrofit.runtime
     api versions.deps.retrofit.adapter
     api versions.deps.retrofit.converter_gson
-    api versions.deps.retrofit.gson
     // Okhttp
     api versions.deps.okio
     api versions.deps.okhttp
@@ -89,6 +88,8 @@ dependencies {
     // apache HttpClient
     api versions.deps.apache.httpmime
     api versions.deps.apache.httpcore
+    // Gson
+    api versions.deps.gson
     // other
     testImplementation versions.deps.junit
 }

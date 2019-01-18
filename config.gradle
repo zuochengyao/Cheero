@@ -31,14 +31,13 @@ dep_version.rxandroid = "2.1.0"
 dep_version.rxpermission = "0.10.2"
 dep_version.greendao = "3.2.2"
 dep_version.stetho = "1.5.0"
-dep_version.httpmime = "4.3.6"
+dep_version.httpmime = "4.3.2"
 dep_version.httpcore = "4.4.10"
 
 def retrofit = [:]
 retrofit.runtime = "com.squareup.retrofit2:retrofit:$dep_version.retrofit"
 retrofit.adapter = "com.squareup.retrofit2:adapter-rxjava2:$dep_version.retrofit"
 retrofit.converter_gson = "com.squareup.retrofit2:converter-gson:$dep_version.retrofit"
-retrofit.gson = "com.google.code.gson:gson:$dep_version.gson"
 
 def butterknife = [:]
 butterknife.runtime = "com.jakewharton:butterknife:$dep_version.butterknife"
@@ -76,6 +75,7 @@ deps.greendao = greendao
 deps.apache = apache
 deps.gradle = "com.android.tools.build:gradle:$build_version.gradle"
 deps.rxjava2 = "io.reactivex.rxjava2:rxjava:$dep_version.rxjava2"
+deps.gson = "com.google.code.gson:gson:$dep_version.gson"
 deps.rxandroid = "io.reactivex.rxjava2:rxandroid:$dep_version.rxandroid"
 deps.okio = "com.squareup.okio:okio:$dep_version.okio"
 deps.okhttp = "com.squareup.okhttp3:okhttp:$dep_version.okhttp"
