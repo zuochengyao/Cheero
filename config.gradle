@@ -31,8 +31,8 @@ dep_version.rxandroid = "2.1.0"
 dep_version.rxpermission = "0.10.2"
 dep_version.greendao = "3.2.2"
 dep_version.stetho = "1.5.0"
-dep_version.httpmime = "4.3.2"
-dep_version.httpcore = "4.4.10"
+dep_version.httpmime = "4.3.6"
+dep_version.httpandroid = "4.3.5.1"
 
 def retrofit = [:]
 retrofit.runtime = "com.squareup.retrofit2:retrofit:$dep_version.retrofit"
@@ -62,9 +62,8 @@ greendao.impl = "org.greenrobot:greendao:$dep_version.greendao"
 greendao.generator = "org.greenrobot:greendao-generator:$dep_version.greendao"
 
 def apache = [:]
-apache.httpcore = "org.apache.httpcomponents:httpcore:$dep_version.httpcore"
 apache.httpmime = "org.apache.httpcomponents:httpmime:$dep_version.httpmime"
-
+apache.httpandroid = "org.apache.httpcomponents:httpclient-android:$dep_version.httpandroid"
 
 def deps = [:]
 deps.retrofit = retrofit

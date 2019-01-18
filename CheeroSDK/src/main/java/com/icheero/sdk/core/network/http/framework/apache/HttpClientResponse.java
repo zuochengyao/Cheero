@@ -56,6 +56,7 @@ public class HttpClientResponse extends AbstractHttpResponse
             String line;
             while ((line = reader.readLine()) != null)
                 sb.append(line).append("\n");
+            return sb.toString();
         }
         catch (IOException e)
         {
