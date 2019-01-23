@@ -15,8 +15,8 @@ import android.widget.ImageView;
 
 import com.icheero.app.R;
 import com.icheero.sdk.core.manager.AndFixPatchManager;
-import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.core.manager.PluginManager;
+import com.icheero.sdk.util.Log;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -106,11 +106,10 @@ public class LoadPluginActivity extends Activity
                     PluginManager.loadPlugin(this); // 加载插件
                 break;
             case R.id.create_bug:
-                com.icheero.sdk.util.Log.print();
+                Log.print();
                 break;
             case R.id.fix_bug:
-                String path = IOManager.DIR_PATH_CHEERO_PATCHES.concat("cheero").concat(AndFixPatchManager.PATCH_EXTENSION);
-                AndFixPatchManager.getInstance().addPatch(path);
+                AndFixPatchManager.getInstance().addPatch();
                 break;
         }
     }

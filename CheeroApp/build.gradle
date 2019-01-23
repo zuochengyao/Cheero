@@ -16,10 +16,10 @@ android {
         // 打包签名
         staging.initWith(signingConfigs.debug)
         release {
-            storeFile file(project.rootDir.absolutePath + '/cheero_key.jks')
-            storePassword '123456'
-            keyAlias 'icheero'
-            keyPassword '654321'
+            keyAlias versions.sign.release.alias
+            keyPassword versions.sign.release.password
+            storeFile file(versions.sign.release.filepath)
+            storePassword versions.sign.release.store
         }
     }
 

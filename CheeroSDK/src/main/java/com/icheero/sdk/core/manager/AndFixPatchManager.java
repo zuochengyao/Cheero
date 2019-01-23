@@ -36,12 +36,12 @@ public class AndFixPatchManager
         return mInstance;
     }
 
-    public void addPatch(String path)
+    public void addPatch()
     {
         try
         {
             if (mPatchManager != null)
-                mPatchManager.addPatch(path);
+                mPatchManager.addPatch(IOManager.DIR_PATH_CHEERO_PATCHES.concat("cheero").concat(AndFixPatchManager.PATCH_EXTENSION));
         }
         catch (Exception e)
         {

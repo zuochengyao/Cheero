@@ -37,4 +37,11 @@ public class CheeroApi extends BaseApi
         // Do request
         HttpManager.getInstance().enqueue(request);
     }
+
+    public static void checkPatchUpdate(String url, IResponseListener response)
+    {
+        HttpRequest request = newRequest(url, HttpMethod.POST, null, MEDIA_TYPE_NORMAL, new HttpResponse(response, new JsonConvert()));
+        request.getHeader().setUserAgent("Cheero-Android");
+        HttpManager.getInstance().enqueue(request);
+    }
 }

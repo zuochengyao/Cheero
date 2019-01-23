@@ -13,6 +13,21 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            keyAlias versions.sign.release.alias
+            keyPassword versions.sign.release.password
+            storeFile file(versions.sign.release.filepath)
+            storePassword versions.sign.release.store
+        }
+        debug {
+            keyAlias versions.sign.debug.alias
+            keyPassword versions.sign.debug.password
+            storeFile file(versions.sign.debug.filepath)
+            storePassword versions.sign.debug.store
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false

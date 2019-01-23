@@ -52,7 +52,7 @@ public class Log
 
     public static void print()
     {
-        String error = null;
+        String error = "FixBug";
         android.util.Log.e("Cheero", error);
     }
 }
