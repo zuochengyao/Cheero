@@ -46,7 +46,7 @@ import com.icheero.sdk.knowledge.designpattern.visitor.idea.ConcreteElementB;
 import com.icheero.sdk.knowledge.designpattern.visitor.idea.ConcreteVisitorA;
 import com.icheero.sdk.knowledge.designpattern.visitor.idea.ConcreteVisitorB;
 import com.icheero.sdk.knowledge.designpattern.visitor.idea.ObjectStructure;
-import com.icheero.sdk.util.Log;
+import com.icheero.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;

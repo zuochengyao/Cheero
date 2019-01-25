@@ -132,7 +132,7 @@ public class DownloadManager
             long start;
             long end;
             // 如果文件存在，则继续下载
-            if (FileUtils.exists(FileUtils.DIR_PATH_CHEERO_CACHE + Common.md5(url)))
+            if (FileUtils.exists(IOManager.DIR_PATH_CHEERO_CACHE + Common.md5(url)))
             {
                 start = entity.getStart() + entity.getProgress();
                 end = entity.getEnd();

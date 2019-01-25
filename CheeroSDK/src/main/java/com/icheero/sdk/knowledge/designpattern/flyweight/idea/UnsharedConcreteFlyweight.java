@@ -1,6 +1,6 @@
 package com.icheero.sdk.knowledge.designpattern.flyweight.idea;
 
-import com.icheero.sdk.util.Log;
+import com.icheero.util.Log;
 
 /**
  * 不需要共享的子类

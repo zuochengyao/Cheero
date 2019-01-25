@@ -1,5 +1,7 @@
 package com.icheero.network.http.framework.origin;
 
+import com.icheero.network.http.HttpResponse;
+import com.icheero.network.http.encapsulation.AbstractHttpEntity;
 import com.icheero.network.http.encapsulation.HttpMethod;
 import com.icheero.network.http.encapsulation.IHttpResponse;
 import com.icheero.network.http.implement.AbstractAsyncHttpCall;

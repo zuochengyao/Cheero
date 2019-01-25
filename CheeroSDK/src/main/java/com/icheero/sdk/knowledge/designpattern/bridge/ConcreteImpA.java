@@ -1,6 +1,6 @@
 package com.icheero.sdk.knowledge.designpattern.bridge;
 
-import com.icheero.sdk.util.Log;
+import com.icheero.util.Log;
 
 /**
  * Created by zuochengyao on 2018/3/20.

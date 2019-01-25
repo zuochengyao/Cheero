@@ -3,6 +3,7 @@ package com.icheero.database.entity;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
+import org.greenrobot.greendao.annotation.Generated;
 
 @Entity(nameInDb = "t_download")
 public class Download
@@ -21,8 +22,9 @@ public class Download
     @Property(nameInDb = "d_thread_id")
     private int threadId;
 
-    public Download(Long id, long progress, long start, long end, String downloadUrl, int threadId)
-    {
+    @Generated(hash = 1711978314)
+    public Download(Long id, long progress, long start, long end,
+            String downloadUrl, int threadId) {
         this.id = id;
         this.progress = progress;
         this.start = start;
@@ -31,8 +33,8 @@ public class Download
         this.threadId = threadId;
     }
 
-    public Download()
-    {
+    @Generated(hash = 1462805409)
+    public Download() {
     }
 
     public Long getId()

@@ -1,6 +1,6 @@
 package com.icheero.network.http.framework.retrofit;
 
-import android.util.Log;
+import com.icheero.util.Log;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;

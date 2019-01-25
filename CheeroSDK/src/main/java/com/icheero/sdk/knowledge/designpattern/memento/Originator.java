@@ -1,6 +1,6 @@
 package com.icheero.sdk.knowledge.designpattern.memento;
 
-import com.icheero.sdk.util.Log;
+import com.icheero.util.Log;
 
 /**
  * 发起人：

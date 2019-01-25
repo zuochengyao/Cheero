@@ -1,5 +1,7 @@
 package com.icheero.sdk.knowledge.designpattern.interpreter.demo;
 
+import com.icheero.util.Log;
+
 public class Scale extends Expression
 {
     @Override
@@ -18,6 +20,6 @@ public class Scale extends Expression
                 scale = "高音";
                 break;
         }
-        com.icheero.sdk.util.Log.i(Scale.class, "scale = " + scale);
+        Log.i(Scale.class, "scale = " + scale);
     }
 }

@@ -1,5 +1,6 @@
 package com.icheero.network.http.framework.retrofit;
 
+import com.icheero.network.http.HttpRequest;
 import com.icheero.network.http.encapsulation.IHttpCall;
 
 import retrofit2.Retrofit;

@@ -12,6 +12,7 @@ import com.icheero.network.http.encapsulation.IHttpResponse;
 import com.icheero.network.listener.IDownloadListener;
 import com.icheero.util.Common;
 import com.icheero.util.FileUtils;
+import com.icheero.util.IOManager;
 import com.icheero.util.Log;
 
 import java.io.File;
@@ -59,7 +60,7 @@ public class DownloadRunnable implements Runnable
             else
             {
                 DBHelper.getInstance().insertDownload(mEntity);
-                File file = FileUtils.createFile(FileUtils.DIR_PATH_CHEERO_CACHE + Common.md5(mEntity.getDownloadUrl()));
+                File file = FileUtils.createFile(IOManager.DIR_PATH_CHEERO_CACHE + Common.md5(mEntity.getDownloadUrl()));
                 RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rwd");
                 randomAccessFile.seek(mStart);
                 byte[] buffer = new byte[500 * 1024];

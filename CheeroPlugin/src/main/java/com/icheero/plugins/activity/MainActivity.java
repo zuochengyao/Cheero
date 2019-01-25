@@ -7,9 +7,9 @@ import android.widget.Toast;
 import com.icheero.plugins.R;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.AndFixPatchManager;
-import com.icheero.sdk.core.manager.IOManager;
-import com.icheero.sdk.util.Common;
-import com.icheero.sdk.util.Log;
+import com.icheero.util.Common;
+import com.icheero.util.IOManager;
+import com.icheero.util.Log;
 
 public class MainActivity extends BaseActivity
 {

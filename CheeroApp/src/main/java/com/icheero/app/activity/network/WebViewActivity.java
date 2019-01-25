@@ -13,8 +13,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.icheero.sdk.util.Common;
-import com.icheero.sdk.util.Log;
+import com.icheero.util.Common;
+import com.icheero.util.Log;
 
 public class WebViewActivity extends Activity
 {

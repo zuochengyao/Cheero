@@ -9,21 +9,14 @@ android {
         targetSdkVersion versions.build.target_sdk
         versionCode versions.build.code
         versionName versions.build.name
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
         release {
-            keyAlias versions.sign.release.alias
-            keyPassword versions.sign.release.password
-            storeFile file(versions.sign.release.filepath)
-            storePassword versions.sign.release.store
-        }
-        debug {
-            keyAlias versions.sign.debug.alias
-            keyPassword versions.sign.debug.password
-            storeFile file(versions.sign.debug.filepath)
-            storePassword versions.sign.debug.store
+            keyAlias versions.sign.alias
+            keyPassword versions.sign.password
+            storeFile file(versions.sign.filepath)
+            storePassword versions.sign.store
         }
     }
 
@@ -39,8 +32,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_10
-        targetCompatibility JavaVersion.VERSION_1_10
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     packagingOptions {

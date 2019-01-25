@@ -1,6 +1,6 @@
 package com.icheero.sdk.knowledge.designpattern.flyweight.demo;
 
-import com.icheero.sdk.util.Log;
+import com.icheero.util.Log;
 
 /**
  * 具体网站类

@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.icheero.network.http.HttpSecure;
 import com.icheero.network.listener.IDownloadListener;
+import com.icheero.util.IOManager;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -6,6 +6,7 @@ import com.icheero.network.http.framework.apache.HttpClientRequestFactory;
 import com.icheero.network.http.framework.okhttp.OkHttpRequestFactory;
 import com.icheero.network.http.framework.origin.OriginHttpRequestFactory;
 import com.icheero.network.http.framework.volley.VolleyRequestFactory;
+import com.icheero.util.Common;
 
 public class HttpRequestProvider
 {

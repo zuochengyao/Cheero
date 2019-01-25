@@ -7,9 +7,9 @@ import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
 
+import com.icheero.network.listener.IResponseListener;
 import com.icheero.plugins.model.Patch;
-import com.icheero.sdk.core.network.http.api.CheeroApi;
-import com.icheero.sdk.core.network.listener.IResponseListener;
+import com.icheero.sdk.core.api.CheeroApi;
 
 import java.lang.ref.WeakReference;
 

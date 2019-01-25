@@ -45,8 +45,7 @@ public class DBHelper implements IDownloadService, IUserService
         {
             synchronized (TAG)
             {
-                if (mInstance == null)
-                    mInstance = new DBHelper();
+                if (mInstance == null) mInstance = new DBHelper();
             }
         }
         return mInstance;
@@ -97,6 +96,7 @@ public class DBHelper implements IDownloadService, IUserService
     public void insertDownload(Download entity)
     {
         mDaoSession.insertOrReplace(entity);
+
     }
 
     @Override
@@ -120,4 +120,5 @@ public class DBHelper implements IDownloadService, IUserService
         return mSqliteDB.rawQuery("select u_id as _id, * from " + UserDao.TABLENAME, null);
     }
     // endregion
+
 }

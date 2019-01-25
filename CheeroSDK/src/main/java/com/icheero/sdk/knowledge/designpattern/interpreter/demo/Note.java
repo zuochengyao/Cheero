@@ -1,6 +1,6 @@
 package com.icheero.sdk.knowledge.designpattern.interpreter.demo;
 
-import com.icheero.sdk.util.Log;
+import com.icheero.util.Log;
 
 public class Note extends Expression
 {

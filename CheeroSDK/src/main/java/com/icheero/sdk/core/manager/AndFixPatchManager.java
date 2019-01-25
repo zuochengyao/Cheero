@@ -3,6 +3,7 @@ package com.icheero.sdk.core.manager;
 import com.alipay.euler.andfix.patch.PatchManager;
 import com.icheero.sdk.base.BaseApplication;
 import com.icheero.util.Common;
+import com.icheero.util.IOManager;
 
 /**
  * @author 左程耀 2018年11月05日

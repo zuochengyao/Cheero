@@ -1,6 +1,6 @@
 package com.icheero.sdk.knowledge.designpattern.visitor.idea;
 
-import com.icheero.sdk.util.Log;
+import com.icheero.util.Log;
 
 /**
  * 具体访问者A，实现每个由Visitor声明的操作

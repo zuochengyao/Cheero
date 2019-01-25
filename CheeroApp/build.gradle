@@ -13,12 +13,11 @@ android {
 
     signingConfigs {
         // 打包签名
-        staging.initWith(signingConfigs.debug)
         release {
-            keyAlias versions.sign.release.alias
-            keyPassword versions.sign.release.password
-            storeFile file(versions.sign.release.filepath)
-            storePassword versions.sign.release.store
+            keyAlias versions.sign.alias
+            keyPassword versions.sign.password
+            storeFile file(versions.sign.filepath)
+            storePassword versions.sign.store
         }
     }
 
@@ -34,8 +33,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_10
-        targetCompatibility JavaVersion.VERSION_1_10
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     dataBinding {

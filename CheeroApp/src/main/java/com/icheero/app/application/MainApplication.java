@@ -1,7 +1,7 @@
 package com.icheero.app.application;
 
 import com.icheero.sdk.base.BaseApplication;
-import com.icheero.sdk.util.Log;
+import com.icheero.util.Log;
 
 
 public class MainApplication extends BaseApplication

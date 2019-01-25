@@ -2,7 +2,7 @@ def build_version = [:]
 build_version.compile_sdk = 28
 build_version.min_sdk = 24
 build_version.target_sdk = 28
-build_version.gradle = '3.2.1'
+build_version.gradle = '3.3.0'
 build_version.code = 2
 build_version.name = "1.0.1"
 
@@ -90,21 +90,11 @@ deps.andfix = "com.alipay.euler:andfix:$dep_version.andfix"
 deps.stetho = "com.facebook.stetho:stetho:$dep_version.stetho"
 deps.faceid_api = "com.megvii.api:faceid:$dep_version.faceid_api"
 
-def sign_debug = [:]
-sign_debug.alias = "androiddebugkey"
-sign_debug.password = "android"
-sign_debug.filepath = "/Users/Work/.android/debug.keystore"
-sign_debug.store = "android"
-
-def sign_release = [:]
-sign_release.alias = "icheero"
-sign_release.password = "654321"
-sign_release.filepath = project.rootDir.absolutePath + "/cheero_key.jks"
-sign_release.store = "123456"
-
 def sign = [:]
-sign.debug = sign_debug
-sign.release = sign_release
+sign.alias = "icheero"
+sign.password = "654321"
+sign.filepath = project.rootDir.absolutePath + "/cheero_key.jks"
+sign.store = "123456"
 
 def static addRepos(RepositoryHandler handler) {
     handler.maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }

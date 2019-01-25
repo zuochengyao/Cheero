@@ -9,7 +9,7 @@
 #include <android/log.h>
 #include "service_engine.h"
 
-#define JNI_PACKAGE_NAME "com/icheero/sdk"
+#define JNI_PACKAGE_NAME "com/icheero/util"
 #define TAG "Cheero"
 
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, TAG, __VA_ARGS__)
@@ -17,7 +17,7 @@
 
 // jvm obj
 static JavaVM *mJVM = NULL;
-static const char *classPathName = JNI_PACKAGE_NAME"/core/engine/CheeroNative";
+static const char *classPathName = JNI_PACKAGE_NAME"/LogNative";
 
 #ifdef __cplusplus
 extern "C" {

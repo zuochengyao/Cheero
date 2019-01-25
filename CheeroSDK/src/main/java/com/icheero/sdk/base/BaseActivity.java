@@ -1,17 +1,13 @@
 package com.icheero.sdk.base;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 
-import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.core.manager.PermissionManager;
 import com.icheero.sdk.core.manager.ViewManager;
-import com.icheero.sdk.util.Common;
-import com.icheero.sdk.util.Log;
+import com.icheero.util.Log;
 
 import java.util.Arrays;
 
@@ -59,13 +55,6 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
     public void onPermissionRequest(boolean isGranted, String permission)
     {
         Log.i(TAG, String.format("Permission:%s granted %s ", permission, isGranted));
-        if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-        {
-            if (isGranted)
-                IOManager.getInstance().createRootFolder();
-            else
-                Common.toast(this, "请打开读写权限！", Toast.LENGTH_SHORT);
-        }
     }
 
     /**

@@ -1,7 +1,7 @@
 package com.icheero.network.http.implement.convert;
 
 import com.google.gson.Gson;
-import com.icheero.network.http.api.BaseApi;
+import com.icheero.network.http.HttpApi;
 import com.icheero.network.http.encapsulation.IConvert;
 
 import java.io.Reader;
@@ -31,6 +31,6 @@ public class JsonConvert implements IConvert
     @Override
     public boolean isSupportParse(String contentType)
     {
-        return BaseApi.MEDIA_TYPE_JSON.equals(contentType);
+        return HttpApi.MEDIA_TYPE_JSON.equals(contentType);
     }
 }

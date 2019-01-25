@@ -1,5 +1,6 @@
 package com.icheero.network.http.framework.volley;
 
+import com.icheero.network.http.HttpRequest;
 import com.icheero.network.http.encapsulation.IHttpCall;
 import com.icheero.network.http.encapsulation.IHttpRequestFactory;
 

@@ -26,12 +26,6 @@ android {
         }
     }
 
-    repositories {
-        flatDir {
-            dirs 'libs'
-        }
-    }
-
     externalNativeBuild {
         cmake {
             path 'src/main/jni/CMakeLists.txt'
@@ -39,12 +33,16 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_10
-        targetCompatibility JavaVersion.VERSION_1_10
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation versions.deps.support.v7
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    // Support libraries
+    api versions.deps.support.design
+    api versions.deps.support.v4
+    api versions.deps.support.v7
+    api versions.deps.support.constraint
 }

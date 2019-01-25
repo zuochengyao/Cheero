@@ -24,7 +24,16 @@ public abstract class AbstractAsyncHttpCall extends AbstractHttpCall
                 if (getListener() != null)
                 {
                     if (response.getStatus().isSuccess())
-                        getListener().onSuccess(response.getHeaders().getContentType(), new String(IOManager.getInstance().getResponseData(response)));
+                    {
+                        try
+                        {
+                            getListener().onSuccess(response.getHeaders().getContentType(), new String(IOManager.getInstance().getResponseData(response.getContentLength(), response.getBody())));
+                        }
+                        catch (IOException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
                     else
                         getListener().onFailure(response.getStatus().getStatusCode(), response.getStatusMessage());
                 }

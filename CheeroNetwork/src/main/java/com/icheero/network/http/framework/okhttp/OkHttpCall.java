@@ -2,12 +2,16 @@ package com.icheero.network.http.framework.okhttp;
 
 import android.support.annotation.NonNull;
 
-import com.icheero.network.http.api.BaseApi;
+import com.icheero.network.http.HttpApi;
+import com.icheero.network.http.HttpResponse;
+import com.icheero.network.http.encapsulation.AbstractHttpEntity;
+import com.icheero.network.http.encapsulation.HttpMethod;
 import com.icheero.network.http.encapsulation.HttpStatus;
 import com.icheero.network.http.encapsulation.IHttpCall;
 import com.icheero.network.http.encapsulation.IHttpResponse;
 import com.icheero.network.http.implement.HttpHeader;
 import com.icheero.network.http.implement.entity.FormEntity;
+import com.icheero.network.http.implement.entity.MultipartEntity;
 
 import java.io.File;
 import java.io.IOException;
@@ -157,12 +161,12 @@ public class OkHttpCall implements IHttpCall
                             if (value instanceof File)
                             {
                                 File file = (File) value;
-                                builder.addFormDataPart(entry.getKey(), file.getName(), RequestBody.create(MediaType.parse(BaseApi.MEDIA_TYPE_MULTIPART), file));
+                                builder.addFormDataPart(entry.getKey(), file.getName(), RequestBody.create(MediaType.parse(HttpApi.MEDIA_TYPE_MULTIPART), file));
                             }
                             else if (value instanceof byte[])
                             {
                                 byte[] data = (byte[]) value;
-                                builder.addFormDataPart(entry.getKey(), entry.getKey(), RequestBody.create(MediaType.parse(BaseApi.MEDIA_TYPE_MULTIPART), data));
+                                builder.addFormDataPart(entry.getKey(), entry.getKey(), RequestBody.create(MediaType.parse(HttpApi.MEDIA_TYPE_MULTIPART), data));
                             }
                             else
                                 builder.addFormDataPart(entry.getKey(), value.toString());

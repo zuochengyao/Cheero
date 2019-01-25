@@ -1,6 +1,6 @@
 package com.icheero.sdk.knowledge.designpattern.interpreter.idea;
 
-import com.icheero.sdk.util.Log;
+import com.icheero.util.Log;
 
 public class NonterminalExpression extends AbstractExpression
 {
