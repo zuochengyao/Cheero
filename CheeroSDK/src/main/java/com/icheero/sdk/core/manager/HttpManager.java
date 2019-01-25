@@ -1,11 +1,11 @@
 package com.icheero.sdk.core.manager;
 
-import com.icheero.sdk.core.network.http.HttpConfig;
-import com.icheero.sdk.core.network.http.HttpRequest;
-import com.icheero.sdk.core.network.http.HttpRequestProvider;
-import com.icheero.sdk.core.network.http.encapsulation.IHttpRequestFactory;
-import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpRequestFactory;
-import com.icheero.sdk.util.Log;
+import com.icheero.util.Log;
+import com.icheero.network.http.HttpConfig;
+import com.icheero.network.http.HttpRequest;
+import com.icheero.network.http.HttpRequestProvider;
+import com.icheero.network.http.encapsulation.IHttpRequestFactory;
+import com.icheero.network.http.framework.okhttp.OkHttpRequestFactory;
 
 import java.io.IOException;
 

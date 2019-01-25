@@ -33,9 +33,9 @@ import com.icheero.app.activity.ui.StyledActivity;
 import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
 import com.icheero.sdk.base.BaseActivity;
-import com.icheero.sdk.core.manager.IOManager;
-import com.icheero.sdk.util.Common;
-import com.icheero.sdk.util.Log;
+import com.icheero.util.Common;
+import com.icheero.util.IOManager;
+import com.icheero.util.Log;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

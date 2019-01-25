@@ -2,7 +2,7 @@ package com.icheero.sdk.core.manager;
 
 import com.alipay.euler.andfix.patch.PatchManager;
 import com.icheero.sdk.base.BaseApplication;
-import com.icheero.sdk.util.Common;
+import com.icheero.util.Common;
 
 /**
  * @author 左程耀 2018年11月05日
@@ -19,7 +19,7 @@ public class AndFixPatchManager
     private AndFixPatchManager()
     {
         mPatchManager = new PatchManager(BaseApplication.getAppInstance());
-        mPatchManager.init(Common.getVersionName());
+        mPatchManager.init(Common.getVersionName(BaseApplication.getAppInstance()));
         mPatchManager.loadPatch();
     }
 

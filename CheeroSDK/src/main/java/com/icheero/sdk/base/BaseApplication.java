@@ -5,14 +5,14 @@ import android.app.Application;
 import com.alibaba.android.arouter.BuildConfig;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.facebook.stetho.Stetho;
-import com.icheero.sdk.core.database.DBHelper;
+import com.icheero.database.DBHelper;
+import com.icheero.network.download.DownloadConfig;
+import com.icheero.network.http.HttpConfig;
 import com.icheero.sdk.core.manager.AndFixPatchManager;
-import com.icheero.sdk.core.manager.IOManager;
-import com.icheero.sdk.core.network.download.DownloadConfig;
 import com.icheero.sdk.core.manager.DownloadManager;
-import com.icheero.sdk.core.network.http.HttpConfig;
 import com.icheero.sdk.core.manager.HttpManager;
-import com.icheero.sdk.util.Log;
+import com.icheero.util.IOManager;
+import com.icheero.util.Log;
 
 public class BaseApplication extends Application
 {
@@ -25,7 +25,7 @@ public class BaseApplication extends Application
         mInstance = this;
         Log.traceMode(Log.TRACE_MODE_ON_SCREEN);
         // 初始化 IO管理器
-        IOManager.getInstance();
+        IOManager.getInstance().init(this);
         // 初始化 网络请求
         HttpConfig httpConfig = new HttpConfig.Builder()
                 .setConnectTimeout(60)
@@ -54,7 +54,7 @@ public class BaseApplication extends Application
         // 初始化 stetho
         Stetho.initializeWithDefaults(this);
         // 初始化 数据库
-        DBHelper.getInstance();
+        DBHelper.getInstance().init(this);
     }
 
     public static BaseApplication getAppInstance()

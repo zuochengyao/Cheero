@@ -4,6 +4,7 @@ buildscript {
     dependencies {
         classpath versions.deps.gradle
         classpath versions.deps.greendao.classpath
+        classpath versions.deps.tinker.classpath
     }
     repositories {
         google()

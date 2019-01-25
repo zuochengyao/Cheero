@@ -1,0 +1,87 @@
+package com.icheero.network.http;
+
+import com.icheero.network.http.implement.AbstractAsyncHttpCall;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Iterator;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class HttpThreadPool
+{
+    private static final int REQUEST_SIZE_MAX = 64;
+
+    private Deque<AbstractAsyncHttpCall> mRunningQueue;
+    private Deque<AbstractAsyncHttpCall> mCacheQueue;
+    private static volatile HttpThreadPool mInstance;
+
+    private static final ThreadPoolExecutor mThreadPool = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60, TimeUnit.SECONDS, new SynchronousQueue<>(), new ThreadFactory()
+    {
+        private AtomicInteger mInteger = new AtomicInteger(1);
+
+        @Override
+        public Thread newThread(Runnable r)
+        {
+            return new Thread(r, "Http Thread #" + mInteger.getAndIncrement());
+        }
+    });
+
+    private HttpThreadPool()
+    {
+        mRunningQueue = new ArrayDeque<>();
+        mCacheQueue = new ArrayDeque<>();
+    }
+
+    public static HttpThreadPool getInstance()
+    {
+        if (mInstance == null)
+        {
+            synchronized (HttpThreadPool.class)
+            {
+                if (mInstance == null)
+                    mInstance = new HttpThreadPool();
+            }
+        }
+        return mInstance;
+    }
+
+    public void enqueue(AbstractAsyncHttpCall httpCall)
+    {
+        if (mRunningQueue.size() > REQUEST_SIZE_MAX)
+            mCacheQueue.add(httpCall);
+        else
+            doRequest(httpCall);
+    }
+
+    /**
+     * 异步请求完成后调用
+     */
+    void finish(AbstractAsyncHttpCall httpCall)
+    {
+        mRunningQueue.remove(httpCall);
+        if (mRunningQueue.size() <= REQUEST_SIZE_MAX && mCacheQueue.size() > 0)
+        {
+            Iterator<AbstractAsyncHttpCall> iterator = mCacheQueue.iterator();
+            while (iterator.hasNext())
+            {
+                AbstractAsyncHttpCall next = iterator.next();
+                mRunningQueue.add(next);
+                iterator.remove();
+                doRequest(next);
+            }
+        }
+    }
+
+    private void doRequest(AbstractAsyncHttpCall httpCall)
+    {
+        if (httpCall != null)
+        {
+            mRunningQueue.add(httpCall);
+            mThreadPool.execute(new HttpRunnable(httpCall, httpCall.getCallback()));
+        }
+    }
+}
