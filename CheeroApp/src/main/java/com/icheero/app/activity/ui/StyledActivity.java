@@ -1,7 +1,7 @@
 package com.icheero.app.activity.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.transition.Explode;
 
 import com.icheero.app.R;

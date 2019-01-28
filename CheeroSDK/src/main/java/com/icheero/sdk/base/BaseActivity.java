@@ -1,8 +1,8 @@
 package com.icheero.sdk.base;
 
 import android.os.Bundle;
-import android.support.annotation.IdRes;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.IdRes;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 import com.icheero.sdk.core.manager.PermissionManager;

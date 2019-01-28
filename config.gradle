@@ -13,8 +13,8 @@ dep_version.rxandroid = "2.1.0"
 dep_version.rxpermission = "0.10.2"
 dep_version.gson = "2.8.5"
 dep_version.butterknife = "10.0.0"
-dep_version.support = "28.0.0"
-dep_version.constraint = "1.1.3"
+dep_version.support = '1.0.0-rc01'
+dep_version.constraint = '1.1.2'
 dep_version.okio = "2.2.0"
 dep_version.okhttp = "3.12.1"
 dep_version.volley = "1.1.1"
@@ -42,10 +42,10 @@ butterknife.runtime = "com.jakewharton:butterknife:$dep_version.butterknife"
 butterknife.compiler = "com.jakewharton:butterknife-compiler:$dep_version.butterknife"
 
 def support = [:]
-support.design = "com.android.support:design:$dep_version.support"
-support.v4 = "com.android.support:support-v4:$dep_version.support"
-support.v7 = "com.android.support:appcompat-v7:$dep_version.support"
-support.constraint = "com.android.support.constraint:constraint-layout:$dep_version.constraint"
+support.design = "com.google.android.material:material:$dep_version.support"
+support.v4 = "androidx.legacy:legacy-support-v4:$dep_version.support"
+support.v7 = "androidx.appcompat:appcompat:$dep_version.support"
+support.constraint = "androidx.constraintlayout:constraintlayout:$dep_version.constraint"
 support.test = "com.android.support.test:runner:$dep_version.test"
 support.espresso = "com.android.support.test.espresso:espresso-core:$dep_version.espresso"
 

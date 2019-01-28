@@ -3,7 +3,7 @@ package com.icheero.app.activity.data;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;

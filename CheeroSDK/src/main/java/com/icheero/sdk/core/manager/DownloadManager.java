@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.manager;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.icheero.database.DBHelper;
 import com.icheero.database.entity.Download;

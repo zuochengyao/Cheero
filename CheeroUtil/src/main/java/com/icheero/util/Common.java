@@ -3,7 +3,7 @@ package com.icheero.util;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.support.annotation.StringRes;
+import android.os.Build;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -30,7 +30,7 @@ public class Common
         Toast.makeText(context, str, duration).show();
     }
 
-    public static void toast(Context context, @StringRes int resID, int duration)
+    public static void toast(Context context, int resID, int duration)
     {
         Toast.makeText(context, resID, duration).show();
     }
@@ -43,7 +43,10 @@ public class Common
         try
         {
             packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
-            versionCode = packageInfo.getLongVersionCode() + "";
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+                versionCode = packageInfo.getLongVersionCode() + "";
+            else
+                versionCode = packageInfo.versionCode + "";
         }
         catch (PackageManager.NameNotFoundException e)
         {

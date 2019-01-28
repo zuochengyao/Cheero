@@ -23,6 +23,7 @@
         </activity>
 
         <activity android:name=".activity.PluginActivity"/>
-    <service android:name=".service.AndFixService"/></application>
+        <service android:name=".service.AndFixService"/>
+    </application>
 
 </manifest>

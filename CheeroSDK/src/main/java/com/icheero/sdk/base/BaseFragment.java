@@ -1,7 +1,7 @@
 package com.icheero.sdk.base;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 public class BaseFragment extends Fragment
 {

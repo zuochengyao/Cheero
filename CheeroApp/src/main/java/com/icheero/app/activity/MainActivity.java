@@ -4,14 +4,13 @@ import android.Manifest;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.icheero.app.R;
 import com.icheero.app.activity.data.CustomSettingActivity;
 import com.icheero.app.activity.data.DatabaseActivity;
@@ -37,6 +36,7 @@ import com.icheero.util.Common;
 import com.icheero.util.IOManager;
 import com.icheero.util.Log;
 
+import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

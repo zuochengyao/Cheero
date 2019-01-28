@@ -1,6 +1,6 @@
 package com.icheero.network.http.framework.okhttp;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.icheero.network.http.HttpSecure;
 import com.icheero.network.listener.IDownloadListener;
