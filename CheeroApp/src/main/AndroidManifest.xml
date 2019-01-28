@@ -11,8 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ActionBar"
-        tools:ignore="GoogleAppIndexingWarning"
-        tools:replace="android:theme">
+        tools:ignore="GoogleAppIndexingWarning">
 
         <!-- region Activities -->
         <activity
