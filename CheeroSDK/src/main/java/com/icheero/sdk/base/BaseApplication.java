@@ -2,8 +2,8 @@ package com.icheero.sdk.base;
 
 import android.app.Application;
 
-import com.alibaba.android.arouter.BuildConfig;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.alibaba.android.arouter.utils.PackageUtils;
 import com.facebook.stetho.Stetho;
 import com.icheero.database.DBHelper;
 import com.icheero.network.download.DownloadConfig;
@@ -42,11 +42,13 @@ public class BaseApplication extends Application
                 .build();
         DownloadManager.getInstance().init(downloadConfig);
         // 初始化 ARouter
-        if (BuildConfig.DEBUG)
+        if (ARouter.debuggable() || PackageUtils.isNewVersion(this))
         {
             ARouter.openDebug();
             ARouter.openLog();
         }
+        else
+            ARouter.getInstance();
         ARouter.init(this);
         // 初始化 stetho
         Stetho.initializeWithDefaults(this);

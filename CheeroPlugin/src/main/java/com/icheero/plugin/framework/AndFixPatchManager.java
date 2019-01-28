@@ -3,7 +3,6 @@ package com.icheero.plugin.framework;
 import android.content.Context;
 
 import com.alipay.euler.andfix.patch.PatchManager;
-import com.icheero.sdk.base.BaseApplication;
 import com.icheero.util.Common;
 import com.icheero.util.IOManager;
 
@@ -21,9 +20,6 @@ public class AndFixPatchManager
 
     private AndFixPatchManager()
     {
-        mPatchManager = new PatchManager(BaseApplication.getAppInstance());
-        mPatchManager.init(Common.getVersionName(BaseApplication.getAppInstance()));
-        mPatchManager.loadPatch();
     }
 
     public static AndFixPatchManager getInstance()
@@ -41,7 +37,9 @@ public class AndFixPatchManager
 
     public void init(Context context)
     {
-
+        mPatchManager = new PatchManager(context.getApplicationContext());
+        mPatchManager.init(Common.getVersionName(context.getApplicationContext()));
+        mPatchManager.loadPatch();
     }
 
     public void addPatch()

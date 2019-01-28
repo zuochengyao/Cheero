@@ -17,7 +17,7 @@ android {
         versionName versions.build.name
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ moduleName : project.getName() ]
+                arguments = [ AROUTER_MODULE_NAME : project.getName() ]
             }
         }
     }
@@ -71,8 +71,9 @@ android {
 }
 
 dependencies {
-    implementation project(':CheeroSDK')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':CheeroSDK')
+    annotationProcessor versions.deps.arouter_compiler
     // Alibaba Andfix
     implementation versions.deps.andfix
     // Tencent Tinker

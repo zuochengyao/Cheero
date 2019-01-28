@@ -17,7 +17,7 @@ android {
         versionName versions.build.name
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ moduleName : project.getName() ]
+                arguments = [ AROUTER_MODULE_NAME : project.getName() ]
             }
         }
     }
@@ -71,8 +71,8 @@ android {
 }
 
 dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':CheeroSDK')
     implementation versions.deps.faceid_api
     annotationProcessor versions.deps.arouter_compiler
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
 }

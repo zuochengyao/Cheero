@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.icheero.plugin.R;
+import com.icheero.plugin.framework.AndFixPatchManager;
 import com.icheero.plugin.framework.PluginManager;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.util.Log;
@@ -94,7 +95,7 @@ public class LoadPluginActivity extends BaseActivity implements View.OnClickList
                 Log.print();
                 break;
             case R.id.fix_bug:
-                PluginManager.getInstance().addPatch();
+                AndFixPatchManager.getInstance().addPatch();
                 break;
         }
     }
