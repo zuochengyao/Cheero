@@ -1,60 +1,45 @@
-package com.icheero.app.activity.plugin;
+package com.icheero.plugin.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.icheero.app.R;
-import com.icheero.sdk.core.manager.AndFixPatchManager;
-import com.icheero.sdk.core.manager.PluginManager;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.icheero.plugin.R;
+import com.icheero.plugin.framework.PluginManager;
+import com.icheero.sdk.base.BaseActivity;
 import com.icheero.util.Log;
 
 import java.io.File;
 import java.lang.reflect.Field;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import dalvik.system.DexClassLoader;
 
-public class LoadPluginActivity extends Activity
+@Route(path = "/plugin/LoadPlugin")
+public class LoadPluginActivity extends BaseActivity implements View.OnClickListener
 {
     private static final Class TAG = LoadPluginActivity.class;
-
-    @BindView(R.id.image_volume_bigger)
-    ImageView ivVolumeBigger;
-    @BindView(R.id.image_volume_smaller)
-    ImageView ivVolumeSmaller;
-    @BindView(R.id.create_bug)
-    Button btCreateBug;
-    @BindView(R.id.fix_bug)
-    Button btFixBug;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_plugin);
-        // 动态申请存储权限
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
-            String[] perms = {"android.permission.WRITE_EXTERNAL_STORAGE"};
-            if (checkSelfPermission(perms[0]) == PackageManager.PERMISSION_DENIED) requestPermissions(perms, 200);
-        }
-        ButterKnife.bind(this);
+        String[] perms = {"android.permission.WRITE_EXTERNAL_STORAGE"};
+        if (checkSelfPermission(perms[0]) == PackageManager.PERMISSION_DENIED)
+            requestPermissions(perms, 200);
+        doInitView();
     }
-
-    @OnClick({R.id.image_volume_bigger, R.id.image_volume_smaller, R.id.create_bug, R.id.fix_bug})
-    public void OnClickEvent(View v)
+    
+    @Override
+    public void onClick(View v)
     {
         switch (v.getId())
         {
@@ -63,7 +48,7 @@ public class LoadPluginActivity extends Activity
                 break;
             case R.id.image_volume_smaller:
                 Drawable background = v.getBackground();
-                if (background != null && background instanceof AnimationDrawable)
+                if (background instanceof AnimationDrawable)
                 {
                     handleAnim(v);
                     return;
@@ -109,9 +94,21 @@ public class LoadPluginActivity extends Activity
                 Log.print();
                 break;
             case R.id.fix_bug:
-                AndFixPatchManager.getInstance().addPatch();
+                PluginManager.getInstance().addPatch();
                 break;
         }
+    }
+    
+    private void doInitView()
+    {
+        ImageView ivVolumeBigger = findViewById(R.id.image_volume_bigger);
+        ivVolumeBigger.setOnClickListener(this);
+        ImageView ivVolumeSmaller = findViewById(R.id.image_volume_smaller);
+        ivVolumeSmaller.setOnClickListener(this);
+        Button btCreateBug = findViewById(R.id.create_bug);
+        btCreateBug.setOnClickListener(this);
+        Button btFixBug = findViewById(R.id.fix_bug);
+        btFixBug.setOnClickListener(this);
     }
 
     private void handleAnim(View v)

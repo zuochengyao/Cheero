@@ -31,8 +31,14 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility versions.build.java
+        targetCompatibility versions.build.java
+    }
+
+    android {
+        lintOptions {
+            abortOnError false
+        }
     }
 }
 

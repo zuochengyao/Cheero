@@ -1,12 +1,13 @@
-package com.icheero.plugins.activity;
+package com.icheero.plugin.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.icheero.plugins.R;
+import com.icheero.plugin.R;
+import com.icheero.plugin.framework.AndFixPatchManager;
 import com.icheero.sdk.base.BaseActivity;
-import com.icheero.sdk.core.manager.AndFixPatchManager;
 import com.icheero.util.Common;
 import com.icheero.util.IOManager;
 import com.icheero.util.Log;
@@ -20,16 +21,15 @@ public class MainActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViewById(R.id.click_me).setOnClickListener(v -> {
-            Toast.makeText(MainActivity.this, "Hello plugin!", Toast.LENGTH_SHORT).show();
-            initClassLoader();
-        });
         if (!mPermissionManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
             mPermissionManager.permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         else
             IOManager.getInstance().createRootFolder();
+        findViewById(R.id.click_me).setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, LoadPluginActivity.class));
+            initClassLoader();
+        });
         findViewById(R.id.create_bug).setOnClickListener(v -> createBug());
-
         findViewById(R.id.fix_bug).setOnClickListener(v -> fixBug());
     }
 

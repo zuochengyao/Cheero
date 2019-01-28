@@ -1,14 +1,25 @@
-apply plugin: 'com.android.application'
+if (isLibrary) {
+    apply plugin: 'com.android.library'
+} else {
+    apply plugin: 'com.android.application'
+}
 
 android {
     compileSdkVersion versions.build.compile_sdk
 
     defaultConfig {
-        applicationId "com.icheero.plugins"
+        if (!isLibrary) {
+            applicationId "com.icheero.plugin"
+        }
         minSdkVersion versions.build.min_sdk
         targetSdkVersion versions.build.target_sdk
         versionCode versions.build.code
         versionName versions.build.name
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
     }
 
     signingConfigs {
@@ -27,13 +38,27 @@ android {
         }
     }
 
+    sourceSets {
+        main {
+            if (isLibrary) {
+                manifest.srcFile 'src/main/module/AndroidManifest.xml'
+                // 集成开发模式下排除debug文件夹中的所有Java文件
+                java {
+                    exclude 'application/**'
+                }
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
+    }
+
     lintOptions {
         abortOnError false
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility versions.build.java
+        targetCompatibility versions.build.java
     }
 
     packagingOptions {
@@ -48,4 +73,9 @@ android {
 dependencies {
     implementation project(':CheeroSDK')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    // Alibaba Andfix
+    implementation versions.deps.andfix
+    // Tencent Tinker
+    //    compileOnly versions.deps.tinker.anno
+    //    api versions.deps.tinker.lib
 }

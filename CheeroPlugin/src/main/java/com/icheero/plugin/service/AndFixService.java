@@ -1,17 +1,18 @@
-package com.icheero.plugins.service;
+package com.icheero.plugin.service;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import androidx.annotation.Nullable;
 
 import com.icheero.network.listener.IResponseListener;
-import com.icheero.plugins.model.Patch;
+import com.icheero.plugin.model.Patch;
 import com.icheero.sdk.core.api.CheeroApi;
 
 import java.lang.ref.WeakReference;
+
+import androidx.annotation.Nullable;
 
 public class AndFixService extends Service
 {

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.icheero.app.R;
@@ -22,7 +23,6 @@ import com.icheero.app.activity.network.ImageDownloadActivity;
 import com.icheero.app.activity.network.RequestActivity;
 import com.icheero.app.activity.network.RetrofitActivity;
 import com.icheero.app.activity.network.WebViewActivity;
-import com.icheero.app.activity.plugin.LoadPluginActivity;
 import com.icheero.app.activity.ui.AnimActivity;
 import com.icheero.app.activity.ui.CustomViewActivity;
 import com.icheero.app.activity.ui.DialogActivity;
@@ -239,7 +239,7 @@ public class MainActivity extends BaseActivity
         switch (v.getId())
         {
             case R.id.to_load_plugin_activity:
-                startActivity(new Intent(this, LoadPluginActivity.class));
+                ARouter.getInstance().build("/plugin/LoadPlugin").navigation();
                 break;
         }
     }

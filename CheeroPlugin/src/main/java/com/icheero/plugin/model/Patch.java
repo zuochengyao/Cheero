@@ -1,4 +1,4 @@
-package com.icheero.plugins.model;
+package com.icheero.plugin.model;
 
 import java.io.Serializable;
 

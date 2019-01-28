@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.icheero.plugin"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name="com.icheero.plugin.activity.MainActivity"/>
+        <activity android:name="com.icheero.plugin.activity.PluginActivity"/>
+        <service android:name="com.icheero.plugin.service.AndFixService"/>
+    </application>
+
+</manifest>

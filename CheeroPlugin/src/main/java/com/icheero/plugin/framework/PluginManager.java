@@ -1,4 +1,4 @@
-package com.icheero.sdk.core.manager;
+package com.icheero.plugin.framework;
 
 import android.app.Activity;
 import android.content.res.AssetManager;
@@ -17,6 +17,34 @@ public class PluginManager
     private static final String PLUGIN_ASSET_PATH = "plugin/apk/";
     public static final String PLUGIN_FILE_PATH = Environment.getExternalStorageDirectory() + File.separator + PLUGIN_NAME;
     public static final String PLUGIN_PACKAGE_NAME = "com.icheero.plugins";
+
+    private static volatile PluginManager mInstance;
+
+    private PluginManager()
+    {
+        // 初始化 AndFix
+        AndFixPatchManager.getInstance();
+    }
+
+    public static PluginManager getInstance()
+    {
+        if (mInstance == null)
+        {
+            synchronized (PluginManager.class)
+            {
+                if (mInstance == null)
+                    mInstance = new PluginManager();
+            }
+        }
+        return mInstance;
+    }
+
+    // region AndFix Methods
+    public void addPatch()
+    {
+        AndFixPatchManager.getInstance().addPatch();
+    }
+    // endregion
 
     public static void loadPlugin(Activity context)
     {

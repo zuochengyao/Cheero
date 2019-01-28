@@ -8,7 +8,6 @@ import com.facebook.stetho.Stetho;
 import com.icheero.database.DBHelper;
 import com.icheero.network.download.DownloadConfig;
 import com.icheero.network.http.HttpConfig;
-import com.icheero.sdk.core.manager.AndFixPatchManager;
 import com.icheero.sdk.core.manager.DownloadManager;
 import com.icheero.sdk.core.manager.HttpManager;
 import com.icheero.util.IOManager;
@@ -49,8 +48,6 @@ public class BaseApplication extends Application
             ARouter.openLog();
         }
         ARouter.init(this);
-        // 初始化 AndFix
-        AndFixPatchManager.getInstance();
         // 初始化 stetho
         Stetho.initializeWithDefaults(this);
         // 初始化 数据库

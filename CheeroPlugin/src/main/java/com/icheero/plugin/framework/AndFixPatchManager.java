@@ -1,4 +1,6 @@
-package com.icheero.sdk.core.manager;
+package com.icheero.plugin.framework;
+
+import android.content.Context;
 
 import com.alipay.euler.andfix.patch.PatchManager;
 import com.icheero.sdk.base.BaseApplication;
@@ -35,6 +37,11 @@ public class AndFixPatchManager
             }
         }
         return mInstance;
+    }
+
+    public void init(Context context)
+    {
+
     }
 
     public void addPatch()

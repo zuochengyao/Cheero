@@ -1,4 +1,4 @@
-if (isModule) {
+if (isLibrary) {
     apply plugin: 'com.android.library'
 } else {
     apply plugin: 'com.android.application'
@@ -8,7 +8,7 @@ android {
     compileSdkVersion versions.build.compile_sdk
 
     defaultConfig {
-        if (!isModule) {
+        if (!isLibrary) {
             applicationId "com.icheero.faceid"
         }
         minSdkVersion versions.build.min_sdk
@@ -22,6 +22,15 @@ android {
         }
     }
 
+    signingConfigs {
+        release {
+            keyAlias versions.sign.alias
+            keyPassword versions.sign.password
+            storeFile file(versions.sign.filepath)
+            storePassword versions.sign.store
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -31,9 +40,9 @@ android {
 
     sourceSets {
         main {
-            if (isModule) {
+            if (isLibrary) {
                 manifest.srcFile 'src/main/module/AndroidManifest.xml'
-                //集成开发模式下排除debug文件夹中的所有Java文件
+                // 集成开发模式下排除debug文件夹中的所有Java文件
                 java {
                     exclude 'application/**'
                 }
@@ -43,9 +52,21 @@ android {
         }
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility versions.build.java
+        targetCompatibility versions.build.java
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
     }
 }
 

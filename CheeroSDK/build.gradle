@@ -24,9 +24,15 @@ android {
         }
     }
 
+    android {
+        lintOptions {
+            abortOnError false
+        }
+    }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility versions.build.java
+        targetCompatibility versions.build.java
     }
 }
 
@@ -37,11 +43,6 @@ dependencies {
     api project(':CheeroDatabase')
     // Alibaba ARouter
     api versions.deps.arouter_api
-    // Alibaba Andfix
-    api versions.deps.andfix
-    // Tencent Tinker
-    //    compileOnly versions.deps.tinker.anno
-    //    api versions.deps.tinker.lib
     // rx series
     api versions.deps.rx.java
     api versions.deps.rx.android
