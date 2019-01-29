@@ -18,6 +18,13 @@ import java.io.InputStream;
 @SuppressWarnings("unused")
 public class FileUtils
 {
+    public static final String DIR_PATH_BASE = Environment.getExternalStorageDirectory().getPath();
+    public static final String DIR_PATH_CHEERO_ROOT = DIR_PATH_BASE + "/Cheero";
+    public static final String DIR_PATH_CHEERO_IMAGES = DIR_PATH_CHEERO_ROOT + "/images/";
+    public static final String DIR_PATH_CHEERO_LOGS = DIR_PATH_CHEERO_ROOT + "/logs/";
+    public static final String DIR_PATH_CHEERO_PATCHES = DIR_PATH_CHEERO_ROOT + "/patches/";
+    public static final String DIR_PATH_CHEERO_CACHE = DIR_PATH_CHEERO_ROOT + "/cache/";
+
     public static Bitmap convertToBitmap(File file)
     {
         Bitmap bitmap = null;
@@ -118,5 +125,25 @@ public class FileUtils
             }
         }
         return data;
+    }
+
+    /**
+     * 获取响应InputStream数据
+     */
+    public static byte[] getInputStreamData(long contentLength, InputStream body)
+    {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream((int) contentLength);
+        int length;
+        byte[] data = new byte[1024];
+        try
+        {
+            while ((length = body.read(data)) != -1)
+                outputStream.write(data, 0, length);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return outputStream.toByteArray();
     }
 }

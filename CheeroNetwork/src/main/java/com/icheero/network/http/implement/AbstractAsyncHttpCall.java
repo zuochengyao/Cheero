@@ -4,7 +4,7 @@ import com.icheero.network.http.HttpResponse;
 import com.icheero.network.http.HttpThreadPool;
 import com.icheero.network.http.encapsulation.HttpStatus;
 import com.icheero.network.http.encapsulation.IHttpResponse;
-import com.icheero.util.IOManager;
+import com.icheero.util.FileUtils;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
@@ -27,7 +27,7 @@ public abstract class AbstractAsyncHttpCall extends AbstractHttpCall
                     {
                         try
                         {
-                            getListener().onSuccess(response.getHeaders().getContentType(), new String(IOManager.getInstance().getResponseData(response.getContentLength(), response.getBody())));
+                            getListener().onSuccess(response.getHeaders().getContentType(), new String(FileUtils.getInputStreamData(response.getContentLength(), response.getBody())));
                         }
                         catch (IOException e)
                         {

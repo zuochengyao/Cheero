@@ -17,7 +17,7 @@
 
 // jvm obj
 static JavaVM *mJVM = NULL;
-static const char *classPathName = JNI_PACKAGE_NAME"/LogNative";
+static const char *classPathName = JNI_PACKAGE_NAME"/Log";
 
 #ifdef __cplusplus
 extern "C" {

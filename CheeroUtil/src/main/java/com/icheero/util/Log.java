@@ -39,18 +39,27 @@ public class Log
 
     public static void traceMode(int mode)
     {
-        LogNative.nativeSetTraceMode(mode);
+        nativeSetTraceMode(mode);
     }
 
     private static void trace(Class<?> cls, String log, int prio)
     {
         log += "\n";
-        LogNative.nativeTrace(cls.getName(), log, prio);
+        nativeTrace(cls.getName(), log, prio);
     }
 
     public static void print()
     {
         String error = null;
         // android.util.Log.e("Cheero", error);
+    }
+
+    private static native void nativeSetTraceMode(int traceMode);
+
+    private static native void nativeTrace(String tag, String log, int prio);
+
+    static
+    {
+        System.loadLibrary("cheero-1.0.0");
     }
 }

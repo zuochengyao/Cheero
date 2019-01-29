@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.alipay.euler.andfix.patch.PatchManager;
 import com.icheero.util.Common;
-import com.icheero.util.IOManager;
+import com.icheero.util.FileUtils;
 
 /**
  * @author 左程耀 2018年11月05日
@@ -47,7 +47,7 @@ public class AndFixPatchManager
         try
         {
             if (mPatchManager != null)
-                mPatchManager.addPatch(IOManager.DIR_PATH_CHEERO_PATCHES.concat("cheero").concat(AndFixPatchManager.PATCH_EXTENSION));
+                mPatchManager.addPatch(FileUtils.DIR_PATH_CHEERO_PATCHES.concat("cheero").concat(AndFixPatchManager.PATCH_EXTENSION));
         }
         catch (Exception e)
         {

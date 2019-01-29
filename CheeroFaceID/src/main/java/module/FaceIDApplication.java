@@ -1,4 +1,4 @@
-package application;
+package module;
 
 import com.icheero.sdk.base.BaseApplication;
 

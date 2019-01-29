@@ -32,8 +32,8 @@ import com.icheero.app.activity.ui.StyledActivity;
 import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
 import com.icheero.sdk.base.BaseActivity;
+import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.util.Common;
-import com.icheero.util.IOManager;
 import com.icheero.util.Log;
 
 import androidx.appcompat.widget.Toolbar;

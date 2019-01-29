@@ -104,7 +104,7 @@ def static addRepos(RepositoryHandler handler) {
 }
 
 ext {
-    isLibrary = false
+    isLibrary = true
     versions = [:]
     versions.build = build_version
     versions.deps = deps

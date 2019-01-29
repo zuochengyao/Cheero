@@ -42,61 +42,65 @@ public class LoadPluginActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onClick(View v)
     {
-        switch (v.getId())
+        int i = v.getId();
+        if (i == R.id.image_volume_bigger)
         {
-            case R.id.image_volume_bigger:
+            handleAnim(v);
+        }
+        else if (i == R.id.image_volume_smaller)
+        {
+            Drawable background = v.getBackground();
+            if (background instanceof AnimationDrawable)
+            {
                 handleAnim(v);
-                break;
-            case R.id.image_volume_smaller:
-                Drawable background = v.getBackground();
-                if (background instanceof AnimationDrawable)
+                return;
+            }
+            File apk = new File(PluginManager.PLUGIN_FILE_PATH);
+            // 检查本地是否有插件apk
+            if (apk.exists())
+            {
+                // 加载到内存
+                DexClassLoader classLoader = new DexClassLoader(apk.getAbsolutePath(), this.getDir(PluginManager.PLUGIN_NAME, Context.MODE_PRIVATE).getAbsolutePath(), null, getClassLoader());
+                // 获取本地资源
+                // Drawable drawable = this.getResources().getDrawable(R.drawable.volume_bigger);
+                try
                 {
-                    handleAnim(v);
-                    return;
-                }
-                File apk = new File(PluginManager.PLUGIN_FILE_PATH);
-                // 检查本地是否有插件apk
-                if (apk.exists())
-                {
-                    // 加载到内存
-                    DexClassLoader classLoader = new DexClassLoader(apk.getAbsolutePath(), this.getDir(PluginManager.PLUGIN_NAME, Context.MODE_PRIVATE).getAbsolutePath(), null, getClassLoader());
-                    // 获取本地资源
-                    // Drawable drawable = this.getResources().getDrawable(R.drawable.volume_bigger);
-                    try
+                    // 获取插件资源 - 利用反射
+                    Class<?> loadClass = classLoader.loadClass(PluginManager.PLUGIN_PACKAGE_NAME + ".R$drawable");
+                    Field[] declareField = loadClass.getDeclaredFields();
+                    for (Field field : declareField)
                     {
-                        // 获取插件资源 - 利用反射
-                        Class<?> loadClass = classLoader.loadClass(PluginManager.PLUGIN_PACKAGE_NAME + ".R$drawable");
-                        Field[] declareField = loadClass.getDeclaredFields();
-                        for (Field field : declareField)
+                        if (field.getName().equals("volume_smaller"))
                         {
-                            if (field.getName().equals("volume_smaller"))
+                            int animId = field.getInt(R.drawable.class);
+                            AssetManager assetManager = PluginManager.getPluginAssetManager(apk);
+                            if (assetManager != null)
                             {
-                                int animId = field.getInt(R.drawable.class);
-                                AssetManager assetManager = PluginManager.getPluginAssetManager(apk);
-                                if (assetManager != null)
-                                {
-                                    Resources resources = new Resources(assetManager, super.getResources().getDisplayMetrics(), super.getResources().getConfiguration());
-                                    Drawable drawable = resources.getDrawable(animId);
-                                    v.setBackground(drawable);
-                                    handleAnim(v);
-                                }
+                                Resources resources = new Resources(assetManager, super.getResources().getDisplayMetrics(), super.getResources().getConfiguration());
+                                Drawable drawable = resources.getDrawable(animId);
+                                v.setBackground(drawable);
+                                handleAnim(v);
                             }
                         }
                     }
-                    catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }
                 }
-                else
-                    PluginManager.loadPlugin(this); // 加载插件
-                break;
-            case R.id.create_bug:
-                Log.print();
-                break;
-            case R.id.fix_bug:
-                AndFixPatchManager.getInstance().addPatch();
-                break;
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            else PluginManager.loadPlugin(this); // 加载插件
+
+        }
+        else if (i == R.id.create_bug)
+        {
+            Log.print();
+
+        }
+        else if (i == R.id.fix_bug)
+        {
+            AndFixPatchManager.getInstance().addPatch();
+
         }
     }
     

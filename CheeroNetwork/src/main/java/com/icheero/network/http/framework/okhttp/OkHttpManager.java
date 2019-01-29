@@ -1,10 +1,9 @@
 package com.icheero.network.http.framework.okhttp;
 
-import androidx.annotation.NonNull;
-
 import com.icheero.network.http.HttpSecure;
 import com.icheero.network.listener.IDownloadListener;
-import com.icheero.util.IOManager;
+import com.icheero.util.Common;
+import com.icheero.util.FileUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.NonNull;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -123,7 +123,7 @@ public class OkHttpManager
                     listener.onFailure(response.code(), response.message());
                 else
                 {
-                    File file = IOManager.getInstance().getCacheFileByName(request.url().toString());
+                    File file = FileUtils.createFile(FileUtils.DIR_PATH_CHEERO_CACHE + Common.md5(request.url().toString()));
                     byte[] buffer = new byte[500 * 1024];
                     int len;
                     int progress = 0;

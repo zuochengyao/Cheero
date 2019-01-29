@@ -11,7 +11,7 @@ import com.icheero.network.listener.IResponseListener;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.api.CheeroApi;
 import com.icheero.sdk.core.api.FaceIDApi;
-import com.icheero.util.IOManager;
+import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.util.Log;
 
 import java.io.File;

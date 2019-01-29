@@ -1,7 +1,5 @@
 package com.icheero.sdk.core.manager;
 
-import androidx.annotation.NonNull;
-
 import com.icheero.database.DBHelper;
 import com.icheero.database.entity.Download;
 import com.icheero.network.download.DownloadConfig;
@@ -16,7 +14,6 @@ import com.icheero.network.listener.IDownloadListener;
 import com.icheero.network.listener.IResponseListener;
 import com.icheero.util.Common;
 import com.icheero.util.FileUtils;
-import com.icheero.util.IOManager;
 import com.icheero.util.Log;
 
 import java.io.IOException;
@@ -28,6 +25,8 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import androidx.annotation.NonNull;
 
 public class DownloadManager
 {
@@ -132,7 +131,7 @@ public class DownloadManager
             long start;
             long end;
             // 如果文件存在，则继续下载
-            if (FileUtils.exists(IOManager.DIR_PATH_CHEERO_CACHE + Common.md5(url)))
+            if (FileUtils.exists(FileUtils.DIR_PATH_CHEERO_CACHE + Common.md5(url)))
             {
                 start = entity.getStart() + entity.getProgress();
                 end = entity.getEnd();
