@@ -32,6 +32,7 @@ dep_version.stetho = "1.5.0"
 dep_version.httpmime = "4.3.6"
 dep_version.httpandroid = "4.3.5.1"
 dep_version.tinker = "1.9.1"
+dep_version.tinker_patch = "1.2.11"
 
 def retrofit = [:]
 retrofit.runtime = "com.squareup.retrofit2:retrofit:$dep_version.retrofit"
@@ -89,11 +90,21 @@ deps.andfix = "com.alipay.euler:andfix:$dep_version.andfix"
 deps.stetho = "com.facebook.stetho:stetho:$dep_version.stetho"
 deps.faceid_api = "com.megvii.api:faceid:$dep_version.faceid_api"
 
+def sign_release = [:]
+sign_release.alias = "icheero"
+sign_release.password = "654321"
+sign_release.filepath = project.rootDir.absolutePath + "/cheero_key.jks"
+sign_release.store = "123456"
+
+def sign_debug = [:]
+sign_debug.alias = "androiddebugkey"
+sign_debug.password = "android"
+sign_debug.filepath = "/Users/Work/.android/debug.keystore"
+sign_debug.store = "android"
+
 def sign = [:]
-sign.alias = "icheero"
-sign.password = "654321"
-sign.filepath = project.rootDir.absolutePath + "/cheero_key.jks"
-sign.store = "123456"
+sign.debug = sign_debug
+sign.release = sign_release
 
 def static addRepos(RepositoryHandler handler) {
     handler.maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
@@ -104,7 +115,7 @@ def static addRepos(RepositoryHandler handler) {
 }
 
 ext {
-    isLibrary = true
+    isLibrary = false
     versions = [:]
     versions.build = build_version
     versions.deps = deps

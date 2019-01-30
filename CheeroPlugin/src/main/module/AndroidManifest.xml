@@ -26,6 +26,10 @@
         <activity android:name=".activity.LoadPluginActivity"/>
 
         <service android:name=".service.AndFixService"/>
+
+        <meta-data
+            android:name="TINKER_ID"
+            android:value="tinker_id_6235657"/>
     </application>
 
 </manifest>

@@ -14,10 +14,16 @@ android {
     signingConfigs {
         // 打包签名
         release {
-            keyAlias versions.sign.alias
-            keyPassword versions.sign.password
-            storeFile file(versions.sign.filepath)
-            storePassword versions.sign.store
+            keyAlias versions.sign.release.alias
+            keyPassword versions.sign.release.password
+            storeFile file(versions.sign.release.filepath)
+            storePassword versions.sign.release.store
+        }
+        debug {
+            keyAlias versions.sign.debug.alias
+            keyPassword versions.sign.debug.password
+            storeFile file(versions.sign.debug.filepath)
+            storePassword versions.sign.debug.store
         }
     }
 

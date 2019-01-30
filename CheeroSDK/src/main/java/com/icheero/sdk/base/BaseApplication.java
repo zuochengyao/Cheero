@@ -22,13 +22,6 @@ public class BaseApplication extends Application
     private Context mApplicationContext;
 
     @Override
-    protected void attachBaseContext(Context base)
-    {
-        super.attachBaseContext(base);
-        ApplicationManager.getInstance().attachBaseContext(mApplicationContext);
-    }
-
-    @Override
     public void onCreate()
     {
         super.onCreate();
@@ -65,7 +58,6 @@ public class BaseApplication extends Application
         Stetho.initializeWithDefaults(this);
         // 初始化 数据库
         DBHelper.getInstance().init(this);
-        ApplicationManager.getInstance().onCreate(this);
     }
 
     @Override

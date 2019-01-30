@@ -2,7 +2,6 @@ package com.icheero.util;
 
 /**
  * Created by zuochengyao on 2018/3/1.
- *
  * 日志输出管理类
  */
 @SuppressWarnings("unused")
@@ -50,8 +49,8 @@ public class Log
 
     public static void print()
     {
-        String error = null;
-        // android.util.Log.e("Cheero", error);
+        String error = "FixBug";
+        android.util.Log.e("Cheero", error);
     }
 
     private static native void nativeSetTraceMode(int traceMode);

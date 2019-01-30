@@ -47,5 +47,5 @@ dependencies {
     implementation project(':CheeroUtil')
     // greendao
     api versions.deps.greendao.impl
-    implementation versions.deps.greendao.generator
+    compileOnly versions.deps.greendao.generator
 }
