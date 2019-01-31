@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.icheero.plugin.R;
-import com.icheero.plugin.framework.AndFixPatchManager;
+import com.icheero.plugin.framework.andfix.AndFixPatchManager;
 import com.icheero.plugin.framework.PluginManager;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.util.Log;

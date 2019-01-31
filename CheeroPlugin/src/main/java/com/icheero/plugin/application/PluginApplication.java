@@ -3,7 +3,7 @@ package com.icheero.plugin.application;
 import android.app.Application;
 import android.content.Context;
 
-import com.icheero.plugin.framework.AndFixPatchManager;
+import com.icheero.plugin.framework.andfix.AndFixPatchManager;
 import com.icheero.sdk.core.listener.IAppInitListener;
 import com.icheero.sdk.core.listener.IAppLifeListener;
 

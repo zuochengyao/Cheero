@@ -5,7 +5,7 @@
     <application>
         <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.LoadPluginActivity"/>
-        <service android:name=".service.AndFixService"/>
+        <service android:name=".framework.andfix.AndFixService"/>
 
         <meta-data
             android:name="com.icheero.plugin.application.PluginApplication"

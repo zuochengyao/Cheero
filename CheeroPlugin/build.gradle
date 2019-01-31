@@ -3,7 +3,6 @@ if (isLibrary) {
 } else {
     apply plugin: 'com.android.application'
 }
-apply plugin: 'com.tencent.tinker.patch'
 
 android {
     compileSdkVersion versions.build.compile_sdk
@@ -18,7 +17,8 @@ android {
         versionName versions.build.name
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ AROUTER_MODULE_NAME : project.getName() ]
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+                includeCompileClasspath true
             }
         }
     }
@@ -89,7 +89,9 @@ dependencies {
     implementation versions.deps.andfix
     // Tencent Tinker
     // 生成Application时使用
-    compileOnly versions.deps.tinker.anno
+    compileOnly(versions.deps.tinker.anno)
     // 核心sdk库
     implementation versions.deps.tinker.lib
 }
+
+apply from: 'tinker.gradle'

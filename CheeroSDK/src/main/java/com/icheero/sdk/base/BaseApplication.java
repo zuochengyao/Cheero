@@ -15,11 +15,21 @@ import com.icheero.sdk.core.manager.HttpManager;
 import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.util.Log;
 
+import androidx.multidex.MultiDex;
+
 public class BaseApplication extends Application
 {
     private static final Class TAG = BaseApplication.class;
     private static BaseApplication mInstance;
     private Context mApplicationContext;
+
+    @Override
+    protected void attachBaseContext(Context base)
+    {
+        super.attachBaseContext(base);
+        Log.i(TAG, "attachBaseContext");
+        MultiDex.install(base);
+    }
 
     @Override
     public void onCreate()
@@ -28,7 +38,7 @@ public class BaseApplication extends Application
         mInstance = this;
         mApplicationContext = mInstance.getApplicationContext();
         Log.traceMode(Log.TRACE_MODE_ON_SCREEN);
-        Log.i(TAG, "Application OnCreate");
+        Log.i(TAG, "onCreate");
         // 初始化 IO管理器
         IOManager.getInstance();
         // 初始化 网络请求
@@ -64,7 +74,7 @@ public class BaseApplication extends Application
     public void onTerminate()
     {
         super.onTerminate();
-        Log.i(TAG, "Application onTerminate");
+        Log.i(TAG, "onTerminate");
         ApplicationManager.getInstance().onTerminate(this);
         mInstance = null;
     }

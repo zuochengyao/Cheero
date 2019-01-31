@@ -9,6 +9,7 @@ android {
         targetSdkVersion versions.build.target_sdk
         versionCode versions.build.code
         versionName versions.build.name
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -51,10 +52,13 @@ dependencies {
     api versions.deps.retrofit.runtime
     api versions.deps.retrofit.adapter
     api versions.deps.retrofit.converter_gson
+    // multidex
+    api versions.deps.multidex
     // facebook stetho
     implementation versions.deps.stetho
     // Gson
     api versions.deps.gson
     // other
     testImplementation versions.deps.junit
+
 }

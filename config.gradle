@@ -33,6 +33,7 @@ dep_version.httpmime = "4.3.6"
 dep_version.httpandroid = "4.3.5.1"
 dep_version.tinker = "1.9.1"
 dep_version.tinker_patch = "1.2.11"
+dep_version.multidex = "1.0.3"
 
 def retrofit = [:]
 retrofit.runtime = "com.squareup.retrofit2:retrofit:$dep_version.retrofit"
@@ -66,9 +67,9 @@ apache.httpmime = "org.apache.httpcomponents:httpmime:$dep_version.httpmime"
 apache.httpandroid = "org.apache.httpcomponents:httpclient-android:$dep_version.httpandroid"
 
 def tinker = [:]
-tinker.classpath = "com.tencent.tinker:tinker-patch-gradle-plugin:$dep_version.tinker"
+tinker.classpath = "com.tinkerpatch.sdk:tinkerpatch-gradle-plugin:$dep_version.tinker_patch"
 tinker.anno = "com.tencent.tinker:tinker-android-anno:$dep_version.tinker"
-tinker.lib = "com.tencent.tinker:tinker-android-lib:$dep_version.tinker"
+tinker.lib = "com.tinkerpatch.sdk:tinkerpatch-android-sdk:$dep_version.tinker_patch"
 
 def deps = [:]
 deps.retrofit = retrofit
@@ -88,6 +89,7 @@ deps.arouter_api = "com.alibaba:arouter-api:$dep_version.arouter_api"
 deps.arouter_compiler = "com.alibaba:arouter-compiler:$dep_version.arouter_compiler"
 deps.andfix = "com.alipay.euler:andfix:$dep_version.andfix"
 deps.stetho = "com.facebook.stetho:stetho:$dep_version.stetho"
+deps.multidex = "com.android.support:multidex:$dep_version.multidex"
 deps.faceid_api = "com.megvii.api:faceid:$dep_version.faceid_api"
 
 def sign_release = [:]

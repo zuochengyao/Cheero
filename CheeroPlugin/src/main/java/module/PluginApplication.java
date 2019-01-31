@@ -1,6 +1,6 @@
 package module;
 
-import com.icheero.plugin.framework.AndFixPatchManager;
+import com.icheero.plugin.framework.andfix.AndFixPatchManager;
 import com.icheero.sdk.base.BaseApplication;
 
 public class PluginApplication extends BaseApplication

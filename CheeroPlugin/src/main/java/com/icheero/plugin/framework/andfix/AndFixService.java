@@ -1,4 +1,4 @@
-package com.icheero.plugin.service;
+package com.icheero.plugin.framework.andfix;
 
 import android.app.Service;
 import android.content.Intent;
