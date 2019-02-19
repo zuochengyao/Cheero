@@ -21,22 +21,21 @@ android {
                 includeCompileClasspath true
             }
         }
+        // resourcePrefix "cheero_plugin_"
     }
 
-    if (!isLibrary) {
-        signingConfigs {
-            release {
-                keyAlias versions.sign.release.alias
-                keyPassword versions.sign.release.password
-                storeFile file(versions.sign.release.filepath)
-                storePassword versions.sign.release.store
-            }
-            debug {
-                keyAlias versions.sign.debug.alias
-                keyPassword versions.sign.debug.password
-                storeFile file(versions.sign.debug.filepath)
-                storePassword versions.sign.debug.store
-            }
+    signingConfigs {
+        release {
+            keyAlias versions.sign.release.alias
+            keyPassword versions.sign.release.password
+            storeFile file(versions.sign.release.filepath)
+            storePassword versions.sign.release.store
+        }
+        debug {
+            keyAlias versions.sign.debug.alias
+            keyPassword versions.sign.debug.password
+            storeFile file(versions.sign.debug.filepath)
+            storePassword versions.sign.debug.store
         }
     }
 
@@ -84,6 +83,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':CheeroSDK')
+    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     annotationProcessor versions.deps.arouter_compiler
     // Alibaba Andfix
     implementation versions.deps.andfix
@@ -95,3 +96,7 @@ dependencies {
 }
 
 apply from: 'tinker.gradle'
+
+repositories {
+    google()
+}

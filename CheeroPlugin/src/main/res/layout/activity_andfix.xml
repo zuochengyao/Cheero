@@ -1,27 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/to_custom"
+        android:id="@+id/create_bug"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cheero_plugin_to_custom"/>
+        android:text="CreateBug"/>
 
     <Button
-        android:id="@+id/to_andfix"
+        android:id="@+id/fix_bug"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cheero_plugin_to_andfix"/>
-
-    <Button
-        android:id="@+id/to_tinker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/cheero_plugin_to_tinker"/>
+        android:text="FixBug"/>
 
 </LinearLayout>

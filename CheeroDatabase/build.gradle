@@ -49,3 +49,7 @@ dependencies {
     api versions.deps.greendao.impl
     compileOnly versions.deps.greendao.generator
 }
+
+repositories {
+    google()
+}

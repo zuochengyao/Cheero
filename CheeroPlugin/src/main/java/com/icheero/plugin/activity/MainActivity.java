@@ -1,73 +1,51 @@
 package com.icheero.plugin.activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.Button;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.icheero.plugin.R;
-import com.icheero.plugin.framework.andfix.AndFixPatchManager;
 import com.icheero.sdk.base.BaseActivity;
-import com.icheero.sdk.core.manager.IOManager;
-import com.icheero.util.Common;
-import com.icheero.util.Log;
 
-public class MainActivity extends BaseActivity
+@Route(path = "/plugin/Main")
+public class MainActivity extends BaseActivity implements View.OnClickListener
 {
-    private static final Class TAG = MainActivity.class;
+    private Button mToCustom;
+    private Button mToAndFix;
+    private Button mToTinker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (!mPermissionManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            mPermissionManager.permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        else
-            IOManager.getInstance().createRootFolder();
-        findViewById(R.id.click_me).setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, LoadPluginActivity.class));
-            initClassLoader();
-        });
-        findViewById(R.id.create_bug).setOnClickListener(v -> createBug());
-        findViewById(R.id.fix_bug).setOnClickListener(v -> fixBug());
+        doInitView();
     }
 
-    private void initClassLoader()
+    private void doInitView()
     {
-        ClassLoader classLoader = getClassLoader();
-        if (classLoader != null)
-        {
-            Log.i(TAG, "ClassLoader: " + classLoader.toString());
-            while (classLoader.getParent() != null)
-            {
-                classLoader = classLoader.getParent();
-                Log.i(TAG, "ParentClassLoader: " + classLoader.toString());
-            }
-        }
-    }
+        mToCustom = $(R.id.to_custom);
+        mToAndFix = $(R.id.to_andfix);
+        mToTinker = $(R.id.to_tinker);
 
-    private void createBug()
-    {
-        // adb push /usr/local/apkpatch-1.0.3/outputs/cheero.apatch /storage/emulated/0/Cheero/patches
-        Log.print();
-    }
-
-    private void fixBug()
-    {
-        AndFixPatchManager.getInstance().addPatch();
+        mToCustom.setOnClickListener(this);
+        mToAndFix.setOnClickListener(this);
+        mToTinker.setOnClickListener(this);
     }
 
     @Override
-    public void onPermissionRequest(boolean isGranted, String permission)
+    public void onClick(View v)
     {
-        super.onPermissionRequest(isGranted, permission);
-        if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-        {
-            if (isGranted)
-                IOManager.getInstance().createRootFolder();
-            else
-                Common.toast(this, "请打开读写权限！", Toast.LENGTH_SHORT);
-        }
+        int id = v.getId();
+        Intent intent = null;
+        if (id == R.id.to_custom)
+            intent = new Intent(this, LoadPluginActivity.class);
+        else if (id == R.id.to_andfix)
+            intent = new Intent(this, AndFixActivity.class);
+        else if (id == R.id.to_tinker)
+            intent = new Intent(this, TinkerActivity.class);
+        startActivity(intent);
     }
 }

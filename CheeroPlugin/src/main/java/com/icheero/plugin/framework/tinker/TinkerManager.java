@@ -46,9 +46,12 @@ public class TinkerManager
         isInstalled = true;
     }
 
+    /**
+     * 加载patch文件
+     */
     public void loadPatch(String path)
     {
         if (Tinker.isTinkerInstalled())
-            TinkerInstaller.onReceiveUpgradePatch(mContext, path);
+            TinkerInstaller.onReceiveUpgradePatch(mContext, path.concat("cheero").concat(".apk"));
     }
 }

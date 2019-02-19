@@ -8,26 +8,19 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.icheero.plugin.R;
-import com.icheero.plugin.framework.andfix.AndFixPatchManager;
 import com.icheero.plugin.framework.PluginManager;
 import com.icheero.sdk.base.BaseActivity;
-import com.icheero.util.Log;
 
 import java.io.File;
 import java.lang.reflect.Field;
 
 import dalvik.system.DexClassLoader;
 
-@Route(path = "/plugin/LoadPlugin")
 public class LoadPluginActivity extends BaseActivity implements View.OnClickListener
 {
-    private static final Class TAG = LoadPluginActivity.class;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -44,9 +37,7 @@ public class LoadPluginActivity extends BaseActivity implements View.OnClickList
     {
         int i = v.getId();
         if (i == R.id.image_volume_bigger)
-        {
             handleAnim(v);
-        }
         else if (i == R.id.image_volume_smaller)
         {
             Drawable background = v.getBackground();
@@ -89,18 +80,8 @@ public class LoadPluginActivity extends BaseActivity implements View.OnClickList
                     e.printStackTrace();
                 }
             }
-            else PluginManager.loadPlugin(this); // 加载插件
-
-        }
-        else if (i == R.id.create_bug)
-        {
-            Log.print();
-
-        }
-        else if (i == R.id.fix_bug)
-        {
-            AndFixPatchManager.getInstance().addPatch();
-
+            else
+                PluginManager.loadPlugin(this); // 加载插件
         }
     }
     
@@ -110,10 +91,6 @@ public class LoadPluginActivity extends BaseActivity implements View.OnClickList
         ivVolumeBigger.setOnClickListener(this);
         ImageView ivVolumeSmaller = findViewById(R.id.image_volume_smaller);
         ivVolumeSmaller.setOnClickListener(this);
-        Button btCreateBug = findViewById(R.id.create_bug);
-        btCreateBug.setOnClickListener(this);
-        Button btFixBug = findViewById(R.id.fix_bug);
-        btFixBug.setOnClickListener(this);
     }
 
     private void handleAnim(View v)

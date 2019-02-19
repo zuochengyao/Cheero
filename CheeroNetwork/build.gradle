@@ -54,3 +54,7 @@ dependencies {
     implementation versions.deps.retrofit.adapter
     implementation versions.deps.retrofit.converter_gson
 }
+
+repositories {
+    google()
+}

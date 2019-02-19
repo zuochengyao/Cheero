@@ -62,3 +62,7 @@ dependencies {
     testImplementation versions.deps.junit
 
 }
+
+repositories {
+    google()
+}

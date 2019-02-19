@@ -46,3 +46,7 @@ dependencies {
     api versions.deps.support.v7
     api versions.deps.support.constraint
 }
+
+repositories {
+    google()
+}

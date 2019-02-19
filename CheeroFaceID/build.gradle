@@ -84,3 +84,7 @@ dependencies {
     implementation versions.deps.faceid_api
     annotationProcessor versions.deps.arouter_compiler
 }
+
+repositories {
+    google()
+}

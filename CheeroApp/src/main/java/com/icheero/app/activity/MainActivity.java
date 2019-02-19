@@ -239,7 +239,7 @@ public class MainActivity extends BaseActivity
         switch (v.getId())
         {
             case R.id.to_load_plugin_activity:
-                ARouter.getInstance().build("/plugin/LoadPlugin").navigation();
+                ARouter.getInstance().build("/plugin/Main").navigation();
                 break;
         }
     }

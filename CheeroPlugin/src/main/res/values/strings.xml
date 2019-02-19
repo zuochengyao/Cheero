@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">CheeroPlugin</string>
+    <string name="cheero_plugin_app_name">CheeroPlugin</string>
+    <string name="cheero_plugin_to_andfix">跳转到AndFix</string>
+    <string name="cheero_plugin_to_tinker">跳转到Tinker</string>
+    <string name="cheero_plugin_to_custom">跳转到自定义</string>
+    <string name="cheero_plugin_load_tinker_patch">加载Tinker补丁</string>
 </resources>
