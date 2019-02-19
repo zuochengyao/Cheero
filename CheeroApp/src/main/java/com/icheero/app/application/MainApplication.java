@@ -1,10 +1,10 @@
 package com.icheero.app.application;
 
 import android.content.Context;
+import android.content.res.Configuration;
 
 import com.icheero.sdk.base.BaseApplication;
 import com.icheero.sdk.core.manager.ApplicationManager;
-import com.icheero.util.Log;
 
 
 public class MainApplication extends BaseApplication
@@ -24,9 +24,30 @@ public class MainApplication extends BaseApplication
     }
 
     @Override
+    public void onTerminate()
+    {
+        super.onTerminate();
+        ApplicationManager.getInstance().onTerminate(this);
+    }
+
+    @Override
     public void onTrimMemory(int level)
     {
         super.onTrimMemory(level);
-        Log.e(MainApplication.class, "onTrimMemory level：" + level);
+        ApplicationManager.getInstance().onTrimMemory(level);
+    }
+
+    @Override
+    public void onLowMemory()
+    {
+        super.onLowMemory();
+        ApplicationManager.getInstance().onLowMemory();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        ApplicationManager.getInstance().onConfigurationChanged(newConfig);
     }
 }

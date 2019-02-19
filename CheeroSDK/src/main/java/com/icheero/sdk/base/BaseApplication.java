@@ -2,6 +2,7 @@ package com.icheero.sdk.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.android.arouter.utils.PackageUtils;
@@ -77,6 +78,27 @@ public class BaseApplication extends Application
         Log.i(TAG, "onTerminate");
         ApplicationManager.getInstance().onTerminate(this);
         mInstance = null;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        Log.i(TAG, "onConfigurationChanged");
+    }
+
+    @Override
+    public void onTrimMemory(int level)
+    {
+        super.onTrimMemory(level);
+        Log.i(TAG, "onTrimMemory level：" + level);
+    }
+
+    @Override
+    public void onLowMemory()
+    {
+        super.onLowMemory();
+        Log.i(TAG, "onLowMemory");
     }
 
     public static BaseApplication getAppInstance()

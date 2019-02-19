@@ -1,23 +1,22 @@
 package com.icheero.faceid.activity;
 
 import android.os.Bundle;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import android.util.Log;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.icheero.sdk.base.BaseActivity;
-import com.icheero.sdk.base.BaseFragment;
-import com.icheero.sdk.core.manager.ViewManager;
-import com.icheero.sdk.widget.NoScrollViewPager;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.icheero.faceid.R;
 import com.icheero.faceid.adapter.FragmentAdapter;
 import com.icheero.faceid.fragment.IDCardFragment;
 import com.icheero.faceid.fragment.LiteFragment;
 import com.icheero.faceid.fragment.MegLiveFragment;
 import com.icheero.faceid.listener.OnFragmentListener;
+import com.icheero.sdk.base.BaseActivity;
+import com.icheero.sdk.base.BaseFragment;
+import com.icheero.sdk.core.manager.ViewManager;
+import com.icheero.sdk.widget.NoScrollViewPager;
 import com.megvii.api.FaceIDApi;
 import com.megvii.api.FaceIDApiCallback;
-import com.megvii.api.FaceIDConfig;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,14 +36,6 @@ public class FaceIDActivity extends BaseActivity implements FaceIDApiCallback, O
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faceid);
-        FaceIDConfig config = new FaceIDConfig.Builder()
-                .setApiKey("56ymDEP38_Z1uwDoyRSUEUr_ukBJfEzG")
-                .setApiSecret("Lmy0aNaQ2fXg_ZaliQtvhjcPrgmxGq5y")
-                .setConnectTimeout(20)
-                .setReadTimeout(30)
-                .setWriteTimeout(30)
-                .build();
-        FaceIDApi.getInstance().init(config);
         FaceIDApi.getInstance().setFaceIDApiCallback(this);
         doInitView();
     }

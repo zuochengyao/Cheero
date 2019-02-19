@@ -2,6 +2,7 @@ package com.icheero.sdk.core.manager;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
 
 import com.icheero.sdk.core.listener.IAppInitListener;
 import com.icheero.sdk.core.listener.IAppLifeListener;
@@ -42,7 +43,8 @@ public class ApplicationManager implements IAppLifeListener
         // 初始化Manifest文件解析器，用于解析组件在自己的Manifest文件配置的Application
         ManifestParser parser = new ManifestParser(context);
         List<IAppInitListener> appInitListeners = parser.parse();
-        // 解析得到的组件Application列表之后，给每个组件Application注入context，和Application的生命周期的回调，用于实现application的同步
+        // 解析得到的组件Application列表之后，给每个组件Application注入context
+        // 和Application的生命周期的回调，用于实现application的同步
         if (appInitListeners != null && appInitListeners.size() > 0)
         {
             for (IAppInitListener appInit : appInitListeners)
@@ -81,16 +83,42 @@ public class ApplicationManager implements IAppLifeListener
         if (mAppLifeListeners != null && mAppLifeListeners.size() > 0)
         {
             for (IAppLifeListener appLife : mAppLifeListeners)
-            {
                 appLife.onTerminate(application);
-            }
         }
         if (mActivityLifeCallbacks != null && mActivityLifeCallbacks.size() > 0)
         {
             for (Application.ActivityLifecycleCallbacks life : mActivityLifeCallbacks)
-            {
                 application.unregisterActivityLifecycleCallbacks(life);
-            }
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        if (mAppLifeListeners != null && mAppLifeListeners.size() > 0)
+        {
+            for (IAppLifeListener appLife : mAppLifeListeners)
+                appLife.onConfigurationChanged(newConfig);
+        }
+    }
+
+    @Override
+    public void onTrimMemory(int level)
+    {
+        if (mAppLifeListeners != null && mAppLifeListeners.size() > 0)
+        {
+            for (IAppLifeListener appLife : mAppLifeListeners)
+                appLife.onTrimMemory(level);
+        }
+    }
+
+    @Override
+    public void onLowMemory()
+    {
+        if (mAppLifeListeners != null && mAppLifeListeners.size() > 0)
+        {
+            for (IAppLifeListener appLife : mAppLifeListeners)
+                appLife.onLowMemory();
         }
     }
 }

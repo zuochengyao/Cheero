@@ -1,8 +1,6 @@
 package com.icheero.sdk.base;
 
 import android.os.Bundle;
-import androidx.annotation.IdRes;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 import com.icheero.sdk.core.manager.PermissionManager;
@@ -10,6 +8,9 @@ import com.icheero.sdk.core.manager.ViewManager;
 import com.icheero.util.Log;
 
 import java.util.Arrays;
+
+import androidx.annotation.IdRes;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class BaseActivity extends AppCompatActivity implements PermissionManager.PermissionListener
 {
@@ -23,7 +24,6 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
         super.onCreate(savedInstanceState);
         TAG = getClass();
         Log.i(TAG, TAG.getSimpleName() + ": onCreate");
-
         mPermissionManager = new PermissionManager(this);
         ViewManager.getInstance().addActivity(this);
     }

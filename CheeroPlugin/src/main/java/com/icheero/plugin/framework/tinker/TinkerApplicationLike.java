@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
+import com.icheero.plugin.framework.andfix.AndFixPatchManager;
 import com.tencent.tinker.anno.DefaultLifeCycle;
 import com.tencent.tinker.entry.ApplicationLike;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
@@ -11,6 +12,8 @@ import com.tencent.tinker.loader.shareutil.ShareConstants;
 @DefaultLifeCycle(application = ".CheeroTinkerApplication", flags = ShareConstants.TINKER_ENABLE_ALL)
 public class TinkerApplicationLike extends ApplicationLike
 {
+    private Context mContext;
+
     public TinkerApplicationLike(Application application,
                                  int tinkerFlags,
                                  boolean tinkerLoadVerifyFlag,
@@ -24,6 +27,7 @@ public class TinkerApplicationLike extends ApplicationLike
     public void onBaseContextAttached(Context base)
     {
         super.onBaseContextAttached(base);
+        mContext = base;
         TinkerManager.getInstance().init(this);
     }
 
@@ -31,5 +35,6 @@ public class TinkerApplicationLike extends ApplicationLike
     public void onCreate()
     {
         super.onCreate();
+        AndFixPatchManager.getInstance().init(mContext);
     }
 }
