@@ -11,7 +11,7 @@ import com.tencent.tinker.lib.tinker.TinkerInstaller;
  *
  * 封装tinker
  */
-public class TinkerManager
+ public class TinkerManager
 {
     private static boolean isInstalled = false;
 

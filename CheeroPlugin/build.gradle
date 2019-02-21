@@ -43,6 +43,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
         }
     }
 
@@ -83,8 +88,6 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':CheeroSDK')
-    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     annotationProcessor versions.deps.arouter_compiler
     // Alibaba Andfix
     implementation versions.deps.andfix
@@ -97,6 +100,3 @@ dependencies {
 
 apply from: 'tinker.gradle'
 
-repositories {
-    google()
-}

@@ -9,6 +9,8 @@ import com.tencent.tinker.anno.DefaultLifeCycle;
 import com.tencent.tinker.entry.ApplicationLike;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
 
+import androidx.multidex.MultiDex;
+
 @DefaultLifeCycle(application = ".CheeroTinkerApplication", flags = ShareConstants.TINKER_ENABLE_ALL)
 public class TinkerApplicationLike extends ApplicationLike
 {
@@ -28,6 +30,7 @@ public class TinkerApplicationLike extends ApplicationLike
     {
         super.onBaseContextAttached(base);
         mContext = base;
+        MultiDex.install(base);
         TinkerManager.getInstance().init(this);
     }
 

@@ -63,30 +63,40 @@ android {
  * https://github.com/Tencent/tinker/wiki/Tinker-%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97
  */
 tinkerPatch {
+    oldApk = "${tinkerpatchSupport.baseApkFile}"
     ignoreWarning = false
     useSign = true
+
     dex {
         dexMode = "jar"
-        pattern = ["classes*.dex"]
-        loader = []
+        pattern = ["classes*.dex", "assets/secondary-dex-?.jar"] // 指定dex文件目录
+        loader = ["com.icheero.plugin.framework.tinker.CheeroTinkerApplication"] // 指定加载patch文件用到的类
     }
+
     lib {
         pattern = ["lib/*/*.so"]
     }
 
     res {
         pattern = ["res/*", "r/*", "assets/*", "resources.arsc", "AndroidManifest.xml"]
-        ignoreChange = []
-        largeModSize = 100
+        ignoreChange = [] // 指定不受tinker影响的资源路径
+        largeModSize = 100 // 资源修改大小的默认值
     }
 
     packageConfig {
+        configField("patchMessage", "fix the 1.0.2 version's bug")
+        configField("patchVersion", "1.0.2")
     }
+
     sevenZip {
         zipArtifact = "com.tencent.mm:SevenZip:1.1.10"
 //        path = "/usr/local/bin/7za"
     }
+
     buildConfig {
+        applyMapping = "${tinkerpatchSupport.baseProguardMappingFile}" // 指定old apk打包时的混淆文件
+        applyResourceMapping = "${tinkerpatchSupport.baseResourceRFile}" // 指定old apk的资源文件
+        tinkerId = "${tinkerpatchSupport.appVersion}" // 指定TinkerID
         keepDexApply = false
     }
 }

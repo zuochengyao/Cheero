@@ -16,4 +16,12 @@
         android:textSize="24sp"
         android:text="@string/cheero_plugin_load_tinker_patch"/>
 
+    <Button
+        android:id="@+id/test_tinker_patch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="24sp"
+        android:text="@string/cheero_plugin_test_tinker_patch"/>
+
 </LinearLayout>
