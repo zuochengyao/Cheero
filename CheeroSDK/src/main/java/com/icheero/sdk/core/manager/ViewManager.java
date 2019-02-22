@@ -45,6 +45,11 @@ public class ViewManager
         activityStack.remove(activity);
     }
 
+    public int getActivitySize()
+    {
+        return activityStack.size();
+    }
+
     public void addFragment(int index, BaseFragment fragment)
     {
         fragmentList.add(index, fragment);

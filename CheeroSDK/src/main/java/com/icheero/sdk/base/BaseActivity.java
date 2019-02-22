@@ -10,6 +10,7 @@ import com.icheero.util.Log;
 import java.util.Arrays;
 
 import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class BaseActivity extends AppCompatActivity implements PermissionManager.PermissionListener
@@ -26,6 +27,44 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
         Log.i(TAG, TAG.getSimpleName() + ": onCreate");
         mPermissionManager = new PermissionManager(this);
         ViewManager.getInstance().addActivity(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        Log.i(TAG, TAG.getSimpleName() + ": onSaveInstanceState");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.i(TAG, TAG.getSimpleName() + ": onRestoreInstanceState");
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+    }
+
+    @Override
+    protected void onRestart()
+    {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
     }
 
     @Override
