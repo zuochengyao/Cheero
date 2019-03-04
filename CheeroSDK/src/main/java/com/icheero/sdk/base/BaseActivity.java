@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.icheero.sdk.core.manager.PermissionManager;
 import com.icheero.sdk.core.manager.ViewManager;
-import com.icheero.util.Log;
+import com.icheero.sdk.util.Log;
 
 import java.util.Arrays;
 

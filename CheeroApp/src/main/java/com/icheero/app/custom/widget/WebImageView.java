@@ -6,13 +6,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
-import com.icheero.network.http.framework.okhttp.OkHttpManager;
+import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpManager;
 
 import java.io.IOException;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 
 
 /**

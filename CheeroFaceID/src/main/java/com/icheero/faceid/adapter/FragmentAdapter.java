@@ -1,14 +1,14 @@
 package com.icheero.faceid.adapter;
 
+import com.icheero.sdk.base.BaseFragment;
+
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
-
-import com.icheero.sdk.base.BaseFragment;
-
-import java.util.List;
 
 public class FragmentAdapter extends FragmentStatePagerAdapter
 {

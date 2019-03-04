@@ -3,10 +3,11 @@ package com.icheero.app.activity.data;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import androidx.annotation.Nullable;
 
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
+
+import androidx.annotation.Nullable;
 
 public class CustomSettingActivity extends BaseActivity
 {

@@ -2,13 +2,14 @@ package com.icheero.faceid.fragment;
 
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.icheero.sdk.base.BaseFragment;
 import com.icheero.faceid.R;
+import com.icheero.sdk.base.BaseFragment;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -5,10 +5,10 @@ import android.widget.ProgressBar;
 
 import com.icheero.app.R;
 import com.icheero.app.custom.widget.WebImageView;
-import com.icheero.util.Log;
-import com.icheero.network.listener.IDownloadListener;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.DownloadManager;
+import com.icheero.sdk.core.network.listener.IDownloadListener;
+import com.icheero.sdk.util.Log;
 
 import java.io.File;
 

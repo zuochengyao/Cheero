@@ -8,8 +8,9 @@ import com.icheero.plugin.R;
 import com.icheero.plugin.framework.andfix.AndFixPatchManager;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.IOManager;
-import com.icheero.util.Common;
-import com.icheero.util.Log;
+import com.icheero.sdk.util.Common;
+import com.icheero.sdk.util.Log;
+
 
 public class AndFixActivity extends BaseActivity
 {

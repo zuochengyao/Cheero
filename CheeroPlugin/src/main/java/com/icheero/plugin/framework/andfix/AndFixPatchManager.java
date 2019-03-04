@@ -3,8 +3,9 @@ package com.icheero.plugin.framework.andfix;
 import android.content.Context;
 
 import com.alipay.euler.andfix.patch.PatchManager;
-import com.icheero.util.Common;
-import com.icheero.util.FileUtils;
+import com.icheero.sdk.util.Common;
+import com.icheero.sdk.util.FileUtils;
+
 
 /**
  * @author 左程耀 2018年11月05日

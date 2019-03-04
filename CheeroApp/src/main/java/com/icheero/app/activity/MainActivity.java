@@ -33,8 +33,8 @@ import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.IOManager;
-import com.icheero.util.Common;
-import com.icheero.util.Log;
+import com.icheero.sdk.util.Common;
+import com.icheero.sdk.util.Log;
 
 import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
@@ -251,7 +251,7 @@ public class MainActivity extends BaseActivity
         {
             case R.id.to_faceid_activity:
                 // startActivity(new Intent(this, FaceIDActivity.class));
-                // ARouter.getInstance().build("/faceid/index").navigation();
+                ARouter.getInstance().build("/faceid/index").navigation();
                 Log.e(MainActivity.class, "test");
                 break;
         }

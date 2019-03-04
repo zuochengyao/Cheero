@@ -6,7 +6,6 @@ import android.content.res.Configuration;
 
 import com.icheero.sdk.core.listener.IAppInitListener;
 import com.icheero.sdk.core.listener.IAppLifeListener;
-import com.icheero.sdk.util.ManifestParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +40,7 @@ public class ApplicationManager implements IAppLifeListener
     public void attachBaseContext(Context context)
     {
         // 初始化Manifest文件解析器，用于解析组件在自己的Manifest文件配置的Application
-        ManifestParser parser = new ManifestParser(context);
+        ManifestManager parser = new ManifestManager(context);
         List<IAppInitListener> appInitListeners = parser.parse();
         // 解析得到的组件Application列表之后，给每个组件Application注入context
         // 和Application的生命周期的回调，用于实现application的同步

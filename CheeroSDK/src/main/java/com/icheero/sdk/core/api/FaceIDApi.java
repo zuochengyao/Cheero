@@ -1,13 +1,13 @@
 package com.icheero.sdk.core.api;
 
-import com.icheero.network.http.HttpApi;
-import com.icheero.network.http.HttpRequest;
-import com.icheero.network.http.HttpResponse;
-import com.icheero.network.http.encapsulation.HttpMethod;
-import com.icheero.network.http.implement.convert.JsonConvert;
-import com.icheero.network.http.implement.entity.MultipartEntity;
-import com.icheero.network.listener.IResponseListener;
 import com.icheero.sdk.core.manager.HttpManager;
+import com.icheero.sdk.core.network.http.HttpApi;
+import com.icheero.sdk.core.network.http.HttpRequest;
+import com.icheero.sdk.core.network.http.HttpResponse;
+import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
+import com.icheero.sdk.core.network.http.implement.convert.JsonConvert;
+import com.icheero.sdk.core.network.http.implement.entity.MultipartEntity;
+import com.icheero.sdk.core.network.listener.IResponseListener;
 
 import java.io.File;
 

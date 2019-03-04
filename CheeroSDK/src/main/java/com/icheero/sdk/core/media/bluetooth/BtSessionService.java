@@ -2,7 +2,7 @@ package com.icheero.sdk.core.media.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 
-import com.icheero.util.Log;
+import com.icheero.sdk.util.Log;
 
 import java.util.UUID;
 import java.util.logging.Handler;

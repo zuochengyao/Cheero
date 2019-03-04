@@ -6,9 +6,9 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 
-import com.icheero.network.listener.IResponseListener;
 import com.icheero.plugin.model.Patch;
 import com.icheero.sdk.core.api.CheeroApi;
+import com.icheero.sdk.core.network.listener.IResponseListener;
 
 import java.lang.ref.WeakReference;
 

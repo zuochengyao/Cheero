@@ -3,9 +3,9 @@ package com.icheero.sdk.core.manager;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 
-import com.icheero.util.Common;
-import com.icheero.util.FileUtils;
-import com.icheero.util.Log;
+import com.icheero.sdk.util.Common;
+import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

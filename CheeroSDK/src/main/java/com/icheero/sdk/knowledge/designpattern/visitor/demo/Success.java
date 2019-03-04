@@ -1,6 +1,6 @@
 package com.icheero.sdk.knowledge.designpattern.visitor.demo;
 
-import com.icheero.util.Log;
+import com.icheero.sdk.util.Log;
 
 public class Success extends Action
 {

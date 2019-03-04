@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.icheero.sdk.base.BaseFragment;
 import com.icheero.faceid.R;
 import com.icheero.faceid.listener.OnFragmentListener;
+import com.icheero.sdk.base.BaseFragment;
 import com.megvii.api.FaceIDApi;
 
 import java.io.File;

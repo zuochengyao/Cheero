@@ -4,7 +4,6 @@
           xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:name=".framework.tinker.CheeroTinkerApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/cheero_plugin_app_name"
@@ -12,8 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.TinkerActivity">
-        </activity>
+
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -23,6 +21,7 @@
         </activity>
         <activity android:name=".activity.LoadPluginActivity"/>
         <activity android:name=".activity.AndFixActivity"/>
+        <activity android:name=".activity.TinkerActivity"/>
 
         <service android:name=".framework.andfix.AndFixService"/>
 

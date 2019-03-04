@@ -1,20 +1,20 @@
 package com.icheero.sdk.core.manager;
 
-import com.icheero.database.DBHelper;
-import com.icheero.database.entity.Download;
-import com.icheero.network.download.DownloadConfig;
-import com.icheero.network.download.DownloadRunnable;
-import com.icheero.network.download.DownloadTask;
-import com.icheero.network.http.HttpRequest;
-import com.icheero.network.http.HttpRequestProvider;
-import com.icheero.network.http.HttpResponse;
-import com.icheero.network.http.encapsulation.HttpMethod;
-import com.icheero.network.http.encapsulation.HttpStatus;
-import com.icheero.network.listener.IDownloadListener;
-import com.icheero.network.listener.IResponseListener;
-import com.icheero.util.Common;
-import com.icheero.util.FileUtils;
-import com.icheero.util.Log;
+import com.icheero.sdk.core.database.DBHelper;
+import com.icheero.sdk.core.database.entity.Download;
+import com.icheero.sdk.core.network.download.DownloadConfig;
+import com.icheero.sdk.core.network.download.DownloadRunnable;
+import com.icheero.sdk.core.network.download.DownloadTask;
+import com.icheero.sdk.core.network.http.HttpRequest;
+import com.icheero.sdk.core.network.http.HttpRequestProvider;
+import com.icheero.sdk.core.network.http.HttpResponse;
+import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
+import com.icheero.sdk.core.network.http.encapsulation.HttpStatus;
+import com.icheero.sdk.core.network.listener.IDownloadListener;
+import com.icheero.sdk.core.network.listener.IResponseListener;
+import com.icheero.sdk.util.Common;
+import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;

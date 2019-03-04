@@ -1,10 +1,11 @@
 package com.icheero.app.activity.ui;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.transition.Explode;
 
 import com.icheero.app.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class StyledActivity extends AppCompatActivity
 {

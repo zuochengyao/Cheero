@@ -6,7 +6,8 @@ import android.view.View;
 import com.icheero.plugin.R;
 import com.icheero.plugin.framework.tinker.TinkerManager;
 import com.icheero.sdk.base.BaseActivity;
-import com.icheero.util.FileUtils;
+import com.icheero.sdk.util.FileUtils;
+
 
 public class TinkerActivity extends BaseActivity
 {

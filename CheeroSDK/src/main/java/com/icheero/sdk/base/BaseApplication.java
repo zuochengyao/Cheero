@@ -7,14 +7,14 @@ import android.content.res.Configuration;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.android.arouter.utils.PackageUtils;
 import com.facebook.stetho.Stetho;
-import com.icheero.database.DBHelper;
-import com.icheero.network.download.DownloadConfig;
-import com.icheero.network.http.HttpConfig;
+import com.icheero.sdk.core.database.DBHelper;
 import com.icheero.sdk.core.manager.ApplicationManager;
 import com.icheero.sdk.core.manager.DownloadManager;
 import com.icheero.sdk.core.manager.HttpManager;
 import com.icheero.sdk.core.manager.IOManager;
-import com.icheero.util.Log;
+import com.icheero.sdk.core.network.download.DownloadConfig;
+import com.icheero.sdk.core.network.http.HttpConfig;
+import com.icheero.sdk.util.Log;
 
 import androidx.multidex.MultiDex;
 

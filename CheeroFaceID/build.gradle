@@ -18,6 +18,7 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
+                includeCompileClasspath true
             }
         }
     }
@@ -55,16 +56,25 @@ android {
                 manifest.srcFile 'src/main/AndroidManifest.xml'
                 // 集成开发模式下排除application文件夹中的所有Java文件
                 java {
-                    exclude 'application/**'
+                    exclude 'module/**'
                 }
             } else {
                 manifest.srcFile 'src/main/module/AndroidManifest.xml'
+                java {
+                    exclude 'com.icheero.faceid.application/**'
+                }
             }
         }
     }
 
     lintOptions {
         abortOnError false
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
     }
 
     compileOptions {
@@ -86,8 +96,4 @@ dependencies {
     implementation project(':CheeroSDK')
     implementation versions.deps.faceid_api
     annotationProcessor versions.deps.arouter_compiler
-}
-
-repositories {
-    google()
 }

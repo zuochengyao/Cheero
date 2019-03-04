@@ -11,7 +11,8 @@ import android.telephony.SmsMessage;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.icheero.util.Common;
+import com.icheero.sdk.util.Common;
+
 
 /**
  * 短信接收器

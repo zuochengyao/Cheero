@@ -6,7 +6,7 @@ import android.content.res.Configuration;
 
 import com.icheero.sdk.core.listener.IAppInitListener;
 import com.icheero.sdk.core.listener.IAppLifeListener;
-import com.icheero.util.Log;
+import com.icheero.sdk.util.Log;
 
 import java.util.List;
 

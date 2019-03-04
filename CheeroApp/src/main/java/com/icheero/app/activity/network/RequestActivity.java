@@ -7,12 +7,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.icheero.app.R;
-import com.icheero.network.listener.IResponseListener;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.api.CheeroApi;
 import com.icheero.sdk.core.api.FaceIDApi;
 import com.icheero.sdk.core.manager.IOManager;
-import com.icheero.util.Log;
+import com.icheero.sdk.core.network.listener.IResponseListener;
+import com.icheero.sdk.util.Log;
 
 import java.io.File;
 
