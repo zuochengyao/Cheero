@@ -64,6 +64,8 @@ android {
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     implementation versions.deps.butterknife.runtime
+    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     annotationProcessor versions.deps.butterknife.compiler
     if (isLibrary) {
         implementation project(':CheeroPlugin')

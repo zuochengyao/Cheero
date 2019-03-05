@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.MainActivity"
-    tools:showIn="@layout/activity_faceid">
+    tools:ignore="HardcodedText">
 
     <HorizontalScrollView
+        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scrollbars="none">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -76,7 +75,7 @@
         android:scrollbars="none">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -118,7 +117,7 @@
         android:scrollbars="none">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -137,7 +136,7 @@
         android:scrollbars="none">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -168,24 +167,18 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <HorizontalScrollView
+    <Button
+        android:id="@+id/to_jni_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scrollbars="none">
+        android:text="JniActivity"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <Button
+        android:id="@+id/to_load_plugin_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LoadPluginActivity"/>
 
-            <Button
-                android:id="@+id/to_load_plugin_activity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="LoadPluginActivity"/>
-
-        </LinearLayout>
-    </HorizontalScrollView>
 
     <Button
         android:id="@+id/to_faceid_activity"

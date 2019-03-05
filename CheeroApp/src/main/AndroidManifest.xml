@@ -16,7 +16,6 @@
         <!-- region Activities -->
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/cheero_app_title_activity_main"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -45,8 +44,8 @@
         <activity android:name=".activity.data.ViewModelActivity"/>
         <activity android:name=".activity.network.RetrofitActivity"/>
         <activity android:name=".activity.network.RequestActivity"/>
+        <activity android:name=".activity.jni.JniActivity"/>
         <!-- endregion -->
-
         <!-- region Services -->
         <service
             android:name=".service.CheeroService"
@@ -56,7 +55,6 @@
                 <action android:name="com.icheero.app.service.CheeroService"/>
             </intent-filter>
         </service>
-        <!-- endregion -->
     </application>
 
 </manifest>

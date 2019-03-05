@@ -1,5 +1,7 @@
 package com.icheero.sdk.util;
 
+import com.icheero.sdk.base.CheeroEngine;
+
 /**
  * Created by zuochengyao on 2018/3/1.
  * 日志输出管理类
@@ -38,27 +40,23 @@ public class Log
 
     public static void traceMode(int mode)
     {
-        nativeSetTraceMode(mode);
+        CheeroEngine.nativeSetTraceMode(mode);
+    }
+
+    public static void traceFilePath(String filePath)
+    {
+        CheeroEngine.nativeSetTraceFilePath(filePath);
     }
 
     private static void trace(Class<?> cls, String log, int prio)
     {
         log += "\n";
-        nativeTrace(cls.getName(), log, prio);
+        CheeroEngine.nativeTrace(cls.getName(), log, prio);
     }
 
     public static void print()
     {
         String error = "FixBug";
         android.util.Log.e("Cheero", error);
-    }
-
-    private static native void nativeSetTraceMode(int traceMode);
-
-    private static native void nativeTrace(String tag, String log, int prio);
-
-    static
-    {
-        System.loadLibrary("cheero-1.0.0");
     }
 }

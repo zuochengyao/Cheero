@@ -17,6 +17,7 @@ import com.icheero.app.activity.data.CustomSettingActivity;
 import com.icheero.app.activity.data.DatabaseActivity;
 import com.icheero.app.activity.data.SystemSettingActivity;
 import com.icheero.app.activity.data.ViewModelActivity;
+import com.icheero.app.activity.jni.JniActivity;
 import com.icheero.app.activity.media.CameraActivity;
 import com.icheero.app.activity.network.DownloadActivity;
 import com.icheero.app.activity.network.ImageDownloadActivity;
@@ -34,7 +35,6 @@ import com.icheero.app.activity.ui.touch.PanScrollActivity;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.util.Common;
-import com.icheero.sdk.util.Log;
 
 import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
@@ -79,6 +79,8 @@ public class MainActivity extends BaseActivity
     Button toDatabaseActivity;
     @BindView(R.id.to_view_model_activity)
     Button toViewModelActivity;
+    @BindView(R.id.to_jni_activity)
+    Button toJniActivity;
     @BindView(R.id.to_load_plugin_activity)
     Button toLoadPluginActivity;
     @BindView(R.id.to_faceid_activity)
@@ -233,28 +235,23 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @OnClick({R.id.to_load_plugin_activity})
-    public void OnPluginClickEvent(View v)
+    @OnClick(R.id.to_jni_activity)
+    public void OnJniClickEvent()
     {
-        switch (v.getId())
-        {
-            case R.id.to_load_plugin_activity:
-                ARouter.getInstance().build("/plugin/Main").navigation();
-                break;
-        }
+        Intent intent = new Intent(this, JniActivity.class);
+        startActivity(intent);
     }
 
-    @OnClick({R.id.to_faceid_activity})
-    public void OnModuleClickEvent(View v)
+    @OnClick(R.id.to_load_plugin_activity)
+    public void OnPluginClickEvent(View v)
     {
-        switch (v.getId())
-        {
-            case R.id.to_faceid_activity:
-                // startActivity(new Intent(this, FaceIDActivity.class));
-                ARouter.getInstance().build("/faceid/index").navigation();
-                Log.e(MainActivity.class, "test");
-                break;
-        }
+        ARouter.getInstance().build("/plugin/Main").navigation();
+    }
+
+    @OnClick(R.id.to_faceid_activity)
+    public void OnFaceIdClickEvent(View v)
+    {
+        ARouter.getInstance().build("/faceid/index").navigation();
     }
 
     @Override
