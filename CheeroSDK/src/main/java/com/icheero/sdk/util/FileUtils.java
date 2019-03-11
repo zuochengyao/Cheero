@@ -1,5 +1,6 @@
 package com.icheero.sdk.util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -128,11 +129,40 @@ public class FileUtils
     }
 
     /**
+     * 获取raw资源文件数据
+     */
+    public static byte[] readRawResource(Context context, int rid)
+    {
+        InputStream in = context.getResources().openRawResource(rid);
+        return getInputStreamData(in);
+    }
+
+    /**
      * 获取响应InputStream数据
      */
-    public static byte[] getInputStreamData(long contentLength, InputStream body)
+    public static byte[] getInputStreamData(InputStream body, long contentLength)
     {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream((int) contentLength);
+        int length;
+        byte[] data = new byte[1024];
+        try
+        {
+            while ((length = body.read(data)) != -1)
+                outputStream.write(data, 0, length);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return outputStream.toByteArray();
+    }
+
+    /**
+     * 获取响应InputStream数据
+     */
+    public static byte[] getInputStreamData(InputStream body)
+    {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         int length;
         byte[] data = new byte[1024];
         try

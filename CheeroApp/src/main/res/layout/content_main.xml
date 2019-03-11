@@ -167,11 +167,30 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <Button
-        android:id="@+id/to_jni_activity"
+    <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="JniActivity"/>
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/to_jni_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="JniActivity"/>
+
+            <Button
+                android:id="@+id/to_dispose_so_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DisposeSoActivity"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <Button
         android:id="@+id/to_load_plugin_activity"

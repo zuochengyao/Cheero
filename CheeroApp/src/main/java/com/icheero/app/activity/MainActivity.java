@@ -17,7 +17,8 @@ import com.icheero.app.activity.data.CustomSettingActivity;
 import com.icheero.app.activity.data.DatabaseActivity;
 import com.icheero.app.activity.data.SystemSettingActivity;
 import com.icheero.app.activity.data.ViewModelActivity;
-import com.icheero.app.activity.jni.JniActivity;
+import com.icheero.app.activity.reverse.DisposeSoActivity;
+import com.icheero.app.activity.reverse.JniActivity;
 import com.icheero.app.activity.media.CameraActivity;
 import com.icheero.app.activity.network.DownloadActivity;
 import com.icheero.app.activity.network.ImageDownloadActivity;
@@ -81,6 +82,8 @@ public class MainActivity extends BaseActivity
     Button toViewModelActivity;
     @BindView(R.id.to_jni_activity)
     Button toJniActivity;
+    @BindView(R.id.to_dispose_so_activity)
+    Button toDisposeSoActivity;
     @BindView(R.id.to_load_plugin_activity)
     Button toLoadPluginActivity;
     @BindView(R.id.to_faceid_activity)
@@ -235,11 +238,25 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @OnClick(R.id.to_jni_activity)
-    public void OnJniClickEvent()
+    @OnClick({R.id.to_dispose_so_activity, R.id.to_jni_activity})
+    public void OnReverseClickEvent(View v)
     {
-        Intent intent = new Intent(this, JniActivity.class);
-        startActivity(intent);
+        switch (v.getId())
+        {
+            case R.id.to_jni_activity:
+            {
+                Intent intent = new Intent(this, JniActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.to_dispose_so_activity:
+            {
+                Intent intent = new Intent(this, DisposeSoActivity.class);
+                startActivity(intent);
+                break;
+            }
+        }
+
     }
 
     @OnClick(R.id.to_load_plugin_activity)

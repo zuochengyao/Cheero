@@ -8,6 +8,7 @@
 #include <jni.h>
 #include <android/log.h>
 #include <iostream>
+#include <algorithm>
 #include "service_engine.h"
 using namespace std;
 
@@ -71,16 +72,16 @@ JNIEXPORT void JNICALL native_CallJavaMethod(JNIEnv *env, jobject, jobject obj)
     LOGI("summation:%f", numberF);
 }
 
-JNIEXPORT void JNICALL native_CallJavaNonVirtualMethod(JNIEnv *env, jobject obj)
+JNIEXPORT void JNICALL native_CallJavaNonVirtualMethod(JNIEnv *env, jobject, jobject obj)
 {
     // 获取obj中对象的class对象
     jclass jClass = env->GetObjectClass(obj);
     // 获取java中father字段的id
-    jfieldID jFatherID = env->GetFieldID(jClass, "father", "Lcom/icheero/safety/jni/SafetyNative$Father;");
+    jfieldID jFatherID = env->GetFieldID(jClass, "father", "Lcom/icheero/app/activity/jni/JniActivity$Father;");
     // 获取father字段的对象类型
     jobject jFather = env->GetObjectField(obj, jFatherID);
     // 获取father对象的class对象
-    jclass jFatherClass = env->FindClass("com/icheero/safety/jni/SafetyNative$Father");
+    jclass jFatherClass = env->FindClass("com/icheero/app/activity/jni/JniActivity$Father");
     // 获取father对象中的function方法id
     jmethodID jFatherFunction = env->GetMethodID(jFatherClass, "function", "()V");
     // 调用父类方法：会执行子类的方法
@@ -99,7 +100,7 @@ JNIEXPORT void JNICALL native_GetSystemDateTime(JNIEnv *env)
     LOGI("time now is: %ld", time);
 }
 
-JNIEXPORT void JNICALL native_CppString(JNIEnv *env, jobject obj)
+JNIEXPORT void JNICALL native_CppString(JNIEnv *env, jobject, jobject obj)
 {
     jfieldID jMsg = env->GetFieldID(env->GetObjectClass(obj), "msg", "Ljava/lang/String;");
     // 获取属性msg的对象
@@ -123,18 +124,17 @@ JNIEXPORT void JNICALL native_CppString(JNIEnv *env, jobject obj)
     // region 第三种方式
     jsize len = env->GetStringLength(msg);
     jchar *jStr3 = new jchar[len + 1];
-    jStr3[len] = L'\n';
+    jStr3[len] = L'\0';
     env->GetStringRegion(msg, 0, len, jStr3);
     wstring wStr3((const wchar_t *) jStr3);
     delete[] jStr3;
     // endregion
-
-    reverse(wStr.begin(), wStr.end());
+    reverse(wStr.rbegin(), wStr.rend());
     jstring newStr = env->NewString((const jchar *)wStr.c_str(), (jint)wStr.size());
     env->SetObjectField(obj, jMsg, newStr);
 }
 
-JNIEXPORT void JNICALL native_CppArray(JNIEnv *env, jobject obj)
+JNIEXPORT void JNICALL native_CppArray(JNIEnv *env, jobject, jobject obj)
 {
     // Java中的intArrays
     jfieldID jIntArrays = env->GetFieldID(env->GetObjectClass(obj), "intArrays", "[I");
@@ -163,11 +163,11 @@ JNIEXPORT void JNICALL native_CppArray(JNIEnv *env, jobject obj)
 
 static JNINativeMethod methods[] = {
     {"nativeHelloWorld", "()V", (void *) native_HelloWorld},
-    {"nativeCallJavaMethod", "(Landroid/app/Activity;)V", (void *) native_CallJavaMethod},
-    {"nativeCallJavaNonVirtualMethod", "()V", (void *) native_CallJavaNonVirtualMethod},
+    {"nativeCallJavaMethod", "(Ljava/lang/Object;)V", (void *) native_CallJavaMethod},
+    {"nativeCallJavaNonVirtualMethod", "(Ljava/lang/Object;)V", (void *) native_CallJavaNonVirtualMethod},
     {"nativeGetSystemDateTime", "()V", (void *) native_GetSystemDateTime},
-    {"nativeCppString", "()V", (void *) native_CppString},
-    {"nativeCppArray", "()V", (void *) native_CppArray},
+    {"nativeCppString", "(Ljava/lang/Object;)V", (void *) native_CppString},
+    {"nativeCppArray", "(Ljava/lang/Object;)V", (void *) native_CppArray},
     {"nativeSetTraceMode", "(I)V", (void *) native_SetTraceMode},
     {"nativeTrace", "(Ljava/lang/String;Ljava/lang/String;I)V", (void *) native_Trace},
     {"nativeSetTraceFilePath", "(Ljava/lang/String;)V", (void *) native_SetTraceFilePath}

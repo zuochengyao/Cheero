@@ -27,7 +27,7 @@ public abstract class AbstractAsyncHttpCall extends AbstractHttpCall
                     {
                         try
                         {
-                            getListener().onSuccess(response.getHeaders().getContentType(), new String(FileUtils.getInputStreamData(response.getContentLength(), response.getBody())));
+                            getListener().onSuccess(response.getHeaders().getContentType(), new String(FileUtils.getInputStreamData(response.getBody(), response.getContentLength())));
                         }
                         catch (IOException e)
                         {

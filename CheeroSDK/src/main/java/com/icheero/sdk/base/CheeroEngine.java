@@ -1,22 +1,20 @@
 package com.icheero.sdk.base;
 
-import android.app.Activity;
-
 public class CheeroEngine
 {
     private static final Class TAG = CheeroEngine.class;
 
     public static native void nativeHelloWorld();
 
-    public static native void nativeCallJavaMethod(Activity activity);
+    public static native void nativeCallJavaMethod(Object object);
 
-    public static native void nativeCallJavaNonVirtualMethod();
+    public static native void nativeCallJavaNonVirtualMethod(Object object);
 
     public static native void nativeGetSystemDateTime();
 
-    public static native void nativeCppString();
+    public static native void nativeCppString(Object object);
 
-    public static native void nativeCppArray();
+    public static native void nativeCppArray(Object object);
 
     public static native void nativeSetTraceMode(int traceMode);
 

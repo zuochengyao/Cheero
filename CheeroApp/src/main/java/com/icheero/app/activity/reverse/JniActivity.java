@@ -1,4 +1,4 @@
-package com.icheero.app.activity.jni;
+package com.icheero.app.activity.reverse;
 
 import android.os.Bundle;
 import android.view.View;
@@ -31,7 +31,7 @@ public class JniActivity extends BaseActivity
     // endregion
 
     // region 变量
-    public String msg = null;
+    public String msg = "ABCDE";
     public int number = 2;
     private Father father = new Child();
     int[] intArrays = {4, 3, 12, 56, 1, 23, 45, 67};
@@ -63,7 +63,7 @@ public class JniActivity extends BaseActivity
             }
             case R.id.jni_call_java_non_virtual_method:
             {
-                CheeroEngine.nativeCallJavaNonVirtualMethod();
+                CheeroEngine.nativeCallJavaNonVirtualMethod(this);
                 break;
             }
             case R.id.jni_get_system_data_time:
@@ -73,12 +73,13 @@ public class JniActivity extends BaseActivity
             }
             case R.id.jni_cpp_string:
             {
-                CheeroEngine.nativeCppString();
+                CheeroEngine.nativeCppString(this);
+                Log.i(TAG, msg);
                 break;
             }
             case R.id.jni_cpp_array:
             {
-                CheeroEngine.nativeCppArray();
+                CheeroEngine.nativeCppArray(this);
                 break;
             }
         }

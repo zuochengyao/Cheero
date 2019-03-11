@@ -124,4 +124,49 @@ public class Common
         Type type = classObj.getGenericSuperclass();
         return type != null ? ((ParameterizedType) type).getActualTypeArguments()[0] : null;
     }
+
+    /**
+     * 字节数组 转换 十六进制字符串
+     */
+    public static String bytes2HexString(byte[] data)
+    {
+        StringBuilder ret = new StringBuilder();
+        for (byte b : data)
+        {
+            String hex = Integer.toHexString(b & 0xFF);
+            if (hex.length() == 1)
+                hex = '0' + hex;
+            ret.append(hex);
+        }
+        return ret.toString();
+    }
+
+    public static byte[] copyBytes(byte[] res, int start, int count)
+    {
+        if (res == null)
+            return null;
+        byte[] result = new byte[count];
+        System.arraycopy(res, start, result, 0, count);
+        return result;
+    }
+
+    public static byte[] int2Byte(int number)
+    {
+        byte[] data = new byte[4];
+        data[0] = (byte) ((number >> 24) & 0xff);
+        data[1] = (byte) ((number >> 16) & 0xff);
+        data[2] = (byte) ((number >> 8) & 0xff);
+        data[3] = (byte) (number & 0xff);
+        return data;
+    }
+
+    public static int byte2Int(byte[] data)
+    {
+        return data[3] & 0xFF | (data[2] & 0xFF) << 8 | (data[1] & 0xFF) << 16 | (data[0] & 0xFF) << 24;
+    }
+
+    public static short byte2Short(byte[] data)
+    {
+        return (short) (((data[1] & 0xff) << 8) | (data[0] & 0xff));
+    }
 }
