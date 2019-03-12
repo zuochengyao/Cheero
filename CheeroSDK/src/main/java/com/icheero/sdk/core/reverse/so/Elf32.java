@@ -1,17 +1,19 @@
 package com.icheero.sdk.core.reverse.so;
 
 import com.icheero.sdk.util.Common;
+import com.icheero.sdk.util.Log;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Elf32
 {
+    private static final Class TAG = Elf32.class;
+
     public Elf32_Rel rel;
     public Elf32_Rela rela;
-    public List<Elf32_Sym> symList;
     public Elf32_Hdr hdr;
-    public List<Elf32_Phdr> phdrList; // 可能会有多个程序头
+    public ArrayList<Elf32_Sym> symList;
+    public ArrayList<Elf32_Phdr> phdrList; // 可能会有多个程序头
     public ArrayList<Elf32_Shdr> shdrList; // 可能会有多个段头
     public ArrayList<Elf32_Strtb> strtbList; // 可能会有多个字符串值
 
@@ -19,8 +21,8 @@ public class Elf32
     {
         rel = new Elf32_Rel();
         rela = new Elf32_Rela();
-        symList = new ArrayList<>();
         hdr = new Elf32_Hdr();
+        symList = new ArrayList<>();
         phdrList = new ArrayList<>();
         shdrList = new ArrayList<>();
         strtbList = new ArrayList<>();
@@ -64,8 +66,12 @@ public class Elf32
         public String toString()
         {
 
-            return "st_name:" + Common.bytes2HexString(st_name) + "\nst_value:" + Common.bytes2HexString(st_value) + "\nst_size:" + Common.bytes2HexString(st_size) + "\nst_info:" + (st_info / 16) + "\nst_other:" + (((short) st_other) & 0xF) + "\nst_shndx:" + Common
-                    .bytes2HexString(st_shndx);
+            return "st_name:" + Common.bytes2HexString(st_name) +
+                    "\nst_value:" + Common.bytes2HexString(st_value) +
+                    "\nst_size:" + Common.bytes2HexString(st_size) +
+                    "\nst_info:" + (st_info / 16) +
+                    "\nst_other:" + (((short) st_other) & 0xF) +
+                    "\nst_shndx:" + Common.bytes2HexString(st_shndx);
         }
     }
 
@@ -73,9 +79,8 @@ public class Elf32
     {
         for (int i = 0; i < symList.size(); i++)
         {
-            System.out.println();
-            System.out.println("The " + (i + 1) + " Symbol Table:");
-            System.out.println(symList.get(i).toString());
+            Log.i(TAG, "The " + (i + 1) + " Symbol Table:");
+            Log.i(TAG, symList.get(i).toString());
         }
     }
     //Bind字段==》st_info
@@ -157,9 +162,8 @@ public class Elf32
     {
         for (int i = 0; i < phdrList.size(); i++)
         {
-            System.out.println();
-            System.out.println("The " + (i + 1) + " Program Header:");
-            System.out.println(phdrList.get(i).toString());
+            Log.i(TAG, "The " + (i + 1) + " Program Header:");
+            Log.i(TAG, phdrList.get(i).toString());
         }
     }
 
@@ -218,9 +222,8 @@ public class Elf32
     {
         for (int i = 0; i < shdrList.size(); i++)
         {
-            System.out.println();
-            System.out.println("The " + (i + 1) + " Section Header:");
-            System.out.println(shdrList.get(i));
+            Log.i(TAG, "The " + (i + 1) + " Section Header:");
+            Log.i(TAG, shdrList.get(i) + "");
         }
     }
 

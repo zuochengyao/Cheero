@@ -169,4 +169,19 @@ public class Common
     {
         return (short) (((data[1] & 0xff) << 8) | (data[0] & 0xff));
     }
+
+    public static byte[] reverseBytes(byte[] bytes)
+    {
+        if (bytes == null || (bytes.length == 1))
+            return bytes;
+        int offset = bytes.length / 2;
+        // 1 2 3 4 5
+        for (int i = 0; i < offset; i++)
+        {
+            byte tmp = bytes[i];
+            bytes[i] = bytes[bytes.length - i - 1];
+            bytes[bytes.length - i - 1] = tmp;
+        }
+        return bytes;
+    }
 }

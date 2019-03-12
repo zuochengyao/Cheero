@@ -149,12 +149,24 @@ public class FileUtils
         {
             while ((length = body.read(data)) != -1)
                 outputStream.write(data, 0, length);
+            return outputStream.toByteArray();
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
-        return outputStream.toByteArray();
+        finally
+        {
+            try
+            {
+                outputStream.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     /**
@@ -169,11 +181,23 @@ public class FileUtils
         {
             while ((length = body.read(data)) != -1)
                 outputStream.write(data, 0, length);
+            return outputStream.toByteArray();
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
-        return outputStream.toByteArray();
+        finally
+        {
+            try
+            {
+                outputStream.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }
