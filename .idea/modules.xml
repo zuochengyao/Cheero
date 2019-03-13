@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/CheeroApp/CheeroApp.iml" filepath="$PROJECT_DIR$/CheeroApp/CheeroApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/CheeroFaceID/CheeroFaceID.iml" filepath="$PROJECT_DIR$/CheeroFaceID/CheeroFaceID.iml" />
       <module fileurl="file://$PROJECT_DIR$/CheeroPlugin/CheeroPlugin.iml" filepath="$PROJECT_DIR$/CheeroPlugin/CheeroPlugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CheeroReverse/CheeroReverse.iml" filepath="$PROJECT_DIR$/CheeroReverse/CheeroReverse.iml" />
       <module fileurl="file://$PROJECT_DIR$/CheeroSDK/CheeroSDK.iml" filepath="$PROJECT_DIR$/CheeroSDK/CheeroSDK.iml" />
     </modules>
   </component>

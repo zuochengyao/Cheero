@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ActionBar"
         tools:ignore="GoogleAppIndexingWarning">
+
         <!-- region Activities -->
         <activity
             android:name=".activity.MainActivity"
@@ -43,9 +44,8 @@
         <activity android:name=".activity.data.ViewModelActivity"/>
         <activity android:name=".activity.network.RetrofitActivity"/>
         <activity android:name=".activity.network.RequestActivity"/>
-        <activity android:name=".activity.reverse.JniActivity"/>
-        <activity android:name=".activity.reverse.DisposeSoActivity"/>
         <!-- endregion -->
+
         <!-- region Services -->
         <service
             android:name=".service.CheeroService"
@@ -55,6 +55,7 @@
                 <action android:name="com.icheero.app.service.CheeroService"/>
             </intent-filter>
         </service>
+        <!-- endregion -->
     </application>
 
 </manifest>

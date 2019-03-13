@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.reverse.JniActivity"
+    tools:ignore="HardcodedText, ButtonStyle">
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/jni_cpp_array"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CppArray"/>
+
+            <Button
+                android:id="@+id/jni_cpp_string"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CppString"/>
+
+            <Button
+                android:id="@+id/jni_get_system_data_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GetSystemDataTime"/>
+
+            <Button
+                android:id="@+id/jni_call_java_non_virtual_method"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CallJavaNonVirtualMethod"/>
+
+            <Button
+                android:id="@+id/jni_call_java_method"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CallJavaMethod"/>
+
+            <Button
+                android:id="@+id/jni_hello_world"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HelloWorld"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</LinearLayout>

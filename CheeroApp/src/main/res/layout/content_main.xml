@@ -9,9 +9,9 @@
     tools:ignore="HardcodedText">
 
     <HorizontalScrollView
-        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:scrollbars="none">
 
         <LinearLayout
@@ -178,31 +178,26 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/to_jni_activity"
+                android:id="@+id/to_faceid_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="JniActivity"/>
+                android:text="FaceIDActivity"/>
 
             <Button
-                android:id="@+id/to_dispose_so_activity"
+                android:id="@+id/to_load_plugin_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DisposeSoActivity"/>
+                android:text="LoadPluginActivity"/>
+
+            <Button
+                android:id="@+id/to_reverse_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ReverseActivity"/>
 
         </LinearLayout>
     </HorizontalScrollView>
 
-    <Button
-        android:id="@+id/to_load_plugin_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LoadPluginActivity"/>
 
-
-    <Button
-        android:id="@+id/to_faceid_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FaceIDActivity"/>
 
 </LinearLayout>
