@@ -28,7 +28,6 @@ public class BaseApplication extends Application
     protected void attachBaseContext(Context base)
     {
         super.attachBaseContext(base);
-        Log.i(TAG, "attachBaseContext");
         MultiDex.install(base);
     }
 
@@ -39,7 +38,7 @@ public class BaseApplication extends Application
         mInstance = this;
         mApplicationContext = mInstance.getApplicationContext();
         Log.traceMode(Log.TRACE_MODE_ON_SCREEN);
-        Log.i(TAG, "onCreate");
+        Log.i(TAG, "Application onCreate");
         // 初始化 IO管理器
         IOManager.getInstance();
         // 初始化 网络请求

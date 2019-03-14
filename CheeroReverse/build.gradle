@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         if (!isLibrary) {
-            applicationId "com.icheero.plugin"
+            applicationId "com.icheero.reverse"
         }
         minSdkVersion versions.build.min_sdk
         targetSdkVersion versions.build.target_sdk
@@ -54,14 +54,8 @@ android {
         main {
             if (isLibrary) {
                 manifest.srcFile 'src/main/AndroidManifest.xml'
-                java {
-                    exclude 'module/**'
-                }
             } else {
                 manifest.srcFile 'src/main/module/AndroidManifest.xml'
-                java {
-                    exclude 'com.icheero.plugin.application/**'
-                }
             }
         }
     }

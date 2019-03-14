@@ -5,9 +5,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.icheero.reverse.R;
+import com.icheero.reverse.so.Elf32;
+import com.icheero.reverse.so.SoParser;
 import com.icheero.sdk.base.BaseActivity;
-import com.icheero.sdk.core.reverse.so.Elf32;
-import com.icheero.sdk.core.reverse.so.SoParser;
 import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.FileUtils;
 import com.icheero.sdk.util.Log;
@@ -60,26 +60,18 @@ public class DisposeSoActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onClick(View v)
     {
-        switch (v.getId())
+        int i = v.getId();
+        if (i == R.id.so_dispose_program)
         {
-            case R.id.so_dispose_program:
-            {
-                Log.i(TAG, "+++++++++++++++++++Program Header+++++++++++++++++");
-                int p_header_offset = Common.byte2Int(Common.reverseBytes(mElf32.hdr.e_phoff)); // 52;
-                Log.i(TAG, "offset:" + p_header_offset);
-                mSoParser.parseProgramHeaderList(mSoData, p_header_offset);
-                mElf32.printPhdrList();
-                break;
-            }
-            case R.id.so_dispose_section:
-            {
-                Log.i(TAG, "+++++++++++++++++++Section Header++++++++++++++++++");
-                int s_header_offset = Common.byte2Int(Common.reverseBytes(mElf32.hdr.e_shoff));// 12592;
-                Log.i(TAG, "offset:" + s_header_offset);
-                mSoParser.parseSectionHeaderList(mSoData, s_header_offset);
-                mElf32.printShdrList();
-                break;
-            }
+            Log.i(TAG, "+++++++++++++++++++Program Header+++++++++++++++++");
+            int p_header_offset = Common.byte2Int(Common.reverseBytes(mElf32.hdr.e_phoff)); // 52;
+            Log.i(TAG, "offset:" + p_header_offset);mSoParser.parseProgramHeaderList(mSoData, p_header_offset);mElf32.printPhdrList();
+        }
+        else if (i == R.id.so_dispose_section)
+        {
+            Log.i(TAG, "+++++++++++++++++++Section Header++++++++++++++++++");
+            int s_header_offset = Common.byte2Int(Common.reverseBytes(mElf32.hdr.e_shoff));// 12592;
+            Log.i(TAG, "offset:" + s_header_offset);mSoParser.parseSectionHeaderList(mSoData, s_header_offset);mElf32.printShdrList();
         }
     }
 }

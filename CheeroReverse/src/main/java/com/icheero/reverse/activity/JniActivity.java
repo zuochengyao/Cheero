@@ -55,40 +55,22 @@ public class JniActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View v)
     {
-        switch (v.getId())
+        int i = v.getId();
+        if (i == R.id.jni_hello_world)
+            CheeroEngine.nativeHelloWorld();
+        else if (i == R.id.jni_call_java_method)
+            CheeroEngine.nativeCallJavaMethod(this);
+        else if (i == R.id.jni_call_java_non_virtual_method)
+            CheeroEngine.nativeCallJavaNonVirtualMethod(this);
+        else if (i == R.id.jni_get_system_data_time)
+            CheeroEngine.nativeGetSystemDateTime();
+        else if (i == R.id.jni_cpp_string)
         {
-            case R.id.jni_hello_world:
-            {
-                CheeroEngine.nativeHelloWorld();
-                break;
-            }
-            case R.id.jni_call_java_method:
-            {
-                CheeroEngine.nativeCallJavaMethod(this);
-                break;
-            }
-            case R.id.jni_call_java_non_virtual_method:
-            {
-                CheeroEngine.nativeCallJavaNonVirtualMethod(this);
-                break;
-            }
-            case R.id.jni_get_system_data_time:
-            {
-                CheeroEngine.nativeGetSystemDateTime();
-                break;
-            }
-            case R.id.jni_cpp_string:
-            {
-                CheeroEngine.nativeCppString(this);
-                Log.i(TAG, msg);
-                break;
-            }
-            case R.id.jni_cpp_array:
-            {
-                CheeroEngine.nativeCppArray(this);
-                break;
-            }
+            CheeroEngine.nativeCppString(this);
+            Log.i(TAG, msg);
         }
+        else if (i == R.id.jni_cpp_array)
+            CheeroEngine.nativeCppArray(this);
     }
 
 

@@ -1,4 +1,4 @@
-package com.icheero.sdk.core.reverse.so;
+package com.icheero.reverse.so;
 
 import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.Log;
@@ -36,7 +36,7 @@ public class Elf32
         @Override
         public String toString()
         {
-            return "r_offset:" + Common.bytes2HexString(r_offset) + ";r_info:" + Common.bytes2HexString(r_info);
+            return "r_offset:" + Common.byte2HexString(r_offset) + ";r_info:" + Common.byte2HexString(r_info);
         }
     }
 
@@ -49,7 +49,7 @@ public class Elf32
         @Override
         public String toString()
         {
-            return "r_offset:" + Common.bytes2HexString(r_offset) + ";r_info:" + Common.bytes2HexString(r_info) + ";r_addend:" + Common.bytes2HexString(r_addend);
+            return "r_offset:" + Common.byte2HexString(r_offset) + ";r_info:" + Common.byte2HexString(r_info) + ";r_addend:" + Common.byte2HexString(r_addend);
         }
     }
 
@@ -66,12 +66,12 @@ public class Elf32
         public String toString()
         {
 
-            return "st_name:" + Common.bytes2HexString(st_name) +
-                    "\nst_value:" + Common.bytes2HexString(st_value) +
-                    "\nst_size:" + Common.bytes2HexString(st_size) +
+            return "st_name:" + Common.byte2HexString(st_name) +
+                    "\nst_value:" + Common.byte2HexString(st_value) +
+                    "\nst_size:" + Common.byte2HexString(st_size) +
                     "\nst_info:" + (st_info / 16) +
                     "\nst_other:" + (((short) st_other) & 0xF) +
-                    "\nst_shndx:" + Common.bytes2HexString(st_shndx);
+                    "\nst_shndx:" + Common.byte2HexString(st_shndx);
         }
     }
 
@@ -132,10 +132,10 @@ public class Elf32
         @Override
         public String toString()
         {
-            return "magic:" + Common.bytes2HexString(e_ident) + "\ne_type:" + Common.bytes2HexString(e_type) + "\ne_machine:" + Common.bytes2HexString(e_machine) + "\ne_version:" + Common.bytes2HexString(e_version) + "\ne_entry:" + Common
-                    .bytes2HexString(e_entry) + "\ne_phoff:" + Common.bytes2HexString(e_phoff) + "\ne_shoff:" + Common.bytes2HexString(e_shoff) + "\ne_flags:" + Common.bytes2HexString(e_flags) + "\ne_ehsize:" + Common
-                    .bytes2HexString(e_ehsize) + "\ne_phentsize:" + Common.bytes2HexString(e_phentsize) + "\ne_phnum:" + Common.bytes2HexString(e_phnum) + "\ne_shentsize:" + Common.bytes2HexString(e_shentsize) + "\ne_shnum:" + Common
-                    .bytes2HexString(e_shnum) + "\ne_shstrndx:" + Common.bytes2HexString(e_shstrndx);
+            return "magic:" + Common.byte2HexString(e_ident) + "\ne_type:" + Common.byte2HexString(e_type) + "\ne_machine:" + Common.byte2HexString(e_machine) + "\ne_version:" + Common.byte2HexString(e_version) + "\ne_entry:" + Common
+                    .byte2HexString(e_entry) + "\ne_phoff:" + Common.byte2HexString(e_phoff) + "\ne_shoff:" + Common.byte2HexString(e_shoff) + "\ne_flags:" + Common.byte2HexString(e_flags) + "\ne_ehsize:" + Common
+                    .byte2HexString(e_ehsize) + "\ne_phentsize:" + Common.byte2HexString(e_phentsize) + "\ne_phnum:" + Common.byte2HexString(e_phnum) + "\ne_shentsize:" + Common.byte2HexString(e_shentsize) + "\ne_shnum:" + Common
+                    .byte2HexString(e_shnum) + "\ne_shstrndx:" + Common.byte2HexString(e_shstrndx);
         }
     }
 
@@ -153,8 +153,8 @@ public class Elf32
         @Override
         public String toString()
         {
-            return "p_type:" + Common.bytes2HexString(p_type) + "\np_offset:" + Common.bytes2HexString(p_offset) + "\np_vaddr:" + Common.bytes2HexString(p_vaddr) + "\np_paddr:" + Common.bytes2HexString(p_paddr) + "\np_filesz:" + Common
-                    .bytes2HexString(p_filesz) + "\np_memsz:" + Common.bytes2HexString(p_memsz) + "\np_flags:" + Common.bytes2HexString(p_flags) + "\np_align:" + Common.bytes2HexString(p_align);
+            return "p_type:" + Common.byte2HexString(p_type) + "\np_offset:" + Common.byte2HexString(p_offset) + "\np_vaddr:" + Common.byte2HexString(p_vaddr) + "\np_paddr:" + Common.byte2HexString(p_paddr) + "\np_filesz:" + Common
+                    .byte2HexString(p_filesz) + "\np_memsz:" + Common.byte2HexString(p_memsz) + "\np_flags:" + Common.byte2HexString(p_flags) + "\np_align:" + Common.byte2HexString(p_align);
         }
     }
 
@@ -183,9 +183,9 @@ public class Elf32
         @Override
         public String toString()
         {
-            return "sh_name:" + Common.bytes2HexString(sh_name)/*Common.byte2Int(sh_name)*/ + "\nsh_type:" + Common.bytes2HexString(sh_type) + "\nsh_flags:" + Common.bytes2HexString(sh_flags) + "\nsh_add:" + Common
-                    .bytes2HexString(sh_addr) + "\nsh_offset:" + Common.bytes2HexString(sh_offset) + "\nsh_size:" + Common.bytes2HexString(sh_size) + "\nsh_link:" + Common.bytes2HexString(sh_link) + "\nsh_info:" + Common
-                    .bytes2HexString(sh_info) + "\nsh_addralign:" + Common.bytes2HexString(sh_addralign) + "\nsh_entsize:" + Common.bytes2HexString(sh_entsize);
+            return "sh_name:" + Common.byte2HexString(sh_name)/*Common.byte2Int(sh_name)*/ + "\nsh_type:" + Common.byte2HexString(sh_type) + "\nsh_flags:" + Common.byte2HexString(sh_flags) + "\nsh_add:" + Common
+                    .byte2HexString(sh_addr) + "\nsh_offset:" + Common.byte2HexString(sh_offset) + "\nsh_size:" + Common.byte2HexString(sh_size) + "\nsh_link:" + Common.byte2HexString(sh_link) + "\nsh_info:" + Common
+                    .byte2HexString(sh_info) + "\nsh_addralign:" + Common.byte2HexString(sh_addralign) + "\nsh_entsize:" + Common.byte2HexString(sh_entsize);
         }
     }
 

@@ -98,5 +98,6 @@ dependencies {
     implementation versions.deps.tinker.lib
 }
 
-apply from: 'tinker.gradle'
-
+if (!isLibrary) {
+    apply from: 'tinker.gradle'
+}

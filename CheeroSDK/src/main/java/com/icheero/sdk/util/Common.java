@@ -128,7 +128,7 @@ public class Common
     /**
      * 字节数组 转换 十六进制字符串
      */
-    public static String bytes2HexString(byte[] data)
+    public static String byte2HexString(byte[] data)
     {
         StringBuilder ret = new StringBuilder();
         for (byte b : data)

@@ -1,4 +1,4 @@
-package com.icheero.sdk.core.reverse.so;
+package com.icheero.reverse.so;
 
 import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.Log;

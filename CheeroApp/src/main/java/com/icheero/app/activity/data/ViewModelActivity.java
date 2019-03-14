@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.icheero.app.R;
-import com.icheero.app.databinding.ActivityViewModelBinding;
+import com.icheero.app.databinding.ActivityViewmodelBinding;
 import com.icheero.app.model.User;
 
 import java.lang.ref.WeakReference;
@@ -26,14 +26,14 @@ public class ViewModelActivity extends AppCompatActivity
     Button btnUserUpdate;
     */
     private User mUser;
-    private ActivityViewModelBinding binding;
+    private ActivityViewmodelBinding binding;
     private WeakHandler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_view_model);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_viewmodel);
         mHandler = new WeakHandler(this);
         mUser = new User();
         mUser.setAge(10);

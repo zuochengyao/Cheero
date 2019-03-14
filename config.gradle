@@ -2,7 +2,7 @@ def build_version = [:]
 build_version.compile_sdk = 28
 build_version.min_sdk = 24
 build_version.target_sdk = 28
-build_version.gradle = '3.2.1'
+build_version.gradle = '3.3.1'
 build_version.code = 3
 build_version.name = "1.0.2"
 build_version.java = JavaVersion.VERSION_1_8
@@ -118,7 +118,7 @@ def static addRepos(RepositoryHandler handler) {
 }
 
 ext {
-    isLibrary = false
+    isLibrary = true
     versions = [:]
     versions.build = build_version
     versions.deps = deps

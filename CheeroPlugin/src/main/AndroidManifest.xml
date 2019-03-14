@@ -3,6 +3,7 @@
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application>
+        <activity android:name=".activity.PluginActivity"/>
         <activity android:name=".activity.AndFixActivity"/>
         <activity android:name=".activity.LoadPluginActivity"/>
         <service android:name=".framework.andfix.AndFixService"/>
