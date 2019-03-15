@@ -24,7 +24,7 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
     {
         super.onCreate(savedInstanceState);
         TAG = getClass();
-        Log.i(TAG, TAG.getSimpleName() + ": onCreate");
+        Log.i(TAG, TAG.getSimpleName() + " onCreate");
         mPermissionManager = new PermissionManager(this);
         ViewManager.getInstance().addActivity(this);
     }
@@ -33,14 +33,14 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
     protected void onSaveInstanceState(@NonNull Bundle outState)
     {
         super.onSaveInstanceState(outState);
-        Log.i(TAG, TAG.getSimpleName() + ": onSaveInstanceState");
+        Log.i(TAG, TAG.getSimpleName() + " onSaveInstanceState");
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState)
     {
         super.onRestoreInstanceState(savedInstanceState);
-        Log.i(TAG, TAG.getSimpleName() + ": onRestoreInstanceState");
+        Log.i(TAG, TAG.getSimpleName() + " onRestoreInstanceState");
     }
 
     @Override
@@ -50,9 +50,9 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
     }
 
     @Override
-    protected void onRestart()
+    protected void onResume()
     {
-        super.onRestart();
+        super.onResume();
     }
 
     @Override
@@ -68,11 +68,17 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
     }
 
     @Override
+    protected void onRestart()
+    {
+        super.onRestart();
+    }
+
+    @Override
     protected void onDestroy()
     {
         super.onDestroy();
         ViewManager.getInstance().removeActivity(this);
-        Log.i(TAG, TAG.getSimpleName() + ": onDestroy");
+        Log.i(TAG, TAG.getSimpleName() + " onDestroy");
     }
 
     // endregion

@@ -10,6 +10,7 @@ public class PluginApplication extends ModuleApplication
     @Override
     public void onCreate(Application application)
     {
+        super.onCreate(application);
         AndFixPatchManager.getInstance().init(application);
     }
 }

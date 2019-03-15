@@ -87,9 +87,9 @@ public class LoadPluginActivity extends BaseActivity implements View.OnClickList
     
     private void doInitView()
     {
-        ImageView ivVolumeBigger = findViewById(R.id.image_volume_bigger);
+        ImageView ivVolumeBigger = $(R.id.image_volume_bigger);
         ivVolumeBigger.setOnClickListener(this);
-        ImageView ivVolumeSmaller = findViewById(R.id.image_volume_smaller);
+        ImageView ivVolumeSmaller = $(R.id.image_volume_smaller);
         ivVolumeSmaller.setOnClickListener(this);
     }
 

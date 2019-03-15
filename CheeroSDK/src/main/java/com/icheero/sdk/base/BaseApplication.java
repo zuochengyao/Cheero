@@ -23,6 +23,7 @@ public class BaseApplication extends Application
     private static final Class TAG = BaseApplication.class;
     private static BaseApplication mInstance;
     private Context mApplicationContext;
+    private boolean isBigEndian = false;
 
     @Override
     protected void attachBaseContext(Context base)
@@ -38,7 +39,7 @@ public class BaseApplication extends Application
         mInstance = this;
         mApplicationContext = mInstance.getApplicationContext();
         Log.traceMode(Log.TRACE_MODE_ON_SCREEN);
-        Log.i(TAG, "Application onCreate");
+        Log.i(TAG, TAG.getSimpleName() + " onCreate");
         // 初始化 IO管理器
         IOManager.getInstance();
         // 初始化 网络请求
@@ -68,6 +69,7 @@ public class BaseApplication extends Application
         Stetho.initializeWithDefaults(this);
         // 初始化 数据库
         DBHelper.getInstance().init(this);
+        isBigEndian = CheeroNative.nativeCheckEndian() == 1;
     }
 
     @Override
@@ -108,5 +110,10 @@ public class BaseApplication extends Application
     public Context getAppicationContext()
     {
         return mApplicationContext;
+    }
+
+    public boolean isBigEndian()
+    {
+        return isBigEndian;
     }
 }

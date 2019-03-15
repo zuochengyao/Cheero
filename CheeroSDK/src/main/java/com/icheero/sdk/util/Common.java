@@ -7,6 +7,8 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.icheero.sdk.base.BaseApplication;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.security.MessageDigest;
@@ -136,7 +138,7 @@ public class Common
             String hex = Integer.toHexString(b & 0xFF);
             if (hex.length() == 1)
                 hex = '0' + hex;
-            ret.append(hex);
+            ret.append(hex).append(" ");
         }
         return ret.toString();
     }
@@ -162,15 +164,19 @@ public class Common
 
     public static int byte2Int(byte[] data)
     {
+        if (!BaseApplication.getAppInstance().isBigEndian())
+            reverseBytes(data);
         return data[3] & 0xFF | (data[2] & 0xFF) << 8 | (data[1] & 0xFF) << 16 | (data[0] & 0xFF) << 24;
     }
 
     public static short byte2Short(byte[] data)
     {
+        if (!BaseApplication.getAppInstance().isBigEndian())
+            reverseBytes(data);
         return (short) (((data[1] & 0xff) << 8) | (data[0] & 0xff));
     }
 
-    public static byte[] reverseBytes(byte[] bytes)
+    private static byte[] reverseBytes(byte[] bytes)
     {
         if (bytes == null || (bytes.length == 1))
             return bytes;

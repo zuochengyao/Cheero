@@ -13,14 +13,14 @@
 using namespace std;
 
 #define JNI_PACKAGE_NAME "com/icheero/sdk/base"
-#define TAG "Cheero"
+#define TAG "CheeroNDK"
 
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, TAG, __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
 
 // jvm obj
 static JavaVM *mJVM = NULL;
-static const char *classPathName = JNI_PACKAGE_NAME"/CheeroEngine";
+static const char *classPathName = JNI_PACKAGE_NAME"/CheeroNative";
 
 #ifdef __cplusplus
 extern "C" {
@@ -48,6 +48,21 @@ JNIEXPORT void JNICALL native_SetTraceFilePath(JNIEnv *env, jobject obj, jstring
 }
 
 // region NDK Practice
+
+JNIEXPORT jint JNICALL native_CheckEndian(JNIEnv *, jobject)
+{
+    int a = 0x12345678;
+    if(*((char*)&a) == 0x12)
+    {
+        LOGI("Big Endian");
+        return 1;
+    }
+    else
+    {
+        LOGI("Small Endian");
+        return 0;
+    }
+}
 
 JNIEXPORT void JNICALL native_HelloWorld(JNIEnv *, jobject)
 {
@@ -162,6 +177,7 @@ JNIEXPORT void JNICALL native_CppArray(JNIEnv *env, jobject, jobject obj)
 // endregion
 
 static JNINativeMethod methods[] = {
+    {"nativeCheckEndian", "()I", (void *) native_CheckEndian},
     {"nativeHelloWorld", "()V", (void *) native_HelloWorld},
     {"nativeCallJavaMethod", "(Ljava/lang/Object;)V", (void *) native_CallJavaMethod},
     {"nativeCallJavaNonVirtualMethod", "(Ljava/lang/Object;)V", (void *) native_CallJavaNonVirtualMethod},

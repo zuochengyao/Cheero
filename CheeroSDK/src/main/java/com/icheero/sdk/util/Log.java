@@ -1,6 +1,6 @@
 package com.icheero.sdk.util;
 
-import com.icheero.sdk.base.CheeroEngine;
+import com.icheero.sdk.base.CheeroNative;
 
 /**
  * Created by zuochengyao on 2018/3/1.
@@ -40,18 +40,18 @@ public class Log
 
     public static void traceMode(int mode)
     {
-        CheeroEngine.nativeSetTraceMode(mode);
+        CheeroNative.nativeSetTraceMode(mode);
     }
 
     public static void traceFilePath(String filePath)
     {
-        CheeroEngine.nativeSetTraceFilePath(filePath);
+        CheeroNative.nativeSetTraceFilePath(filePath);
     }
 
     private static void trace(Class<?> cls, String log, int prio)
     {
         log += "\n";
-        CheeroEngine.nativeTrace(cls.getName(), log, prio);
+        CheeroNative.nativeTrace(cls.getName(), log, prio);
     }
 
     public static void print()

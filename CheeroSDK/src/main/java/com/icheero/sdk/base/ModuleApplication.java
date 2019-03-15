@@ -39,6 +39,7 @@ public class ModuleApplication implements IAppInitListener, IAppLifeListener
     @Override
     public void onCreate(Application application)
     {
+        Log.i(TAG, TAG.getSimpleName() + " onCreate");
     }
 
     @Override

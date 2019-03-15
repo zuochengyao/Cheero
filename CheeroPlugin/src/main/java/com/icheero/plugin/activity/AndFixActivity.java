@@ -26,8 +26,8 @@ public class AndFixActivity extends BaseActivity
         else
             IOManager.getInstance().createRootFolder();
         initClassLoader();
-        findViewById(R.id.create_bug).setOnClickListener(v -> createBug());
-        findViewById(R.id.fix_bug).setOnClickListener(v -> fixBug());
+        $(R.id.create_bug).setOnClickListener(v -> createBug());
+        $(R.id.fix_bug).setOnClickListener(v -> fixBug());
     }
 
     private void initClassLoader()

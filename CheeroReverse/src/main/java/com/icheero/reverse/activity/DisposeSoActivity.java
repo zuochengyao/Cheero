@@ -39,9 +39,9 @@ public class DisposeSoActivity extends BaseActivity implements View.OnClickListe
 
     private void doInit()
     {
-        mDisposeProgram = findViewById(R.id.so_dispose_program);
+        mDisposeProgram = $(R.id.so_dispose_program);
         mDisposeProgram.setOnClickListener(this);
-        mDisposeSection = findViewById(R.id.so_dispose_section);
+        mDisposeSection = $(R.id.so_dispose_section);
         mDisposeSection.setOnClickListener(this);
 
         mSoData = FileUtils.readRawResource(this, R.raw.libhello);
@@ -64,13 +64,13 @@ public class DisposeSoActivity extends BaseActivity implements View.OnClickListe
         if (i == R.id.so_dispose_program)
         {
             Log.i(TAG, "+++++++++++++++++++Program Header+++++++++++++++++");
-            int p_header_offset = Common.byte2Int(Common.reverseBytes(mElf32.hdr.e_phoff)); // 52;
+            int p_header_offset = Common.byte2Int(mElf32.hdr.e_phoff); // 52;
             Log.i(TAG, "offset:" + p_header_offset);mSoParser.parseProgramHeaderList(mSoData, p_header_offset);mElf32.printPhdrList();
         }
         else if (i == R.id.so_dispose_section)
         {
             Log.i(TAG, "+++++++++++++++++++Section Header++++++++++++++++++");
-            int s_header_offset = Common.byte2Int(Common.reverseBytes(mElf32.hdr.e_shoff));// 12592;
+            int s_header_offset = Common.byte2Int(mElf32.hdr.e_shoff); // 12592;
             Log.i(TAG, "offset:" + s_header_offset);mSoParser.parseSectionHeaderList(mSoData, s_header_offset);mElf32.printShdrList();
         }
     }

@@ -10,6 +10,7 @@ public class FaceIDApplication extends ModuleApplication
     @Override
     public void onCreate(Application application)
     {
+        super.onCreate(application);
         FaceIDManager.getInstance();
     }
 }
