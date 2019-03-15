@@ -10,8 +10,8 @@ public class FaceIDManager
     private FaceIDManager()
     {
         FaceIDConfig config = new FaceIDConfig.Builder()
-                .setApiKey("56ymDEP38_Z1uwDoyRSUEUr_ukBJfEzG")
-                .setApiSecret("Lmy0aNaQ2fXg_ZaliQtvhjcPrgmxGq5y")
+                .setApiKey("")
+                .setApiSecret("")
                 .setConnectTimeout(20)
                 .setReadTimeout(30)
                 .setWriteTimeout(30)

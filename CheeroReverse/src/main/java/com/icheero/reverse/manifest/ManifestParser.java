@@ -60,6 +60,7 @@ public class ManifestParser
 
         //这里的格式是：偏移值开始的两个字节是字符串的长度，接着是字符串的内容，后面跟着两个字符串的结束符00
         byte[] firstStringSize = Common.copyBytes(stringContent, 0, 2);
-        int firstStringSizeValue = Common.byte2Int(firstStringSize);
+        int firstStringSizeValue = Common.byte2Short(firstStringSize);
+        Log.i(TAG, "First String Size: " + stringOffsetValue);
     }
 }
