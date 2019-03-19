@@ -4,12 +4,6 @@ public class CheeroNative
 {
     private static final Class TAG = CheeroNative.class;
 
-    /**
-     * 检测当前环境字节序
-     * @return 0：小端；1：大端
-     */
-    public static native int nativeCheckEndian();
-
     public static native void nativeHelloWorld();
 
     public static native void nativeCallJavaMethod(Object object);

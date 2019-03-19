@@ -35,8 +35,7 @@ public class DisposeManifestActivity extends BaseActivity implements View.OnClic
         int id = v.getId();
         if (id == R.id.manifest_dispose)
         {
-            mManifestParser.parseMagicNumber();
-            mManifestParser.parseSize();
+            mManifestParser.parseHeader();
             mManifestParser.parseStringChunk();
         }
     }

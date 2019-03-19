@@ -49,21 +49,6 @@ JNIEXPORT void JNICALL native_SetTraceFilePath(JNIEnv *env, jobject obj, jstring
 
 // region NDK Practice
 
-JNIEXPORT jint JNICALL native_CheckEndian(JNIEnv *, jobject)
-{
-    int a = 0x12345678;
-    if(*((char*)&a) == 0x12)
-    {
-        LOGI("Big Endian");
-        return 1;
-    }
-    else
-    {
-        LOGI("Small Endian");
-        return 0;
-    }
-}
-
 JNIEXPORT void JNICALL native_HelloWorld(JNIEnv *, jobject)
 {
     LOGI("hello world");
@@ -177,7 +162,6 @@ JNIEXPORT void JNICALL native_CppArray(JNIEnv *env, jobject, jobject obj)
 // endregion
 
 static JNINativeMethod methods[] = {
-    {"nativeCheckEndian", "()I", (void *) native_CheckEndian},
     {"nativeHelloWorld", "()V", (void *) native_HelloWorld},
     {"nativeCallJavaMethod", "(Ljava/lang/Object;)V", (void *) native_CallJavaMethod},
     {"nativeCallJavaNonVirtualMethod", "(Ljava/lang/Object;)V", (void *) native_CallJavaNonVirtualMethod},

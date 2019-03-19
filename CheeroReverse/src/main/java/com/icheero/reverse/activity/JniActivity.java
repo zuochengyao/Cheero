@@ -12,7 +12,6 @@ import com.icheero.sdk.util.Log;
 public class JniActivity extends BaseActivity implements View.OnClickListener
 {
     // region Activity Controls
-    Button mCheckEndian;
     Button mHelloWorld;
     Button mCallJavaMethod;
     Button mCallJavaNonVirtualMethod;
@@ -39,14 +38,12 @@ public class JniActivity extends BaseActivity implements View.OnClickListener
 
     private void doInitView()
     {
-        mCheckEndian = $(R.id.jni_check_endian);
         mHelloWorld = $(R.id.jni_hello_world);
         mCallJavaMethod = $(R.id.jni_call_java_method);
         mCallJavaNonVirtualMethod = $(R.id.jni_call_java_non_virtual_method);
         mGetSystemDataTime = $(R.id.jni_get_system_data_time);
         mCppString = $(R.id.jni_cpp_string);
         mCppArray = $(R.id.jni_cpp_array);
-        mCheckEndian.setOnClickListener(this);
         mHelloWorld.setOnClickListener(this);
         mCallJavaMethod.setOnClickListener(this);
         mCallJavaNonVirtualMethod.setOnClickListener(this);
@@ -59,9 +56,7 @@ public class JniActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v)
     {
         int i = v.getId();
-        if (i == R.id.jni_check_endian)
-            CheeroNative.nativeCheckEndian();
-        else if (i == R.id.jni_hello_world)
+        if (i == R.id.jni_hello_world)
             CheeroNative.nativeHelloWorld();
         else if (i == R.id.jni_call_java_method)
             CheeroNative.nativeCallJavaMethod(this);

@@ -7,10 +7,9 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.icheero.sdk.base.BaseApplication;
-
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.nio.ByteOrder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -21,6 +20,11 @@ import java.security.NoSuchAlgorithmException;
 @SuppressWarnings("unused")
 public class Common
 {
+    public static ByteOrder byteOrder()
+    {
+        return ByteOrder.nativeOrder();
+    }
+
     public static int dp2px(Context context, float dp)
     {
         final float scale = context.getResources().getDisplayMetrics().density;
@@ -164,30 +168,41 @@ public class Common
 
     public static int byte2Int(byte[] data)
     {
-        if (!BaseApplication.getAppInstance().isBigEndian())
-            reverseBytes(data);
+        /*
+        ByteBuffer byteBuffer = ByteBuffer.allocate(4);
+        byteBuffer.order(byteOrder()).put(data).getInt();
+        */
+        if (byteOrder() == ByteOrder.LITTLE_ENDIAN)
+            data = reverseBytes(data);
         return data[3] & 0xFF | (data[2] & 0xFF) << 8 | (data[1] & 0xFF) << 16 | (data[0] & 0xFF) << 24;
     }
 
     public static short byte2Short(byte[] data)
     {
-        if (!BaseApplication.getAppInstance().isBigEndian())
-            reverseBytes(data);
-        return (short) (((data[1] & 0xff) << 8) | (data[0] & 0xff));
+        /*
+        ByteBuffer byteBuffer = ByteBuffer.allocate(2);
+        byteBuffer.order(byteOrder());
+        byteBuffer.put(data);
+        return byteBuffer.getShort(0);
+        */
+        if (byteOrder() == ByteOrder.LITTLE_ENDIAN)
+            data = reverseBytes(data);
+        return (short) (data[1] & 0xff | (data[0] & 0xff) << 8);
     }
 
-    private static byte[] reverseBytes(byte[] bytes)
+    public static byte[] reverseBytes(byte[] bytes)
     {
         if (bytes == null || (bytes.length == 1))
             return bytes;
+        byte[] newBytes = copyBytes(bytes, 0, bytes.length);
         int offset = bytes.length / 2;
-        // 1 2 3 4 5
+        // 1 2
         for (int i = 0; i < offset; i++)
         {
-            byte tmp = bytes[i];
-            bytes[i] = bytes[bytes.length - i - 1];
-            bytes[bytes.length - i - 1] = tmp;
+            byte tmp = newBytes[i];
+            newBytes[i] = newBytes[newBytes.length - i - 1];
+            newBytes[newBytes.length - i - 1] = tmp;
         }
-        return bytes;
+        return newBytes;
     }
 }
