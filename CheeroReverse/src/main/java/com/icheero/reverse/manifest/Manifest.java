@@ -8,17 +8,36 @@ import androidx.annotation.NonNull;
 
 class Manifest
 {
-    Header header;
-    StringChunk stringChunk;
+    private Header mHeader;
+    private StringChunk mStringChunk;
+    private ResourceIdChunk mResourceIdChunk;
 
     Manifest()
     {
-        header = new Header();
-        stringChunk = new StringChunk();
+        mHeader = new Header();
+        mStringChunk = new StringChunk();
+        mResourceIdChunk = new ResourceIdChunk();
+    }
+
+    Header getHeader()
+    {
+        return mHeader;
+    }
+
+    StringChunk getStringChunk()
+    {
+        return mStringChunk;
+    }
+
+    ResourceIdChunk getResourceIdChunk()
+    {
+        return mResourceIdChunk;
     }
 
     public static class Header
     {
+        private Header() {}
+
         byte[] h_magic;
         byte[] h_size;
 
@@ -35,6 +54,8 @@ class Manifest
 
     public static class StringChunk
     {
+        private StringChunk() {}
+
         byte[] sc_signature;
         byte[] sc_size;
         byte[] sc_stringCount;
@@ -42,9 +63,9 @@ class Manifest
         byte[] sc_unknown;
         byte[] sc_stringPoolOffset;
         byte[] sc_stylePoolOffset;
-        byte[] sc_stringPoolContent;
 
-        List<String> sc_stringContentList;
+        byte[] sc_stringPoolContent;
+        List<String> sc_stringPoolContentList;
 
         int getSignatureValue()
         {
@@ -93,8 +114,41 @@ class Manifest
             builder.append("Unknown: ").append(Common.byte2HexString(sc_unknown)).append("(").append(getUnknownValue()).append(")").append("\n");
             builder.append("StringPool Offset: ").append(Common.byte2HexString(sc_stringPoolOffset)).append("(").append(getStringPoolOffsetValue()).append(")").append("\n");
             builder.append("StylePool Offset: ").append(Common.byte2HexString(sc_stylePoolOffset)).append("(").append(getStylePoolOffsetValue()).append(")").append("\n");
-            for (String str : sc_stringContentList)
+            for (String str : sc_stringPoolContentList)
                 builder.append("str: ").append(str).append("\n");
+            return builder.toString();
+        }
+    }
+
+    public static class ResourceIdChunk
+    {
+        private ResourceIdChunk() {}
+
+        byte[] rc_signature;
+        byte[] rc_size;
+
+        byte[] rc_resourceId;
+        List<Integer> rc_resourceIdList;
+
+        int getSignatureValue()
+        {
+            return Common.byte2Int(rc_signature);
+        }
+
+        int getSizeValue()
+        {
+            return Common.byte2Int(rc_size);
+        }
+
+        @NonNull
+        @Override
+        public String toString()
+        {
+            StringBuilder builder = new StringBuilder("------------------ ResourceIdChunk ------------------\n");
+            builder.append("Signature: ").append(Common.byte2HexString(rc_signature)).append("(").append(getSignatureValue()).append(")").append("\n");
+            builder.append("Size: ").append(Common.byte2HexString(rc_size)).append("(").append(getSizeValue()).append(")").append("\n");
+            for (int redId : rc_resourceIdList)
+                builder.append("resId: ").append(Common.byte2HexString(Common.int2Byte(redId))).append("(").append(redId).append(")").append("\n");
             return builder.toString();
         }
     }

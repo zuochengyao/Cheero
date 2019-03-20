@@ -25,7 +25,7 @@ public class DisposeManifestActivity extends BaseActivity implements View.OnClic
     private void doInitView()
     {
         $(R.id.manifest_dispose).setOnClickListener(this);
-        mManifestData = FileUtils.readRawResource(this, R.raw.manifest2);
+        mManifestData = FileUtils.readRawResource(this, R.raw.manifest);
         mManifestParser = new ManifestParser(mManifestData);
     }
 
@@ -37,6 +37,7 @@ public class DisposeManifestActivity extends BaseActivity implements View.OnClic
         {
             mManifestParser.parseHeader();
             mManifestParser.parseStringChunk();
+            mManifestParser.parseResourceIdChunk();
         }
     }
 }

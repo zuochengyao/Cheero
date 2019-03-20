@@ -14,7 +14,8 @@ public class ManifestParser
 
     private byte[] mManifestData;
     private Manifest mManifest;
-    private int mManifestOffsetResourceChunk;
+    private int mResourceChunkOffset;
+    private int mNextChunkOffset;
 
     public ManifestParser(byte[] manifestData)
     {
@@ -26,9 +27,9 @@ public class ManifestParser
 
     public void parseHeader()
     {
-        mManifest.header.h_magic = Common.copyBytes(mManifestData, MANIFEST_OFFSET_HEADER, 4);
-        mManifest.header.h_size = Common.copyBytes(mManifestData, 4, 4);
-        Log.i(TAG, mManifest.header.toString().split("\n"));
+        mManifest.getHeader().h_magic = Common.copyBytes(mManifestData, MANIFEST_OFFSET_HEADER, 4);
+        mManifest.getHeader().h_size = Common.copyBytes(mManifestData, 4, 4);
+        Log.i(TAG, mManifest.getHeader().toString().split("\n"));
     }
     // endregion
 
@@ -36,35 +37,35 @@ public class ManifestParser
 
     public void parseStringChunk()
     {
-        mManifest.stringChunk.sc_signature = Common.copyBytes(mManifestData, MANIFEST_OFFSET_STRING_CHUNK, 4);
-        mManifest.stringChunk.sc_size = Common.copyBytes(mManifestData, 12, 4);
-        mManifest.stringChunk.sc_stringCount = Common.copyBytes(mManifestData, 16, 4);
-        mManifest.stringChunk.sc_styleCount = Common.copyBytes(mManifestData, 20, 4);
-        mManifest.stringChunk.sc_unknown = Common.copyBytes(mManifestData, 24, 4);
-        mManifest.stringChunk.sc_stringPoolOffset = Common.copyBytes(mManifestData, 28, 4);
-        mManifest.stringChunk.sc_stylePoolOffset = Common.copyBytes(mManifestData, 32, 4);
+        mManifest.getStringChunk().sc_signature = Common.copyBytes(mManifestData, MANIFEST_OFFSET_STRING_CHUNK, 4);
+        mManifest.getStringChunk().sc_size = Common.copyBytes(mManifestData, 12, 4);
+        mManifest.getStringChunk().sc_stringCount = Common.copyBytes(mManifestData, 16, 4);
+        mManifest.getStringChunk().sc_styleCount = Common.copyBytes(mManifestData, 20, 4);
+        mManifest.getStringChunk().sc_unknown = Common.copyBytes(mManifestData, 24, 4);
+        mManifest.getStringChunk().sc_stringPoolOffset = Common.copyBytes(mManifestData, 28, 4);
+        mManifest.getStringChunk().sc_stylePoolOffset = Common.copyBytes(mManifestData, 32, 4);
         parseScStringPoolContent();
-        Log.i(TAG, mManifest.stringChunk.toString().split("\n"));
-        mManifestOffsetResourceChunk = MANIFEST_OFFSET_STRING_CHUNK + mManifest.stringChunk.getSizeValue();
+        Log.i(TAG, mManifest.getStringChunk().toString().split("\n"));
+        mResourceChunkOffset = MANIFEST_OFFSET_STRING_CHUNK + mManifest.getStringChunk().getSizeValue();
     }
 
     private void parseScStringPoolContent()
     {
-        int scSizeValue = mManifest.stringChunk.getSizeValue();
-        int scStringCountValue = mManifest.stringChunk.getStringCountValue();
-        int scStringPoolOffsetValue = mManifest.stringChunk.getStringPoolOffsetValue();
-        mManifest.stringChunk.sc_stringPoolContent = Common.copyBytes(mManifestData, scStringPoolOffsetValue + MANIFEST_OFFSET_STRING_CHUNK, scSizeValue);
-        mManifest.stringChunk.sc_stringContentList = new ArrayList<>(scStringCountValue);
+        int scSizeValue = mManifest.getStringChunk().getSizeValue();
+        int scStringCountValue = mManifest.getStringChunk().getStringCountValue();
+        int scStringPoolOffsetValue = mManifest.getStringChunk().getStringPoolOffsetValue();
+        mManifest.getStringChunk().sc_stringPoolContent = Common.copyBytes(mManifestData, scStringPoolOffsetValue + MANIFEST_OFFSET_STRING_CHUNK, scSizeValue);
+        mManifest.getStringChunk().sc_stringPoolContentList = new ArrayList<>(scStringCountValue);
         int endStringIndex = 0;
         for (int i = 0; i < scStringCountValue; i++)
         {
             // 这里的格式是：偏移值开始的两个字节是字符串的长度，接着是字符串的内容，后面跟着两个字符串的结束符00
-            byte[] stringSize = Common.copyBytes(mManifest.stringChunk.sc_stringPoolContent, endStringIndex, 2);
+            byte[] stringSize = Common.copyBytes(mManifest.getStringChunk().sc_stringPoolContent, endStringIndex, 2);
             // 一个字符对应两个字节，所以要乘以2
             int stringSizeValue = Common.byte2Short(stringSize) * 2;
-            String str = new String(Common.copyBytes(mManifest.stringChunk.sc_stringPoolContent, endStringIndex + 2, stringSizeValue + 2));
+            String str = new String(Common.copyBytes(mManifest.getStringChunk().sc_stringPoolContent, endStringIndex + 2, stringSizeValue + 2));
             // 将字符串都放到ArrayList中
-            mManifest.stringChunk.sc_stringContentList.add(filterStringNull(str));
+            mManifest.getStringChunk().sc_stringPoolContentList.add(filterStringNull(str));
             endStringIndex += (2 + stringSizeValue + 2);
         }
     }
@@ -86,5 +87,33 @@ public class ManifestParser
             newByteAry[i] = newByte.get(i);
         return new String(newByteAry);
     }
+    // endregion
+
+    // region ResourceIdChunk
+
+    public void parseResourceIdChunk()
+    {
+        mManifest.getResourceIdChunk().rc_signature = Common.copyBytes(mManifestData, mResourceChunkOffset, 4);
+        mManifest.getResourceIdChunk().rc_size = Common.copyBytes(mManifestData, mResourceChunkOffset + 4, 4);
+        parseResourceIdList();
+        Log.i(TAG, mManifest.getResourceIdChunk().toString().split("\n"));
+
+    }
+
+    private void parseResourceIdList()
+    {
+        // chunkSize的值 包含了chunkTag和chunkSize，所以要去除这8个字节
+        int resIdSize = mManifest.getResourceIdChunk().getSizeValue();
+        mManifest.getResourceIdChunk().rc_resourceId = Common.copyBytes(mManifestData, mResourceChunkOffset + 8, resIdSize - 8);
+        mManifest.getResourceIdChunk().rc_resourceIdList = new ArrayList<>( mManifest.getResourceIdChunk().rc_resourceId.length / 4);
+        for (int i = 0; i < mManifest.getResourceIdChunk().rc_resourceId.length / 4; i++)
+        {
+            byte[] resId = Common.copyBytes(mManifest.getResourceIdChunk().rc_resourceId, i * 4, 4);
+            int resIdValue = Common.byte2Int(resId);
+            mManifest.getResourceIdChunk().rc_resourceIdList.add(resIdValue);
+        }
+        mNextChunkOffset = mResourceChunkOffset + resIdSize;
+    }
+
     // endregion
 }
