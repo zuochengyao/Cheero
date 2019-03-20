@@ -18,24 +18,28 @@ public class Log
     private static final int ANDROID_LOG_DEBUG = 2;
     private static final int ANDROID_LOG_WARN = 3;
 
-    public static void i(Class<?> cls, String log)
+    public static void i(Class<?> cls, String... logs)
     {
-        trace(cls, log, ANDROID_LOG_INFO);
+        for (String log : logs)
+            trace(cls, log, ANDROID_LOG_INFO);
     }
 
-    public static void e(Class<?> cls, String log)
+    public static void e(Class<?> cls, String... logs)
     {
-        trace(cls, log, ANDROID_LOG_ERROR);
+        for (String log : logs)
+            trace(cls, log, ANDROID_LOG_ERROR);
     }
 
-    public static void d(Class<?> cls, String log)
+    public static void d(Class<?> cls, String... logs)
     {
-        trace(cls, log, ANDROID_LOG_DEBUG);
+        for (String log : logs)
+            trace(cls, log, ANDROID_LOG_DEBUG);
     }
 
-    public static void w(Class<?> cls, String log)
+    public static void w(Class<?> cls, String... logs)
     {
-        trace(cls, log, ANDROID_LOG_WARN);
+        for (String log : logs)
+            trace(cls, log, ANDROID_LOG_WARN);
     }
 
     public static void traceMode(int mode)
