@@ -38,6 +38,7 @@ public class DisposeManifestActivity extends BaseActivity implements View.OnClic
             mManifestParser.parseHeader();
             mManifestParser.parseStringChunk();
             mManifestParser.parseResourceIdChunk();
+            mManifestParser.parseStartNamespaceChunk();
         }
     }
 }
