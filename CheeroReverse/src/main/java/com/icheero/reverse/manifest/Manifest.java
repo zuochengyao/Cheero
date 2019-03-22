@@ -2,6 +2,7 @@ package com.icheero.reverse.manifest;
 
 import com.icheero.sdk.util.Common;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -9,10 +10,20 @@ import androidx.annotation.NonNull;
 @SuppressWarnings("StringBufferReplaceableByString")
 class Manifest
 {
+    public static final int MANIFEST_HEADER = 0x00080003;
+    public static final int MANIFEST_STRING_CHUNK = 0x001c0001;
+    public static final int MANIFEST_RESOURCE_CHUNK = 0x00080180;
+    public static final int MANIFEST_START_NAMESPACE_CHUNK = 0x00100100;
+    public static final int MANIFEST_END_NAMESPACE_CHUNK = 0x00100101;
+    public static final int MANIFEST_START_TAG_CHUNK = 0x00100102;
+    public static final int MANIFEST_END_TAG_CHUNK = 0x00100103;
+    public static final int MANIFEST_TEXT_CHUNK = 0x00100104;
+
     private Header mHeader;
     private StringChunk mStringChunk;
     private ResourceIdChunk mResourceIdChunk;
     private StartNamespaceChunk mStartNamespaceChunk;
+    private StartTagChunk mStartTagChunk;
 
     Manifest()
     {
@@ -20,6 +31,7 @@ class Manifest
         mStringChunk = new StringChunk();
         mResourceIdChunk = new ResourceIdChunk();
         mStartNamespaceChunk = new StartNamespaceChunk();
+        mStartTagChunk = new StartTagChunk();
     }
 
     Header getHeader()
@@ -42,7 +54,12 @@ class Manifest
         return mStartNamespaceChunk;
     }
 
-    public class Header
+    StartTagChunk getStartTagChunk()
+    {
+        return mStartTagChunk;
+    }
+
+    class Header
     {
         private Header() {}
         /** 文件魔数 */
@@ -50,18 +67,31 @@ class Manifest
         /** 文件大小 */
         byte[] hSize;
 
+        int getMagicNumberValue()
+        {
+            return Common.byte2Int(hMagic);
+        }
+
+        /**
+         * @return Manifest 总长度
+         */
+        int getSizeValue()
+        {
+            return Common.byte2Int(hSize);
+        }
+
         @NonNull
         @Override
         public String toString()
         {
             StringBuilder builder = new StringBuilder("------------------ Header ------------------\n");
-            builder.append("MagicNumber: ").append(Common.byte2HexString(hMagic)).append("\n");
-            builder.append("Size: ").append(Common.byte2HexString(hSize));
+            builder.append("MagicNumber: ").append(Common.byte2HexString(hMagic)).append("(").append(getMagicNumberValue()).append(")").append("\n");
+            builder.append("Size: ").append(Common.byte2HexString(hSize)).append("(").append(getSizeValue()).append(")");
             return builder.toString();
         }
     }
 
-    public class StringChunk
+    class StringChunk
     {
         private StringChunk() {}
 
@@ -130,13 +160,17 @@ class Manifest
             builder.append("Unknown: ").append(Common.byte2HexString(scUnknown)).append("(").append(getUnknownValue()).append(")").append("\n");
             builder.append("StringPool Offset: ").append(Common.byte2HexString(scStringPoolOffset)).append("(").append(getStringPoolOffsetValue()).append(")").append("\n");
             builder.append("StylePool Offset: ").append(Common.byte2HexString(scStylePoolOffset)).append("(").append(getStylePoolOffsetValue()).append(")").append("\n");
-            for (String str : scStringPoolContentList)
-                builder.append("str: ").append(str).append("\n");
+            for (int i = 0; i < scStringPoolContentList.size(); i++)
+            {
+                builder.append("str[").append(i).append("]: ").append(scStringPoolContentList.get(i));
+                if (i != scStringPoolContentList.size() - 1)
+                    builder.append("\n");
+            }
             return builder.toString();
         }
     }
 
-    public class ResourceIdChunk
+    class ResourceIdChunk
     {
         private ResourceIdChunk() {}
 
@@ -165,13 +199,19 @@ class Manifest
             StringBuilder builder = new StringBuilder("------------------ ResourceIdChunk ------------------\n");
             builder.append("Signature: ").append(Common.byte2HexString(rcSignature)).append("(").append(getSignatureValue()).append(")").append("\n");
             builder.append("Size: ").append(Common.byte2HexString(rcSize)).append("(").append(getSizeValue()).append(")").append("\n");
-            for (int redId : rcResourceIdList)
-                builder.append("resId: ").append(Common.byte2HexString(Common.int2Byte(redId))).append("(").append(redId).append(")").append("\n");
+            for (int i = 0; i < rcResourceIdList.size(); i++)
+            {
+                builder.append("resId[").append(i).append("]: ");
+                builder.append(Common.byte2HexString(Common.int2Byte(rcResourceIdList.get(i))));
+                builder.append("(").append(rcResourceIdList.get(i)).append(")");
+                if (i != rcResourceIdList.size() - 1)
+                    builder.append("\n");
+            }
             return builder.toString();
         }
     }
 
-    public class StartNamespaceChunk
+    class StartNamespaceChunk
     {
         private StartNamespaceChunk() {}
         /** Chunk的类型，固定四个字节：0x00100100 */
@@ -234,4 +274,187 @@ class Manifest
         }
     }
 
+    class StartTagChunk
+    {
+        private StartTagChunk() {}
+
+        /** StartTagChunk的类型，固定四个字节：0x00100102 */
+        byte[] stcSignature;
+        /** StartTagChunk的大小 */
+        byte[] stcSize;
+        /** 对应于AndroidManifest中的行号 */
+        byte[] stcLineNumber;
+        /** 未知区域 */
+        byte[] stcUnknown;
+        /**
+         * 这个标签用到的命名空间的Uri
+         * 比如用到了android这个前缀，那么就需要用http://schemas.android.com/apk/res/android这个Uri去获取
+         */
+        byte[] stcNamespaceUri;
+        /** 标签名称(在字符串中的索引值) */
+        byte[] stcName;
+        /** 标签的类型，四个字节，比如是开始标签还是结束标签等 */
+        byte[] stcFlags;
+        /** 标签包含的属性个数 */
+        byte[] stcAttributeCount;
+        /** 标签包含的类属性 */
+        byte[] stcClassAttribute;
+        /** 
+         * 属性内容
+         * 每个属性算是一个Entry，这个Entry固定大小是大小为5的字节数组：
+         * 我们在解析的时候需要注意第四个值，要做一次处理：需要右移24位。所以这个字段的大小是：属性个数*5*4个字节
+         */
+        byte[] stcAttributeChunk;
+        ArrayList<AttributeChunk> stcAttributeList;
+
+        int getSignatureValue()
+        {
+            return Common.byte2Int(stcSignature);
+        }
+
+        int getSizeValue()
+        {
+            return Common.byte2Int(stcSize);
+        }
+
+        int getLineNumberValue()
+        {
+            return Common.byte2Int(stcLineNumber);
+        }
+
+        int getUnknownValue()
+        {
+            return Common.byte2Int(stcUnknown);
+        }
+
+        int getNamespaceUriValue()
+        {
+            return Common.byte2Int(stcNamespaceUri);
+        }
+
+        int getNameValue()
+        {
+            return Common.byte2Int(stcName);
+        }
+
+        int getFlagsValue()
+        {
+            return Common.byte2Int(stcFlags);
+        }
+
+        int getAttributeCountValue()
+        {
+            return Common.byte2Int(stcAttributeCount);
+        }
+
+        int getClassAttributeValue()
+        {
+            return Common.byte2Int(stcClassAttribute);
+        }
+
+        @NonNull
+        @Override
+        public String toString()
+        {
+            StringBuilder builder = new StringBuilder("------------------ StartTagChunk ------------------\n");
+            builder.append("Signature: ").append(Common.byte2HexString(stcSignature)).append("(").append(getSignatureValue()).append(")").append("\n");
+            builder.append("Size: ").append(Common.byte2HexString(stcSize)).append("(").append(getSizeValue()).append(")").append("\n");
+            builder.append("LineNumber: ").append(Common.byte2HexString(stcLineNumber)).append("(").append(getLineNumberValue()).append(")").append("\n");
+            builder.append("Unknown: ").append(Common.byte2HexString(stcUnknown)).append("(").append(getUnknownValue()).append(")").append("\n");
+            builder.append("NamespaceUri: ").append(Common.byte2HexString(stcNamespaceUri)).append("(").append(getNamespaceUriValue()).append(")").append("\n");
+            if (getNamespaceUriValue() != -1 && getNamespaceUriValue() < mStringChunk.scStringPoolContentList.size())
+                builder.append("Uri Str: ").append(mStringChunk.scStringPoolContentList.get(getNamespaceUriValue())).append("\n");
+            builder.append("TagName: ").append(Common.byte2HexString(stcName)).append("(").append(getNameValue()).append(")").append("\n");
+            if (getNameValue() != -1 && getNameValue() < mStringChunk.scStringPoolContentList.size())
+                builder.append("TagName Str: ").append(mStringChunk.scStringPoolContentList.get(getNameValue())).append("\n");
+            builder.append("Flags: ").append(Common.byte2HexString(stcFlags)).append("(").append(getFlagsValue()).append(")").append("\n");
+            builder.append("AttributeCount: ").append(Common.byte2HexString(stcAttributeCount)).append("(").append(getAttributeCountValue()).append(")").append("\n");
+            builder.append("ClassAttribute: ").append(Common.byte2HexString(stcClassAttribute)).append("(").append(getClassAttributeValue()).append(")").append("\n");
+            for (int i = 0; i < stcAttributeList.size(); i++)
+            {
+                builder.append("Attribute[").append(i).append("]: ");
+                builder.append(stcAttributeList.get(i).toString());
+                if (i != stcAttributeList.size() - 1)
+                    builder.append("\n");
+            }
+            return builder.toString();
+        }
+
+        class AttributeChunk
+        {
+            byte[] acNamespaceUri;
+            byte[] acName;
+            byte[] acValueStr;
+            byte[] acType;
+            byte[] acData;
+
+            private int getNamespaceUriValue()
+            {
+                return Common.byte2Int(acNamespaceUri);
+            }
+
+            private int getNameValue()
+            {
+                return Common.byte2Int(acName);
+            }
+
+            private int getValueStrValue()
+            {
+                return Common.byte2Int(acValueStr);
+            }
+
+            private int getTypeValue()
+            {
+                return Common.byte2Int(acType);
+            }
+
+            private int getDataValue()
+            {
+                return Common.byte2Int(acData);
+            }
+
+            @NonNull
+            @Override
+            public String toString()
+            {
+                StringBuilder builder = new StringBuilder();
+                // 当没有android这样的前缀的时候，NamespaceUri是null
+                builder.append("NamespaceUri: ").append(Common.byte2HexString(acNamespaceUri)).append(" (");
+                builder.append((getNamespaceUriValue() != -1 && getNamespaceUriValue() < mStringChunk.scStringPoolContentList.size()) ? mStringChunk.scStringPoolContentList.get(getNamespaceUriValue()) : "null");
+                builder.append("), ");
+
+                builder.append("AttributeName: ").append(Common.byte2HexString(acName)).append(" (");
+                builder.append((getNameValue() != -1 && getNameValue() < mStringChunk.scStringPoolContentList.size()) ? mStringChunk.scStringPoolContentList.get(getNameValue()) : "null");
+                builder.append("), ");
+
+                builder.append("ValueStr: ").append(Common.byte2HexString(acValueStr)).append(" (");
+                builder.append((getValueStrValue() != -1 && getValueStrValue() < mStringChunk.scStringPoolContentList.size()) ? mStringChunk.scStringPoolContentList.get(getValueStrValue()) : "null");
+                builder.append("), ");
+
+                builder.append("Type: ").append(Common.byte2HexString(acType)).append(" (").append(getTypeValue()).append("),");
+
+                builder.append("Data: ").append(Common.byte2HexString(acData)).append(" (").append(getDataValue()).append(")");
+                return builder.toString();
+            }
+        }
+    }
+
+    class EndTagChunk
+    {
+        private EndTagChunk() {}
+
+        byte[] etcSignature;
+        byte[] etcSize;
+        byte[] etcLineNumber;
+        byte[] etcUNKNOWN;
+        byte[] etcNamespaceUri;
+        byte[] etcName;
+
+        @NonNull
+        @Override
+        public String toString()
+        {
+            return super.toString();
+        }
+    }
 }
