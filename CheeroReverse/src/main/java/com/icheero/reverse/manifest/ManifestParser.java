@@ -22,6 +22,7 @@ public class ManifestParser
     {
         int sizeValue = 0;
         int nextChunkOffset = 0;
+        Log.e(TAG, "Parse manifest start!");
         while (nextChunkOffset < mManifestData.length)
         {
             byte[] signature = Common.copyBytes(mManifestData, nextChunkOffset, 4);
@@ -64,17 +65,21 @@ public class ManifestParser
                     case Manifest.MANIFEST_END_NAMESPACE_CHUNK:
                     {
                         parseEndNamespaceChunk(source);
+                        Log.i(TAG, mManifest.getEndNamespaceChunk().toString().split("\n"));
                         break;
                     }
                     case Manifest.MANIFEST_START_TAG_CHUNK:
                     {
-                        parseStartTagChunk(source);
-                        Log.i(TAG, mManifest.getStartTagChunk().toString().split("\n"));
+                        Manifest.StartTagChunk chunk = parseStartTagChunk(source);
+                        mManifest.getStartTagChunkList().add(chunk);
+                        Log.i(TAG, chunk.toString().split("\n"));
                         break;
                     }
                     case Manifest.MANIFEST_END_TAG_CHUNK:
                     {
-                        parseEndTagChunk(source);
+                        Manifest.EndTagChunk chunk = parseEndTagChunk(source);
+                        mManifest.getEndTagChunkList().add(chunk);
+                        Log.i(TAG, chunk.toString().split("\n"));
                         break;
                     }
                     default:
@@ -85,6 +90,12 @@ public class ManifestParser
             }
             nextChunkOffset += sizeValue;
         }
+        Log.e(TAG, "Parse manifest finish!");
+    }
+
+    String getStringContent(int index)
+    {
+        return mManifest.getStringChunk().scStringPoolContentList.get(index);
     }
 
     // region StringChunk
@@ -177,47 +188,62 @@ public class ManifestParser
 
     private void parseEndNamespaceChunk(byte[] endNamespaceChunk)
     {
+        mManifest.getEndNamespaceChunk().encSignature = Common.copyBytes(endNamespaceChunk, 0, 4);
+        mManifest.getEndNamespaceChunk().encSize = Common.copyBytes(endNamespaceChunk, 4, 4);
+        mManifest.getEndNamespaceChunk().encLineNumber = Common.copyBytes(endNamespaceChunk, 8, 4);
+        mManifest.getEndNamespaceChunk().encUnknown = Common.copyBytes(endNamespaceChunk, 12, 4);
+        mManifest.getEndNamespaceChunk().encPrefix = Common.copyBytes(endNamespaceChunk, 16, 4);
+        mManifest.getEndNamespaceChunk().encUri = Common.copyBytes(endNamespaceChunk, 20, 4);
     }
 
     // endregion
 
     // region Tag Chunk
 
-    private void parseStartTagChunk(byte[] startTagChunk)
+    private Manifest.StartTagChunk parseStartTagChunk(byte[] startTagChunk)
     {
-        mManifest.getStartTagChunk().stcSignature = Common.copyBytes(startTagChunk, 0, 4);
-        mManifest.getStartTagChunk().stcSize = Common.copyBytes(startTagChunk, 4, 4);
-        mManifest.getStartTagChunk().stcLineNumber = Common.copyBytes(startTagChunk, 8, 4);
-        mManifest.getStartTagChunk().stcUnknown = Common.copyBytes(startTagChunk, 12, 4);
-        mManifest.getStartTagChunk().stcNamespaceUri = Common.copyBytes(startTagChunk, 16, 4);
-        mManifest.getStartTagChunk().stcName = Common.copyBytes(startTagChunk, 20, 4);
-        mManifest.getStartTagChunk().stcFlags = Common.copyBytes(startTagChunk, 24, 4);
-        mManifest.getStartTagChunk().stcAttributeCount = Common.copyBytes(startTagChunk, 28, 4);
-        mManifest.getStartTagChunk().stcClassAttribute = Common.copyBytes(startTagChunk, 32, 4);
-        parseAttributeChunk(Common.copyBytes(startTagChunk, 36, startTagChunk.length - 36));
+        Manifest.StartTagChunk chunk = mManifest.new StartTagChunk();
+        chunk.stcSignature = Common.copyBytes(startTagChunk, 0, 4);
+        chunk.stcSize = Common.copyBytes(startTagChunk, 4, 4);
+        chunk.stcLineNumber = Common.copyBytes(startTagChunk, 8, 4);
+        chunk.stcUnknown = Common.copyBytes(startTagChunk, 12, 4);
+        chunk.stcNamespaceUri = Common.copyBytes(startTagChunk, 16, 4);
+        chunk.stcName = Common.copyBytes(startTagChunk, 20, 4);
+        chunk.stcFlags = Common.copyBytes(startTagChunk, 24, 4);
+        chunk.stcAttributeCount = Common.copyBytes(startTagChunk, 28, 4);
+        chunk.stcClassAttribute = Common.copyBytes(startTagChunk, 32, 4);
+        chunk.stcAttributeChunk = Common.copyBytes(startTagChunk, 36, startTagChunk.length - 36);
+        parseAttributeChunk(chunk);
+        return chunk;
     }
 
-    private void parseAttributeChunk(byte[] attributeChunk)
+    private void parseAttributeChunk(Manifest.StartTagChunk chunk)
     {
-        mManifest.getStartTagChunk().stcAttributeChunk = attributeChunk;
-        mManifest.getStartTagChunk().stcAttributeList = new ArrayList<>(mManifest.getStartTagChunk().getAttributeCountValue());
-        for (int i = 0; i < mManifest.getStartTagChunk().getAttributeCountValue(); i++)
+        chunk.stcAttributeList = new ArrayList<>(chunk.getAttributeCountValue());
+        for (int i = 0; i < chunk.getAttributeCountValue(); i++)
         {
-            Manifest.StartTagChunk.AttributeChunk attribute = mManifest.getStartTagChunk().new AttributeChunk();
-            attribute.acNamespaceUri = Common.copyBytes(attributeChunk,  20 * i, 4);
-            attribute.acName = Common.copyBytes(attributeChunk, 20 * i + 4, 4);
-            attribute.acValueStr = Common.copyBytes(attributeChunk, 20 * i + 8, 4);
-            attribute.acType = Common.copyBytes(attributeChunk,   20 * i + 12, 4);
-            attribute.acData = Common.copyBytes(attributeChunk,   20 * i + 16, 4);
-            mManifest.getStartTagChunk().stcAttributeList.add(attribute);
+            Manifest.StartTagChunk.AttributeChunk attribute = chunk.new AttributeChunk();
+            attribute.acNamespaceUri = Common.copyBytes(chunk.stcAttributeChunk,  20 * i, 4);
+            attribute.acName = Common.copyBytes(chunk.stcAttributeChunk, 20 * i + 4, 4);
+            attribute.acValueStr = Common.copyBytes(chunk.stcAttributeChunk, 20 * i + 8, 4);
+            attribute.acType = Common.copyBytes(chunk.stcAttributeChunk,   20 * i + 12, 4);
+            attribute.acData = Common.copyBytes(chunk.stcAttributeChunk,   20 * i + 16, 4);
+            chunk.stcAttributeList.add(attribute);
         }
     }
 
-    private void parseEndTagChunk(byte[] endTagChunk)
+    private Manifest.EndTagChunk parseEndTagChunk(byte[] endTagChunk)
     {
-
+        Manifest.EndTagChunk chunk = mManifest.new EndTagChunk();
+        chunk.etcSignature = Common.copyBytes(endTagChunk, 0, 4);
+        chunk.etcSize = Common.copyBytes(endTagChunk, 4, 4);
+        chunk.etcLineNumber = Common.copyBytes(endTagChunk, 8, 4);
+        chunk.etcUnknown = Common.copyBytes(endTagChunk, 12, 4);
+        chunk.etcNamespaceUri = Common.copyBytes(endTagChunk, 16, 4);
+        chunk.etcName = Common.copyBytes(endTagChunk, 20, 4);
+        return chunk;
     }
 
-
     // endregion
+
 }

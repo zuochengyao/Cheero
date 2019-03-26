@@ -23,7 +23,9 @@ class Manifest
     private StringChunk mStringChunk;
     private ResourceIdChunk mResourceIdChunk;
     private StartNamespaceChunk mStartNamespaceChunk;
-    private StartTagChunk mStartTagChunk;
+    private EndNamespaceChunk mEndNamespaceChunk;
+    private ArrayList<StartTagChunk> mStartTagChunkList;
+    private ArrayList<EndTagChunk> mEndTagChunkList;
 
     Manifest()
     {
@@ -31,7 +33,9 @@ class Manifest
         mStringChunk = new StringChunk();
         mResourceIdChunk = new ResourceIdChunk();
         mStartNamespaceChunk = new StartNamespaceChunk();
-        mStartTagChunk = new StartTagChunk();
+        mEndNamespaceChunk = new EndNamespaceChunk();
+        mStartTagChunkList = new ArrayList<>();
+        mEndTagChunkList = new ArrayList<>();
     }
 
     Header getHeader()
@@ -54,9 +58,19 @@ class Manifest
         return mStartNamespaceChunk;
     }
 
-    StartTagChunk getStartTagChunk()
+    EndNamespaceChunk getEndNamespaceChunk()
     {
-        return mStartTagChunk;
+        return mEndNamespaceChunk;
+    }
+
+    ArrayList<StartTagChunk> getStartTagChunkList()
+    {
+        return mStartTagChunkList;
+    }
+
+    ArrayList<EndTagChunk> getEndTagChunkList()
+    {
+        return mEndTagChunkList;
     }
 
     class Header
@@ -274,9 +288,72 @@ class Manifest
         }
     }
 
+    class EndNamespaceChunk
+    {
+        private EndNamespaceChunk() {}
+        /** Chunk的类型，固定四个字节：0x00100100 */
+        byte[] encSignature;
+        /** Chunk的大小 */
+        byte[] encSize;
+        /** 在AndroidManifest文件中的行号 */
+        byte[] encLineNumber;
+        /** 未知区域 */
+        byte[] encUnknown;
+        /** 命名空间的前缀(在字符串中的索引值)，比如：android */
+        byte[] encPrefix;
+        /** 命名空间的uri(在字符串中的索引值)：比如：http://schemas.android.com/apk/res/android */
+        byte[] encUri;
+
+        int getSignatureValue()
+        {
+            return Common.byte2Int(encSignature);
+        }
+
+        int getSizeValue()
+        {
+            return Common.byte2Int(encSize);
+        }
+
+        int getLineNumberValue()
+        {
+            return Common.byte2Int(encLineNumber);
+        }
+
+        int getUnknownValue()
+        {
+            return Common.byte2Int(encUnknown);
+        }
+
+        int getPrefixValue()
+        {
+            return Common.byte2Int(encPrefix);
+        }
+
+        int getUriValue()
+        {
+            return Common.byte2Int(encUri);
+        }
+
+        @NonNull
+        @Override
+        public String toString()
+        {
+            StringBuilder builder = new StringBuilder("------------------ EndNamespaceChunk ------------------\n");
+            builder.append("Signature: ").append(Common.byte2HexString(encSignature)).append("(").append(getSignatureValue()).append(")").append("\n");
+            builder.append("Size: ").append(Common.byte2HexString(encSize)).append("(").append(getSizeValue()).append(")").append("\n");
+            builder.append("LineNumber: ").append(Common.byte2HexString(encLineNumber)).append("(").append(getLineNumberValue()).append(")").append("\n");
+            builder.append("Unknown: ").append(Common.byte2HexString(encUnknown)).append("(").append(getUnknownValue()).append(")").append("\n");
+            builder.append("Prefix: ").append(Common.byte2HexString(encPrefix)).append("(").append(getPrefixValue()).append(")").append("\n");
+            builder.append("Prefix: ").append(mStringChunk.scStringPoolContentList.get(getPrefixValue())).append("\n");
+            builder.append("Uri: ").append(Common.byte2HexString(encUri)).append("(").append(getUriValue()).append(")").append("\n");
+            builder.append("Uri: ").append(mStringChunk.scStringPoolContentList.get(getUriValue())).append("\n");
+            return builder.toString();
+        }
+    }
+
     class StartTagChunk
     {
-        private StartTagChunk() {}
+        StartTagChunk() {}
 
         /** StartTagChunk的类型，固定四个字节：0x00100102 */
         byte[] stcSignature;
@@ -393,9 +470,19 @@ class Manifest
                 return Common.byte2Int(acNamespaceUri);
             }
 
+            public String getNamespaceUriStr()
+            {
+                return mStringChunk.scStringPoolContentList.get(getNamespaceUriValue());
+            }
+
             private int getNameValue()
             {
                 return Common.byte2Int(acName);
+            }
+
+            public String getNameStr()
+            {
+                return mStringChunk.scStringPoolContentList.get(getNameValue());
             }
 
             private int getValueStrValue()
@@ -403,9 +490,14 @@ class Manifest
                 return Common.byte2Int(acValueStr);
             }
 
+            public String getValueStr()
+            {
+                return mStringChunk.scStringPoolContentList.get(getValueStrValue());
+            }
+
             private int getTypeValue()
             {
-                return Common.byte2Int(acType);
+                return Common.byte2Int(acType) >> 24;
             }
 
             private int getDataValue()
@@ -420,20 +512,19 @@ class Manifest
                 StringBuilder builder = new StringBuilder();
                 // 当没有android这样的前缀的时候，NamespaceUri是null
                 builder.append("NamespaceUri: ").append(Common.byte2HexString(acNamespaceUri)).append(" (");
-                builder.append((getNamespaceUriValue() != -1 && getNamespaceUriValue() < mStringChunk.scStringPoolContentList.size()) ? mStringChunk.scStringPoolContentList.get(getNamespaceUriValue()) : "null");
+                builder.append((getNamespaceUriValue() != -1 && getNamespaceUriValue() < mStringChunk.scStringPoolContentList.size()) ? getNamespaceUriStr() : "null");
                 builder.append("), ");
 
                 builder.append("AttributeName: ").append(Common.byte2HexString(acName)).append(" (");
-                builder.append((getNameValue() != -1 && getNameValue() < mStringChunk.scStringPoolContentList.size()) ? mStringChunk.scStringPoolContentList.get(getNameValue()) : "null");
+                builder.append((getNameValue() != -1 && getNameValue() < mStringChunk.scStringPoolContentList.size()) ? getNameStr() : "null");
                 builder.append("), ");
 
                 builder.append("ValueStr: ").append(Common.byte2HexString(acValueStr)).append(" (");
-                builder.append((getValueStrValue() != -1 && getValueStrValue() < mStringChunk.scStringPoolContentList.size()) ? mStringChunk.scStringPoolContentList.get(getValueStrValue()) : "null");
+                builder.append((getValueStrValue() != -1 && getValueStrValue() < mStringChunk.scStringPoolContentList.size()) ? getValueStr() : "null");
                 builder.append("), ");
 
-                builder.append("Type: ").append(Common.byte2HexString(acType)).append(" (").append(getTypeValue()).append("),");
-
-                builder.append("Data: ").append(Common.byte2HexString(acData)).append(" (").append(getDataValue()).append(")");
+                builder.append("Type: ").append(Common.byte2HexString(acType)).append(" (").append(AttributeType.getAttrType(getTypeValue())).append("),");
+                builder.append("Data: ").append(Common.byte2HexString(acData)).append(" (").append(AttributeType.getAttributeData(mStringChunk.scStringPoolContentList, getTypeValue(), getDataValue())).append(")");
                 return builder.toString();
             }
         }
@@ -441,20 +532,61 @@ class Manifest
 
     class EndTagChunk
     {
-        private EndTagChunk() {}
+        EndTagChunk() {}
 
         byte[] etcSignature;
         byte[] etcSize;
         byte[] etcLineNumber;
-        byte[] etcUNKNOWN;
+        byte[] etcUnknown;
         byte[] etcNamespaceUri;
         byte[] etcName;
+
+        int getSignatureValue()
+        {
+            return Common.byte2Int(etcSignature);
+        }
+
+        int getSizeValue()
+        {
+            return Common.byte2Int(etcSize);
+        }
+
+        int getLineNumberValue()
+        {
+            return Common.byte2Int(etcLineNumber);
+        }
+
+        int getUnknownValue()
+        {
+            return Common.byte2Int(etcUnknown);
+        }
+
+        int getNamespaceUriValue()
+        {
+            return Common.byte2Int(etcNamespaceUri);
+        }
+
+        int getNameValue()
+        {
+            return Common.byte2Int(etcName);
+        }
 
         @NonNull
         @Override
         public String toString()
         {
-            return super.toString();
+            StringBuilder builder = new StringBuilder("------------------ EndTagChunk ------------------\n");
+            builder.append("Signature: ").append(Common.byte2HexString(etcSignature)).append("(").append(getSignatureValue()).append(")").append("\n");
+            builder.append("Size: ").append(Common.byte2HexString(etcSize)).append("(").append(getSizeValue()).append(")").append("\n");
+            builder.append("LineNumber: ").append(Common.byte2HexString(etcLineNumber)).append("(").append(getLineNumberValue()).append(")").append("\n");
+            builder.append("Unknown: ").append(Common.byte2HexString(etcUnknown)).append("(").append(getUnknownValue()).append(")").append("\n");
+            builder.append("NamespaceUri: ").append(Common.byte2HexString(etcNamespaceUri)).append("(").append(getNamespaceUriValue()).append(")").append("\n");
+            if (getNamespaceUriValue() != -1 && getNamespaceUriValue() < mStringChunk.scStringPoolContentList.size())
+                builder.append("Uri Str: ").append(mStringChunk.scStringPoolContentList.get(getNamespaceUriValue())).append("\n");
+            builder.append("TagName: ").append(Common.byte2HexString(etcName)).append("(").append(getNameValue()).append(")").append("\n");
+            if (getNameValue() != -1 && getNameValue() < mStringChunk.scStringPoolContentList.size())
+                builder.append("TagName Str: ").append(mStringChunk.scStringPoolContentList.get(getNameValue())).append("\n");
+            return builder.toString();
         }
     }
 }
