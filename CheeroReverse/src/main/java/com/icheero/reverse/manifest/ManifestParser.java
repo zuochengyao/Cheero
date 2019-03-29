@@ -1,9 +1,14 @@
 package com.icheero.reverse.manifest;
 
+import android.text.TextUtils;
+
 import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.Log;
+import com.icheero.sdk.util.XmlUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ManifestParser
 {
@@ -11,17 +16,21 @@ public class ManifestParser
 
     private byte[] mManifestData;
     private Manifest mManifest;
+    private Map<String, String> mUriPrefixMap = new HashMap<>();
+    private StringBuilder mBuilder;
 
     public ManifestParser(byte[] manifestData)
     {
         this.mManifestData = manifestData;
-        mManifest = new Manifest();
+        this.mManifest = new Manifest();
+        this.mBuilder = new StringBuilder();
     }
 
     public void parseManifest()
     {
         int sizeValue = 0;
         int nextChunkOffset = 0;
+
         Log.e(TAG, "Parse manifest start!");
         while (nextChunkOffset < mManifestData.length)
         {
@@ -37,6 +46,7 @@ public class ManifestParser
                 mManifest.getHeader().hSize = size;
                 Log.i(TAG, mManifest.getHeader().toString().split("\n"));
                 sizeValue += 8;
+                mBuilder.append(XmlUtils.createDeclaration("1.0", "utf-8"));
             }
             else
             {
@@ -58,20 +68,24 @@ public class ManifestParser
                     }
                     case Manifest.MANIFEST_START_NAMESPACE_CHUNK:
                     {
-                        parseStartNamespaceChunk(source);
-                        Log.i(TAG, mManifest.getStartNamespaceChunk().toString().split("\n"));
+                        Manifest.StartNamespaceChunk chunk = parseStartNamespaceChunk(source);
+                        mManifest.getStartNamespaceChunkList().add(chunk);
+                        mUriPrefixMap.put(chunk.getUriStr(), chunk.getPrefixStr());
+                        Log.i(TAG, chunk.toString().split("\n"));
                         break;
                     }
                     case Manifest.MANIFEST_END_NAMESPACE_CHUNK:
                     {
-                        parseEndNamespaceChunk(source);
-                        Log.i(TAG, mManifest.getEndNamespaceChunk().toString().split("\n"));
+                        Manifest.EndNamespaceChunk chunk = parseEndNamespaceChunk(source);
+                        Log.i(TAG, chunk.toString().split("\n"));
+                        mManifest.getEndNamespaceChunkList().add(chunk);
                         break;
                     }
                     case Manifest.MANIFEST_START_TAG_CHUNK:
                     {
                         Manifest.StartTagChunk chunk = parseStartTagChunk(source);
                         mManifest.getStartTagChunkList().add(chunk);
+                        createStartTag(chunk);
                         Log.i(TAG, chunk.toString().split("\n"));
                         break;
                     }
@@ -79,6 +93,7 @@ public class ManifestParser
                     {
                         Manifest.EndTagChunk chunk = parseEndTagChunk(source);
                         mManifest.getEndTagChunkList().add(chunk);
+                        mBuilder.append(XmlUtils.createEndTag(chunk.getNameStr()));
                         Log.i(TAG, chunk.toString().split("\n"));
                         break;
                     }
@@ -91,11 +106,38 @@ public class ManifestParser
             nextChunkOffset += sizeValue;
         }
         Log.e(TAG, "Parse manifest finish!");
+        Log.i(TAG,("parse xml:\n" + mBuilder.toString()).split("\n"));
     }
 
-    String getStringContent(int index)
+    private void createStartTag(Manifest.StartTagChunk startTagChunk)
     {
-        return mManifest.getStringChunk().scStringPoolContentList.get(index);
+        if ("manifest".equals(startTagChunk.getNameStr()))
+        {
+            mBuilder.append("<manifest ");
+            mManifest.getStartNamespaceChunkList().forEach(startNamespaceChunk -> {
+                mBuilder.append("xmls:").append(startNamespaceChunk.getPrefixStr());
+                mBuilder.append("=");
+                mBuilder.append("\"").append(startNamespaceChunk.getUriStr()).append("\"");
+                mBuilder.append("\n");
+            });
+        }
+        else
+            mBuilder.append("<").append(startTagChunk.getNameStr());
+        if (startTagChunk.stcAttributeList != null && startTagChunk.stcAttributeList.size() > 0)
+        {
+            if (!"manifest".equals(startTagChunk.getNameStr()))
+                mBuilder.append("\n");
+            for (int i = 0; i < startTagChunk.stcAttributeList.size(); i++)
+            {
+                Manifest.StartTagChunk.AttributeChunk attributeChunk = startTagChunk.stcAttributeList.get(i);
+                if (!TextUtils.isEmpty(attributeChunk.getNamespaceUriStr()))
+                    mBuilder.append(mUriPrefixMap.get(attributeChunk.getNamespaceUriStr())).append(":");
+                mBuilder.append(attributeChunk.getNameStr()).append("=").append("\"");
+                mBuilder.append(attributeChunk.getDataStr()).append("\"");
+                mBuilder.append(i != startTagChunk.stcAttributeList.size() - 1 ? "\n" : "");
+            }
+        }
+        mBuilder.append(">\n");
     }
 
     // region StringChunk
@@ -176,24 +218,28 @@ public class ManifestParser
 
     // region Namespace Chunk
 
-    private void parseStartNamespaceChunk(byte[] startNamespaceChunk)
+    private Manifest.StartNamespaceChunk parseStartNamespaceChunk(byte[] startNamespaceChunk)
     {
-        mManifest.getStartNamespaceChunk().sncSignature = Common.copyBytes(startNamespaceChunk, 0, 4);
-        mManifest.getStartNamespaceChunk().sncSize = Common.copyBytes(startNamespaceChunk, 4, 4);
-        mManifest.getStartNamespaceChunk().sncLineNumber = Common.copyBytes(startNamespaceChunk, 8, 4);
-        mManifest.getStartNamespaceChunk().sncUnknown = Common.copyBytes(startNamespaceChunk, 12, 4);
-        mManifest.getStartNamespaceChunk().sncPrefix = Common.copyBytes(startNamespaceChunk, 16, 4);
-        mManifest.getStartNamespaceChunk().sncUri = Common.copyBytes(startNamespaceChunk, 20, 4);
+        Manifest.StartNamespaceChunk chunk = mManifest.new StartNamespaceChunk();
+        chunk.sncSignature = Common.copyBytes(startNamespaceChunk, 0, 4);
+        chunk.sncSize = Common.copyBytes(startNamespaceChunk, 4, 4);
+        chunk.sncLineNumber = Common.copyBytes(startNamespaceChunk, 8, 4);
+        chunk.sncUnknown = Common.copyBytes(startNamespaceChunk, 12, 4);
+        chunk.sncPrefix = Common.copyBytes(startNamespaceChunk, 16, 4);
+        chunk.sncUri = Common.copyBytes(startNamespaceChunk, 20, 4);
+        return chunk;
     }
 
-    private void parseEndNamespaceChunk(byte[] endNamespaceChunk)
+    private Manifest.EndNamespaceChunk parseEndNamespaceChunk(byte[] endNamespaceChunk)
     {
-        mManifest.getEndNamespaceChunk().encSignature = Common.copyBytes(endNamespaceChunk, 0, 4);
-        mManifest.getEndNamespaceChunk().encSize = Common.copyBytes(endNamespaceChunk, 4, 4);
-        mManifest.getEndNamespaceChunk().encLineNumber = Common.copyBytes(endNamespaceChunk, 8, 4);
-        mManifest.getEndNamespaceChunk().encUnknown = Common.copyBytes(endNamespaceChunk, 12, 4);
-        mManifest.getEndNamespaceChunk().encPrefix = Common.copyBytes(endNamespaceChunk, 16, 4);
-        mManifest.getEndNamespaceChunk().encUri = Common.copyBytes(endNamespaceChunk, 20, 4);
+        Manifest.EndNamespaceChunk chunk = mManifest.new EndNamespaceChunk();
+        chunk.encSignature = Common.copyBytes(endNamespaceChunk, 0, 4);
+        chunk.encSize = Common.copyBytes(endNamespaceChunk, 4, 4);
+        chunk.encLineNumber = Common.copyBytes(endNamespaceChunk, 8, 4);
+        chunk.encUnknown = Common.copyBytes(endNamespaceChunk, 12, 4);
+        chunk.encPrefix = Common.copyBytes(endNamespaceChunk, 16, 4);
+        chunk.encUri = Common.copyBytes(endNamespaceChunk, 20, 4);
+        return chunk;
     }
 
     // endregion
