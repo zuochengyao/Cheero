@@ -9,7 +9,10 @@ import android.widget.Toast;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -134,26 +137,44 @@ public class Common
     /**
      * 字节数组 转换 十六进制字符串
      */
-    public static String byte2HexString(byte[] data)
+    public static String byte2HexString(byte... data)
     {
         StringBuilder ret = new StringBuilder();
-        for (byte b : data)
+        if (data != null && data.length > 0)
         {
-            String hex = Integer.toHexString(b & 0xFF);
-            if (hex.length() == 1)
-                hex = '0' + hex;
-            ret.append(hex).append(" ");
+            for (byte b : data)
+            {
+                String hex = Integer.toHexString(b & 0xFF);
+                if (hex.length() == 1) hex = '0' + hex;
+                ret.append(hex).append(" ");
+            }
+            return ret.toString();
         }
-        return ret.toString();
+        return null;
     }
 
-    public static byte[] copyBytes(byte[] res, int start, int count)
+    public static byte[] copyBytes(byte[] src, int start, int count)
     {
-        if (res == null)
+        if (src == null)
             return null;
-        byte[] result = new byte[count];
-        System.arraycopy(res, start, result, 0, count);
-        return result;
+        byte[] dest = new byte[count];
+        System.arraycopy(src, start, dest, 0, count);
+        return dest;
+    }
+
+    public static void copyBytes(byte[] src, int start, byte[] dest)
+    {
+        System.arraycopy(src, start, dest, 0, dest.length);
+    }
+
+    public static char[] byte2Char(byte[] data)
+    {
+        Charset charset = Charset.forName("UTF-8");
+        ByteBuffer byteBuffer = ByteBuffer.allocate(data.length);
+        byteBuffer.order(byteOrder()).put(data);
+        byteBuffer.flip();
+        CharBuffer charBuffer = charset.decode(byteBuffer);
+        return charBuffer.array();
     }
 
     public static byte[] int2Byte(int number)

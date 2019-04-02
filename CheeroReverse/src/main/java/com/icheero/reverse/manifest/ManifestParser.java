@@ -114,12 +114,13 @@ public class ManifestParser
         if ("manifest".equals(startTagChunk.getNameStr()))
         {
             mBuilder.append("<manifest ");
-            mManifest.getStartNamespaceChunkList().forEach(startNamespaceChunk -> {
+            for (Manifest.StartNamespaceChunk startNamespaceChunk : mManifest.getStartNamespaceChunkList())
+            {
                 mBuilder.append("xmls:").append(startNamespaceChunk.getPrefixStr());
                 mBuilder.append("=");
                 mBuilder.append("\"").append(startNamespaceChunk.getUriStr()).append("\"");
                 mBuilder.append("\n");
-            });
+            }
         }
         else
             mBuilder.append("<").append(startTagChunk.getNameStr());
