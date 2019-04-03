@@ -45,6 +45,10 @@
         <activity android:name=".activity.data.ViewModelActivity"/>
         <activity android:name=".activity.network.RetrofitActivity"/>
         <activity android:name=".activity.network.RequestActivity"/>
+        <activity android:name=".activity.reverse.JniActivity"/>
+        <activity android:name=".activity.reverse.DisposeSoActivity"/>
+        <activity android:name=".activity.reverse.DisposeManifestActivity"/>
+        <activity android:name=".activity.reverse.DisposeResourceActivity"/>
         <!-- endregion -->
 
         <!-- region Services -->

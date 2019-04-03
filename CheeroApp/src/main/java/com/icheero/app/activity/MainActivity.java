@@ -23,6 +23,9 @@ import com.icheero.app.activity.network.ImageDownloadActivity;
 import com.icheero.app.activity.network.RequestActivity;
 import com.icheero.app.activity.network.RetrofitActivity;
 import com.icheero.app.activity.network.WebViewActivity;
+import com.icheero.app.activity.reverse.DisposeManifestActivity;
+import com.icheero.app.activity.reverse.DisposeSoActivity;
+import com.icheero.app.activity.reverse.JniActivity;
 import com.icheero.app.activity.ui.AnimActivity;
 import com.icheero.app.activity.ui.CustomViewActivity;
 import com.icheero.app.activity.ui.DialogActivity;
@@ -78,8 +81,12 @@ public class MainActivity extends BaseActivity
     Button toDatabaseActivity;
     @BindView(R.id.to_view_model_activity)
     Button toViewModelActivity;
-    @BindView(R.id.to_reverse_activity)
-    Button toReverseActivity;
+    @BindView(R.id.to_jni_activity)
+    Button toJniActivity;
+    @BindView(R.id.to_dispose_so_activity)
+    Button toDisposeSoActivity;
+    @BindView(R.id.to_dispose_manifest_activity)
+    Button toDisposeManifestActivity;
     @BindView(R.id.to_load_plugin_activity)
     Button toLoadPluginActivity;
     @BindView(R.id.to_faceid_activity)
@@ -234,8 +241,27 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @OnClick({R.id.to_reverse_activity, R.id.to_load_plugin_activity, R.id.to_faceid_activity})
+    @OnClick({R.id.to_jni_activity, R.id.to_dispose_so_activity, R.id.to_dispose_manifest_activity})
     public void OnReverseClickEvent(View v)
+    {
+        Intent intent = new Intent();
+        switch (v.getId())
+        {
+            case R.id.to_jni_activity:
+                intent.setClass(this, JniActivity.class);
+                break;
+            case R.id.to_dispose_so_activity:
+                intent.setClass(this, DisposeSoActivity.class);
+                break;
+            case R.id.to_dispose_manifest_activity:
+                intent.setClass(this, DisposeManifestActivity.class);
+                break;
+        }
+        startActivity(intent);
+    }
+
+    @OnClick({R.id.to_load_plugin_activity, R.id.to_faceid_activity})
+    public void OnModuleClickEvent(View v)
     {
         switch (v.getId())
         {
@@ -247,11 +273,6 @@ public class MainActivity extends BaseActivity
             case R.id.to_faceid_activity:
             {
                 ARouter.getInstance().build("/faceid/index").navigation();
-                break;
-            }
-            case R.id.to_reverse_activity:
-            {
-                ARouter.getInstance().build("/reverse/index").navigation();
                 break;
             }
         }

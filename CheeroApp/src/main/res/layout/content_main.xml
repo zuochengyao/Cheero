@@ -178,6 +178,37 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/to_jni_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="JniActivity"/>
+
+            <Button
+                android:id="@+id/to_dispose_so_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DisposeSoActivity"/>
+
+            <Button
+                android:id="@+id/to_dispose_manifest_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DisposeManifestActivity"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
                 android:id="@+id/to_faceid_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -188,12 +219,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="LoadPluginActivity"/>
-
-            <Button
-                android:id="@+id/to_reverse_activity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ReverseActivity"/>
 
         </LinearLayout>
     </HorizontalScrollView>

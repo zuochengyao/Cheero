@@ -1,1 +1,1 @@
-include ':CheeroApp', ':CheeroSDK', ':CheeroPlugin', ':CheeroFaceID', ':CheeroReverse'
+include ':CheeroApp', ':CheeroSDK', ':CheeroPlugin', ':CheeroFaceID'

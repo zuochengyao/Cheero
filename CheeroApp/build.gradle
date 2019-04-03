@@ -67,7 +67,6 @@ dependencies {
     if (isLibrary) {
         implementation project(':CheeroPlugin')
         implementation project(':CheeroFaceID')
-        implementation project(':CheeroReverse')
     }
     implementation versions.deps.butterknife.runtime
     annotationProcessor versions.deps.butterknife.compiler
