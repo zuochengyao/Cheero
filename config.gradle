@@ -1,6 +1,6 @@
 def build_version = [:]
 build_version.compile_sdk = 28
-build_version.min_sdk = 14
+build_version.min_sdk = 24
 build_version.target_sdk = 28
 build_version.gradle = '3.2.0'
 build_version.code = 3

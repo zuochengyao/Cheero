@@ -195,6 +195,12 @@
                 android:layout_height="wrap_content"
                 android:text="DisposeManifestActivity"/>
 
+            <Button
+                android:id="@+id/to_dispose_resource_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DisposeResourceActivity"/>
+
         </LinearLayout>
     </HorizontalScrollView>
 

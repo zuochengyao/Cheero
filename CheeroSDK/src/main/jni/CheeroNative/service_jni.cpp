@@ -77,11 +77,11 @@ JNIEXPORT void JNICALL native_CallJavaNonVirtualMethod(JNIEnv *env, jobject, job
     // 获取obj中对象的class对象
     jclass jClass = env->GetObjectClass(obj);
     // 获取java中father字段的id
-    jfieldID jFatherID = env->GetFieldID(jClass, "father", "Lcom/icheero/app/activity/jni/JniActivity$Father;");
+    jfieldID jFatherID = env->GetFieldID(jClass, "father", "Lcom/icheero/app/activity/reverse/JniActivity$Father;");
     // 获取father字段的对象类型
     jobject jFather = env->GetObjectField(obj, jFatherID);
     // 获取father对象的class对象
-    jclass jFatherClass = env->FindClass("com/icheero/app/activity/jni/JniActivity$Father");
+    jclass jFatherClass = env->FindClass("com/icheero/app/activity/reverse/JniActivity$Father");
     // 获取father对象中的function方法id
     jmethodID jFatherFunction = env->GetMethodID(jFatherClass, "function", "()V");
     // 调用父类方法：会执行子类的方法

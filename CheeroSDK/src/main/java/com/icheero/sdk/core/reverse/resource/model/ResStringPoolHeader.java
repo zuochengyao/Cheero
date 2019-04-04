@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.reverse.resource.model;
 
-import com.icheero.sdk.util.Common;
+import com.icheero.sdk.util.FileUtils;
 
 import androidx.annotation.NonNull;
 
@@ -92,27 +92,27 @@ public class ResStringPoolHeader
 
     int getStringCountValue()
     {
-        return Common.byte2Int(stringCount);
+        return FileUtils.byte2Int(stringCount);
     }
 
     int getStyleCountValue()
     {
-        return Common.byte2Int(styleCount);
+        return FileUtils.byte2Int(styleCount);
     }
 
     int getFlagsValue()
     {
-        return Common.byte2Int(flags);
+        return FileUtils.byte2Int(flags);
     }
 
     int getStringsStartValue()
     {
-        return Common.byte2Int(stringsStart);
+        return FileUtils.byte2Int(stringsStart);
     }
 
     int getStylesStartValue()
     {
-        return Common.byte2Int(stylesStart);
+        return FileUtils.byte2Int(stylesStart);
     }
 
     @NonNull
@@ -121,11 +121,11 @@ public class ResStringPoolHeader
     {
         StringBuilder builder = new StringBuilder("------------------ ResStringPoolHeader ------------------\n");
         builder.append("Header: ").append("\n").append(header.toString()).append("\n");
-        builder.append("StringCount: ").append(Common.byte2HexString(stringCount)).append("(").append(getStringCountValue()).append(")").append("\n");
-        builder.append("styleCount: ").append(Common.byte2HexString(styleCount)).append("(").append(getStyleCountValue()).append(")").append("\n");
-        builder.append("flags: ").append(Common.byte2HexString(flags)).append("(").append(getFlagsValue()).append(")").append("\n");
-        builder.append("stringStart: ").append(Common.byte2HexString(stringsStart)).append("(").append(getStringsStartValue()).append(")").append("\n");
-        builder.append("stylesStart: ").append(Common.byte2HexString(stylesStart)).append("(").append(getStylesStartValue()).append(")").append("\n");
+        builder.append("StringCount: ").append(FileUtils.byte2HexString(stringCount)).append("(").append(getStringCountValue()).append(")").append("\n");
+        builder.append("styleCount: ").append(FileUtils.byte2HexString(styleCount)).append("(").append(getStyleCountValue()).append(")").append("\n");
+        builder.append("flags: ").append(FileUtils.byte2HexString(flags)).append("(").append(getFlagsValue()).append(")").append("\n");
+        builder.append("stringStart: ").append(FileUtils.byte2HexString(stringsStart)).append("(").append(getStringsStartValue()).append(")").append("\n");
+        builder.append("stylesStart: ").append(FileUtils.byte2HexString(stylesStart)).append("(").append(getStylesStartValue()).append(")").append("\n");
         return builder.toString();
     }
 }

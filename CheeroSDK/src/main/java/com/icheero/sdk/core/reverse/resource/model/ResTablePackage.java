@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.reverse.resource.model;
 
-import com.icheero.sdk.util.Common;
+import com.icheero.sdk.util.FileUtils;
 
 import java.util.Arrays;
 
@@ -76,32 +76,32 @@ public class ResTablePackage
 
     public int getIdValue()
     {
-        return Common.byte2Int(id);
+        return FileUtils.byte2Int(id);
     }
 
     public String getNameStr()
     {
-        return Arrays.toString(Common.byte2Char(name));
+        return Arrays.toString(FileUtils.byte2Char(name));
     }
 
     public int getTypeStringsValue()
     {
-        return Common.byte2Int(typeStrings);
+        return FileUtils.byte2Int(typeStrings);
     }
 
     public int getLastPublicTypeValue()
     {
-        return Common.byte2Int(lastPublicType);
+        return FileUtils.byte2Int(lastPublicType);
     }
 
     public int getKeyStringsValue()
     {
-        return Common.byte2Int(keyStrings);
+        return FileUtils.byte2Int(keyStrings);
     }
 
     public int getLastPublicKeyValue()
     {
-        return Common.byte2Int(lastPublicKey);
+        return FileUtils.byte2Int(lastPublicKey);
     }
 
     @NonNull
@@ -110,12 +110,12 @@ public class ResTablePackage
     {
         StringBuilder builder = new StringBuilder("------------------ ResTablePackage ------------------\n");
         builder.append("Header: ").append("\n").append(header.toString()).append("\n");
-        builder.append("Id: ").append(Common.byte2HexString(id)).append("(").append(getIdValue()).append(")").append("\n");
-        builder.append("Name: ").append(Common.byte2HexString(name)).append("(").append(getNameStr()).append(")").append("\n");
-        builder.append("TypeStrings: ").append(Common.byte2HexString(typeStrings)).append("(").append(getTypeStringsValue()).append(")").append("\n");
-        builder.append("LastPublicType: ").append(Common.byte2HexString(lastPublicType)).append("(").append(getLastPublicTypeValue()).append(")").append("\n");
-        builder.append("KeyStrings: ").append(Common.byte2HexString(keyStrings)).append("(").append(getKeyStringsValue()).append(")").append("\n");
-        builder.append("LastPublicKey: ").append(Common.byte2HexString(lastPublicKey)).append("(").append(getLastPublicKeyValue()).append(")").append("\n");
+        builder.append("Id: ").append(FileUtils.byte2HexString(id)).append("(").append(getIdValue()).append(")").append("\n");
+        builder.append("Name: ").append(FileUtils.byte2HexString(name)).append("(").append(getNameStr()).append(")").append("\n");
+        builder.append("TypeStrings: ").append(FileUtils.byte2HexString(typeStrings)).append("(").append(getTypeStringsValue()).append(")").append("\n");
+        builder.append("LastPublicType: ").append(FileUtils.byte2HexString(lastPublicType)).append("(").append(getLastPublicTypeValue()).append(")").append("\n");
+        builder.append("KeyStrings: ").append(FileUtils.byte2HexString(keyStrings)).append("(").append(getKeyStringsValue()).append(")").append("\n");
+        builder.append("LastPublicKey: ").append(FileUtils.byte2HexString(lastPublicKey)).append("(").append(getLastPublicKeyValue()).append(")").append("\n");
         return builder.toString();
     }
 }

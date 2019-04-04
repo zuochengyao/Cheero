@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.icheero.app.R;
 import com.icheero.app.activity.data.CustomSettingActivity;
@@ -101,7 +102,7 @@ public class MainActivity extends BaseActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = $(R.id.fab);
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show());
+        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", BaseTransientBottomBar.LENGTH_LONG).setAction("Action", null).show());
         Slide slide = new Slide();
         slide.setDuration(700);
         getWindow().setExitTransition(slide);

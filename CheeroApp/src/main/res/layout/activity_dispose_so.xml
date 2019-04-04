@@ -8,15 +8,9 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/so_dispose_program"
+        android:id="@+id/so_dispose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="解析program header"/>
-
-    <Button
-        android:id="@+id/so_dispose_section"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="解析section header"/>
+        android:text="解析SO文件"/>
 
 </LinearLayout>

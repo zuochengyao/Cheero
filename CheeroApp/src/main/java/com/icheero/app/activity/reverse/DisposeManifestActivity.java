@@ -9,6 +9,7 @@ import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.reverse.IParser;
 import com.icheero.sdk.core.reverse.manifest.ManifestParser;
 import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.Log;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +45,11 @@ public class DisposeManifestActivity extends BaseActivity
             case R.id.manifest_dispose_2:
                 mManifestData = FileUtils.readRawResource(this, R.raw.manifest2);
                 break;
+        }
+        if (mManifestData == null)
+        {
+            Log.e(TAG, "Read file failed!");
+            return;
         }
         IParser mManifestParser = new ManifestParser(mManifestData);
         mManifestParser.parse();

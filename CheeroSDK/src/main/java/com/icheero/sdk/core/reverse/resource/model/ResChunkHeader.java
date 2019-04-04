@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.reverse.resource.model;
 
-import com.icheero.sdk.util.Common;
+import com.icheero.sdk.util.FileUtils;
 
 import androidx.annotation.NonNull;
 
@@ -76,17 +76,17 @@ public class ResChunkHeader
 
     int getTypeValue()
     {
-        return Common.byte2Int(type);
+        return FileUtils.byte2Int(type);
     }
 
     int getHeaderSizeValue()
     {
-        return Common.byte2Int(headerSize);
+        return FileUtils.byte2Int(headerSize);
     }
 
     int getSizeValue()
     {
-        return Common.byte2Int(size);
+        return FileUtils.byte2Int(size);
     }
 
     @NonNull
@@ -94,9 +94,9 @@ public class ResChunkHeader
     public String toString()
     {
         StringBuilder builder = new StringBuilder("------------------ ResChunkHeader ------------------\n");
-        builder.append("Type: ").append(Common.byte2HexString(type)).append("(").append(getTypeValue()).append(")").append("\n");
-        builder.append("HeaderSize: ").append(Common.byte2HexString(headerSize)).append("(").append(getHeaderSizeValue()).append(")").append("\n");
-        builder.append("Size: ").append(Common.byte2HexString(size)).append("(").append(getSizeValue()).append(")").append("\n");
+        builder.append("Type: ").append(FileUtils.byte2HexString(type)).append("(").append(getTypeValue()).append(")").append("\n");
+        builder.append("HeaderSize: ").append(FileUtils.byte2HexString(headerSize)).append("(").append(getHeaderSizeValue()).append(")").append("\n");
+        builder.append("Size: ").append(FileUtils.byte2HexString(size)).append("(").append(getSizeValue()).append(")").append("\n");
         return builder.toString();
     }
 }

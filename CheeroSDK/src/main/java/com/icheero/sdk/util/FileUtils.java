@@ -11,6 +11,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 
 /**
  * Created by 左程耀 on 2018/3/2.
@@ -199,5 +203,103 @@ public class FileUtils
             }
         }
         return null;
+    }
+
+    public static ByteOrder byteOrder()
+    {
+        return ByteOrder.nativeOrder();
+    }
+
+    /**
+     * 字节数组 转换 十六进制字符串
+     */
+    public static String byte2HexString(byte... data)
+    {
+        StringBuilder ret = new StringBuilder();
+        if (data != null && data.length > 0)
+        {
+            for (byte b : data)
+            {
+                String hex = Integer.toHexString(b & 0xFF);
+                if (hex.length() == 1) hex = '0' + hex;
+                ret.append(hex).append(" ");
+            }
+            return ret.toString();
+        }
+        return null;
+    }
+
+    public static byte[] copyBytes(byte[] src, int start, int count)
+    {
+        if (src == null)
+            return null;
+        byte[] dest = new byte[count];
+        System.arraycopy(src, start, dest, 0, count);
+        return dest;
+    }
+
+    public static void copyBytes(byte[] src, int start, byte[] dest)
+    {
+        System.arraycopy(src, start, dest, 0, dest.length);
+    }
+
+    public static char[] byte2Char(byte[] data)
+    {
+        Charset charset = Charset.forName("UTF-8");
+        ByteBuffer byteBuffer = ByteBuffer.allocate(data.length);
+        byteBuffer.order(byteOrder()).put(data);
+        byteBuffer.flip();
+        CharBuffer charBuffer = charset.decode(byteBuffer);
+        return charBuffer.array();
+    }
+
+    public static byte[] int2Byte(int number)
+    {
+        byte[] data = new byte[4];
+        data[0] = (byte) ((number >> 24) & 0xff);
+        data[1] = (byte) ((number >> 16) & 0xff);
+        data[2] = (byte) ((number >> 8) & 0xff);
+        data[3] = (byte) (number & 0xff);
+        return data;
+    }
+
+    public static int byte2Int(byte[] data)
+    {
+        /*
+        ByteBuffer byteBuffer = ByteBuffer.allocate(4);
+        byteBuffer.order(byteOrder()).put(data).getInt();
+        */
+        if (byteOrder() == ByteOrder.LITTLE_ENDIAN)
+            data = reverseBytes(data);
+        return data[3] & 0xFF | (data[2] & 0xFF) << 8 | (data[1] & 0xFF) << 16 | (data[0] & 0xFF) << 24;
+    }
+
+    public static short byte2Short(byte[] data)
+    {
+        /*
+        ByteBuffer byteBuffer = ByteBuffer.allocate(2);
+        byteBuffer.order(byteOrder());
+        byteBuffer.put(data);
+        return byteBuffer.getShort(0);
+        */
+        if (byteOrder() == ByteOrder.LITTLE_ENDIAN)
+            data = reverseBytes(data);
+        return (short) (data[1] & 0xff | (data[0] & 0xff) << 8);
+    }
+
+    public static byte[] reverseBytes(byte[] bytes)
+    {
+        if (bytes == null || (bytes.length == 1))
+            return bytes;
+        byte[] newBytes = copyBytes(bytes, 0, bytes.length);
+        int offset = bytes.length / 2;
+        // 1 2
+        for (int i = 0; i < offset; i++)
+        {
+            byte tmp = newBytes[i];
+            newBytes[i] = newBytes[newBytes.length - i - 1];
+            newBytes[newBytes.length - i - 1] = tmp;
+        }
+        return newBytes;
     }
 }

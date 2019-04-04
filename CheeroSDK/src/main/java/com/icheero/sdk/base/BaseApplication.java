@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.alibaba.android.arouter.utils.PackageUtils;
 import com.facebook.stetho.Stetho;
 import com.icheero.sdk.core.database.DBHelper;
 import com.icheero.sdk.core.manager.ApplicationManager;
@@ -14,6 +13,7 @@ import com.icheero.sdk.core.manager.HttpManager;
 import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.core.network.download.DownloadConfig;
 import com.icheero.sdk.core.network.http.HttpConfig;
+import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.Log;
 
 import androidx.multidex.MultiDex;
@@ -58,7 +58,7 @@ public class BaseApplication extends Application
                 .build();
         DownloadManager.getInstance().init(downloadConfig);
         // 初始化 ARouter
-        if (ARouter.debuggable() || PackageUtils.isNewVersion(this))
+        if (Common.isDebug(this))
         {
             ARouter.openDebug();
             ARouter.openLog();

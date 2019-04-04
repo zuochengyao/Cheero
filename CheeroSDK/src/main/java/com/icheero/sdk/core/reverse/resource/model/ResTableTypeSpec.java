@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.reverse.resource.model;
 
-import com.icheero.sdk.util.Common;
+import com.icheero.sdk.util.FileUtils;
 
 import androidx.annotation.NonNull;
 
@@ -94,12 +94,12 @@ public class ResTableTypeSpec
 
     public short getRes1Value()
     {
-        return Common.byte2Short(res1);
+        return FileUtils.byte2Short(res1);
     }
 
     public int getEntryCountValue()
     {
-        return Common.byte2Int(entryCount);
+        return FileUtils.byte2Int(entryCount);
     }
 
     @NonNull
@@ -108,10 +108,10 @@ public class ResTableTypeSpec
     {
         StringBuilder builder = new StringBuilder("------------------ ResTableTypeSpec ------------------\n");
         builder.append("Header: ").append("\n").append(header.toString()).append("\n");
-        builder.append("Id: ").append(Common.byte2HexString(id)).append("(").append(getIdValue()).append(")").append("\n");
-        builder.append("res0: ").append(Common.byte2HexString(res0)).append("(").append(getRes0Value()).append(")").append("\n");
-        builder.append("res1: ").append(Common.byte2HexString(res1)).append("(").append(getRes1Value()).append(")").append("\n");
-        builder.append("EntryCount: ").append(Common.byte2HexString(entryCount)).append("(").append(getEntryCountValue()).append(")").append("\n");
+        builder.append("Id: ").append(FileUtils.byte2HexString(id)).append("(").append(getIdValue()).append(")").append("\n");
+        builder.append("res0: ").append(FileUtils.byte2HexString(res0)).append("(").append(getRes0Value()).append(")").append("\n");
+        builder.append("res1: ").append(FileUtils.byte2HexString(res1)).append("(").append(getRes1Value()).append(")").append("\n");
+        builder.append("EntryCount: ").append(FileUtils.byte2HexString(entryCount)).append("(").append(getEntryCountValue()).append(")").append("\n");
         return builder.toString();
     }
 }

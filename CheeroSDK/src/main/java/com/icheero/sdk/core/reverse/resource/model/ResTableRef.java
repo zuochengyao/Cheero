@@ -1,6 +1,7 @@
 package com.icheero.sdk.core.reverse.resource.model;
 
-import com.icheero.sdk.util.Common;
+
+import com.icheero.sdk.util.FileUtils;
 
 import androidx.annotation.NonNull;
 
@@ -34,6 +35,6 @@ public class ResTableRef
     @Override
     public String toString()
     {
-        return "Ident: " + Common.byte2HexString(ident) + "(" + Common.byte2Int(ident) + ")";
+        return "Ident: " + FileUtils.byte2HexString(ident) + "(" + FileUtils.byte2Int(ident) + ")";
     }
 }
