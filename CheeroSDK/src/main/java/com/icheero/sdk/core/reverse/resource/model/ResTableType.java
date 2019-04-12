@@ -120,7 +120,7 @@ public class ResTableType
 
     public int getSize()
     {
-        return header.getHeaderSize() + 1 + 1 + 2 + 4 + 4;
+        return ResChunkHeader.getHeaderLength() + 1 + 1 + 2 + 4 + 4;
     }
 
     @NonNull

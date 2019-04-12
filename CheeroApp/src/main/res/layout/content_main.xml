@@ -178,16 +178,10 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/to_jni_activity"
+                android:id="@+id/to_dispose_resource_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="JniActivity"/>
-
-            <Button
-                android:id="@+id/to_dispose_so_activity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="DisposeSoActivity"/>
+                android:text="DisposeResourceActivity"/>
 
             <Button
                 android:id="@+id/to_dispose_manifest_activity"
@@ -196,10 +190,16 @@
                 android:text="DisposeManifestActivity"/>
 
             <Button
-                android:id="@+id/to_dispose_resource_activity"
+                android:id="@+id/to_dispose_so_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DisposeResourceActivity"/>
+                android:text="DisposeSoActivity"/>
+
+            <Button
+                android:id="@+id/to_jni_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="JniActivity"/>
 
         </LinearLayout>
     </HorizontalScrollView>

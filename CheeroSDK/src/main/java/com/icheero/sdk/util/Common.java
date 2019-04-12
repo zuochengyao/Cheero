@@ -12,6 +12,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 /**
  * Created by 左程耀 on 2018/2/26.
@@ -129,5 +130,21 @@ public class Common
     public static boolean isDebug(Context context)
     {
         return context.getApplicationInfo() != null && (context.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+    }
+
+    public static String filterStringNull(String str)
+    {
+        if (str == null || str.length() == 0) return str;
+        byte[] strBytes = str.getBytes();
+        ArrayList<Byte> newByte = new ArrayList<>();
+
+        for (byte strByte : strBytes)
+        {
+            if (strByte != 0) newByte.add(strByte);
+        }
+        byte[] newByteAry = new byte[newByte.size()];
+        for (int i = 0; i < newByteAry.length; i++)
+            newByteAry[i] = newByte.get(i);
+        return new String(newByteAry);
     }
 }

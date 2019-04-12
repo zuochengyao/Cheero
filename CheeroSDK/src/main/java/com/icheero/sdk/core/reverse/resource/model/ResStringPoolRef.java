@@ -19,10 +19,6 @@ import com.icheero.sdk.util.FileUtils;
  */
 public class ResStringPoolRef
 {
-    /**
-
-     */
-
     public byte[] index = new byte[4];
 
     int getSize()

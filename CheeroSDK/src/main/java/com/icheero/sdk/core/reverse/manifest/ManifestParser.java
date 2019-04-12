@@ -3,6 +3,7 @@ package com.icheero.sdk.core.reverse.manifest;
 import android.text.TextUtils;
 
 import com.icheero.sdk.core.reverse.IParser;
+import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.FileUtils;
 import com.icheero.sdk.util.Log;
 import com.icheero.sdk.util.XmlUtils;
@@ -172,26 +173,11 @@ public class ManifestParser implements IParser
             int stringSizeValue = FileUtils.byte2Short(stringSize) * 2;
             String str = new String(FileUtils.copyBytes(mManifest.getStringChunk().scStringPoolContent, endStringIndex + 2, stringSizeValue + 2));
             // 将字符串都放到ArrayList中
-            mManifest.getStringChunk().scStringPoolContentList.add(filterStringNull(str));
+            mManifest.getStringChunk().scStringPoolContentList.add(Common.filterStringNull(str));
             endStringIndex += (2 + stringSizeValue + 2);
         }
     }
 
-    private String filterStringNull(String str)
-    {
-        if (str == null || str.length() == 0) return str;
-        byte[] strBytes = str.getBytes();
-        ArrayList<Byte> newByte = new ArrayList<>();
-
-        for (byte strByte : strBytes)
-        {
-            if (strByte != 0) newByte.add(strByte);
-        }
-        byte[] newByteAry = new byte[newByte.size()];
-        for (int i = 0; i < newByteAry.length; i++)
-            newByteAry[i] = newByte.get(i);
-        return new String(newByteAry);
-    }
     // endregion
 
     // region ResourceIdChunk

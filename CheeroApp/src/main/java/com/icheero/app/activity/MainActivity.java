@@ -25,6 +25,7 @@ import com.icheero.app.activity.network.RequestActivity;
 import com.icheero.app.activity.network.RetrofitActivity;
 import com.icheero.app.activity.network.WebViewActivity;
 import com.icheero.app.activity.reverse.DisposeManifestActivity;
+import com.icheero.app.activity.reverse.DisposeResourceActivity;
 import com.icheero.app.activity.reverse.DisposeSoActivity;
 import com.icheero.app.activity.reverse.JniActivity;
 import com.icheero.app.activity.ui.AnimActivity;
@@ -88,6 +89,8 @@ public class MainActivity extends BaseActivity
     Button toDisposeSoActivity;
     @BindView(R.id.to_dispose_manifest_activity)
     Button toDisposeManifestActivity;
+    @BindView(R.id.to_dispose_resource_activity)
+    Button toDisposeResouceActivity;
     @BindView(R.id.to_load_plugin_activity)
     Button toLoadPluginActivity;
     @BindView(R.id.to_faceid_activity)
@@ -242,7 +245,7 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @OnClick({R.id.to_jni_activity, R.id.to_dispose_so_activity, R.id.to_dispose_manifest_activity})
+    @OnClick({R.id.to_jni_activity, R.id.to_dispose_so_activity, R.id.to_dispose_manifest_activity, R.id.to_dispose_resource_activity})
     public void OnReverseClickEvent(View v)
     {
         Intent intent = new Intent();
@@ -256,6 +259,9 @@ public class MainActivity extends BaseActivity
                 break;
             case R.id.to_dispose_manifest_activity:
                 intent.setClass(this, DisposeManifestActivity.class);
+                break;
+            case R.id.to_dispose_resource_activity:
+                intent.setClass(this, DisposeResourceActivity.class);
                 break;
         }
         startActivity(intent);

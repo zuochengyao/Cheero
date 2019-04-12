@@ -42,9 +42,19 @@ public class ResTableHeader
      */
     public byte[] packageCount = new byte[4];
 
+    public ResTableHeader()
+    {
+        header = new ResChunkHeader();
+    }
+
     int getPackageCountValue()
     {
         return FileUtils.byte2Int(packageCount);
+    }
+
+    public int getHeaderSize()
+    {
+        return ResChunkHeader.getHeaderLength() + 4;
     }
 
     @NonNull

@@ -72,7 +72,7 @@ public class ResStringPoolHeader
     public byte[] styleCount = new byte[4];
     /**
      * 字符串的属性
-     * 可取值包括0x000(UTF-16)、0x001(字符串经过排序)、0X100(UTF-8)和他们的组合值
+     * 可取值包括0x000(UTF-16)、0x001(字符串经过排序)、0x100(UTF-8)和他们的组合值
      */
     public byte[] flags = new byte[4];
     /** 字符串内容块相对于其头部的距离 */
@@ -80,14 +80,9 @@ public class ResStringPoolHeader
     /** 字符串样式块相对于其头部的距离 */
     public byte[] stylesStart = new byte[4];
 
-    public ResStringPoolHeader()
-    {
-        header = new ResChunkHeader();
-    }
-
     public int getHeaderSize()
     {
-        return header.getHeaderSize() + 4 + 4 + 4 + 4 + 4;
+        return ResChunkHeader.getHeaderLength() + 4 + 4 + 4 + 4 + 4;
     }
 
     int getStringCountValue()
@@ -103,6 +98,14 @@ public class ResStringPoolHeader
     int getFlagsValue()
     {
         return FileUtils.byte2Int(flags);
+    }
+
+    public String getFlagsValueEncode()
+    {
+        String encoding = "utf-8";
+        if (getFlagsValue() == 0x000)
+            encoding = "utf-16";
+        return encoding;
     }
 
     int getStringsStartValue()

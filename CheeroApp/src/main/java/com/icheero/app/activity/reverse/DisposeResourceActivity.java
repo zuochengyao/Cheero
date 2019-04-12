@@ -6,6 +6,10 @@ import android.widget.Button;
 
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
+import com.icheero.sdk.core.reverse.IParser;
+import com.icheero.sdk.core.reverse.resource.ResourceParser;
+import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.Log;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,8 +19,6 @@ public class DisposeResourceActivity extends BaseActivity
 {
     @BindView(R.id.resource_dispose)
     Button mResourceDispose;
-
-    private byte[] mResourceData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,6 +31,13 @@ public class DisposeResourceActivity extends BaseActivity
     @OnClick(R.id.resource_dispose)
     public void onResourceDisposeClickEvent(View v)
     {
-
+        byte[] resourceData = FileUtils.readRawResource(this, R.raw.resources);
+        if (resourceData == null)
+        {
+            Log.e(TAG, "Read file failed!");
+            return;
+        }
+        IParser mResourceParser = new ResourceParser(resourceData);
+        mResourceParser.parse();
     }
 }

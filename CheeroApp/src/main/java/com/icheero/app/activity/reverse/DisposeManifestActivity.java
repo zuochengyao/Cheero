@@ -36,8 +36,7 @@ public class DisposeManifestActivity extends BaseActivity
     @OnClick({R.id.manifest_dispose_1, R.id.manifest_dispose_2})
     public void onManifestDisposeClickEvent(View v)
     {
-        int id = v.getId();
-        switch (id)
+        switch (v.getId())
         {
             case R.id.manifest_dispose_1:
                 mManifestData = FileUtils.readRawResource(this, R.raw.manifest);

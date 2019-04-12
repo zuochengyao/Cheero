@@ -158,10 +158,13 @@ public class ResValue
 
     public static final int COMPLEX_UNIT_PX = 0, COMPLEX_UNIT_DIP = 1, COMPLEX_UNIT_SP = 2, COMPLEX_UNIT_PT = 3, COMPLEX_UNIT_IN = 4, COMPLEX_UNIT_MM = 5, COMPLEX_UNIT_SHIFT = 0, COMPLEX_UNIT_MASK = 15, COMPLEX_UNIT_FRACTION = 0, COMPLEX_UNIT_FRACTION_PARENT = 1, COMPLEX_RADIX_23p0 = 0, COMPLEX_RADIX_16p7 = 1, COMPLEX_RADIX_8p15 = 2, COMPLEX_RADIX_0p23 = 3, COMPLEX_RADIX_SHIFT = 4, COMPLEX_RADIX_MASK = 3, COMPLEX_MANTISSA_SHIFT = 8, COMPLEX_MANTISSA_MASK = 0xFFFFFF;
 
-
+    /** ResValue 的头部大小 */
     public short size;
+    /** 保留，始终为0 */
     public byte res0;
+    /** 数据的类型,可以从上面的枚举类型中获取 */
     public byte dataType;
+    /** 数据对应的索引 */
     public int data;
 
     public int getSize()
@@ -293,5 +296,4 @@ public class ResValue
     {
         return "size:" + size + ",res0:" + res0 + ",dataType:" + getTypeStr() + ",data:" + getDataStr();
     }
-
 }

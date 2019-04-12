@@ -1,8 +1,7 @@
 package com.icheero.sdk.core.reverse.resource.model;
 
+import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.FileUtils;
-
-import java.util.Arrays;
 
 import androidx.annotation.NonNull;
 
@@ -69,11 +68,6 @@ public class ResTablePackage
     /** 最后一个导出的Public资源项名称字符串在资源项名称字符串资源池中的索引，目前这个值设置为资源项名称字符串资源池的元素个数 */
     public byte[] lastPublicKey = new byte[4];
 
-    public ResTablePackage()
-    {
-        header = new ResChunkHeader();
-    }
-
     public int getIdValue()
     {
         return FileUtils.byte2Int(id);
@@ -81,7 +75,7 @@ public class ResTablePackage
 
     public String getNameStr()
     {
-        return Arrays.toString(FileUtils.byte2Char(name));
+        return Common.filterStringNull(new String(name));
     }
 
     public int getTypeStringsValue()
