@@ -80,22 +80,22 @@ public class ResStringPoolHeader
     /** 字符串样式块相对于其头部的距离 */
     public byte[] stylesStart = new byte[4];
 
-    public int getHeaderSize()
+    public static int getHeaderLength()
     {
         return ResChunkHeader.getHeaderLength() + 4 + 4 + 4 + 4 + 4;
     }
 
-    int getStringCountValue()
+    public int getStringCountValue()
     {
         return FileUtils.byte2Int(stringCount);
     }
 
-    int getStyleCountValue()
+    public int getStyleCountValue()
     {
         return FileUtils.byte2Int(styleCount);
     }
 
-    int getFlagsValue()
+    public int getFlagsValue()
     {
         return FileUtils.byte2Int(flags);
     }
@@ -108,12 +108,12 @@ public class ResStringPoolHeader
         return encoding;
     }
 
-    int getStringsStartValue()
+    public int getStringsStartValue()
     {
         return FileUtils.byte2Int(stringsStart);
     }
 
-    int getStylesStartValue()
+    public int getStylesStartValue()
     {
         return FileUtils.byte2Int(stylesStart);
     }

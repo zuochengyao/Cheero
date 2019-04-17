@@ -72,9 +72,9 @@ public class ResTableTypeSpec
     /** 等于本类型的资源项个数,指名称相同的资源项的个数 */
     public byte[] entryCount = new byte[4];
 
-    public ResTableTypeSpec()
+    public ResTableTypeSpec(ResChunkHeader header)
     {
-        header = new ResChunkHeader();
+        this.header = header;
     }
 
     public ResChunkHeader getHeader()

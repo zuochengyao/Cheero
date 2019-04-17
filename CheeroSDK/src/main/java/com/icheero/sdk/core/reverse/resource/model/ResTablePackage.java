@@ -68,6 +68,11 @@ public class ResTablePackage
     /** 最后一个导出的Public资源项名称字符串在资源项名称字符串资源池中的索引，目前这个值设置为资源项名称字符串资源池的元素个数 */
     public byte[] lastPublicKey = new byte[4];
 
+    public ResTablePackage(ResChunkHeader header)
+    {
+        this.header = header;
+    }
+
     public int getIdValue()
     {
         return FileUtils.byte2Int(id);

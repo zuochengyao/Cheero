@@ -42,9 +42,9 @@ public class ResTableHeader
      */
     public byte[] packageCount = new byte[4];
 
-    public ResTableHeader()
+    public ResTableHeader(ResChunkHeader resChunkHeader)
     {
-        header = new ResChunkHeader();
+        this.header = resChunkHeader;
     }
 
     int getPackageCountValue()

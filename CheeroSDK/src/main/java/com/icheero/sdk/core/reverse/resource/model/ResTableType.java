@@ -87,9 +87,9 @@ public class ResTableType
     /** 指向一个ResTable_config，用来描述配置信息，地区，语言，分辨率等 */
     public ResTableConfig resConfig;
 
-    public ResTableType()
+    public ResTableType(ResChunkHeader header)
     {
-        header = new ResChunkHeader();
+        this.header = header;
         resConfig = new ResTableConfig();
     }
 
@@ -118,7 +118,7 @@ public class ResTableType
         return FileUtils.byte2Int(entriesStart);
     }
 
-    public int getSize()
+    public int getHeaderLength()
     {
         return ResChunkHeader.getHeaderLength() + 1 + 1 + 2 + 4 + 4;
     }

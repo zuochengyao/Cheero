@@ -98,7 +98,7 @@ public class ResChunkHeader
         return 8;
     }
 
-    int getTypeValue()
+    public int getTypeValue()
     {
         return FileUtils.byte2Short(type);
     }
