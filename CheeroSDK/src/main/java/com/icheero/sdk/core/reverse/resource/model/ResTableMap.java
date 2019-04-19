@@ -105,7 +105,7 @@ public class ResTableMap
 
     public int getSize()
     {
-        return name.getSize() + value.getSize();
+        return ResTableRef.getLength() + ResValue.getLength();
     }
 
     @Override

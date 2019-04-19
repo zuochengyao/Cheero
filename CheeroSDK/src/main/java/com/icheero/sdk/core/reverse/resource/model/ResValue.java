@@ -1,5 +1,8 @@
 package com.icheero.sdk.core.reverse.resource.model;
 
+import com.icheero.sdk.core.reverse.resource.ResourceParser;
+import com.icheero.sdk.util.FileUtils;
+
 /**
  * @author zcy 2019-04-02 16:08:48
  *
@@ -159,17 +162,27 @@ public class ResValue
     public static final int COMPLEX_UNIT_PX = 0, COMPLEX_UNIT_DIP = 1, COMPLEX_UNIT_SP = 2, COMPLEX_UNIT_PT = 3, COMPLEX_UNIT_IN = 4, COMPLEX_UNIT_MM = 5, COMPLEX_UNIT_SHIFT = 0, COMPLEX_UNIT_MASK = 15, COMPLEX_UNIT_FRACTION = 0, COMPLEX_UNIT_FRACTION_PARENT = 1, COMPLEX_RADIX_23p0 = 0, COMPLEX_RADIX_16p7 = 1, COMPLEX_RADIX_8p15 = 2, COMPLEX_RADIX_0p23 = 3, COMPLEX_RADIX_SHIFT = 4, COMPLEX_RADIX_MASK = 3, COMPLEX_MANTISSA_SHIFT = 8, COMPLEX_MANTISSA_MASK = 0xFFFFFF;
 
     /** ResValue 的头部大小 */
-    public short size;
+    public byte[] size = new byte[2];
     /** 保留，始终为0 */
     public byte res0;
     /** 数据的类型,可以从上面的枚举类型中获取 */
     public byte dataType;
     /** 数据对应的索引 */
-    public int data;
+    public byte[] data = new byte[4];
 
-    public int getSize()
+    public static int getLength()
     {
         return 2 + 1 + 1 + 4;
+    }
+
+    public short getSizeValue()
+    {
+        return FileUtils.byte2Short(size);
+    }
+
+    public int getDataValue()
+    {
+        return FileUtils.byte2Int(data);
     }
 
     public String getTypeStr()
@@ -223,46 +236,45 @@ public class ResValue
     {
         if (dataType == TYPE_STRING)
         {
-            // TODO
-            return "";// ParseResourceUtils.getResString(data);
+            return ResourceParser.getResString(getDataValue());
         }
         if (dataType == TYPE_ATTRIBUTE)
         {
-            return String.format("?%s%08X", getPackage(data), data);
+            return String.format("?%s%08X", getPackage(getDataValue()), getDataValue());
         }
         if (dataType == TYPE_REFERENCE)
         {
-            return String.format("@%s%08X", getPackage(data), data);
+            return String.format("@%s%08X", getPackage(getDataValue()), getDataValue());
         }
         if (dataType == TYPE_FLOAT)
         {
-            return String.valueOf(Float.intBitsToFloat(data));
+            return String.valueOf(Float.intBitsToFloat(getDataValue()));
         }
         if (dataType == TYPE_INT_HEX)
         {
-            return String.format("0x%08X", data);
+            return String.format("0x%08X", getDataValue());
         }
         if (dataType == TYPE_INT_BOOLEAN)
         {
-            return data != 0 ? "true" : "false";
+            return getDataValue() != 0 ? "true" : "false";
         }
         if (dataType == TYPE_DIMENSION)
         {
-            return Float.toString(complexToFloat(data)) + DIMENSION_UNITS[data & COMPLEX_UNIT_MASK];
+            return Float.toString(complexToFloat(getDataValue())) + DIMENSION_UNITS[getDataValue() & COMPLEX_UNIT_MASK];
         }
         if (dataType == TYPE_FRACTION)
         {
-            return Float.toString(complexToFloat(data)) + FRACTION_UNITS[data & COMPLEX_UNIT_MASK];
+            return Float.toString(complexToFloat(getDataValue())) + FRACTION_UNITS[getDataValue() & COMPLEX_UNIT_MASK];
         }
         if (dataType >= TYPE_FIRST_COLOR_INT && dataType <= TYPE_LAST_COLOR_INT)
         {
-            return String.format("#%08X", data);
+            return String.format("#%08X", getDataValue());
         }
         if (dataType >= TYPE_FIRST_INT && dataType <= TYPE_LAST_INT)
         {
-            return String.valueOf(data);
+            return String.valueOf(getDataValue());
         }
-        return String.format("<0x%X, type 0x%02X>", data, dataType);
+        return String.format("<0x%X, type 0x%02X>", getDataValue(), dataType);
     }
 
     private static String getPackage(int id)
@@ -294,6 +306,6 @@ public class ResValue
     @Override
     public String toString()
     {
-        return "size:" + size + ",res0:" + res0 + ",dataType:" + getTypeStr() + ",data:" + getDataStr();
+        return "size:" + getSizeValue() + ",res0:" + res0 + ",dataType:" + getTypeStr() + ",data:" + getDataStr();
     }
 }

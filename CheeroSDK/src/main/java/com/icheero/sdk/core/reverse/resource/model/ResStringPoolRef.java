@@ -1,5 +1,6 @@
 package com.icheero.sdk.core.reverse.resource.model;
 
+import com.icheero.sdk.core.reverse.resource.ResourceParser;
 import com.icheero.sdk.util.FileUtils;
 
 /**
@@ -21,7 +22,7 @@ public class ResStringPoolRef
 {
     public byte[] index = new byte[4];
 
-    int getSize()
+    public static int getLength()
     {
         return 4;
     }
@@ -34,7 +35,7 @@ public class ResStringPoolRef
     @Override
     public String toString()
     {
-        return "index:" + getIndexValue() + "\n";
+        return "index:" + getIndexValue() + ", str:" + ResourceParser.getKeyString(getIndexValue());
     }
 
 }

@@ -90,7 +90,6 @@ public class ResTableType
     public ResTableType(ResChunkHeader header)
     {
         this.header = header;
-        resConfig = new ResTableConfig();
     }
 
     public byte getIdValue()
@@ -134,6 +133,7 @@ public class ResTableType
         builder.append("res1: ").append(FileUtils.byte2HexString(res1)).append("(").append(getRes1Value()).append(")").append("\n");
         builder.append("EntryCount: ").append(FileUtils.byte2HexString(entryCount)).append("(").append(getEntryCountValue()).append(")").append("\n");
         builder.append("EntriesStart: ").append(FileUtils.byte2HexString(entriesStart)).append("(").append(getEntriesStartValue()).append(")").append("\n");
+        builder.append("ResConfig: ").append(resConfig.toString()).append("\n");
         return builder.toString();
     }
 }

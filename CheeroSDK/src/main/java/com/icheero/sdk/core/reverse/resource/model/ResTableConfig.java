@@ -609,7 +609,7 @@ public class ResTableConfig
     public byte[] localeScript = new byte[4];
     public byte[] localeVariant = new byte[8];
 
-    public int getSize(){
+    public static int getLength(){
         return 48;
     }
 

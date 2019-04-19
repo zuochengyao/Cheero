@@ -21,8 +21,9 @@ import androidx.annotation.NonNull;
  *     uint32_t count;
  * };
  */
-public class ResTableMapEntry extends ResTableEntry
+public class ResTableMapEntry
 {
+    public ResTableEntry entry;
     public ResTableRef parent;
     public byte[] count = new byte[4];
 
@@ -36,17 +37,17 @@ public class ResTableMapEntry extends ResTableEntry
         return FileUtils.byte2Int(count);
     }
 
-    @Override
-    public int getSize()
+    public static int getLength()
     {
-        return super.getSize() + parent.getSize() + 4;
+        return ResTableEntry.getLength() + ResTableRef.getLength() + 4;
     }
 
     @NonNull
     @Override
     public String toString()
     {
-        StringBuilder builder = new StringBuilder(super.toString());
+        StringBuilder builder = new StringBuilder("------------------ ResTableMapEntry ------------------\n");
+        builder.append("Entry: ").append(entry.toString()).append("\n");
         builder.append("Parent: ").append(parent.toString()).append("\n");
         builder.append("Count: ").append(FileUtils.byte2HexString(count)).append("(").append(getCountValue()).append(")").append("\n");
         return builder.toString();

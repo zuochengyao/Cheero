@@ -44,7 +44,7 @@ public class DisposeSoActivity extends BaseActivity
                     return;
                 }
                 mSoParser = new SoParser(mSoData);
-                mSoParser.parse();
+                new Thread(mSoParser::parse).start();
                 break;
         }
     }

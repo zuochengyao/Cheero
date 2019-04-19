@@ -31,13 +31,13 @@ public class DisposeResourceActivity extends BaseActivity
     @OnClick(R.id.resource_dispose)
     public void onResourceDisposeClickEvent(View v)
     {
-        byte[] resourceData = FileUtils.readRawResource(this, R.raw.resources);
+        byte[] resourceData = FileUtils.readRawResource(this, R.raw.resources_gdt);
         if (resourceData == null)
         {
             Log.e(TAG, "Read file failed!");
             return;
         }
         IParser mResourceParser = new ResourceParser(resourceData);
-        mResourceParser.parse();
+        new Thread(mResourceParser::parse).start();
     }
 }

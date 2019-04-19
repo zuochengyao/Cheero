@@ -26,7 +26,7 @@ public class ResTableRef
 {
     public byte[] ident = new byte[4];
 
-    public int getSize()
+    public static int getLength()
     {
         return 4;
     }

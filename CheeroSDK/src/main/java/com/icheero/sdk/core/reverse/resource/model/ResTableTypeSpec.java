@@ -2,6 +2,9 @@ package com.icheero.sdk.core.reverse.resource.model;
 
 import com.icheero.sdk.util.FileUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.NonNull;
 
 /**
@@ -72,6 +75,8 @@ public class ResTableTypeSpec
     /** 等于本类型的资源项个数,指名称相同的资源项的个数 */
     public byte[] entryCount = new byte[4];
 
+    public List<Integer> configMask = new ArrayList<>();
+
     public ResTableTypeSpec(ResChunkHeader header)
     {
         this.header = header;
@@ -82,9 +87,9 @@ public class ResTableTypeSpec
         return header;
     }
 
-    public byte getIdValue()
+    public int getIdValue()
     {
-        return id;
+        return id & 0xFF;
     }
 
     public byte getRes0Value()
@@ -100,6 +105,11 @@ public class ResTableTypeSpec
     public int getEntryCountValue()
     {
         return FileUtils.byte2Int(entryCount);
+    }
+
+    public int getHeaderLength()
+    {
+        return ResChunkHeader.getHeaderLength() + 1 + 1 + 2 + 4;
     }
 
     @NonNull

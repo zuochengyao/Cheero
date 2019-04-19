@@ -51,6 +51,6 @@ public class DisposeManifestActivity extends BaseActivity
             return;
         }
         IParser mManifestParser = new ManifestParser(mManifestData);
-        mManifestParser.parse();
+        new Thread(mManifestParser::parse).start();
     }
 }

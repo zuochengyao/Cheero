@@ -59,17 +59,17 @@ public class ResTableEntry
 
     public int getSizeValue()
     {
-        return FileUtils.byte2Int(size);
+        return FileUtils.byte2Short(size);
     }
 
     public int getFlagsValue()
     {
-        return FileUtils.byte2Int(flags);
+        return FileUtils.byte2Short(flags);
     }
 
-    public int getSize()
+    public static int getLength()
     {
-        return 2 + 2 + key.getSize();
+        return 2 + 2 + ResStringPoolRef.getLength();
     }
 
     @NonNull
@@ -78,7 +78,8 @@ public class ResTableEntry
     {
         StringBuilder builder = new StringBuilder("------------------ ResTableEntry ------------------\n");
         builder.append("Size: ").append(FileUtils.byte2HexString(size)).append("(").append(getSizeValue()).append(")").append("\n");
-        builder.append("flags: ").append(FileUtils.byte2HexString(flags)).append("(").append(getFlagsValue()).append(")").append("\n");
+        builder.append("Flags: ").append(FileUtils.byte2HexString(flags)).append("(").append(getFlagsValue()).append(")").append("\n");
+        builder.append("Key: ").append(key.toString()).append("\n");
         return builder.toString();
     }
 }

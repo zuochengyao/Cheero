@@ -80,6 +80,11 @@ public class ResStringPoolHeader
     /** 字符串样式块相对于其头部的距离 */
     public byte[] stylesStart = new byte[4];
 
+    public ResStringPoolHeader(ResChunkHeader header)
+    {
+        this.header = header;
+    }
+
     public static int getHeaderLength()
     {
         return ResChunkHeader.getHeaderLength() + 4 + 4 + 4 + 4 + 4;
