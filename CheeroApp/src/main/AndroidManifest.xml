@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-
         <!-- region Activities -->
         <activity
             android:name=".activity.MainActivity"
@@ -49,8 +48,8 @@
         <activity android:name=".activity.reverse.DisposeSoActivity"/>
         <activity android:name=".activity.reverse.DisposeManifestActivity"/>
         <activity android:name=".activity.reverse.DisposeResourceActivity"/>
+        <activity android:name=".activity.reverse.DisposeDexActivity"/>
         <!-- endregion -->
-
         <!-- region Services -->
         <service
             android:name=".service.CheeroService"
@@ -60,7 +59,6 @@
                 <action android:name="com.icheero.app.service.CheeroService"/>
             </intent-filter>
         </service>
-        <!-- endregion -->
     </application>
 
 </manifest>

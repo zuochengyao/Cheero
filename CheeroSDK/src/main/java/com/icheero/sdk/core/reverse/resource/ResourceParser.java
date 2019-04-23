@@ -258,7 +258,6 @@ public class ResourceParser implements IParser
 
     private ResValue parseResValue(byte[] valueSrc, int start)
     {
-        // TODO 数据错误，需要重新计算
         ResValue value = new ResValue();
         FileUtils.copyBytes(valueSrc, start, value.size);
         value.res0 = valueSrc[start + 2];

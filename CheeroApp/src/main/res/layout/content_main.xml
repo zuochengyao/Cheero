@@ -178,6 +178,12 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/to_dispose_dex_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DisposeDexActivity"/>
+
+            <Button
                 android:id="@+id/to_dispose_resource_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
