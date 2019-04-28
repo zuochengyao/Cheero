@@ -1,6 +1,7 @@
 package com.icheero.sdk.core.reverse.dex.model;
 
 import com.icheero.sdk.core.reverse.dex.DexParser;
+import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.FileUtils;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ public class TypeItem
     @Override
     public String toString()
     {
-        return DexParser.getTypeString(getTypeIdxValue());
+        String type = DexParser.getTypeString(getTypeIdxValue());
+        return Common.signature2JavaType(type);
     }
 }

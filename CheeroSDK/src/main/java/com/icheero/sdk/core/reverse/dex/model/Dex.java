@@ -9,6 +9,8 @@ public class Dex
     public List<StringIdItem> stringIds;
     public List<TypeIdItem> typeIds;
     public List<ProtoIdItem> protoIds;
+    public List<FieldIdItem> fieldIds;
+    public List<MethodIdItem> methodIds;
 
     public Dex(DexHeader header)
     {
@@ -16,6 +18,8 @@ public class Dex
         stringIds = new ArrayList<>();
         typeIds = new ArrayList<>();
         protoIds = new ArrayList<>();
+        fieldIds = new ArrayList<>();
+        methodIds = new ArrayList<>();
     }
 
     public DexHeader getHeader()

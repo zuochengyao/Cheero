@@ -3,10 +3,13 @@ package com.icheero.sdk.core.reverse.dex;
 import com.icheero.sdk.core.reverse.IParser;
 import com.icheero.sdk.core.reverse.dex.model.Dex;
 import com.icheero.sdk.core.reverse.dex.model.DexHeader;
+import com.icheero.sdk.core.reverse.dex.model.FieldIdItem;
+import com.icheero.sdk.core.reverse.dex.model.MethodIdItem;
 import com.icheero.sdk.core.reverse.dex.model.ProtoIdItem;
 import com.icheero.sdk.core.reverse.dex.model.StringIdItem;
 import com.icheero.sdk.core.reverse.dex.model.TypeIdItem;
 import com.icheero.sdk.core.reverse.dex.model.TypeItem;
+import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.FileUtils;
 import com.icheero.sdk.util.Log;
 
@@ -18,8 +21,8 @@ public class DexParser implements IParser
     private static final Class TAG = DexParser.class;
 
     private byte[] mDexData;
-    private Dex mDex;
     private DexHeader mDexHeader;
+    private static Dex mDex;
     private static List<String> mStringList;
     private static List<String> mTypeList;
 
@@ -40,6 +43,8 @@ public class DexParser implements IParser
         parseDexStringIdList();
         parseTypeIdList();
         parseProtoIdList();
+        parseFieldIdList();
+        parseMethodIdList();
         Log.e(TAG, "Parse dex finish!");
     }
 
@@ -99,7 +104,7 @@ public class DexParser implements IParser
                 TypeIdItem typeId = new TypeIdItem();
                 FileUtils.copyBytes(mDexData, mDexHeader.getTypeIdsOffValue() + i * 4, typeId.descriptorIdx);
                 String type = mDex.stringIds.get(typeId.getDescriptorIdx()).stringData.getDataStr();
-                Log.i(TAG, typeId.toString().concat(", DataStr: " + type));
+                Log.i(TAG, typeId.toString().concat(", Type: " + Common.signature2JavaType(type)));
                 mDex.typeIds.add(typeId);
                 mTypeList.add(type);
             }
@@ -134,6 +139,40 @@ public class DexParser implements IParser
         }
     }
 
+    private void parseFieldIdList()
+    {
+        if (mDexHeader.getFieldIdsSizeValue() > 0)
+        {
+            Log.i(TAG, "------------------ DexFieldIdList ------------------\n");
+            for (int i = 0; i < mDexHeader.getFieldIdsSizeValue(); i++)
+            {
+                FieldIdItem fieldId = new FieldIdItem();
+                FileUtils.copyBytes(mDexData, mDexHeader.getFieldIdsOffValue() + i * 8, fieldId.classIdx);
+                FileUtils.copyBytes(mDexData, mDexHeader.getFieldIdsOffValue() + i * 8 + 2, fieldId.typeIdx);
+                FileUtils.copyBytes(mDexData, mDexHeader.getFieldIdsOffValue() + i * 8 + 4, fieldId.nameIdx);
+                Log.i(TAG, fieldId.toString());
+                mDex.fieldIds.add(fieldId);
+            }
+        }
+    }
+
+    private void parseMethodIdList()
+    {
+        if (mDexHeader.getMethodIdsSizeValue() > 0)
+        {
+            Log.i(TAG, "------------------ DexMethodIdList ------------------\n");
+            for (int i = 0; i < mDexHeader.getMethodIdsSizeValue(); i++)
+            {
+                MethodIdItem methodId = new MethodIdItem();
+                FileUtils.copyBytes(mDexData, mDexHeader.getMethodIdsOffValue() + i * 8, methodId.classIdx);
+                FileUtils.copyBytes(mDexData, mDexHeader.getMethodIdsOffValue() + i * 8 + 2, methodId.protoIdx);
+                FileUtils.copyBytes(mDexData, mDexHeader.getMethodIdsOffValue() + i * 8 + 4, methodId.nameIdx);
+                Log.i(TAG, methodId.toString());
+                mDex.methodIds.add(methodId);
+            }
+        }
+    }
+
     public static String getDataString(int index)
     {
         return mStringList.get(index);
@@ -142,5 +181,10 @@ public class DexParser implements IParser
     public static String getTypeString(int index)
     {
         return mTypeList.get(index);
+    }
+
+    public static ProtoIdItem getProtoIdItem(int index)
+    {
+        return mDex.protoIds.get(index);
     }
 }

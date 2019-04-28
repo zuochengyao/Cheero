@@ -100,7 +100,7 @@ public class Common
         return builder.toString();
     }
 
-    public static boolean isClassExist(String className, ClassLoader loader)
+    public static boolean isClassExist(String className)
     {
         boolean flag = true;
         try
@@ -146,5 +146,47 @@ public class Common
         for (int i = 0; i < newByteAry.length; i++)
             newByteAry[i] = newByte.get(i);
         return new String(newByteAry);
+    }
+
+    public static String signature2JavaType(String signature)
+    {
+        switch (signature)
+        {
+            case "V":
+                return "void";
+            case "Z":
+                return "boolean";
+            case "B":
+                return "byte";
+            case "C":
+                return "char";
+            case "S":
+                return "short";
+            case "I":
+                return "int";
+            case "J":
+                return "long";
+            case "F":
+                return "float";
+            case "D":
+                return "double";
+            default:
+            {
+                if (signature.startsWith("["))
+                {
+                    String tmp = signature2JavaType(signature.substring(1));
+                    if (TextUtils.isEmpty(tmp))
+                        return null;
+                    else
+                        return (tmp += "[]");
+                }
+                else if (signature.startsWith("L") && signature.endsWith(";"))
+                {
+                    return signature.substring(1, signature.length() - 1);
+                }
+                else
+                    return null;
+            }
+        }
     }
 }

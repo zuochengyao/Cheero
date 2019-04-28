@@ -21,7 +21,7 @@ public class TypeItemList
             {
                 builder.append(list.get(i).toString());
                 if (i < size - 1)
-                    builder.append("; ");
+                    builder.append(", ");
             }
         }
         return builder.toString();

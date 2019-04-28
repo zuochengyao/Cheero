@@ -32,17 +32,25 @@ public class ProtoIdItem
         return FileUtils.byte2Int(parametersOff);
     }
 
+    public String getReturnType()
+    {
+        return DexParser.getTypeString(getReturnTypeIdxValue());
+    }
+
+    public String getParametersType()
+    {
+        return parameters.toString();
+    }
+
     @NonNull
     @Override
     public String toString()
     {
         StringBuilder builder = new StringBuilder();
-        builder.append("shortyIdx: ").append(DexParser.getDataString(getShortyIdxValue())).append(" (").append(getShortyIdxValue()).append(")").append(", ");
-        builder.append("returnTypeIdx: ").append(DexParser.getTypeString(getReturnTypeIdxValue())).append(" (").append(getReturnTypeIdxValue()).append(")").append(", ");
+        builder.append(getReturnType()).append(" ").append("(");
         if (getParametersOffValue() > 0)
-            builder.append("parameters: ").append(parameters.toString());
-        else
-            builder.append("parameters: null");
+            builder.append(getParametersType());
+        builder.append(")");
         return builder.toString();
     }
 }

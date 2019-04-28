@@ -43,13 +43,13 @@ public class HttpRequestProvider
     public IHttpRequestFactory getHttpRequestFactory(String className)
     {
         // 是否支持okhttp3
-        if (HttpConfig.CLASSNAME_OKHTTP.equals(className) && Common.isClassExist(HttpConfig.CLASSNAME_OKHTTP, TAG.getClassLoader()))
+        if (HttpConfig.CLASSNAME_OKHTTP.equals(className) && Common.isClassExist(HttpConfig.CLASSNAME_OKHTTP))
             mHttpRequestFactory = new OkHttpRequestFactory();
         // 是否支持volley
-        else if (HttpConfig.CLASSNAME_VOLLEY.equals(className) && Common.isClassExist(HttpConfig.CLASSNAME_VOLLEY, TAG.getClassLoader()))
+        else if (HttpConfig.CLASSNAME_VOLLEY.equals(className) && Common.isClassExist(HttpConfig.CLASSNAME_VOLLEY))
             mHttpRequestFactory = new VolleyRequestFactory();
         // 是否支持HttpClient
-        else if (HttpConfig.CLASSNAME_APACHE.equals(className) && Common.isClassExist(HttpConfig.CLASSNAME_APACHE, TAG.getClassLoader()))
+        else if (HttpConfig.CLASSNAME_APACHE.equals(className) && Common.isClassExist(HttpConfig.CLASSNAME_APACHE))
             mHttpRequestFactory = new HttpClientRequestFactory();
         else // 若都不支持，则使用android自带的
             mHttpRequestFactory = new OriginHttpRequestFactory();

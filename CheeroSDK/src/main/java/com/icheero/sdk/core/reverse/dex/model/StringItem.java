@@ -18,6 +18,6 @@ public class StringItem
     @Override
     public String toString()
     {
-        return "DataStr: " + getDataStr();
+        return "String: " + getDataStr();
     }
 }
