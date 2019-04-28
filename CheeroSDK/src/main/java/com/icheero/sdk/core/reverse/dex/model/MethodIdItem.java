@@ -35,10 +35,10 @@ public class MethodIdItem
     public String toString()
     {
         StringBuilder builder = new StringBuilder();
-        builder.append(Common.signature2JavaType(DexParser.getProtoIdItem(getProtoIdxValue()).getReturnType())).append(" ");
-        builder.append(Common.signature2JavaType(DexParser.getTypeString(getClassIdxValue()))).append(".").append(DexParser.getDataString(getNameIdxValue()));
+        builder.append(Common.signature2JavaType(DexParser.getInstance().getProtoIdItem(getProtoIdxValue()).getReturnType())).append(" ");
+        builder.append(Common.signature2JavaType(DexParser.getInstance().getTypeString(getClassIdxValue()))).append(".").append(DexParser.getInstance().getDataString(getNameIdxValue()));
         builder.append("(");
-        builder.append(DexParser.getProtoIdItem(getProtoIdxValue()).getParametersType());
+        builder.append(DexParser.getInstance().getProtoIdItem(getProtoIdxValue()).getParametersType());
         builder.append(")");
         return builder.toString();
     }

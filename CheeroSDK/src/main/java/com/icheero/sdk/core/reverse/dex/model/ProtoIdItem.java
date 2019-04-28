@@ -34,7 +34,7 @@ public class ProtoIdItem
 
     public String getReturnType()
     {
-        return DexParser.getTypeString(getReturnTypeIdxValue());
+        return DexParser.getInstance().getTypeString(getReturnTypeIdxValue());
     }
 
     public String getParametersType()

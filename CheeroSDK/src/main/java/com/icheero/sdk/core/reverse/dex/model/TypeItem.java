@@ -15,11 +15,12 @@ public class TypeItem
         return FileUtils.byte2Short(typeIdx);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @NonNull
     @Override
     public String toString()
     {
-        String type = DexParser.getTypeString(getTypeIdxValue());
+        String type = DexParser.getInstance().getTypeString(getTypeIdxValue());
         return Common.signature2JavaType(type);
     }
 }

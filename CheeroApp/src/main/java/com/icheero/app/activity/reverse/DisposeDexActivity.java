@@ -6,7 +6,6 @@ import android.widget.Button;
 
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
-import com.icheero.sdk.core.reverse.IParser;
 import com.icheero.sdk.core.reverse.dex.DexParser;
 import com.icheero.sdk.util.FileUtils;
 import com.icheero.sdk.util.Log;
@@ -37,7 +36,6 @@ public class DisposeDexActivity extends BaseActivity
             Log.e(TAG, "Read file failed!");
             return;
         }
-        IParser mResourceParser = new DexParser(resourceData);
-        new Thread(mResourceParser::parse).start();
+        new Thread(() -> DexParser.getInstance().parse(resourceData)).start();
     }
 }

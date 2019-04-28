@@ -1,6 +1,5 @@
 package com.icheero.sdk.core.reverse.dex;
 
-import com.icheero.sdk.core.reverse.IParser;
 import com.icheero.sdk.core.reverse.dex.model.Dex;
 import com.icheero.sdk.core.reverse.dex.model.DexHeader;
 import com.icheero.sdk.core.reverse.dex.model.FieldIdItem;
@@ -16,29 +15,43 @@ import com.icheero.sdk.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DexParser implements IParser
+public class DexParser
 {
     private static final Class TAG = DexParser.class;
 
     private byte[] mDexData;
     private DexHeader mDexHeader;
-    private static Dex mDex;
-    private static List<String> mStringList;
-    private static List<String> mTypeList;
+    private Dex mDex;
+    private List<String> mStringList;
+    private List<String> mTypeList;
 
-    public DexParser(byte[] dexData)
+    private static volatile DexParser mInstance;
+
+    private DexParser()
     {
-        this.mDexData = dexData;
         mDexHeader = new DexHeader();
         mDex = new Dex(mDexHeader);
         mStringList = new ArrayList<>();
         mTypeList = new ArrayList<>();
     }
 
-    @Override
-    public void parse()
+    public static DexParser getInstance()
+    {
+        if (mInstance == null)
+        {
+            synchronized (DexParser.class)
+            {
+                if (mInstance == null)
+                    mInstance = new DexParser();
+            }
+        }
+        return mInstance;
+    }
+
+    public void parse(byte[] dexData)
     {
         Log.e(TAG, "Parse dex start!");
+        this.mDexData = dexData;
         parseDexHeader();
         parseDexStringIdList();
         parseTypeIdList();
@@ -173,17 +186,17 @@ public class DexParser implements IParser
         }
     }
 
-    public static String getDataString(int index)
+    public String getDataString(int index)
     {
         return mStringList.get(index);
     }
 
-    public static String getTypeString(int index)
+    public String getTypeString(int index)
     {
         return mTypeList.get(index);
     }
 
-    public static ProtoIdItem getProtoIdItem(int index)
+    public ProtoIdItem getProtoIdItem(int index)
     {
         return mDex.protoIds.get(index);
     }

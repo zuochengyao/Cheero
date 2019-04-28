@@ -35,9 +35,9 @@ public class FieldIdItem
     public String toString()
     {
         StringBuilder builder = new StringBuilder();
-        builder.append(Common.signature2JavaType(DexParser.getTypeString(getTypeIdxValue()))).append(" ");
-        builder.append(Common.signature2JavaType(DexParser.getTypeString(getClassIdxValue()))).append(".");
-        builder.append(DexParser.getDataString(getNameIdxValue()));
+        builder.append(Common.signature2JavaType(DexParser.getInstance().getTypeString(getTypeIdxValue()))).append(" ");
+        builder.append(Common.signature2JavaType(DexParser.getInstance().getTypeString(getClassIdxValue()))).append(".");
+        builder.append(DexParser.getInstance().getDataString(getNameIdxValue()));
         return builder.toString();
     }
 }
