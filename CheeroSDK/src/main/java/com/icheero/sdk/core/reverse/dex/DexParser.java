@@ -1,5 +1,6 @@
 package com.icheero.sdk.core.reverse.dex;
 
+import com.icheero.sdk.core.reverse.dex.model.ClassDefItem;
 import com.icheero.sdk.core.reverse.dex.model.Dex;
 import com.icheero.sdk.core.reverse.dex.model.DexHeader;
 import com.icheero.sdk.core.reverse.dex.model.FieldIdItem;
@@ -8,6 +9,7 @@ import com.icheero.sdk.core.reverse.dex.model.ProtoIdItem;
 import com.icheero.sdk.core.reverse.dex.model.StringIdItem;
 import com.icheero.sdk.core.reverse.dex.model.TypeIdItem;
 import com.icheero.sdk.core.reverse.dex.model.TypeItem;
+import com.icheero.sdk.core.reverse.dex.model.Uleb128;
 import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.FileUtils;
 import com.icheero.sdk.util.Log;
@@ -58,6 +60,7 @@ public class DexParser
         parseProtoIdList();
         parseFieldIdList();
         parseMethodIdList();
+        parseClassDefItemList();
         Log.e(TAG, "Parse dex finish!");
     }
 
@@ -98,8 +101,8 @@ public class DexParser
             {
                 StringIdItem stringId = new StringIdItem();
                 FileUtils.copyBytes(mDexData, mDexHeader.getStringIdsOffValue() + i * 4, stringId.stringDataOff);
-                stringId.stringData.val = mDexData[stringId.getStringDataOffValue()];
-                stringId.stringData.data = FileUtils.copyBytes(mDexData, stringId.getStringDataOffValue() + 1, stringId.stringData.val);
+                stringId.stringData.val = Uleb128.from(FileUtils.copyBytes(mDexData, stringId.getStringDataOffValue()));
+                stringId.stringData.data = FileUtils.copyBytes(mDexData, stringId.getStringDataOffValue() + stringId.stringData.getLength(), stringId.stringData.getValue());
                 Log.i(TAG, stringId.toString());
                 mDex.stringIds.add(stringId);
                 mStringList.add(stringId.stringData.getDataStr());
@@ -182,6 +185,28 @@ public class DexParser
                 FileUtils.copyBytes(mDexData, mDexHeader.getMethodIdsOffValue() + i * 8 + 4, methodId.nameIdx);
                 Log.i(TAG, methodId.toString());
                 mDex.methodIds.add(methodId);
+            }
+        }
+    }
+
+    private void parseClassDefItemList()
+    {
+        if (mDexHeader.getClassDefsSizeValue() > 0)
+        {
+            Log.i(TAG, "------------------ ClassDefItemList ------------------\n");
+            for (int i = 0; i < mDexHeader.getClassDefsSizeValue(); i++)
+            {
+                ClassDefItem classDef = new ClassDefItem();
+                FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32, classDef.classIdx);
+                FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 4, classDef.accessFlags);
+                FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 8, classDef.superclassIdx);
+                FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 12, classDef.interfacesOff);
+                FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 16, classDef.sourceFileIdx);
+                FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 20, classDef.annotationsOff);
+                FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 24, classDef.classDataOff);
+                FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 28, classDef.staticValueOff);
+                Log.i(TAG, classDef.toString());
+                mDex.classDefs.add(classDef);
             }
         }
     }

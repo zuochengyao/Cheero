@@ -11,6 +11,7 @@ public class Dex
     public List<ProtoIdItem> protoIds;
     public List<FieldIdItem> fieldIds;
     public List<MethodIdItem> methodIds;
+    public List<ClassDefItem> classDefs;
 
     public Dex(DexHeader header)
     {
@@ -20,6 +21,7 @@ public class Dex
         protoIds = new ArrayList<>();
         fieldIds = new ArrayList<>();
         methodIds = new ArrayList<>();
+        classDefs = new ArrayList<>();
     }
 
     public DexHeader getHeader()

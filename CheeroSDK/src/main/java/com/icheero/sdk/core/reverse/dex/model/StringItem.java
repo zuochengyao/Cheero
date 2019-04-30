@@ -6,12 +6,25 @@ import androidx.annotation.NonNull;
 
 public class StringItem
 {
-    public byte val;
+    public Uleb128 val;
     public byte[] data;
 
     public String getDataStr()
     {
         return new String(data, StandardCharsets.UTF_8);
+    }
+
+    public int getValue()
+    {
+        if (val == null)
+            return 0;
+        else
+            return (int) val.asLong();
+    }
+
+    public int getLength()
+    {
+        return val.getLength();
     }
 
     @NonNull

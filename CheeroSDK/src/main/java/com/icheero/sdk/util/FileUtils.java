@@ -229,6 +229,15 @@ public class FileUtils
         return null;
     }
 
+    public static byte[] copyBytes(byte[] src, int start)
+    {
+        if (src == null)
+            return null;
+        byte[] dest = new byte[src.length - start];
+        System.arraycopy(src, start, dest, 0, dest.length);
+        return dest;
+    }
+
     public static byte[] copyBytes(byte[] src, int start, int count)
     {
         if (src == null)
