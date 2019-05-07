@@ -1,8 +1,11 @@
 package com.icheero.sdk.core.reverse.dex;
 
+import com.icheero.sdk.core.reverse.dex.model.ClassDataItem;
 import com.icheero.sdk.core.reverse.dex.model.ClassDefItem;
 import com.icheero.sdk.core.reverse.dex.model.Dex;
 import com.icheero.sdk.core.reverse.dex.model.DexHeader;
+import com.icheero.sdk.core.reverse.dex.model.EncodedField;
+import com.icheero.sdk.core.reverse.dex.model.EncodedMethod;
 import com.icheero.sdk.core.reverse.dex.model.FieldIdItem;
 import com.icheero.sdk.core.reverse.dex.model.MethodIdItem;
 import com.icheero.sdk.core.reverse.dex.model.ProtoIdItem;
@@ -206,9 +209,85 @@ public class DexParser
                 FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 24, classDef.classDataOff);
                 FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 28, classDef.staticValueOff);
                 Log.i(TAG, classDef.toString());
+                if (classDef.getClassDataOffValue() > 0)
+                {
+                    ClassDataItem classData = parseClassDataItem(FileUtils.copyBytes(mDexData, classDef.getClassDataOffValue()));
+                    Log.i(TAG, classData.toString());
+                }
+                if (classDef.getStaticValueOffValue() > 0)
+                {
+                    // TODO
+                }
                 mDex.classDefs.add(classDef);
             }
         }
+    }
+
+    private ClassDataItem parseClassDataItem(byte[] src)
+    {
+        ClassDataItem classData = null;
+        int offset = 0;
+        if (src.length > 0)
+        {
+            classData = new ClassDataItem();
+            classData.staticFieldsSize = Uleb128.from(src);
+            offset += classData.staticFieldsSize.getLength();
+            classData.instanceFieldsSize = Uleb128.from(FileUtils.copyBytes(src, offset));
+            offset += classData.instanceFieldsSize.getLength();
+            classData.directMethodsSize = Uleb128.from(FileUtils.copyBytes(src, offset));
+            offset += classData.directMethodsSize.getLength();
+            classData.virtualMethodsSize = Uleb128.from(FileUtils.copyBytes(src, offset));
+            offset += classData.virtualMethodsSize.getLength();
+
+            classData.staticFields = new EncodedField[(int) classData.staticFieldsSize.asLong()];
+            for (int i = 0; i < classData.staticFields.length; i++)
+            {
+                EncodedField staticField = new EncodedField();
+                staticField.filedIdxDiff = Uleb128.from(FileUtils.copyBytes(src, offset));
+                offset += staticField.filedIdxDiff.getLength();
+                staticField.accessFlags = Uleb128.from(FileUtils.copyBytes(src, offset));
+                offset += staticField.accessFlags.getLength();
+                classData.staticFields[i] = staticField;
+            }
+
+            classData.instanceFields = new EncodedField[(int) classData.instanceFieldsSize.asLong()];
+            for (int i = 0; i < classData.instanceFields.length; i++)
+            {
+                EncodedField staticField = new EncodedField();
+                staticField.filedIdxDiff = Uleb128.from(FileUtils.copyBytes(src, offset));
+                offset += staticField.filedIdxDiff.getLength();
+                staticField.accessFlags = Uleb128.from(FileUtils.copyBytes(src, offset));
+                offset += staticField.accessFlags.getLength();
+                classData.instanceFields[i] = staticField;
+            }
+
+            classData.directMethods = new EncodedMethod[(int) classData.directMethodsSize.asLong()];
+            for (int i = 0; i < classData.directMethods.length; i++)
+            {
+                EncodedMethod directMethod = new EncodedMethod();
+                directMethod.methodIdxDiff = Uleb128.from(FileUtils.copyBytes(src, offset));
+                offset += directMethod.methodIdxDiff.getLength();
+                directMethod.accessFlags = Uleb128.from(FileUtils.copyBytes(src, offset));
+                offset += directMethod.accessFlags.getLength();
+                directMethod.codeOff = Uleb128.from(FileUtils.copyBytes(src, offset));
+                offset += directMethod.codeOff.getLength();
+                classData.directMethods[i] = directMethod;
+            }
+
+            classData.virtualMethods = new EncodedMethod[(int) classData.virtualMethodsSize.asLong()];
+            for (int i = 0; i < classData.virtualMethods.length; i++)
+            {
+                EncodedMethod directMethod = new EncodedMethod();
+                directMethod.methodIdxDiff = Uleb128.from(FileUtils.copyBytes(src, offset));
+                offset += directMethod.methodIdxDiff.getLength();
+                directMethod.accessFlags = Uleb128.from(FileUtils.copyBytes(src, offset));
+                offset += directMethod.accessFlags.getLength();
+                directMethod.codeOff = Uleb128.from(FileUtils.copyBytes(src, offset));
+                offset += directMethod.codeOff.getLength();
+                classData.virtualMethods[i] = directMethod;
+            }
+        }
+        return classData;
     }
 
     public String getDataString(int index)

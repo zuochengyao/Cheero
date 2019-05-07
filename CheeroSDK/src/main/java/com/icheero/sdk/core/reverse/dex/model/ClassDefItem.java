@@ -108,8 +108,8 @@ public class ClassDefItem
     public String toString()
     {
         StringBuilder builder = new StringBuilder();
-        builder.append("Class: ").append(getClassIdxString()).append("\n");
-        builder.append("SuperClass: ").append(getSuperclassIdxString()).append("\n");
+        builder.append("Class: ").append(getClassIdxString()).append(", ");
+        builder.append("SuperClass: ").append(getSuperclassIdxString()).append(", ");
         builder.append("SourceFile: ").append(getSourceFileIdxString()).append("\n");
         return builder.toString();
     }
