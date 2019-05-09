@@ -159,6 +159,42 @@ JNIEXPORT void JNICALL native_CppArray(JNIEnv *env, jobject, jobject obj)
     //
 }
 
+JNIEXPORT void JNICALL native_iop(JNIEnv *env, jobject)
+{
+    const char *APP_SIGN = "308201dd30820146020101300d06092a864886f70d010105050030373116301406035504030c0d416e64726f69642044656275673110300e060355040a0c07416e64726f6964310b3009060355040613025553301e170d3138303630363033303733355a170d3438303532393033303733355a30373116301406035504030c0d416e64726f69642044656275673110300e060355040a0c07416e64726f6964310b300906035504061302555330819f300d06092a864886f70d010101050003818d0030818902818100a3d20c599caf49432b6dabf291e1571ccb443394b8c65744737492a5dc5473e8d87d8b11ab4746bcdf2d535710c56814e6f81b140351b01cf98c61bcaf72946e0f1c5c4e63c443b3ad8323cd2ba622ee448d520e1f3eaeeece4051e40e5b1d13d09dabd8b3989566e13ef0dd03693342c6775e1ec84414023f2980f5f805913f0203010001300d06092a864886f70d0101050500038181001f56d2af107a246ca5992b4d7b59a2e6109fe6a1da2657b9c03a283be155273516d341bc44c359c10c3e80a6ebbf679f4c91fd60b797cd6b5f55fda15bbc8fff1abaf8b1a2b593b933f89f4654db8d7b013a5ecc982d4928b23998de094d1c0c5da811b74216ed7a40fa81a76c13d9d900bfc5b64fb157aa8ad5b8e023ed4183";
+    char *className = "com/icheero/sdk/util/Common";
+    jclass common = env->FindClass(className);
+    int flag = 0;
+    if (common == NULL)
+    {
+        LOGE("Class not found: %s", className);
+        flag = 1;
+    }
+    jmethodID getSignature = env->GetStaticMethodID(common, "getSignature", "()Ljava/lang/String;");
+    if (getSignature == NULL)
+    {
+        LOGE("Method not found");
+        flag = 1;
+    }
+    jstring sign = (jstring) env->CallStaticObjectMethod(common, getSignature);
+    if (sign == NULL)
+    {
+        LOGE("The sign is NULL");
+        flag = 1;
+    }
+    const char *strAry = env->GetStringUTFChars(sign, NULL);
+    int val = strcmp(strAry, APP_SIGN);
+    if (val != 0)
+    {
+        flag = 1;
+    }
+    env->ReleaseStringUTFChars(sign, strAry);
+    if (flag == 1)
+    {
+        exit(0);
+    }
+}
+
 // endregion
 
 static JNINativeMethod methods[] = {
@@ -170,7 +206,8 @@ static JNINativeMethod methods[] = {
     {"nativeCppArray", "(Ljava/lang/Object;)V", (void *) native_CppArray},
     {"nativeSetTraceMode", "(I)V", (void *) native_SetTraceMode},
     {"nativeTrace", "(Ljava/lang/String;Ljava/lang/String;I)V", (void *) native_Trace},
-    {"nativeSetTraceFilePath", "(Ljava/lang/String;)V", (void *) native_SetTraceFilePath}
+    {"nativeSetTraceFilePath", "(Ljava/lang/String;)V", (void *) native_SetTraceFilePath},
+    {"nativeIsOwnApp", "()V", (void *) native_iop}
 };
 
 static int registerNativeMethods(JNIEnv *env)

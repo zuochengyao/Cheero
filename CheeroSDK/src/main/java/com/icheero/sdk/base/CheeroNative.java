@@ -22,6 +22,8 @@ public class CheeroNative
 
     public static native void nativeSetTraceFilePath(String filePath);
 
+    public static native void nativeIsOwnApp();
+
     static
     {
         System.loadLibrary("cheero-1.0.0");

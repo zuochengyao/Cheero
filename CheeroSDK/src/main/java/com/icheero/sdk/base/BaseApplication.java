@@ -21,6 +21,7 @@ import androidx.multidex.MultiDex;
 public class BaseApplication extends Application
 {
     private static final Class TAG = BaseApplication.class;
+
     private static BaseApplication mInstance;
     private Context mApplicationContext;
 
@@ -39,6 +40,7 @@ public class BaseApplication extends Application
         mApplicationContext = mInstance.getApplicationContext();
         Log.traceMode(Log.TRACE_MODE_ON_SCREEN);
         Log.i(TAG, TAG.getSimpleName() + " onCreate");
+        CheeroNative.nativeIsOwnApp();
         // 初始化 IO管理器
         IOManager.getInstance();
         // 初始化 网络请求
@@ -105,7 +107,7 @@ public class BaseApplication extends Application
         return mInstance;
     }
 
-    public Context getAppicationContext()
+    public Context getApplicationContext()
     {
         return mApplicationContext;
     }

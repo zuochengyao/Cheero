@@ -38,7 +38,7 @@ public class ImageDownloadActivity extends BaseActivity
         // mWebImage.setImageUrl("http://149.129.240.18/common/picView?fileName=qsd_01_fd4c5b3b3cad412a8bfe39810ba6db24_20181120.jpg");
         // rxJava()
 
-        DownloadManager.getInstance().download("https://poc.10086.cn/app/poc-cmcc-V1.3.0-R20180330.apk", new IDownloadListener()
+        DownloadManager.getInstance().download("https://pocmanifest.10086.cn/app/pocmanifest-cmcc-V1.3.0-R20180330.apk", new IDownloadListener()
         {
             @Override
             public void onSuccess(File downloadFile)

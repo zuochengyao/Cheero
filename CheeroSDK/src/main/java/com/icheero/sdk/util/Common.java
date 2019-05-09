@@ -1,12 +1,16 @@
 package com.icheero.sdk.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Build;
 import android.text.TextUtils;
 import android.widget.Toast;
+
+import com.icheero.sdk.base.BaseApplication;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -188,5 +192,27 @@ public class Common
                     return null;
             }
         }
+    }
+
+    @SuppressLint("PackageManagerGetSignatures")
+    public static String getSignature()
+    {
+        Context context = BaseApplication.getAppInstance().getApplicationContext();
+        try
+        {
+            // 获取指定包名的签名信息
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES);
+            // 获取签名数组
+            Signature[] signatures = packageInfo.signatures;
+            StringBuilder builder = new StringBuilder();
+            for (Signature signature : signatures)
+                builder.append(signature.toCharsString());
+            return builder.toString();
+        }
+        catch (PackageManager.NameNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

@@ -39,7 +39,7 @@ public class DisposeManifestActivity extends BaseActivity
         switch (v.getId())
         {
             case R.id.manifest_dispose_1:
-                mManifestData = FileUtils.readRawResource(this, R.raw.manifest);
+                mManifestData = FileUtils.readRawResource(this, R.raw.pocmanifest);
                 break;
             case R.id.manifest_dispose_2:
                 mManifestData = FileUtils.readRawResource(this, R.raw.manifest2);
