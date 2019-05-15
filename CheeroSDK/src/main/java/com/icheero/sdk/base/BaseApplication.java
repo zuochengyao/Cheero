@@ -23,7 +23,6 @@ public class BaseApplication extends Application
     private static final Class TAG = BaseApplication.class;
 
     private static BaseApplication mInstance;
-    private Context mApplicationContext;
 
     @Override
     protected void attachBaseContext(Context base)
@@ -37,7 +36,6 @@ public class BaseApplication extends Application
     {
         super.onCreate();
         mInstance = this;
-        mApplicationContext = mInstance.getApplicationContext();
         Log.traceMode(Log.TRACE_MODE_ON_SCREEN);
         Log.i(TAG, TAG.getSimpleName() + " onCreate");
         CheeroNative.nativeIsOwnApp();
@@ -105,10 +103,5 @@ public class BaseApplication extends Application
     public static BaseApplication getAppInstance()
     {
         return mInstance;
-    }
-
-    public Context getApplicationContext()
-    {
-        return mApplicationContext;
     }
 }

@@ -30,7 +30,7 @@ public class DisposeDexActivity extends BaseActivity
     @OnClick(R.id.dex_dispose)
     public void onDexDisposeClickEvent(View v)
     {
-        byte[] resourceData = FileUtils.readRawResource(this, R.raw.classes);
+        byte[] resourceData = FileUtils.readRawResource(this, R.raw.pocdex);
         if (resourceData == null)
         {
             Log.e(TAG, "Read file failed!");
