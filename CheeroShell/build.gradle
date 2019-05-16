@@ -4,7 +4,7 @@ android {
     compileSdkVersion versions.build.compile_sdk
 
     defaultConfig {
-        applicationId "com.icheero.shell"
+        applicationId "com.machipopo.media17"
         minSdkVersion versions.build.min_sdk
         targetSdkVersion versions.build.target_sdk
         versionCode versions.build.code
@@ -48,6 +48,12 @@ android {
         abortOnError false
     }
 
+    sourceSets{
+        main{
+            jniLibs.srcDir(['libs'])
+        }
+    }
+
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/NOTICE'
@@ -60,5 +66,4 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':CheeroSDK')
-    // implementation versions.deps.support.v7
 }
