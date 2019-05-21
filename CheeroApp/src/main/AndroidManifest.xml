@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ActionBar"
         tools:ignore="GoogleAppIndexingWarning">
+
         <!-- region Activities -->
         <activity
             android:name=".activity.MainActivity"
@@ -49,6 +50,7 @@
         <activity android:name=".activity.reverse.DisposeManifestActivity"/>
         <activity android:name=".activity.reverse.DisposeResourceActivity"/>
         <activity android:name=".activity.reverse.DisposeDexActivity"/>
+        <activity android:name=".activity.xposed.XposedActivity"/>
         <!-- endregion -->
         <!-- region Services -->
         <service
@@ -59,6 +61,10 @@
                 <action android:name="com.icheero.app.service.CheeroService"/>
             </intent-filter>
         </service>
+
+        <meta-data android:name="xposedmodule" android:value="true"/>
+        <meta-data android:name="xposeddescription" android:value="Hook信息"/>
+        <meta-data android:name="xposedminversion" android:value="54"/>
     </application>
 
 </manifest>

@@ -69,7 +69,9 @@ dependencies {
         implementation project(':CheeroFaceID')
     }
     implementation versions.deps.butterknife.runtime
+    implementation versions.deps.support.v4
     implementation versions.deps.support.v7
     implementation versions.deps.support.constraint
+    compileOnly versions.deps.xposed
     annotationProcessor versions.deps.butterknife.compiler
 }

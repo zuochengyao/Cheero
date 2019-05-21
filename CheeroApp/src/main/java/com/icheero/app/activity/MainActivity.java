@@ -37,6 +37,7 @@ import com.icheero.app.activity.ui.SectionsActivity;
 import com.icheero.app.activity.ui.StyledActivity;
 import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
+import com.icheero.app.activity.xposed.XposedActivity;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.util.Common;
@@ -96,6 +97,8 @@ public class MainActivity extends BaseActivity
     Button toDisposeDexActivity;
     @BindView(R.id.to_load_plugin_activity)
     Button toLoadPluginActivity;
+    @BindView(R.id.to_xposed_activity)
+    Button toXposedActivity;
     @BindView(R.id.to_faceid_activity)
     Button toFaceIDActivity;
 
@@ -289,6 +292,13 @@ public class MainActivity extends BaseActivity
                 break;
             }
         }
+    }
+
+    @OnClick({R.id.to_xposed_activity})
+    public void onXposedClickEvent(View v)
+    {
+        if (v.getId() == R.id.to_xposed_activity)
+            startActivity(new Intent(this, XposedActivity.class));
     }
 
     @Override
