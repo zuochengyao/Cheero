@@ -10,9 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -33,7 +32,7 @@ public class RecyclerViewActivity extends BaseActivity
     {
         ButterKnife.bind(this);
         // 设置布局管理器
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
         // 设置 item 增加和删除时的动画
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         List<String> stringList = new ArrayList<>();
@@ -41,6 +40,7 @@ public class RecyclerViewActivity extends BaseActivity
             stringList.add(i + "");
         mRecyclerView.setAdapter(new RecyclerViewAdapter(this, stringList));
         // 设置分割线，现在有库提供的，还可以自定义分割线
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, RecyclerView.VERTICAL));
+        // mRecyclerView.addItemDecoration(new DividerItemDecoration(this, RecyclerView.VERTICAL));
+        // mRecyclerView.addItemDecoration(new DividerItemDecoration(this, RecyclerView.HORIZONTAL));
     }
 }

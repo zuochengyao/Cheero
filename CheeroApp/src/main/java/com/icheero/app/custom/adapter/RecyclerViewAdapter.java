@@ -49,6 +49,10 @@ public class RecyclerViewAdapter extends Adapter<RecyclerViewAdapter.RecyclerVie
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position)
     {
         holder.mTextView.setText(mStringList.get(position));
+        // 设置随机高度
+        ViewGroup.LayoutParams params = holder.mTextView.getLayoutParams();
+        params.height = (int) (100 + Math.random() * 300);
+        holder.mTextView.setLayoutParams(params);
         holder.setPosition(position);
     }
 
