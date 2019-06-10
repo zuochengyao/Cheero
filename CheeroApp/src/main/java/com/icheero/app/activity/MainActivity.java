@@ -33,6 +33,7 @@ import com.icheero.app.activity.ui.AnimActivity;
 import com.icheero.app.activity.ui.CustomViewActivity;
 import com.icheero.app.activity.ui.DialogActivity;
 import com.icheero.app.activity.ui.OptionActivity;
+import com.icheero.app.activity.ui.RecyclerViewActivity;
 import com.icheero.app.activity.ui.SectionsActivity;
 import com.icheero.app.activity.ui.StyledActivity;
 import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
@@ -65,6 +66,8 @@ public class MainActivity extends BaseActivity
     Button toPanGestureScrollActivity;
     @BindView(R.id.to_touch_pan_scroll_activity)
     Button toPanScrollActivity;
+    @BindView(R.id.to_recycler_view_activity)
+    Button toRecylerViewActivity;
     @BindView(R.id.to_web_view_activity)
     Button toWebViewActivity;
     @BindView(R.id.to_image_download_activity)
@@ -194,7 +197,7 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @OnClick({R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity, R.id.to_dialog_activity, R.id.to_option_activity, R.id.to_touch_pan_scroll_activity, R.id.to_touch_pan_gesture_scroll_activity})
+    @OnClick({R.id.to_recycler_view_activity, R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity, R.id.to_dialog_activity, R.id.to_option_activity, R.id.to_touch_pan_scroll_activity, R.id.to_touch_pan_gesture_scroll_activity})
     public void OnUIClickEvent(View v)
     {
         Intent toActivity = new Intent();
@@ -230,22 +233,32 @@ public class MainActivity extends BaseActivity
             }
             case R.id.to_dialog_activity:
             {
-                startActivity(new Intent(this, DialogActivity.class));
+                toActivity.setClass(this, DialogActivity.class);
+                startActivity(toActivity);
                 break;
             }
             case R.id.to_option_activity:
             {
-                startActivity(new Intent(this, OptionActivity.class));
+                toActivity.setClass(this, OptionActivity.class);
+                startActivity(toActivity);
                 break;
             }
             case R.id.to_touch_pan_gesture_scroll_activity:
             {
-                startActivity(new Intent(this, PanGestureScrollActivity.class));
+                toActivity.setClass(this, PanGestureScrollActivity.class);
+                startActivity(toActivity);
                 break;
             }
             case R.id.to_touch_pan_scroll_activity:
             {
-                startActivity(new Intent(this, PanScrollActivity.class));
+                toActivity.setClass(this, PanScrollActivity.class);
+                startActivity(toActivity);
+                break;
+            }
+            case R.id.to_recycler_view_activity:
+            {
+                toActivity.setClass(this, RecyclerViewActivity.class);
+                startActivity(toActivity);
                 break;
             }
         }

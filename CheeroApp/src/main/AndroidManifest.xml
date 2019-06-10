@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.icheero.app"
           xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:app="http://schemas.android.com/apk/res-auto"
           xmlns:tools="http://schemas.android.com/tools">
 
     <application
@@ -13,7 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-
         <!-- region Activities -->
         <activity
             android:name=".activity.MainActivity"
@@ -33,6 +31,7 @@
         <activity android:name=".activity.ui.OptionActivity"/>
         <activity android:name=".activity.ui.touch.PanGestureScrollActivity"/>
         <activity android:name=".activity.ui.touch.PanScrollActivity"/>
+        <activity android:name=".activity.ui.RecyclerViewActivity"/>
         <activity android:name=".activity.network.WebViewActivity"/>
         <activity android:name=".activity.network.ImageDownloadActivity"/>
         <activity android:name=".activity.network.DownloadActivity"/>
@@ -62,9 +61,15 @@
             </intent-filter>
         </service>
 
-        <meta-data android:name="xposedmodule" android:value="true"/>
-        <meta-data android:name="xposeddescription" android:value="Hook信息"/>
-        <meta-data android:name="xposedminversion" android:value="54"/>
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true"/>
+        <meta-data
+            android:name="xposeddescription"
+            android:value="Hook信息"/>
+        <meta-data
+            android:name="xposedminversion"
+            android:value="54"/>
     </application>
 
 </manifest>

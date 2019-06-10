@@ -141,6 +141,12 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/to_recycler_view_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RecyclerViewActivity"/>
+
+            <Button
                 android:id="@+id/to_custom_setting_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

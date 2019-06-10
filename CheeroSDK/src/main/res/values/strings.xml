@@ -3,4 +3,8 @@
     <string name="app_name_faceid">CheeroFaceID</string>
     <string name="app_name_plugin">CheeroPlugin</string>
     <string name="app_name_reverse">CheeroReverse</string>
+
+    <string name="cheero_delete_confirm">确认删除吗？</string>
+    <string name="cheero_ok">确定</string>
+    <string name="cheero_cancel">取消</string>
 </resources>
