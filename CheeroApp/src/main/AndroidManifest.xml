@@ -31,7 +31,8 @@
         <activity android:name=".activity.ui.OptionActivity"/>
         <activity android:name=".activity.ui.touch.PanGestureScrollActivity"/>
         <activity android:name=".activity.ui.touch.PanScrollActivity"/>
-        <activity android:name=".activity.ui.RecyclerViewActivity"/>
+        <activity android:name=".activity.ui.lollipop.RecyclerViewActivity"/>
+        <activity android:name=".activity.ui.lollipop.CardViewActivity"/>
         <activity android:name=".activity.network.WebViewActivity"/>
         <activity android:name=".activity.network.ImageDownloadActivity"/>
         <activity android:name=".activity.network.DownloadActivity"/>
@@ -49,8 +50,7 @@
         <activity android:name=".activity.reverse.DisposeManifestActivity"/>
         <activity android:name=".activity.reverse.DisposeResourceActivity"/>
         <activity android:name=".activity.reverse.DisposeDexActivity"/>
-        <activity android:name=".activity.xposed.XposedActivity"/>
-        <!-- endregion -->
+        <activity android:name=".activity.xposed.XposedActivity"/> <!-- endregion -->
         <!-- region Services -->
         <service
             android:name=".service.CheeroService"

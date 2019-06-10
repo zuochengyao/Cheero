@@ -1,4 +1,4 @@
-package com.icheero.app.activity.ui;
+package com.icheero.app.activity.ui.lollipop;
 
 import android.os.Bundle;
 
