@@ -1,4 +1,4 @@
-package com.icheero.app.activity.ui.lollipop;
+package com.icheero.app.activity.feature.lollipop;
 
 import android.os.Bundle;
 import android.widget.SeekBar;

@@ -3,6 +3,7 @@ package com.icheero.app.activity;
 import android.Manifest;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.transition.Slide;
 import android.view.View;
@@ -18,6 +19,9 @@ import com.icheero.app.activity.data.CustomSettingActivity;
 import com.icheero.app.activity.data.DatabaseActivity;
 import com.icheero.app.activity.data.SystemSettingActivity;
 import com.icheero.app.activity.data.ViewModelActivity;
+import com.icheero.app.activity.feature.lollipop.CardViewActivity;
+import com.icheero.app.activity.feature.oreo.NotificationActivity;
+import com.icheero.app.activity.feature.lollipop.RecyclerViewActivity;
 import com.icheero.app.activity.media.CameraActivity;
 import com.icheero.app.activity.network.DownloadActivity;
 import com.icheero.app.activity.network.ImageDownloadActivity;
@@ -33,8 +37,6 @@ import com.icheero.app.activity.ui.AnimActivity;
 import com.icheero.app.activity.ui.CustomViewActivity;
 import com.icheero.app.activity.ui.DialogActivity;
 import com.icheero.app.activity.ui.OptionActivity;
-import com.icheero.app.activity.ui.lollipop.CardViewActivity;
-import com.icheero.app.activity.ui.lollipop.RecyclerViewActivity;
 import com.icheero.app.activity.ui.SectionsActivity;
 import com.icheero.app.activity.ui.StyledActivity;
 import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
@@ -71,6 +73,8 @@ public class MainActivity extends BaseActivity
     Button toRecyclerViewActivity;
     @BindView(R.id.to_card_view_activity)
     Button toCardViewActivity;
+    @BindView(R.id.to_notification_activity)
+    Button toNotificationActivity;
     @BindView(R.id.to_web_view_activity)
     Button toWebViewActivity;
     @BindView(R.id.to_image_download_activity)
@@ -118,14 +122,18 @@ public class MainActivity extends BaseActivity
 
         FloatingActionButton fab = $(R.id.fab);
         fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", BaseTransientBottomBar.LENGTH_LONG).setAction("Action", null).show());
-        Slide slide = new Slide();
-        slide.setDuration(700);
-        getWindow().setExitTransition(slide);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP)
+        {
+            Slide slide = new Slide();
+            slide.setDuration(700);
+            getWindow().setExitTransition(slide);
+        }
         ButterKnife.bind(this);
         if (!mPermissionManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
             mPermissionManager.permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         else
             IOManager.getInstance().createRootFolder();
+
     }
 
     @Override
@@ -200,7 +208,7 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @OnClick({R.id.to_card_view_activity, R.id.to_recycler_view_activity, R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity, R.id.to_dialog_activity, R.id.to_option_activity, R.id.to_touch_pan_scroll_activity, R.id.to_touch_pan_gesture_scroll_activity})
+    @OnClick({R.id.to_notification_activity, R.id.to_card_view_activity, R.id.to_recycler_view_activity, R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity, R.id.to_dialog_activity, R.id.to_option_activity, R.id.to_touch_pan_scroll_activity, R.id.to_touch_pan_gesture_scroll_activity})
     public void OnUIClickEvent(View v)
     {
         Intent toActivity = new Intent();
@@ -210,28 +218,32 @@ public class MainActivity extends BaseActivity
             {
                 toActivity.setClass(this, StyledActivity.class);
                 toActivity.putExtra("transition", "explode");
-                startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             }
             case R.id.to_custom_view_activity:
             {
                 toActivity.setClass(this, CustomViewActivity.class);
                 toActivity.putExtra("transition", "slide");
-                startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             }
             case R.id.to_sections_activity:
             {
                 toActivity.setClass(this, SectionsActivity.class);
                 toActivity.putExtra("transition", "fade");
-                startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             }
             case R.id.to_anim_activity:
             {
                 toActivity.setClass(this, AnimActivity.class);
                 toActivity.putExtra("transition", "fade");
-                startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             }
             case R.id.to_dialog_activity:
@@ -267,6 +279,12 @@ public class MainActivity extends BaseActivity
             case R.id.to_card_view_activity:
             {
                 toActivity.setClass(this, CardViewActivity.class);
+                startActivity(toActivity);
+                break;
+            }
+            case R.id.to_notification_activity:
+            {
+                toActivity.setClass(this, NotificationActivity.class);
                 startActivity(toActivity);
                 break;
             }

@@ -5,13 +5,18 @@ import java.lang.reflect.Method;
 
 public class RefInvoke
 {
-    public static Object invokeStaticMethod(String class_name, String method_name, Class[] pareTyple, Object[] pareVaules)
+    public static Object invokeStaticMethod(String class_name, String method_name, Class[] pareType, Object[] paramValues)
+    {
+        return invokeMethod(class_name, method_name, null, pareType, paramValues);
+    }
+
+    public static Object invokeMethod(String class_name, String method_name, Object obj, Class[] pareType, Object[] paramValues)
     {
         try
         {
             Class<?> obj_class = Class.forName(class_name);
-            Method method = obj_class.getMethod(method_name, pareTyple);
-            return method.invoke(null, pareVaules);
+            Method method = obj_class.getMethod(method_name, pareType);
+            return method.invoke(obj, paramValues);
         }
         catch (Exception e)
         {
@@ -20,22 +25,12 @@ public class RefInvoke
         return null;
     }
 
-    public static Object invokeMethod(String class_name, String method_name, Object obj, Class[] pareTyple, Object[] pareVaules)
+    public static Object getStaticFieldOjbect(String class_name, String filedName)
     {
-        try
-        {
-            Class<?> obj_class = Class.forName(class_name);
-            Method method = obj_class.getMethod(method_name, pareTyple);
-            return method.invoke(obj, pareVaules);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return null;
+        return getFieldObject(class_name, null, filedName);
     }
 
-    public static Object getFieldOjbect(String class_name, Object obj, String filedName)
+    public static Object getFieldObject(String class_name, Object obj, String filedName)
     {
         try
         {
@@ -51,27 +46,11 @@ public class RefInvoke
         return null;
     }
 
-    public static Object getStaticFieldOjbect(String class_name, String filedName)
+    public static void setFieldObject(String class_name, String filedName, Object obj, Object filedVaule)
     {
         try
         {
             Class<?> obj_class = Class.forName(class_name);
-            Field field = obj_class.getDeclaredField(filedName);
-            field.setAccessible(true);
-            return field.get(null);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static void setFieldOjbect(String classname, String filedName, Object obj, Object filedVaule)
-    {
-        try
-        {
-            Class<?> obj_class = Class.forName(classname);
             Field field = obj_class.getDeclaredField(filedName);
             field.setAccessible(true);
             field.set(obj, filedVaule);
@@ -82,18 +61,8 @@ public class RefInvoke
         }
     }
 
-    public static void setStaticOjbect(String class_name, String filedName, Object filedVaule)
+    public static void setStaticObject(String class_name, String filedName, Object filedVaule)
     {
-        try
-        {
-            Class<?> obj_class = Class.forName(class_name);
-            Field field = obj_class.getDeclaredField(filedName);
-            field.setAccessible(true);
-            field.set(null, filedVaule);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        setFieldObject(class_name, filedName, null, filedVaule);
     }
 }

@@ -141,18 +141,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/to_card_view_activity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CardViewActivity"/>
-
-            <Button
-                android:id="@+id/to_recycler_view_activity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RecyclerViewActivity"/>
-
-            <Button
                 android:id="@+id/to_custom_setting_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -252,5 +240,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="XposedActivity"/>
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/to_notification_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NotificationActivity"/>
+
+            <Button
+                android:id="@+id/to_card_view_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CardViewActivity"/>
+
+            <Button
+                android:id="@+id/to_recycler_view_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RecyclerViewActivity"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
 </LinearLayout>

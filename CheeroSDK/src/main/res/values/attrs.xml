@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="channel">
+        <attr name="groupId" format="string"/>
+        <attr name="groupName" format="string"/>
+        <attr name="channelId" format="string"/>
+        <attr name="channelName" format="string"/>
+        <attr name="importance" format="integer"/>
+        <attr name="description" format="string"/>
+    </declare-styleable>
+</resources>

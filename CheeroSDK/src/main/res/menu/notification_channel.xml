@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:channel="http://schemas.android.com/apk/res-auto">
+
+    <group
+        channel:groupId="group_normal"
+        channel:groupName="normal通知">
+        <item
+            android:title="@string/cheero_notification_channel_name_blog"
+            channel:channelId="@string/cheero_notification_channel_id_blog"
+            channel:channelName="@string/cheero_notification_channel_name_blog"
+            channel:importance="3"/>
+
+        <item
+            android:title="@string/cheero_notification_channel_name_home"
+            channel:channelId="@string/cheero_notification_channel_id_home"
+            channel:channelName="@string/cheero_notification_channel_name_home"
+            channel:importance="3"/>
+    </group>
+
+    <group
+        channel:groupId="group_vip"
+        channel:groupName="vip通知">
+        <item
+            android:title="@string/cheero_notification_channel_name_blog"
+            channel:channelId="@string/cheero_notification_channel_id_blog"
+            channel:channelName="@string/cheero_notification_channel_name_blog"
+            channel:importance="4"/>
+
+        <item
+            android:title="@string/cheero_notification_channel_name_home"
+            channel:channelId="@string/cheero_notification_channel_id_home"
+            channel:channelName="@string/cheero_notification_channel_name_home"
+            channel:importance="4"/>
+    </group>
+
+</menu>

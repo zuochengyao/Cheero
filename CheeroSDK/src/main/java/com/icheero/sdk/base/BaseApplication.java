@@ -11,6 +11,7 @@ import com.icheero.sdk.core.manager.ApplicationManager;
 import com.icheero.sdk.core.manager.DownloadManager;
 import com.icheero.sdk.core.manager.HttpManager;
 import com.icheero.sdk.core.manager.IOManager;
+import com.icheero.sdk.core.manager.NotificationManager;
 import com.icheero.sdk.core.network.download.DownloadConfig;
 import com.icheero.sdk.core.network.http.HttpConfig;
 import com.icheero.sdk.util.Common;
@@ -68,6 +69,8 @@ public class BaseApplication extends Application
         Stetho.initializeWithDefaults(this);
         // 初始化 数据库
         DBHelper.getInstance().init(this);
+        // 初始化 通知
+        NotificationManager.getInstance();
     }
 
     @Override
