@@ -1,6 +1,5 @@
 package com.icheero.app.activity.network;
 
-import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,9 +14,11 @@ import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import android.widget.ImageView;
 
+import com.icheero.sdk.base.BaseActivity;
+
 import java.io.FileInputStream;
 
-public class DownloadActivity extends Activity
+public class DownloadActivity extends BaseActivity
 {
     private static final String DL_ID = "downloadId";
     private static final String RESOURCE_URL = "http://www.bigfoto.com/dog-animal.jpg";

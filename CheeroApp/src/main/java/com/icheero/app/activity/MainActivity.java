@@ -5,23 +5,19 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.transition.Slide;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 import com.icheero.app.R;
 import com.icheero.app.activity.data.CustomSettingActivity;
 import com.icheero.app.activity.data.DatabaseActivity;
 import com.icheero.app.activity.data.SystemSettingActivity;
 import com.icheero.app.activity.data.ViewModelActivity;
 import com.icheero.app.activity.feature.lollipop.CardViewActivity;
-import com.icheero.app.activity.feature.oreo.NotificationActivity;
 import com.icheero.app.activity.feature.lollipop.RecyclerViewActivity;
+import com.icheero.app.activity.feature.oreo.NotificationActivity;
 import com.icheero.app.activity.media.CameraActivity;
 import com.icheero.app.activity.network.DownloadActivity;
 import com.icheero.app.activity.network.ImageDownloadActivity;
@@ -46,7 +42,6 @@ import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.util.Common;
 
-import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -117,17 +112,7 @@ public class MainActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = $(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = $(R.id.fab);
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", BaseTransientBottomBar.LENGTH_LONG).setAction("Action", null).show());
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP)
-        {
-            Slide slide = new Slide();
-            slide.setDuration(700);
-            getWindow().setExitTransition(slide);
-        }
         ButterKnife.bind(this);
         if (!mPermissionManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
             mPermissionManager.permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE);

@@ -7,13 +7,13 @@ import android.os.Message;
 import com.icheero.app.R;
 import com.icheero.app.databinding.ActivityViewmodelBinding;
 import com.icheero.app.model.User;
+import com.icheero.sdk.base.BaseActivity;
 
 import java.lang.ref.WeakReference;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-public class ViewModelActivity extends AppCompatActivity
+public class ViewModelActivity extends BaseActivity
 {
     /*
     @BindView(R.id.text_user_name)
