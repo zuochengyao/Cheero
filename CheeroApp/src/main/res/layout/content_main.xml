@@ -20,6 +20,12 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/to_move_view_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MoveViewActivity"/>
+
+            <Button
                 android:id="@+id/to_styled_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

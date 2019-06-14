@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ActionBar"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activity.ui.MoveViewActivity">
+        </activity>
         <!-- region Activities -->
         <activity
             android:name=".activity.MainActivity"

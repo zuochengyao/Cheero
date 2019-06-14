@@ -32,6 +32,7 @@ import com.icheero.app.activity.reverse.JniActivity;
 import com.icheero.app.activity.ui.AnimActivity;
 import com.icheero.app.activity.ui.CustomViewActivity;
 import com.icheero.app.activity.ui.DialogActivity;
+import com.icheero.app.activity.ui.MoveViewActivity;
 import com.icheero.app.activity.ui.OptionActivity;
 import com.icheero.app.activity.ui.SectionsActivity;
 import com.icheero.app.activity.ui.StyledActivity;
@@ -64,6 +65,8 @@ public class MainActivity extends BaseActivity
     Button toPanGestureScrollActivity;
     @BindView(R.id.to_touch_pan_scroll_activity)
     Button toPanScrollActivity;
+    @BindView(R.id.to_move_view_activity)
+    Button toMoveViewActivity;
     @BindView(R.id.to_recycler_view_activity)
     Button toRecyclerViewActivity;
     @BindView(R.id.to_card_view_activity)
@@ -193,7 +196,7 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @OnClick({R.id.to_notification_activity, R.id.to_card_view_activity, R.id.to_recycler_view_activity, R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity, R.id.to_dialog_activity, R.id.to_option_activity, R.id.to_touch_pan_scroll_activity, R.id.to_touch_pan_gesture_scroll_activity})
+    @OnClick({R.id.to_move_view_activity, R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity, R.id.to_dialog_activity, R.id.to_option_activity, R.id.to_touch_pan_scroll_activity, R.id.to_touch_pan_gesture_scroll_activity})
     public void OnUIClickEvent(View v)
     {
         Intent toActivity = new Intent();
@@ -231,6 +234,12 @@ public class MainActivity extends BaseActivity
                     startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             }
+            case R.id.to_move_view_activity:
+            {
+                toActivity.setClass(this, MoveViewActivity.class);
+                startActivity(toActivity);
+                break;
+            }
             case R.id.to_dialog_activity:
             {
                 toActivity.setClass(this, DialogActivity.class);
@@ -255,6 +264,15 @@ public class MainActivity extends BaseActivity
                 startActivity(toActivity);
                 break;
             }
+        }
+    }
+
+    @OnClick({R.id.to_notification_activity, R.id.to_card_view_activity, R.id.to_recycler_view_activity})
+    public void OnFetureClickEvent(View v)
+    {
+        Intent toActivity = new Intent();
+        switch (v.getId())
+        {
             case R.id.to_recycler_view_activity:
             {
                 toActivity.setClass(this, RecyclerViewActivity.class);
@@ -274,6 +292,7 @@ public class MainActivity extends BaseActivity
                 break;
             }
         }
+        startActivity(toActivity);
     }
 
     @OnClick({R.id.to_jni_activity, R.id.to_dispose_so_activity, R.id.to_dispose_manifest_activity, R.id.to_dispose_resource_activity, R.id.to_dispose_dex_activity})
