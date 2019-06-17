@@ -17,6 +17,7 @@ import com.icheero.app.activity.data.SystemSettingActivity;
 import com.icheero.app.activity.data.ViewModelActivity;
 import com.icheero.app.activity.feature.lollipop.CardViewActivity;
 import com.icheero.app.activity.feature.lollipop.RecyclerViewActivity;
+import com.icheero.app.activity.feature.lollipop.TabLayoutActivity;
 import com.icheero.app.activity.feature.oreo.NotificationActivity;
 import com.icheero.app.activity.media.CameraActivity;
 import com.icheero.app.activity.network.DownloadActivity;
@@ -73,6 +74,8 @@ public class MainActivity extends BaseActivity
     Button toCardViewActivity;
     @BindView(R.id.to_notification_activity)
     Button toNotificationActivity;
+    @BindView(R.id.to_tablayout_activity)
+    Button toTabLayoutActivity;
     @BindView(R.id.to_web_view_activity)
     Button toWebViewActivity;
     @BindView(R.id.to_image_download_activity)
@@ -267,8 +270,8 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @OnClick({R.id.to_notification_activity, R.id.to_card_view_activity, R.id.to_recycler_view_activity})
-    public void OnFetureClickEvent(View v)
+    @OnClick({R.id.to_tablayout_activity, R.id.to_notification_activity, R.id.to_card_view_activity, R.id.to_recycler_view_activity})
+    public void OnFeatureClickEvent(View v)
     {
         Intent toActivity = new Intent();
         switch (v.getId())
@@ -276,19 +279,21 @@ public class MainActivity extends BaseActivity
             case R.id.to_recycler_view_activity:
             {
                 toActivity.setClass(this, RecyclerViewActivity.class);
-                startActivity(toActivity);
                 break;
             }
             case R.id.to_card_view_activity:
             {
                 toActivity.setClass(this, CardViewActivity.class);
-                startActivity(toActivity);
                 break;
             }
             case R.id.to_notification_activity:
             {
                 toActivity.setClass(this, NotificationActivity.class);
-                startActivity(toActivity);
+                break;
+            }
+            case R.id.to_tablayout_activity:
+            {
+                toActivity.setClass(this, TabLayoutActivity.class);
                 break;
             }
         }

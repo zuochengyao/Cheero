@@ -258,6 +258,12 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/to_tablayout_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TabLayoutActivity"/>
+
+            <Button
                 android:id="@+id/to_notification_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

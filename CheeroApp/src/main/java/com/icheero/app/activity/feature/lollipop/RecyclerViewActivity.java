@@ -3,7 +3,7 @@ package com.icheero.app.activity.feature.lollipop;
 import android.os.Bundle;
 
 import com.icheero.app.R;
-import com.icheero.app.custom.adapter.RecyclerViewAdapter;
+import com.icheero.app.custom.adapter.RecyclerStringAdapter;
 import com.icheero.sdk.base.BaseActivity;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class RecyclerViewActivity extends BaseActivity
         List<String> stringList = new ArrayList<>();
         for (int i = 0; i < 100; i++)
             stringList.add(i + "");
-        mRecyclerView.setAdapter(new RecyclerViewAdapter(this, stringList));
+        mRecyclerView.setAdapter(new RecyclerStringAdapter(this, stringList));
         // 设置分割线，现在有库提供的，还可以自定义分割线
         // mRecyclerView.addItemDecoration(new DividerItemDecoration(this, RecyclerView.VERTICAL));
         // mRecyclerView.addItemDecoration(new DividerItemDecoration(this, RecyclerView.HORIZONTAL));

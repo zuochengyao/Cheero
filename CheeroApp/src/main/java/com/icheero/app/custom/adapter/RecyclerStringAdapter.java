@@ -21,12 +21,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 
-public class RecyclerViewAdapter extends Adapter<RecyclerViewAdapter.RecyclerViewHolder>
+public class RecyclerStringAdapter extends Adapter<RecyclerStringAdapter.RecyclerViewHolder>
 {
     private Context mContext;
     private List<String> mStringList;
 
-    public RecyclerViewAdapter(Context context, List<String> stringList)
+    public RecyclerStringAdapter(Context context, List<String> stringList)
     {
         this.mContext = context;
         this.mStringList = stringList;
@@ -50,9 +50,9 @@ public class RecyclerViewAdapter extends Adapter<RecyclerViewAdapter.RecyclerVie
     {
         holder.mTextView.setText(mStringList.get(position));
         // 设置随机高度
-//        ViewGroup.LayoutParams params = holder.mTextView.getLayoutParams();
-//        params.height = (int) (100 + Math.random() * 300);
-//        holder.mTextView.setLayoutParams(params);
+        //        ViewGroup.LayoutParams params = holder.mTextView.getLayoutParams();
+        //        params.height = (int) (100 + Math.random() * 300);
+        //        holder.mTextView.setLayoutParams(params);
         holder.setPosition(position);
     }
 
@@ -81,18 +81,19 @@ public class RecyclerViewAdapter extends Adapter<RecyclerViewAdapter.RecyclerVie
         }
 
         @OnClick
-        void ItemClick(View view)
+        void ItemClick()
         {
             Common.toast(mContext, "click: " + mTextView.getText(), Toast.LENGTH_SHORT);
         }
 
         @OnLongClick
-        boolean ItemLongClick(View view)
+        boolean ItemLongClick()
         {
             new AlertDialog.Builder(mContext).setTitle(mContext.getString(R.string.cheero_delete_confirm))
                                              .setNegativeButton(R.string.cheero_cancel, null)
                                              .setPositiveButton(R.string.cheero_ok, (dialog, which) -> removeItem(mPosition))
-                                             .create().show();
+                                             .create()
+                                             .show();
             return false;
         }
     }
