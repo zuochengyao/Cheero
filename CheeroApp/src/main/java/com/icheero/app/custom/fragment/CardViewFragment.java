@@ -1,16 +1,21 @@
-package com.icheero.app.activity.feature.lollipop;
+package com.icheero.app.custom.fragment;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.SeekBar;
 
 import com.icheero.app.R;
-import com.icheero.sdk.base.BaseActivity;
+import com.icheero.sdk.base.BaseFragment;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CardViewActivity extends BaseActivity implements SeekBar.OnSeekBarChangeListener
+public class CardViewFragment extends BaseFragment  implements SeekBar.OnSeekBarChangeListener
 {
     @BindView(R.id.seek_bar_radius)
     SeekBar mSeekBarRadius;
@@ -21,20 +26,16 @@ public class CardViewActivity extends BaseActivity implements SeekBar.OnSeekBarC
     @BindView(R.id.card_view)
     CardView mCardView;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card_view);
-        doInitView();
-    }
-
-    private void doInitView()
-    {
-        ButterKnife.bind(this);
+        View view = inflater.inflate(R.layout.fragment_card_view, container, false);
+        ButterKnife.bind(this, view);
         mSeekBarRadius.setOnSeekBarChangeListener(this);
         mSeekBarShadow.setOnSeekBarChangeListener(this);
         mSeekBarContentPadding.setOnSeekBarChangeListener(this);
+        return view;
     }
 
     @Override

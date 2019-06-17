@@ -1,15 +1,17 @@
-package com.icheero.app.activity.feature.lollipop;
+package com.icheero.app.activity.feature;
 
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 import com.icheero.app.R;
 import com.icheero.app.custom.adapter.FragmentAdapter;
-import com.icheero.app.custom.fragment.TabFragment;
+import com.icheero.app.custom.fragment.CardViewFragment;
+import com.icheero.app.custom.fragment.RecyclerViewFragment;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.base.BaseFragment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import androidx.appcompat.widget.Toolbar;
@@ -17,7 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TabLayoutActivity extends BaseActivity
+public class LollipopActivity extends BaseActivity
 {
     @BindView(R.id.tab_toolbar)
     Toolbar mToolbar;
@@ -26,15 +28,14 @@ public class TabLayoutActivity extends BaseActivity
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
 
-    private FragmentAdapter mAdapter;
-    private List<BaseFragment> mFragments = new ArrayList<>();
-    private String[] mTitles = new String[]{"智能","红润","日系","自然","艺术黑白","甜美","蜜粉","清新","夏日阳光","唯美","蜜粉"};
+    private String[] mFeatures = new String[]{"CardView", "RecycleView", "TabLayout"};
+    private List<BaseFragment> mTabFragments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tab_layout);
+        setContentView(R.layout.activity_lollipop);
         doInitView();
     }
 
@@ -42,17 +43,13 @@ public class TabLayoutActivity extends BaseActivity
     {
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
-        for (int i = 0; i < mTitles.length; i++)
-        {
-            mFragments.add(new TabFragment());
-            mTabLayout.addTab(mTabLayout.newTab());
-        }
+        for (String feature : mFeatures)
+            mTabLayout.addTab(mTabLayout.newTab().setText(feature));
+        mTabFragments.add(new CardViewFragment());
+        mTabFragments.add(new RecyclerViewFragment());
+        mTabFragments.add(new RecyclerViewFragment());
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), mTabFragments, Arrays.asList(mFeatures));
+        mViewPager.setAdapter(fragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager, false);
-        mAdapter = new FragmentAdapter(getSupportFragmentManager(), mFragments);
-        mViewPager.setAdapter(mAdapter);
-        for (int i = 0; i < mTitles.length; i++)
-        {
-            mTabLayout.getTabAt(i).setText(mTitles[i]);
-        }
     }
 }

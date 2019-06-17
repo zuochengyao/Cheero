@@ -258,28 +258,16 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/to_tablayout_activity"
+                android:id="@+id/to_lollipop_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TabLayoutActivity"/>
+                android:text="LollipopActivity"/>
 
             <Button
                 android:id="@+id/to_notification_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="NotificationActivity"/>
-
-            <Button
-                android:id="@+id/to_card_view_activity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CardViewActivity"/>
-
-            <Button
-                android:id="@+id/to_recycler_view_activity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RecyclerViewActivity"/>
 
         </LinearLayout>
     </HorizontalScrollView>

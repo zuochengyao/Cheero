@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.feature.lollipop.TabLayoutActivity">
+    tools:context=".activity.feature.LollipopActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -25,7 +25,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabIndicatorColor="#ADBE107E"
-            app:tabMode="scrollable"/>
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
+            app:tabMode="fixed"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

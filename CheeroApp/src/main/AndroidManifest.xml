@@ -30,37 +30,28 @@
         <activity android:name=".activity.ui.OptionActivity"/>
         <activity android:name=".activity.ui.touch.PanGestureScrollActivity"/>
         <activity android:name=".activity.ui.touch.PanScrollActivity"/>
-
-        <activity android:name=".activity.feature.lollipop.RecyclerViewActivity"/>
-        <activity android:name=".activity.feature.lollipop.CardViewActivity"/>
         <activity
-            android:name=".activity.feature.lollipop.TabLayoutActivity"
+            android:name=".activity.feature.LollipopActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.ui.MoveViewActivity"/>
         <activity android:name=".activity.feature.oreo.NotificationActivity"/>
-
         <activity android:name=".activity.network.WebViewActivity"/>
         <activity android:name=".activity.network.ImageDownloadActivity"/>
         <activity android:name=".activity.network.DownloadActivity"/>
-
         <activity android:name=".activity.media.CameraActivity"/>
-
         <activity android:name=".activity.data.CustomSettingActivity"/>
         <activity
             android:name=".activity.data.SystemSettingActivity"
             android:label="@string/cheero_app_title_activity_settings"/>
         <activity android:name=".activity.data.DatabaseActivity"/>
         <activity android:name=".activity.data.ViewModelActivity"/>
-
         <activity android:name=".activity.network.RetrofitActivity"/>
         <activity android:name=".activity.network.RequestActivity"/>
-
         <activity android:name=".activity.reverse.JniActivity"/>
         <activity android:name=".activity.reverse.DisposeSoActivity"/>
         <activity android:name=".activity.reverse.DisposeManifestActivity"/>
         <activity android:name=".activity.reverse.DisposeResourceActivity"/>
         <activity android:name=".activity.reverse.DisposeDexActivity"/>
-
         <activity android:name=".activity.xposed.XposedActivity"/>
         <!-- endregion -->
         <!-- region Services -->
