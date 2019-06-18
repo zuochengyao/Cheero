@@ -1,10 +1,14 @@
 package com.icheero.app.activity.feature;
 
 import android.os.Bundle;
+import android.transition.Slide;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.icheero.app.R;
 import com.icheero.app.custom.adapter.FragmentAdapter;
@@ -38,6 +42,8 @@ public class LollipopActivity extends BaseActivity
     ViewPager mViewPager;
     @BindView(R.id.navigation_lollipop)
     NavigationView mNavigationView;
+    @BindView(R.id.fab)
+    FloatingActionButton mFloatingActionButton;
 
     private String[] mFeatures = new String[]{"CardView", "RecycleView", "TabLayout"};
     private List<BaseFragment> mTabFragments = new ArrayList<>();
@@ -54,6 +60,7 @@ public class LollipopActivity extends BaseActivity
     {
         ButterKnife.bind(this);
         doInitActionBar();
+        doInitFab();
         doInitNavigation();
         doInitTabLayout();
     }
@@ -66,6 +73,17 @@ public class LollipopActivity extends BaseActivity
         {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
             actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    private void doInitFab()
+    {
+        mFloatingActionButton.setOnClickListener(v -> Snackbar.make(v, "Replace with your own action", BaseTransientBottomBar.LENGTH_LONG).show());
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP)
+        {
+            Slide slide = new Slide();
+            slide.setDuration(700);
+            getWindow().setExitTransition(slide);
         }
     }
 
