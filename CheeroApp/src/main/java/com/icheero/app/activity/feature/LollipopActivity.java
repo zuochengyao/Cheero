@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.icheero.app.R;
@@ -78,7 +77,7 @@ public class LollipopActivity extends BaseActivity
 
     private void doInitFab()
     {
-        mFloatingActionButton.setOnClickListener(v -> Snackbar.make(v, "Replace with your own action", BaseTransientBottomBar.LENGTH_LONG).show());
+        mFloatingActionButton.setOnClickListener(v -> Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG).show());
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP)
         {
             Slide slide = new Slide();
