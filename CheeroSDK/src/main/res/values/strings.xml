@@ -7,6 +7,9 @@
     <string name="cheero_delete_confirm">确认删除吗？</string>
     <string name="cheero_ok">确定</string>
     <string name="cheero_cancel">取消</string>
+    <string name="cheero_other">其它</string>
+    <string name="cheero_setting">设置</string>
+    <string name="cheero_about">关于我们</string>
 
     <string name="cheero_notification_group_name_app">app</string>
     <string name="cheero_notification_group_name_lib">lib</string>
