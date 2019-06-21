@@ -1,51 +1,51 @@
 package com.icheero.sdk.knowledge.designpattern;
 
-import com.icheero.sdk.knowledge.designpattern.bridge.Abstraction;
-import com.icheero.sdk.knowledge.designpattern.bridge.ConcreteImpA;
-import com.icheero.sdk.knowledge.designpattern.bridge.ConcreteImpB;
-import com.icheero.sdk.knowledge.designpattern.bridge.RefinedAbstraction;
-import com.icheero.sdk.knowledge.designpattern.command.Command;
-import com.icheero.sdk.knowledge.designpattern.command.ConcreteCommand;
-import com.icheero.sdk.knowledge.designpattern.command.Invoker;
-import com.icheero.sdk.knowledge.designpattern.command.Receiver;
-import com.icheero.sdk.knowledge.designpattern.composite.demo.ConcreteCompany;
-import com.icheero.sdk.knowledge.designpattern.composite.demo.FinanceDepartment;
-import com.icheero.sdk.knowledge.designpattern.composite.demo.HRDepartment;
-import com.icheero.sdk.knowledge.designpattern.composite.idea.Composite;
-import com.icheero.sdk.knowledge.designpattern.composite.idea.Leaf;
-import com.icheero.sdk.knowledge.designpattern.flyweight.demo.User;
-import com.icheero.sdk.knowledge.designpattern.flyweight.demo.WebSite;
-import com.icheero.sdk.knowledge.designpattern.flyweight.demo.WebSiteFactory;
-import com.icheero.sdk.knowledge.designpattern.flyweight.idea.Flyweight;
-import com.icheero.sdk.knowledge.designpattern.flyweight.idea.FlyweightFactory;
-import com.icheero.sdk.knowledge.designpattern.flyweight.idea.UnsharedConcreteFlyweight;
-import com.icheero.sdk.knowledge.designpattern.interpreter.demo.Expression;
-import com.icheero.sdk.knowledge.designpattern.interpreter.demo.Note;
-import com.icheero.sdk.knowledge.designpattern.interpreter.demo.PlayContext;
-import com.icheero.sdk.knowledge.designpattern.interpreter.demo.Scale;
-import com.icheero.sdk.knowledge.designpattern.interpreter.idea.AbstractExpression;
-import com.icheero.sdk.knowledge.designpattern.interpreter.idea.Context;
-import com.icheero.sdk.knowledge.designpattern.interpreter.idea.NonterminalExpression;
-import com.icheero.sdk.knowledge.designpattern.interpreter.idea.TerminalExpression;
-import com.icheero.sdk.knowledge.designpattern.iterator.ConcreteAggregate;
-import com.icheero.sdk.knowledge.designpattern.iterator.ConcreteIterator;
-import com.icheero.sdk.knowledge.designpattern.iterator.Iterator;
-import com.icheero.sdk.knowledge.designpattern.mediator.Iraq;
-import com.icheero.sdk.knowledge.designpattern.mediator.SecurityCouncil;
-import com.icheero.sdk.knowledge.designpattern.mediator.USA;
-import com.icheero.sdk.knowledge.designpattern.responsibility.GroupLeader;
-import com.icheero.sdk.knowledge.designpattern.responsibility.SuperiorLeader;
-import com.icheero.sdk.knowledge.designpattern.responsibility.WorkRequest;
-import com.icheero.sdk.knowledge.designpattern.visitor.demo.Failing;
-import com.icheero.sdk.knowledge.designpattern.visitor.demo.Man;
-import com.icheero.sdk.knowledge.designpattern.visitor.demo.PersonStructure;
-import com.icheero.sdk.knowledge.designpattern.visitor.demo.Success;
-import com.icheero.sdk.knowledge.designpattern.visitor.demo.Woman;
-import com.icheero.sdk.knowledge.designpattern.visitor.idea.ConcreteElementA;
-import com.icheero.sdk.knowledge.designpattern.visitor.idea.ConcreteElementB;
-import com.icheero.sdk.knowledge.designpattern.visitor.idea.ConcreteVisitorA;
-import com.icheero.sdk.knowledge.designpattern.visitor.idea.ConcreteVisitorB;
-import com.icheero.sdk.knowledge.designpattern.visitor.idea.ObjectStructure;
+import com.icheero.sdk.knowledge.designpattern.structural.bridge.Abstraction;
+import com.icheero.sdk.knowledge.designpattern.structural.bridge.ConcreteImpA;
+import com.icheero.sdk.knowledge.designpattern.structural.bridge.ConcreteImpB;
+import com.icheero.sdk.knowledge.designpattern.structural.bridge.RefinedAbstraction;
+import com.icheero.sdk.knowledge.designpattern.behavioral.command.Command;
+import com.icheero.sdk.knowledge.designpattern.behavioral.command.ConcreteCommand;
+import com.icheero.sdk.knowledge.designpattern.behavioral.command.Invoker;
+import com.icheero.sdk.knowledge.designpattern.behavioral.command.Receiver;
+import com.icheero.sdk.knowledge.designpattern.structural.composite.demo.ConcreteCompany;
+import com.icheero.sdk.knowledge.designpattern.structural.composite.demo.FinanceDepartment;
+import com.icheero.sdk.knowledge.designpattern.structural.composite.demo.HRDepartment;
+import com.icheero.sdk.knowledge.designpattern.structural.composite.idea.Composite;
+import com.icheero.sdk.knowledge.designpattern.structural.composite.idea.Leaf;
+import com.icheero.sdk.knowledge.designpattern.structural.flyweight.demo.User;
+import com.icheero.sdk.knowledge.designpattern.structural.flyweight.demo.WebSite;
+import com.icheero.sdk.knowledge.designpattern.structural.flyweight.demo.WebSiteFactory;
+import com.icheero.sdk.knowledge.designpattern.structural.flyweight.idea.Flyweight;
+import com.icheero.sdk.knowledge.designpattern.structural.flyweight.idea.FlyweightFactory;
+import com.icheero.sdk.knowledge.designpattern.structural.flyweight.idea.UnsharedConcreteFlyweight;
+import com.icheero.sdk.knowledge.designpattern.behavioral.interpreter.demo.Expression;
+import com.icheero.sdk.knowledge.designpattern.behavioral.interpreter.demo.Note;
+import com.icheero.sdk.knowledge.designpattern.behavioral.interpreter.demo.PlayContext;
+import com.icheero.sdk.knowledge.designpattern.behavioral.interpreter.demo.Scale;
+import com.icheero.sdk.knowledge.designpattern.behavioral.interpreter.idea.AbstractExpression;
+import com.icheero.sdk.knowledge.designpattern.behavioral.interpreter.idea.Context;
+import com.icheero.sdk.knowledge.designpattern.behavioral.interpreter.idea.NonterminalExpression;
+import com.icheero.sdk.knowledge.designpattern.behavioral.interpreter.idea.TerminalExpression;
+import com.icheero.sdk.knowledge.designpattern.behavioral.iterator.ConcreteAggregate;
+import com.icheero.sdk.knowledge.designpattern.behavioral.iterator.ConcreteIterator;
+import com.icheero.sdk.knowledge.designpattern.behavioral.iterator.Iterator;
+import com.icheero.sdk.knowledge.designpattern.behavioral.mediator.Iraq;
+import com.icheero.sdk.knowledge.designpattern.behavioral.mediator.SecurityCouncil;
+import com.icheero.sdk.knowledge.designpattern.behavioral.mediator.USA;
+import com.icheero.sdk.knowledge.designpattern.behavioral.responsibilitychain.GroupLeader;
+import com.icheero.sdk.knowledge.designpattern.behavioral.responsibilitychain.SuperiorLeader;
+import com.icheero.sdk.knowledge.designpattern.behavioral.responsibilitychain.WorkRequest;
+import com.icheero.sdk.knowledge.designpattern.behavioral.visitor.demo.Failing;
+import com.icheero.sdk.knowledge.designpattern.behavioral.visitor.demo.Man;
+import com.icheero.sdk.knowledge.designpattern.behavioral.visitor.demo.PersonStructure;
+import com.icheero.sdk.knowledge.designpattern.behavioral.visitor.demo.Success;
+import com.icheero.sdk.knowledge.designpattern.behavioral.visitor.demo.Woman;
+import com.icheero.sdk.knowledge.designpattern.behavioral.visitor.idea.ConcreteElementA;
+import com.icheero.sdk.knowledge.designpattern.behavioral.visitor.idea.ConcreteElementB;
+import com.icheero.sdk.knowledge.designpattern.behavioral.visitor.idea.ConcreteVisitorA;
+import com.icheero.sdk.knowledge.designpattern.behavioral.visitor.idea.ConcreteVisitorB;
+import com.icheero.sdk.knowledge.designpattern.behavioral.visitor.idea.ObjectStructure;
 import com.icheero.sdk.util.Log;
 
 import java.util.ArrayList;
@@ -53,7 +53,27 @@ import java.util.List;
 
 /**
  * Created by zuochengyao on 2018/3/19.
+ *
+ * 设计模式六大原则：
+ *
+ * 1. 单一职责：就一个类而言，应该仅有一个引起它变化的原因。
+ *
+ * 2. 开放封闭：类、模块、函数等是可扩展（开放），但是不可修改（封闭）。
+ *
+ * 3. 里式替换：所有引用基类（父类）的地方，必须能透明地使用其子类的对象。
+ * @description 在软件中将一个基类对象替换成其子类对象，程序将不会产生任何错误和异常；反之不成立。
+ *
+ * 4. 依赖倒置：高层模块不应该依赖底层模块，两者都应该依赖于抽象（抽象类 or 接口）；抽象不应该依赖于细节（继承抽象类 or 实现接口），细节应该依赖于抽象。
+ * @description 模块间的依赖通过抽象发生，实现类之间不发生直接依赖关系
+ *
+ * 5. 迪米特原则（也叫 最少知识原则）：一个软件实体应当尽可能少的与其他实体发生相互作用。
+ * @description 当一个模块发生修改时，尽可能的少影响其它模块：类之间松耦合；尽量降低类成员变量&函数的访问权限；对象之间引用降到最低。
+ *
+ * 6. 接口隔离：一个类对另一个类的依赖应该建立在最小的接口上。
+ * @description 接口尽量小，但是要有限度；为依赖的接口的类定制服务，只暴露给调用的类它需要的方法，不需要的则隐藏；提高内聚，减少对外交互。
+ *
  */
+
 
 @SuppressWarnings("unused")
 public class DesignPatternMethods

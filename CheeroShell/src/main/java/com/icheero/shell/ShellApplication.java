@@ -87,7 +87,9 @@ public class ShellApplication extends Application
             }
             Object currentActivityThread = RefInvoke.invokeStaticMethod(APP_CLASS_NAME_ACTIVITY_THREAD, APP_METHOD_NAME, new Class[] {}, new Object[] {});
             String packageName = getPackageName();
-            ArrayMap mPackages = (ArrayMap) RefInvoke.getFieldObject(APP_CLASS_NAME_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_PACKAGES);
+            ArrayMap mPackages = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
+                mPackages = (ArrayMap) RefInvoke.getFieldObject(APP_CLASS_NAME_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_PACKAGES);
             WeakReference weakRef = (WeakReference) mPackages.get(packageName);
             DexClassLoader dexLoader = new DexClassLoader(apkFileName, odexPath, libPath, (ClassLoader) RefInvoke.getFieldObject(APP_CLASS_NAME_LOADED_APK, weakRef.get(), APP_FILED_NAME_CLASSLOADER));
             RefInvoke.setFieldObject(APP_CLASS_NAME_LOADED_APK, APP_FILED_NAME_CLASSLOADER, weakRef.get(), dexLoader);
@@ -147,7 +149,9 @@ public class ShellApplication extends Application
         }, new Object[]{false, null});
         RefInvoke.setFieldObject(APP_CLASS_NAME_ACTIVITY_THREAD, APP_FILED_NAME_INITIAL_APPLICATION, currentActivityThread, app);
 
-        ArrayMap mProviderMap = (ArrayMap) RefInvoke.getFieldObject(APP_CLASS_NAME_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_PROVIDER_MAP);
+        ArrayMap mProviderMap = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
+            mProviderMap = (ArrayMap) RefInvoke.getFieldObject(APP_CLASS_NAME_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_PROVIDER_MAP);
         Iterator it = mProviderMap.values().iterator();
         while (it.hasNext())
         {

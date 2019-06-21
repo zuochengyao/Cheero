@@ -5,10 +5,9 @@ import com.icheero.sdk.core.network.http.implement.AbstractAsyncHttpCall;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
-import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class HttpThreadPool
@@ -19,7 +18,7 @@ public class HttpThreadPool
     private Deque<AbstractAsyncHttpCall> mCacheQueue;
     private static volatile HttpThreadPool mInstance;
 
-    private static final ThreadPoolExecutor mThreadPool = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60, TimeUnit.SECONDS, new SynchronousQueue<>(), new ThreadFactory()
+    private static final ExecutorService mThreadPool = Executors.newCachedThreadPool(new ThreadFactory()
     {
         private AtomicInteger mInteger = new AtomicInteger(1);
 

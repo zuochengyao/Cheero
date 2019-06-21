@@ -36,6 +36,12 @@ public class MoveView extends View
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent event)
+    {
+        return super.dispatchTouchEvent(event);
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent event)
     {
         int x = (int) event.getX();
@@ -52,7 +58,10 @@ public class MoveView extends View
             {
                 int offsetX = x - lastX;
                 int offsetY = y - lastY;
-                layout(getLeft() + offsetX, getTop() + offsetY, getRight() + offsetX, getBottom() + offsetY);
+                offsetLeftAndRight(offsetX);
+                offsetTopAndBottom(offsetY);
+                // 可以用layout方式
+                // layout(getLeft() + offsetX, getTop() + offsetY, getRight() + offsetX, getBottom() + offsetY);
                 break;
             }
         }
