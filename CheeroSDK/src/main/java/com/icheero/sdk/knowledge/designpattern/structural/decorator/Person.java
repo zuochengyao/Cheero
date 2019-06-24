@@ -4,17 +4,17 @@ public class Person
 {
 	private String name;
 
-	public Person()
+	Person()
 	{
 	}
 
-	public Person(String name)
+	Person(String name)
 	{
 		this.name = name;
 	}
 
 	public void show()
 	{
-		System.out.println(String.format("装扮的{%s}", name).toString());
+		System.out.println(String.format("装扮的{%s}", name));
 	}
 }
