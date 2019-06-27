@@ -118,7 +118,6 @@ public class MainActivity extends BaseActivity
             mPermissionManager.permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         else
             IOManager.getInstance().createRootFolder();
-
     }
 
     @Override

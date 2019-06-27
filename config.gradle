@@ -36,6 +36,7 @@ dep_version.tinker = "1.9.1"
 dep_version.tinker_patch = "1.2.11"
 dep_version.multidex = "1.0.3"
 dep_version.xposed = "82"
+dep_version.eventbus = "3.1.1"
 
 def retrofit = [:]
 retrofit.runtime = "com.squareup.retrofit2:retrofit:$dep_version.retrofit"
@@ -93,6 +94,7 @@ deps.andfix = "com.alipay.euler:andfix:$dep_version.andfix"
 deps.stetho = "com.facebook.stetho:stetho:$dep_version.stetho"
 deps.multidex = "com.android.support:multidex:$dep_version.multidex"
 deps.xposed = "de.robv.android.xposed:api:$dep_version.xposed"
+deps.eventbus = "org.greenrobot:eventbus:$dep_version.eventbus"
 deps.faceid_api = "com.megvii.api:faceid:$dep_version.faceid_api"
 
 def sign_release = [:]

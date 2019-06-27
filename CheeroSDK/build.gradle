@@ -104,6 +104,8 @@ dependencies {
     // greendao
     api versions.deps.greendao.impl
     compileOnly versions.deps.greendao.generator
+    // EventBus
+    api versions.deps.eventbus
 }
 
 repositories {
