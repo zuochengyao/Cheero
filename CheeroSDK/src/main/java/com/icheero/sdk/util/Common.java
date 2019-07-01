@@ -25,6 +25,20 @@ import java.util.ArrayList;
 @SuppressWarnings("unused")
 public class Common
 {
+    /**
+     * 获取最大公因数
+     */
+    public static int gcd(int a, int b)
+    {
+        while (b != 0)
+        {
+            int c = b;
+            b = a % b;
+            a = c;
+        }
+        return a;
+    }
+
     public static int dp2px(Context context, float dp)
     {
         final float scale = context.getResources().getDisplayMetrics().density;

@@ -29,7 +29,7 @@ public class RequestActivity extends BaseActivity
     private static final String PATH_IDCARD_FRONT_180 = BASE_PATH + "/tencent/MicroMsg/WeiXin/IMG_20180808_174229.jpg";
     private static final String PATH_IDCARD_FRONT_270 = BASE_PATH + "/tencent/MicroMsg/WeiXin/IMG_20180808_174451.jpg";
     private static final String PATH_IDCARD_BACK = BASE_PATH + "/tencent/MicroMsg/WeiXin/mmexport1532593355508.jpg";
-    private static final String PATH_BANKCARD = BASE_PATH + "/DCIM/Camera/IMG_20180727_180356.jpg";
+    private static final String PATH_BANKCARD = BASE_PATH + "/DCIM/Camera1/IMG_20180727_180356.jpg";
 
     @BindView(R.id.request_hello_btn)
     Button mHello;

@@ -26,6 +26,7 @@ public class FileUtils
     public static final String DIR_PATH_BASE = Environment.getExternalStorageDirectory().getPath();
     public static final String DIR_PATH_CHEERO_ROOT = DIR_PATH_BASE + "/Cheero";
     public static final String DIR_PATH_CHEERO_IMAGES = DIR_PATH_CHEERO_ROOT + "/images/";
+    public static final String DIR_PATH_CHEERO_VIDEOS = DIR_PATH_CHEERO_ROOT + "/videos/";
     public static final String DIR_PATH_CHEERO_LOGS = DIR_PATH_CHEERO_ROOT + "/logs/";
     public static final String DIR_PATH_CHEERO_PATCHES = DIR_PATH_CHEERO_ROOT + "/patches/";
     public static final String DIR_PATH_CHEERO_CACHE = DIR_PATH_CHEERO_ROOT + "/cache/";

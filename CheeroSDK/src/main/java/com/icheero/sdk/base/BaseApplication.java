@@ -3,6 +3,8 @@ package com.icheero.sdk.base;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.os.Build;
+import android.os.StrictMode;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.facebook.stetho.Stetho;
@@ -71,6 +73,13 @@ public class BaseApplication extends Application
         DBHelper.getInstance().init(this);
         // 初始化 通知
         NotificationManager.getInstance();
+        // 解决 Android 7.0 调用相机传uri时报错
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+        {
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+            builder.detectFileUriExposure();
+        }
     }
 
     @Override

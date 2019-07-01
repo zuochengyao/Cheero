@@ -18,6 +18,7 @@ import com.icheero.app.activity.data.ViewModelActivity;
 import com.icheero.app.activity.feature.LollipopActivity;
 import com.icheero.app.activity.feature.oreo.NotificationActivity;
 import com.icheero.app.activity.media.CameraActivity;
+import com.icheero.app.activity.media.SurfaceViewActivity;
 import com.icheero.app.activity.network.DownloadActivity;
 import com.icheero.app.activity.network.ImageDownloadActivity;
 import com.icheero.app.activity.network.RequestActivity;
@@ -40,6 +41,7 @@ import com.icheero.app.activity.ui.touch.PanScrollActivity;
 import com.icheero.app.activity.xposed.XposedActivity;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.IOManager;
+import com.icheero.sdk.core.media.camera.Camera1;
 import com.icheero.sdk.util.Common;
 
 import butterknife.BindView;
@@ -82,6 +84,8 @@ public class MainActivity extends BaseActivity
     Button toRequestActivity;
     @BindView(R.id.to_camera_activity)
     Button toCameraActivity;
+    @BindView(R.id.to_custom_camera_activity)
+    Button toCustomCameraActivity;
     @BindView(R.id.to_custom_setting_activity)
     Button toCustomSettingActivity;
     @BindView(R.id.to_system_setting_activity)
@@ -154,19 +158,25 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @OnClick({R.id.to_camera_activity})
+    @OnClick({R.id.to_custom_camera_activity, R.id.to_camera_activity})
     public void OnMediaClickEvent(View v)
     {
+        Intent intent = new Intent();
         switch (v.getId())
         {
             case R.id.to_camera_activity:
             {
-                Intent intent = new Intent(this, CameraActivity.class);
-                intent.putExtra(CameraActivity.KEY_REQUEST_CODE, 1);
-                startActivity(intent);
+                intent.setClass(this, CameraActivity.class);
+                intent.putExtra(CameraActivity.KEY_REQUEST_CODE, Camera1.REQUEST_CODE_IMAGE);
+                break;
+            }
+            case R.id.to_custom_camera_activity:
+            {
+                intent.setClass(this, SurfaceViewActivity.class);
                 break;
             }
         }
+        startActivity(intent);
     }
 
     @OnClick({R.id.to_download_activity, R.id.to_image_download_activity, R.id.to_web_view_activity, R.id.to_retrofit_activity, R.id.to_request_activity})

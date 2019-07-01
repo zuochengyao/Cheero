@@ -40,6 +40,7 @@
         <activity android:name=".activity.network.ImageDownloadActivity"/>
         <activity android:name=".activity.network.DownloadActivity"/>
         <activity android:name=".activity.media.CameraActivity"/>
+        <activity android:name=".activity.media.SurfaceViewActivity"/>
         <activity android:name=".activity.data.CustomSettingActivity"/>
         <activity
             android:name=".activity.data.SystemSettingActivity"
@@ -53,8 +54,7 @@
         <activity android:name=".activity.reverse.DisposeManifestActivity"/>
         <activity android:name=".activity.reverse.DisposeResourceActivity"/>
         <activity android:name=".activity.reverse.DisposeDexActivity"/>
-        <activity android:name=".activity.xposed.XposedActivity"/>
-        <!-- endregion -->
+        <activity android:name=".activity.xposed.XposedActivity"/> <!-- endregion -->
         <!-- region Services -->
         <service
             android:name=".service.CheeroService"

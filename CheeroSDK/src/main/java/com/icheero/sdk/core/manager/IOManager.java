@@ -67,6 +67,7 @@ public class IOManager
             {
                 Log.i(TAG, "Create folder root: true");
                 Log.i(TAG, "Create folder images: " + (FileUtils.createDir(FileUtils.DIR_PATH_CHEERO_IMAGES) || FileUtils.exists(FileUtils.DIR_PATH_CHEERO_IMAGES)));
+                Log.i(TAG, "Create folder videos: " + (FileUtils.createDir(FileUtils.DIR_PATH_CHEERO_VIDEOS) || FileUtils.exists(FileUtils.DIR_PATH_CHEERO_VIDEOS)));
                 Log.i(TAG, "Create folder logs: " + (FileUtils.createDir(FileUtils.DIR_PATH_CHEERO_LOGS) || FileUtils.exists(FileUtils.DIR_PATH_CHEERO_LOGS)));
                 Log.i(TAG, "Create folder patches: " + (FileUtils.createDir(FileUtils.DIR_PATH_CHEERO_PATCHES) || FileUtils.exists(FileUtils.DIR_PATH_CHEERO_PATCHES)));
                 Log.i(TAG, "Create folder cache: " + (FileUtils.createDir(FileUtils.DIR_PATH_CHEERO_CACHE) || FileUtils.exists(FileUtils.DIR_PATH_CHEERO_CACHE)));
