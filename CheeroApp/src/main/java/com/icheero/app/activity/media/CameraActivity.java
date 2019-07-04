@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
-import com.icheero.sdk.core.media.camera.Camera1;
+import com.icheero.sdk.core.manager.CameraManager;
 import com.icheero.sdk.util.FileUtils;
 
 import java.io.File;
@@ -23,9 +23,8 @@ import butterknife.OnClick;
 public class CameraActivity extends BaseActivity
 {
     public static final String KEY_REQUEST_CODE = "requestCode";
-    private Camera1 mCamera;
     private File destination;
-    private int requestCode = Camera1.REQUEST_CODE_IMAGE;
+    private int requestCode = CameraManager.REQUEST_CODE_IMAGE;
 
     @BindView(R.id.button_camera)
     Button cameraButton;
@@ -45,14 +44,13 @@ public class CameraActivity extends BaseActivity
     private void doInitView()
     {
         ButterKnife.bind(this);
-        mCamera = new Camera1(this);
-        requestCode = getIntent().getIntExtra("requestCode", Camera1.REQUEST_CODE_IMAGE);
-        if (requestCode == Camera1.REQUEST_CODE_IMAGE)
+        requestCode = getIntent().getIntExtra("requestCode", CameraManager.REQUEST_CODE_IMAGE);
+        if (requestCode == CameraManager.REQUEST_CODE_IMAGE)
         {
             destination = new File(FileUtils.DIR_PATH_CHEERO_IMAGES, "practice_image.jpg");
             cameraButton.setText("Take a Picture");
         }
-        else if (requestCode == Camera1.REQUEST_CODE_VIDEO)
+        else if (requestCode == CameraManager.REQUEST_CODE_VIDEO)
         {
             destination = new File(FileUtils.DIR_PATH_CHEERO_VIDEOS, "practice_video.mp4");
             cameraButton.setText("Take a Video");
@@ -77,10 +75,10 @@ public class CameraActivity extends BaseActivity
 
     private void openSystemCamera()
     {
-        if (requestCode == Camera1.REQUEST_CODE_IMAGE)
-            mCamera.openSystemImageCamera(this, destination);
-        else if (requestCode == Camera1.REQUEST_CODE_VIDEO)
-            mCamera.openSystemVideoCamera(this, destination);
+        if (requestCode == CameraManager.REQUEST_CODE_IMAGE)
+            CameraManager.getInstance().openSystemImageCamera(this, destination);
+        else if (requestCode == CameraManager.REQUEST_CODE_VIDEO)
+            CameraManager.getInstance().openSystemVideoCamera(this, destination);
     }
 
     @Override
@@ -91,7 +89,7 @@ public class CameraActivity extends BaseActivity
         {
             switch (requestCode)
             {
-                case Camera1.REQUEST_CODE_IMAGE:
+                case CameraManager.REQUEST_CODE_IMAGE:
                 {
                     Bitmap image = FileUtils.convertToBitmap(destination);
                     imageView.setImageBitmap(image);
@@ -99,7 +97,7 @@ public class CameraActivity extends BaseActivity
                     textView.setVisibility(View.GONE);
                     break;
                 }
-                case Camera1.REQUEST_CODE_VIDEO:
+                case CameraManager.REQUEST_CODE_VIDEO:
                 {
                     String location = String.valueOf(data.getData());
                     textView.setText(location);

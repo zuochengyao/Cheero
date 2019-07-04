@@ -13,7 +13,7 @@ class Size implements Comparable<Size>
      * @param width  The width of the size, in pixels
      * @param height The height of the size, in pixels
      */
-    public Size(int width, int height) {
+    Size(int width, int height) {
         mWidth = width;
         mHeight = height;
     }
@@ -49,7 +49,7 @@ class Size implements Comparable<Size>
 
     @Override
     public int hashCode() {
-        // assuming most sizes are <2^16, doing a rotate will give us perfect hashing
+        // assuming most get are <2^16, doing a rotate will give us perfect hashing
         return mHeight ^ ((mWidth << (Integer.SIZE / 2)) | (mWidth >>> (Integer.SIZE / 2)));
     }
 

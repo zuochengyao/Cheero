@@ -40,7 +40,9 @@
         <activity android:name=".activity.network.ImageDownloadActivity"/>
         <activity android:name=".activity.network.DownloadActivity"/>
         <activity android:name=".activity.media.CameraActivity"/>
-        <activity android:name=".activity.media.SurfaceViewActivity"/>
+        <activity
+            android:name=".activity.media.SurfaceViewActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.data.CustomSettingActivity"/>
         <activity
             android:name=".activity.data.SystemSettingActivity"

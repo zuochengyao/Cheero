@@ -2,20 +2,23 @@ package com.icheero.app.activity.media;
 
 import android.os.Bundle;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
+import android.widget.RelativeLayout;
 
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.media.camera.Camera1;
+import com.icheero.sdk.core.media.camera.extract.BaseCamera;
+import com.icheero.sdk.core.media.camera.view.SurfacePreview;
 import com.icheero.sdk.util.Log;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SurfaceViewActivity extends BaseActivity implements SurfaceHolder.Callback
+public class SurfaceViewActivity extends BaseActivity implements BaseCamera.Callback
 {
-    @BindView(R.id.surface_view)
-    SurfaceView mSurfaceView;
+    @BindView(R.id.surface_root)
+    RelativeLayout root;
+    SurfacePreview mSurfacePreview;
 
     private Camera1 mCamera;
     private SurfaceHolder mSurfaceHolder;
@@ -28,33 +31,45 @@ public class SurfaceViewActivity extends BaseActivity implements SurfaceHolder.C
         doInitView();
     }
 
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        if (mCamera != null)
+            mCamera.close();
+    }
+
     private void doInitView()
     {
         ButterKnife.bind(this);
-        mCamera = new Camera1(this);
-        mSurfaceHolder = mSurfaceView.getHolder();
-        mSurfaceHolder.addCallback(this);
-    }
-
-    @Override
-    public void surfaceCreated(SurfaceHolder holder)
-    {
-        Log.i(TAG, "surfaceCreated");
-        // mCamera.setDisplayOrientation(90);
-        mCamera.setSurfaceHolder(mSurfaceHolder);
+        mSurfacePreview = new SurfacePreview(this, root);
+        mCamera = new Camera1(this, mSurfacePreview);
         mCamera.open();
+        mCamera.setDisplayOrientation(270);
+
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
+    public void onOpened(int width, int height)
     {
-        Log.i(TAG, "surfaceChanged");
+        Log.i(TAG, "Camera onOpened:width(" + width + "), height(" + height + ")");
+        runOnUiThread(() -> {
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mSurfacePreview.getView().getLayoutParams();
+            params.width = width;
+            params.height = height;
+            mSurfacePreview.getView().setLayoutParams(params);
+        });
     }
 
     @Override
-    public void surfaceDestroyed(SurfaceHolder holder)
+    public void onClosed()
     {
-        Log.i(TAG, "surfaceDestroyed");
-        mCamera.close();
+        Log.i(TAG, "Camera onClosed");
+    }
+
+    @Override
+    public void onPictureTaken(byte[] data)
+    {
+        Log.i(TAG, "Camera onPictureTaken");
     }
 }

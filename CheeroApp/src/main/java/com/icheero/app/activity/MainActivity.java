@@ -40,8 +40,8 @@ import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
 import com.icheero.app.activity.xposed.XposedActivity;
 import com.icheero.sdk.base.BaseActivity;
+import com.icheero.sdk.core.manager.CameraManager;
 import com.icheero.sdk.core.manager.IOManager;
-import com.icheero.sdk.core.media.camera.Camera1;
 import com.icheero.sdk.util.Common;
 
 import butterknife.BindView;
@@ -84,7 +84,7 @@ public class MainActivity extends BaseActivity
     Button toRequestActivity;
     @BindView(R.id.to_camera_activity)
     Button toCameraActivity;
-    @BindView(R.id.to_custom_camera_activity)
+    @BindView(R.id.to_surface_view_activity)
     Button toCustomCameraActivity;
     @BindView(R.id.to_custom_setting_activity)
     Button toCustomSettingActivity;
@@ -158,7 +158,7 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @OnClick({R.id.to_custom_camera_activity, R.id.to_camera_activity})
+    @OnClick({R.id.to_surface_view_activity, R.id.to_camera_activity})
     public void OnMediaClickEvent(View v)
     {
         Intent intent = new Intent();
@@ -167,10 +167,10 @@ public class MainActivity extends BaseActivity
             case R.id.to_camera_activity:
             {
                 intent.setClass(this, CameraActivity.class);
-                intent.putExtra(CameraActivity.KEY_REQUEST_CODE, Camera1.REQUEST_CODE_IMAGE);
+                intent.putExtra(CameraActivity.KEY_REQUEST_CODE, CameraManager.REQUEST_CODE_IMAGE);
                 break;
             }
-            case R.id.to_custom_camera_activity:
+            case R.id.to_surface_view_activity:
             {
                 intent.setClass(this, SurfaceViewActivity.class);
                 break;

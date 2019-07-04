@@ -15,6 +15,7 @@ import androidx.collection.SparseArrayCompat;
 class AspectRatio implements Comparable<AspectRatio>, Parcelable
 {
     private static final SparseArrayCompat<SparseArrayCompat<AspectRatio>> mCache = new SparseArrayCompat<>(16);
+    public static final AspectRatio DEFAULT = of(4, 3);
 
     private final int mWidth;
     private final int mHeight;
@@ -136,7 +137,7 @@ class AspectRatio implements Comparable<AspectRatio>, Parcelable
     @Override
     public int hashCode()
     {
-        // assuming most sizes are <2^16, doing a rotate will give us perfect hashing
+        // assuming most get are <2^16, doing a rotate will give us perfect hashing
         return mHeight ^ ((mWidth << (Integer.SIZE / 2)) | (mWidth >>> (Integer.SIZE / 2)));
     }
 

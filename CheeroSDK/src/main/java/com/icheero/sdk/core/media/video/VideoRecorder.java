@@ -2,14 +2,14 @@ package com.icheero.sdk.core.media.video;
 
 import android.media.MediaRecorder;
 
-import com.icheero.sdk.core.media.camera.extract.ICamera;
+import com.icheero.sdk.core.media.camera.extract.BaseCamera;
 
 public class VideoRecorder
 {
-    private ICamera mCamera;
+    private BaseCamera mCamera;
     private MediaRecorder mMediaRecorder;
 
-    public VideoRecorder(ICamera camera)
+    public VideoRecorder(BaseCamera camera)
     {
         this.mCamera = camera;
         this.mMediaRecorder = new MediaRecorder();
