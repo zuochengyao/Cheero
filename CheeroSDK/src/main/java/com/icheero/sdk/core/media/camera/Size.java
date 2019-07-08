@@ -44,7 +44,7 @@ class Size implements Comparable<Size>
     @NonNull
     @Override
     public String toString() {
-        return mWidth + "x" + mHeight;
+        return mWidth + " * " + mHeight;
     }
 
     @Override

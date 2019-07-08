@@ -6,6 +6,7 @@ import android.view.View;
 import com.icheero.sdk.core.manager.PermissionManager;
 import com.icheero.sdk.core.manager.ViewManager;
 import com.icheero.sdk.util.Log;
+import com.icheero.sdk.util.RefInvoke;
 
 import java.util.Arrays;
 
@@ -87,6 +88,30 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
     protected <T extends View> T $(@IdRes int resId)
     {
         return super.findViewById(resId);
+    }
+
+    protected final int getStatusBarHeight()
+    {
+        int resId, startBarHeight = 0;
+        try
+        {
+            Object obj = RefInvoke.getFieldObject("com.android.internal.R$dimen", "status_bar_height");
+            if (obj == null)
+                return 0;
+            resId = Integer.parseInt(obj.toString());
+            startBarHeight = getResources().getDimensionPixelSize(resId);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return startBarHeight;
+    }
+
+    protected final int getNavBarHeight()
+    {
+        int resId = getResources().getIdentifier("navigation_bar_height","dimen", "android");
+        return getResources().getDimensionPixelSize(resId);
     }
     // endregion
 

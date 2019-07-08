@@ -30,6 +30,38 @@ public class RefInvoke
         return getFieldObject(class_name, null, filedName);
     }
 
+    public static Object getClassInstance(String class_name)
+    {
+        try
+        {
+            Class<?> obj_class = Class.forName(class_name);
+
+            return obj_class.newInstance();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Object getFieldObject(String class_name, String filedName)
+    {
+        try
+        {
+            Class<?> obj_class = Class.forName(class_name);
+            Object obj = obj_class.newInstance();
+            Field field = obj_class.getField(filedName);
+            field.setAccessible(true);
+            return field.get(obj);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static Object getFieldObject(String class_name, Object obj, String filedName)
     {
         try

@@ -1,13 +1,14 @@
 package com.icheero.sdk.core.media.camera;
 
-import android.content.Context;
+import android.app.Activity;
 import android.hardware.Camera;
 import android.util.SparseIntArray;
 import android.view.Surface;
-import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.TextureView;
+import android.view.View;
 
 import com.icheero.sdk.core.media.camera.extract.BaseCamera;
-import com.icheero.sdk.core.media.camera.view.BasePreview;
 import com.icheero.sdk.util.Log;
 
 import java.io.IOException;
@@ -29,10 +30,10 @@ public class Camera1 extends BaseCamera
 
     static
     {
-        CAMERA_ORIENTATIONS.append(Surface.ROTATION_0, 90);
-        CAMERA_ORIENTATIONS.append(Surface.ROTATION_90, 0);
-        CAMERA_ORIENTATIONS.append(Surface.ROTATION_180, 270);
-        CAMERA_ORIENTATIONS.append(Surface.ROTATION_270, 180);
+        CAMERA_ORIENTATIONS.append(Surface.ROTATION_0, 0);
+        CAMERA_ORIENTATIONS.append(Surface.ROTATION_90, 90);
+        CAMERA_ORIENTATIONS.append(Surface.ROTATION_180, 180);
+        CAMERA_ORIENTATIONS.append(Surface.ROTATION_270, 270);
 
         CAMERA_FLASH_MODES.put(BaseCamera.FLASH_OFF, Camera.Parameters.FLASH_MODE_OFF);
         CAMERA_FLASH_MODES.put(BaseCamera.FLASH_ON, Camera.Parameters.FLASH_MODE_ON);
@@ -41,8 +42,9 @@ public class Camera1 extends BaseCamera
         CAMERA_FLASH_MODES.put(BaseCamera.FLASH_RED_EYE, Camera.Parameters.FLASH_MODE_RED_EYE);
     }
 
-    private Context mContext;
-    private int mCameraId;
+    private SurfaceView mSurfaceView;
+    private TextureView mTextureView;
+
     private Camera mCamera;
     private Camera.Parameters mParameters;
     private final Camera.CameraInfo mCameraInfo = new Camera.CameraInfo();
@@ -52,8 +54,10 @@ public class Camera1 extends BaseCamera
     private boolean isShowingPreview = false;
     private boolean isAutoFocus = false;
     private int mFlash;
-    private int mDisplayOrientation;
+    private int mDisplayOrientation = 0;
+    private int mMaxWidth, mMaxHeight;
 
+    /*
     public Camera1(Callback callback, BasePreview preview)
     {
         this(callback, preview, Camera.CameraInfo.CAMERA_FACING_BACK);
@@ -71,6 +75,23 @@ public class Camera1 extends BaseCamera
             }
         });
     }
+    */
+
+    public Camera1(Activity activity, View preview)
+    {
+        this(activity, preview, Camera.CameraInfo.CAMERA_FACING_BACK);
+    }
+
+    public Camera1(Activity activity, View preview, int cameraId)
+    {
+        super(activity, preview, cameraId);
+        if (preview instanceof SurfaceView)
+            mSurfaceView = (SurfaceView) preview;
+        else if (preview instanceof TextureView)
+            mTextureView = (TextureView) preview;
+        else
+            throw new IllegalArgumentException("Preview must be SurfaceView or TextureView");
+    }
 
     @Override
     public boolean open()
@@ -80,7 +101,7 @@ public class Camera1 extends BaseCamera
             openCamera();
             if (mCamera != null)
             {
-                if (mPreview.isReady())
+                if (mPreview != null)
                     setUpPreview();
                 mCamera.startPreview();
                 isShowingPreview = true;
@@ -156,6 +177,11 @@ public class Camera1 extends BaseCamera
 
     }
 
+    /**
+     * 如果设置为90 or 270，则认为是横屏
+     *
+     * @param orientation 角度
+     */
     @Override
     public void setDisplayOrientation(int orientation)
     {
@@ -163,7 +189,23 @@ public class Camera1 extends BaseCamera
             return;
         mDisplayOrientation = orientation;
         if (isCameraOpened())
-            mCamera.setDisplayOrientation(calcDisplayOrientation(orientation));
+        {
+            // mParameters.setRotation(calcCameraRotation(orientation));
+            // mCamera.setParameters(mParameters);
+            mCamera.setDisplayOrientation(calcDisplayOrientation());
+        }
+    }
+
+    public void setMaxSize(int width, int height)
+    {
+        this.mMaxWidth = width;
+        this.mMaxHeight = height;
+        mAspectRatio = AspectRatio.of(width, height);
+    }
+
+    public void setCallback(Callback callback)
+    {
+        this.mCallback = callback;
     }
 
     private boolean checkCameraId()
@@ -171,7 +213,10 @@ public class Camera1 extends BaseCamera
         for (int i = 0, count = Camera.getNumberOfCameras(); i < count; i++)
         {
             if (mCameraId == i)
+            {
+                Camera.getCameraInfo(i, mCameraInfo);
                 return true;
+            }
         }
         return false;
     }
@@ -183,10 +228,8 @@ public class Camera1 extends BaseCamera
         try
         {
             mCamera = Camera.open(mCameraId);
-            mParameters = mCamera.getParameters();
             initSupportedSize();
             adjustCameraParams();
-            mCamera.setDisplayOrientation(mDisplayOrientation);
         }
         catch (Exception e)
         {
@@ -210,6 +253,9 @@ public class Camera1 extends BaseCamera
      */
     private void initSupportedSize()
     {
+        if (mCamera == null)
+            return;
+        mParameters = mCamera.getParameters();
         mPreviewSizes.clear();
         for (Camera.Size size : mParameters.getSupportedPreviewSizes())
             mPreviewSizes.add(new Size(size.width, size.height));
@@ -225,14 +271,18 @@ public class Camera1 extends BaseCamera
      */
     private void adjustCameraParams()
     {
-        SortedSet<Size> sizeSet = mPreviewSizes.get(mAspectRatio);
+        // 如果是横屏，则将宽高比反转
+        if (isLandscape(mDisplayOrientation))
+            mAspectRatio = mAspectRatio.inverse();
+        SortedSet<Size> previewSizeSet = mPreviewSizes.get(mAspectRatio);
         // 如果未找到sizeSet，则说明不支持该宽高比
-        if (sizeSet == null)
+        if (previewSizeSet == null)
         {
             mAspectRatio = chooseAspectRation();
-            sizeSet = mPreviewSizes.get(mAspectRatio);
+            previewSizeSet = mPreviewSizes.get(mAspectRatio);
         }
-        Size previewSize = chooseOptimalSize(sizeSet);
+        Size previewSize = chooseOptimalPreviewSize(previewSizeSet);
+        // TODO 选择最佳合适picture size
         Size pictureSize = mPictureSizes.get(mAspectRatio).last();
         if (isShowingPreview)
             mCamera.stopPreview();
@@ -241,6 +291,7 @@ public class Camera1 extends BaseCamera
         setAutoFocusInternal(isAutoFocus);
         setFlashInternal(mFlash);
         mCamera.setParameters(mParameters);
+        mCamera.setDisplayOrientation(calcDisplayOrientation());
         if (isShowingPreview)
             mCamera.startPreview();
     }
@@ -266,31 +317,39 @@ public class Camera1 extends BaseCamera
      * @param sizeSet Size集合
      * @return Size
      */
-    private Size chooseOptimalSize(SortedSet<Size> sizeSet)
+    private Size chooseOptimalPreviewSize(SortedSet<Size> sizeSet)
     {
-        if (!mPreview.isReady())
+        if (mPreview == null)
             return sizeSet.first();
         int optimalWidth, optimalHeight;
-        final int previewWidth = mPreview.getWidth();
-        final int previewHeight = mPreview.getHeight();
+        // final int previewWidth = mPreview.getWidth();
+        // final int previewHeight = mPreview.getHeight();
         if (isLandscape(mDisplayOrientation))
         {
-            optimalWidth = previewHeight;
-            optimalHeight = previewWidth;
+            optimalWidth = mMaxWidth;
+            optimalHeight = mMaxHeight;
         }
         else
         {
-            optimalWidth = previewWidth;
-            optimalHeight = previewHeight;
+            optimalWidth = mMaxHeight;
+            optimalHeight = mMaxWidth;
         }
         Size optimalSize = null;
         for (Size size : sizeSet)
         {
-            if (optimalWidth <= size.getWidth() && optimalHeight <= size.getHeight())
-                return size;
-            optimalSize = size;
+            if (size.getWidth() <= optimalWidth && size.getHeight() <= optimalHeight)
+                optimalSize = size;
+            else break;
         }
-        return optimalSize;
+        Log.i(TAG, "The OptimalSize is " + optimalSize.toString());
+        return optimalSize == null ? sizeSet.last() : optimalSize;
+    }
+
+    private int calcDisplayOrientation()
+    {
+        int rotation = mActivity.getWindowManager().getDefaultDisplay().getRotation();
+        int degree = CAMERA_ORIENTATIONS.get(rotation);
+        return calcDisplayOrientation(degree);
     }
 
     private int calcDisplayOrientation(int screenOrientationDegrees)
@@ -303,14 +362,27 @@ public class Camera1 extends BaseCamera
             return screenOrientationDegrees;
     }
 
+    private int calcCameraRotation(int screenOrientationDegrees)
+    {
+        if (mCameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT)
+            return (mCameraInfo.orientation + screenOrientationDegrees) % 360;
+        else if (mCameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK)
+        {
+            final int landscapeFlip = isLandscape(screenOrientationDegrees) ? 180 : 0;
+            return (mCameraInfo.orientation + screenOrientationDegrees + landscapeFlip) % 360;
+        }
+        else
+            return screenOrientationDegrees;
+    }
+
     private void setUpPreview()
     {
         try
         {
-            if (mPreview.getSurfaceClass() == SurfaceHolder.class)
-                mCamera.setPreviewDisplay(mPreview.getSurfaceHolder());
-            else
-                mCamera.setPreviewTexture(mPreview.getSurfaceTexture());
+            if (mPreview instanceof SurfaceView)
+                mCamera.setPreviewDisplay(mSurfaceView.getHolder());
+            else if (mPreview instanceof TextureView)
+                mCamera.setPreviewTexture(mTextureView.getSurfaceTexture());
         }
         catch (IOException e)
         {

@@ -1,6 +1,9 @@
 package com.icheero.sdk.core.media.camera.extract;
 
-import com.icheero.sdk.core.media.camera.view.BasePreview;
+import android.app.Activity;
+import android.view.View;
+
+import androidx.annotation.NonNull;
 
 public abstract class BaseCamera
 {
@@ -17,11 +20,22 @@ public abstract class BaseCamera
     public static final int LANDSCAPE_270 = 270;
 
     protected Callback mCallback;
-    protected BasePreview mPreview;
+    // protected BasePreview mPreview;
 
-    public BaseCamera(Callback callback, BasePreview preview)
+//    public BaseCamera(Callback callback, BasePreview preview)
+//    {
+//        this.mCallback = callback;
+//        this.mPreview = preview;
+//    }
+
+    protected Activity mActivity;
+    protected int mCameraId;
+    protected View mPreview;
+
+    public BaseCamera(Activity activity, @NonNull View preview, int cameraId)
     {
-        this.mCallback = callback;
+        this.mActivity = activity;
+        this.mCameraId = cameraId;
         this.mPreview = preview;
     }
 
