@@ -1,10 +1,10 @@
 package com.icheero.app.activity.media;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
+import android.view.TextureView;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
@@ -17,12 +17,10 @@ import com.icheero.sdk.util.Log;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SurfaceViewActivity extends BaseActivity implements SurfaceHolder.Callback, BaseCamera.Callback
+public class TextureViewActivity extends BaseActivity implements TextureView.SurfaceTextureListener, BaseCamera.Callback
 {
-    @BindView(R.id.surface_root)
-    RelativeLayout root;
-    @BindView(R.id.surface_view)
-    SurfaceView mSurfaceView;
+    @BindView(R.id.texture_view)
+    TextureView mTextureView;
 
     private Camera1 mCamera;
     private int mScreenHeight, mScreenWidth;
@@ -32,10 +30,9 @@ public class SurfaceViewActivity extends BaseActivity implements SurfaceHolder.C
     {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_custom_camera);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        setContentView(R.layout.activity_texture_view);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         doInitView();
-        Log.i(TAG, "StatusBarHeight:" + getStatusBarHeight() +", ScreenWidth:" + mScreenWidth + ", ScreenHeight:" + mScreenHeight);
     }
 
     @Override
@@ -49,9 +46,7 @@ public class SurfaceViewActivity extends BaseActivity implements SurfaceHolder.C
     private void doInitView()
     {
         ButterKnife.bind(this);
-        // mSurfacePreview = new SurfacePreview(this, root);
-        // SurfaceView surfaceView = (SurfaceView) mSurfacePreview.getView();
-        mCamera = new Camera1(this, mSurfaceView);
+        mCamera = new Camera1(this, mTextureView);
         mCamera.setCallback(this);
         if (!isPortrait())
             mCamera.setDisplayOrientation(90);
@@ -59,37 +54,44 @@ public class SurfaceViewActivity extends BaseActivity implements SurfaceHolder.C
         mScreenHeight = dMetrics.heightPixels;
         mScreenWidth = dMetrics.widthPixels;
         mCamera.setMaxSize(mScreenWidth, mScreenHeight);
-        mSurfaceView.getHolder().addCallback(this);
+        mTextureView.setSurfaceTextureListener(this);
     }
 
     @Override
-    public void surfaceCreated(SurfaceHolder holder)
+    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height)
     {
-        Log.i(TAG, "surfaceCreated");
+        Log.i(TAG, "onSurfaceTextureAvailable");
         // 设置预览角度
         if (mCamera != null)
             mCamera.open();
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
+    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height)
     {
-        Log.i(TAG, "surfaceChanged：" + width + " * " + height);
+        Log.i(TAG, "onSurfaceTextureSizeChanged：" + width + " * " + height);
     }
 
     @Override
-    public void surfaceDestroyed(SurfaceHolder holder)
+    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface)
     {
         Log.i(TAG, "surfaceDestroyed");
         if (mCamera != null)
             mCamera.close();
+        return true;
+    }
+
+    @Override
+    public void onSurfaceTextureUpdated(SurfaceTexture surface)
+    {
+
     }
 
     @Override
     public void onOpened(int width, int height)
     {
         Log.i(TAG, "onOpened：" + width + " * " + height + "");
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mSurfaceView.getLayoutParams();
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mTextureView.getLayoutParams();
         if (isPortrait())
         {
             params.width = height;
@@ -100,7 +102,7 @@ public class SurfaceViewActivity extends BaseActivity implements SurfaceHolder.C
             params.width = width;
             params.height = height;
         }
-        mSurfaceView.post(() -> mSurfaceView.setLayoutParams(params));
+        mTextureView.post(() -> mTextureView.setLayoutParams(params));
     }
 
     @Override

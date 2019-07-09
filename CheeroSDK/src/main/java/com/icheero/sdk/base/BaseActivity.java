@@ -1,5 +1,6 @@
 package com.icheero.sdk.base;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 
@@ -112,6 +113,11 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
     {
         int resId = getResources().getIdentifier("navigation_bar_height","dimen", "android");
         return getResources().getDimensionPixelSize(resId);
+    }
+
+    protected final boolean isPortrait()
+    {
+        return getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
     }
     // endregion
 

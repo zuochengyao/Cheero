@@ -42,6 +42,11 @@
         <activity android:name=".activity.media.CameraActivity"/>
         <activity
             android:name=".activity.media.SurfaceViewActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activity.media.TextureViewActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.data.CustomSettingActivity"/>
         <activity

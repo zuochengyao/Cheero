@@ -200,7 +200,7 @@ public class Camera1 extends BaseCamera
     {
         this.mMaxWidth = width;
         this.mMaxHeight = height;
-        mAspectRatio = AspectRatio.of(width, height);
+        mAspectRatio = AspectRatio.of(width, height).inverse();
     }
 
     public void setCallback(Callback callback)
@@ -271,9 +271,6 @@ public class Camera1 extends BaseCamera
      */
     private void adjustCameraParams()
     {
-        // 如果是横屏，则将宽高比反转
-        if (isLandscape(mDisplayOrientation))
-            mAspectRatio = mAspectRatio.inverse();
         SortedSet<Size> previewSizeSet = mPreviewSizes.get(mAspectRatio);
         // 如果未找到sizeSet，则说明不支持该宽高比
         if (previewSizeSet == null)
@@ -321,28 +318,16 @@ public class Camera1 extends BaseCamera
     {
         if (mPreview == null)
             return sizeSet.first();
-        int optimalWidth, optimalHeight;
-        // final int previewWidth = mPreview.getWidth();
-        // final int previewHeight = mPreview.getHeight();
-        if (isLandscape(mDisplayOrientation))
-        {
-            optimalWidth = mMaxWidth;
-            optimalHeight = mMaxHeight;
-        }
-        else
-        {
-            optimalWidth = mMaxHeight;
-            optimalHeight = mMaxWidth;
-        }
-        Size optimalSize = null;
+        Size optimalSize = sizeSet.last();
         for (Size size : sizeSet)
         {
-            if (size.getWidth() <= optimalWidth && size.getHeight() <= optimalHeight)
+            if (size.getWidth() <= mMaxHeight && size.getHeight() <= mMaxWidth)
                 optimalSize = size;
-            else break;
+            else
+                break;
         }
         Log.i(TAG, "The OptimalSize is " + optimalSize.toString());
-        return optimalSize == null ? sizeSet.last() : optimalSize;
+        return optimalSize;
     }
 
     private int calcDisplayOrientation()

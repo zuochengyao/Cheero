@@ -63,6 +63,9 @@ public abstract class BaseCamera
 
     public interface Callback
     {
+        /**
+         * 返回最佳预览比例的宽高（Preview不会变形）
+         */
         void onOpened(int width, int height);
 
         void onClosed();

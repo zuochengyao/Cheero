@@ -19,6 +19,7 @@ import com.icheero.app.activity.feature.LollipopActivity;
 import com.icheero.app.activity.feature.oreo.NotificationActivity;
 import com.icheero.app.activity.media.CameraActivity;
 import com.icheero.app.activity.media.SurfaceViewActivity;
+import com.icheero.app.activity.media.TextureViewActivity;
 import com.icheero.app.activity.network.DownloadActivity;
 import com.icheero.app.activity.network.ImageDownloadActivity;
 import com.icheero.app.activity.network.RequestActivity;
@@ -85,7 +86,9 @@ public class MainActivity extends BaseActivity
     @BindView(R.id.to_camera_activity)
     Button toCameraActivity;
     @BindView(R.id.to_surface_view_activity)
-    Button toCustomCameraActivity;
+    Button toSurfaceViewActivity;
+    @BindView(R.id.to_texture_view_activity)
+    Button toTextureViewActivity;
     @BindView(R.id.to_custom_setting_activity)
     Button toCustomSettingActivity;
     @BindView(R.id.to_system_setting_activity)
@@ -158,7 +161,7 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @OnClick({R.id.to_surface_view_activity, R.id.to_camera_activity})
+    @OnClick({R.id.to_texture_view_activity, R.id.to_surface_view_activity, R.id.to_camera_activity})
     public void OnMediaClickEvent(View v)
     {
         Intent intent = new Intent();
@@ -173,6 +176,11 @@ public class MainActivity extends BaseActivity
             case R.id.to_surface_view_activity:
             {
                 intent.setClass(this, SurfaceViewActivity.class);
+                break;
+            }
+            case R.id.to_texture_view_activity:
+            {
+                intent.setClass(this, TextureViewActivity.class);
                 break;
             }
         }

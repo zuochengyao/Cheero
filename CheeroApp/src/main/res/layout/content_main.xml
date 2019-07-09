@@ -128,6 +128,12 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/to_texture_view_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextureViewActivity"/>
+
+            <Button
                 android:id="@+id/to_surface_view_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
