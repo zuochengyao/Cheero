@@ -5,10 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -201,6 +203,51 @@ public class FileUtils
             catch (IOException e)
             {
                 e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public static String saveFile(String fileName, byte[] data)
+    {
+        if (data == null) return null;
+        BufferedOutputStream bos = null;
+        FileOutputStream fos = null;
+        try
+        {
+            String fullFileName = DIR_PATH_CHEERO_IMAGES + "/" + fileName;
+            fos = new FileOutputStream(fullFileName);
+            bos = new BufferedOutputStream(fos);
+            bos.write(data);
+            return fullFileName;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if (bos != null)
+            {
+                try
+                {
+                    bos.close();
+                }
+                catch (IOException e1)
+                {
+                    e1.printStackTrace();
+                }
+            }
+            if (fos != null)
+            {
+                try
+                {
+                    fos.close();
+                }
+                catch (IOException e1)
+                {
+                    e1.printStackTrace();
+                }
             }
         }
         return null;

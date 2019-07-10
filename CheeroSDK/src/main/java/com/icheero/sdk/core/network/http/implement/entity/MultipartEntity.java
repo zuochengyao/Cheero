@@ -85,7 +85,7 @@ public class MultipartEntity extends AbstractHttpEntity
     private void write(String contentEncoding, String contentType, byte[] data, String key, String fileName) throws IOException
     {
         // boundary line
-        mOutputStream.write((DASH_DASH + mBoundary + NEW_LINE).getBytes(StandardCharsets.UTF_8));
+        mOutputStream.write((DASH_DASH + mBoundary + NEW_LINE).getBytes(HttpApi.ENCODING_UTF8));
         // content-disposition line
         mOutputStream.write(getContentDisposition(key, fileName).getBytes(HttpApi.ENCODING_UTF8));
         // content-type line

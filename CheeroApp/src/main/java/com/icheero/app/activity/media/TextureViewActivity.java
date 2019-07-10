@@ -6,21 +6,26 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.TextureView;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
+import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.core.media.camera.Camera1;
 import com.icheero.sdk.core.media.camera.extract.BaseCamera;
 import com.icheero.sdk.util.Log;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class TextureViewActivity extends BaseActivity implements TextureView.SurfaceTextureListener, BaseCamera.Callback
 {
     @BindView(R.id.texture_view)
     TextureView mTextureView;
+    @BindView(R.id.take_picture)
+    ImageView mTakePicture;
 
     private Camera1 mCamera;
     private int mScreenHeight, mScreenWidth;
@@ -54,7 +59,14 @@ public class TextureViewActivity extends BaseActivity implements TextureView.Sur
         mScreenHeight = dMetrics.heightPixels;
         mScreenWidth = dMetrics.widthPixels;
         mCamera.setMaxSize(mScreenWidth, mScreenHeight);
+        mCamera.setAutoFocus(true);
         mTextureView.setSurfaceTextureListener(this);
+    }
+
+    @OnClick(R.id.take_picture)
+    public void OnClickEvent()
+    {
+        mCamera.takePicture();
     }
 
     @Override
@@ -114,6 +126,6 @@ public class TextureViewActivity extends BaseActivity implements TextureView.Sur
     @Override
     public void onPictureTaken(byte[] data)
     {
-
+        IOManager.getInstance().saveImageFile(data);
     }
 }

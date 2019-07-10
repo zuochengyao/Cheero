@@ -90,4 +90,10 @@ public class IOManager
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         return baos.toByteArray();
     }
+
+    public void saveImageFile(byte[] data)
+    {
+        String fileName = System.currentTimeMillis() + ".jpg";
+        FileUtils.saveFile(fileName ,data);
+    }
 }

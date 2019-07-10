@@ -14,6 +14,7 @@ import com.icheero.sdk.util.Log;
 import java.io.IOException;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import androidx.collection.SparseArrayCompat;
 
@@ -56,6 +57,8 @@ public class Camera1 extends BaseCamera
     private int mFlash;
     private int mDisplayOrientation = 0;
     private int mMaxWidth, mMaxHeight;
+
+    private final AtomicBoolean isPictureCaptureInProgress = new AtomicBoolean(false);
 
     /*
     public Camera1(Callback callback, BasePreview preview)
@@ -136,7 +139,7 @@ public class Camera1 extends BaseCamera
     @Override
     public int getFacing()
     {
-        return 0;
+        return mCameraId;
     }
 
     @Override
@@ -168,13 +171,21 @@ public class Camera1 extends BaseCamera
     @Override
     public int getFlash()
     {
-        return 0;
+        return mFlash;
     }
 
     @Override
     public void takePicture()
     {
-
+        if (!isCameraOpened())
+            return;
+        if (getAutoFocus())
+        {
+            mCamera.cancelAutoFocus();
+            mCamera.autoFocus((success, camera) -> takePictureInternal());
+        }
+        else
+            takePictureInternal();
     }
 
     /**
@@ -426,5 +437,19 @@ public class Camera1 extends BaseCamera
     private boolean isLandscape(int orientationDegrees)
     {
         return (orientationDegrees == LANDSCAPE_90 || orientationDegrees == LANDSCAPE_270);
+    }
+
+    private void takePictureInternal()
+    {
+        if (!isPictureCaptureInProgress.getAndSet(true))
+        {
+            mCamera.takePicture(null, null, null, (data, camera) ->
+            {
+                isPictureCaptureInProgress.set(false);
+                mCallback.onPictureTaken(data);
+                camera.cancelAutoFocus();
+                camera.startPreview();
+            });
+        }
     }
 }
