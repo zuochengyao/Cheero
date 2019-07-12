@@ -8,12 +8,14 @@ import android.view.TextureView;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.core.media.camera.Camera1;
 import com.icheero.sdk.core.media.camera.extract.BaseCamera;
+import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.Log;
 
 import butterknife.BindView;
@@ -126,6 +128,7 @@ public class TextureViewActivity extends BaseActivity implements TextureView.Sur
     @Override
     public void onPictureTaken(byte[] data)
     {
-        IOManager.getInstance().saveImageFile(data);
+        String filePath = IOManager.getInstance().saveImageFile(data);
+        Common.toast(this, filePath, Toast.LENGTH_SHORT);
     }
 }

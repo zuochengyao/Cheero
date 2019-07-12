@@ -1,4 +1,4 @@
-package com.icheero.sdk.core.media.camera;
+package com.icheero.sdk.core.media.camera.extract;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,11 +7,11 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-class SizeMap
+public class SizeMap
 {
     private final Map<AspectRatio, SortedSet<Size>> mRatios = new HashMap<>();
 
-    boolean add(Size size)
+    public boolean add(Size size)
     {
         for (AspectRatio ratio : mRatios.keySet())
         {
@@ -33,27 +33,27 @@ class SizeMap
         return true;
     }
 
-    void remove(AspectRatio ratio)
+    public void remove(AspectRatio ratio)
     {
         mRatios.remove(ratio);
     }
 
-    Set<AspectRatio> ratios()
+    public Set<AspectRatio> ratios()
     {
         return mRatios.keySet();
     }
 
-    SortedSet<Size> get(AspectRatio ratio)
+    public SortedSet<Size> get(AspectRatio ratio)
     {
         return mRatios.get(ratio);
     }
 
-    void clear()
+    public void clear()
     {
         mRatios.clear();
     }
 
-    boolean isEmpty()
+    public boolean isEmpty()
     {
         return mRatios.isEmpty();
     }

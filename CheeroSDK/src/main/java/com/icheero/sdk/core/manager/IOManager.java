@@ -91,9 +91,8 @@ public class IOManager
         return baos.toByteArray();
     }
 
-    public void saveImageFile(byte[] data)
+    public String saveImageFile(byte[] data)
     {
-        String fileName = System.currentTimeMillis() + ".jpg";
-        FileUtils.saveFile(fileName ,data);
+        return FileUtils.saveFile(System.currentTimeMillis() + ".jpg" ,data);
     }
 }

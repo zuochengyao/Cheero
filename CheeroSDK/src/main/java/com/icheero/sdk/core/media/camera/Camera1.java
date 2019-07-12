@@ -8,7 +8,9 @@ import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
 
+import com.icheero.sdk.core.media.camera.extract.AspectRatio;
 import com.icheero.sdk.core.media.camera.extract.BaseCamera;
+import com.icheero.sdk.core.media.camera.extract.Size;
 import com.icheero.sdk.util.Log;
 
 import java.io.IOException;
@@ -24,8 +26,6 @@ import androidx.collection.SparseArrayCompat;
 
 public class Camera1 extends BaseCamera
 {
-    private static final Class TAG = Camera1.class;
-
     private static final SparseIntArray CAMERA_ORIENTATIONS = new SparseIntArray();
     private static final SparseArrayCompat<String> CAMERA_FLASH_MODES = new SparseArrayCompat<>();
 
@@ -36,26 +36,17 @@ public class Camera1 extends BaseCamera
         CAMERA_ORIENTATIONS.append(Surface.ROTATION_180, 180);
         CAMERA_ORIENTATIONS.append(Surface.ROTATION_270, 270);
 
-        CAMERA_FLASH_MODES.put(BaseCamera.FLASH_OFF, Camera.Parameters.FLASH_MODE_OFF);
-        CAMERA_FLASH_MODES.put(BaseCamera.FLASH_ON, Camera.Parameters.FLASH_MODE_ON);
-        CAMERA_FLASH_MODES.put(BaseCamera.FLASH_TORCH, Camera.Parameters.FLASH_MODE_TORCH);
-        CAMERA_FLASH_MODES.put(BaseCamera.FLASH_AUTO, Camera.Parameters.FLASH_MODE_AUTO);
-        CAMERA_FLASH_MODES.put(BaseCamera.FLASH_RED_EYE, Camera.Parameters.FLASH_MODE_RED_EYE);
+        CAMERA_FLASH_MODES.put(FLASH_OFF, Camera.Parameters.FLASH_MODE_OFF);
+        CAMERA_FLASH_MODES.put(FLASH_ON, Camera.Parameters.FLASH_MODE_ON);
+        CAMERA_FLASH_MODES.put(FLASH_TORCH, Camera.Parameters.FLASH_MODE_TORCH);
+        CAMERA_FLASH_MODES.put(FLASH_AUTO, Camera.Parameters.FLASH_MODE_AUTO);
+        CAMERA_FLASH_MODES.put(FLASH_RED_EYE, Camera.Parameters.FLASH_MODE_RED_EYE);
     }
-
-    private SurfaceView mSurfaceView;
-    private TextureView mTextureView;
 
     private Camera mCamera;
     private Camera.Parameters mParameters;
     private final Camera.CameraInfo mCameraInfo = new Camera.CameraInfo();
-    private final SizeMap mPreviewSizes = new SizeMap();
-    private final SizeMap mPictureSizes = new SizeMap();
-    private AspectRatio mAspectRatio;
     private boolean isShowingPreview = false;
-    private boolean isAutoFocus = false;
-    private int mFlash;
-    private int mDisplayOrientation = 0;
     private int mMaxWidth, mMaxHeight;
 
     private final AtomicBoolean isPictureCaptureInProgress = new AtomicBoolean(false);
@@ -96,6 +87,7 @@ public class Camera1 extends BaseCamera
             throw new IllegalArgumentException("Preview must be SurfaceView or TextureView");
     }
 
+    // region BaseCamera
     @Override
     public boolean open()
     {
@@ -187,6 +179,7 @@ public class Camera1 extends BaseCamera
         else
             takePictureInternal();
     }
+    // endregion
 
     /**
      * 如果设置为90 or 270，则认为是横屏

@@ -1,8 +1,8 @@
-package com.icheero.sdk.core.media.camera;
+package com.icheero.sdk.core.media.camera.extract;
 
 import androidx.annotation.NonNull;
 
-class Size implements Comparable<Size>
+public class Size implements Comparable<Size>
 {
     private final int mWidth;
     private final int mHeight;
@@ -13,7 +13,7 @@ class Size implements Comparable<Size>
      * @param width  The width of the size, in pixels
      * @param height The height of the size, in pixels
      */
-    Size(int width, int height) {
+    public Size(int width, int height) {
         mWidth = width;
         mHeight = height;
     }

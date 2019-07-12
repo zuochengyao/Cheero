@@ -1,4 +1,4 @@
-package com.icheero.sdk.core.media.camera;
+package com.icheero.sdk.core.media.camera.extract;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -12,7 +12,7 @@ import androidx.collection.SparseArrayCompat;
 /**
  * 用于描述宽度和高度之间的比例关系的不可变类。
  */
-class AspectRatio implements Comparable<AspectRatio>, Parcelable
+public class AspectRatio implements Comparable<AspectRatio>, Parcelable
 {
     private static final SparseArrayCompat<SparseArrayCompat<AspectRatio>> mCache = new SparseArrayCompat<>(16);
     public static final AspectRatio DEFAULT = of(4, 3);
