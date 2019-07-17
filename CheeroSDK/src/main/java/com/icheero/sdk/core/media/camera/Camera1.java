@@ -47,7 +47,6 @@ public class Camera1 extends BaseCamera
     private Camera.Parameters mParameters;
     private final Camera.CameraInfo mCameraInfo = new Camera.CameraInfo();
     private boolean isShowingPreview = false;
-    private int mMaxWidth, mMaxHeight;
 
     private final AtomicBoolean isPictureCaptureInProgress = new AtomicBoolean(false);
 
@@ -78,13 +77,8 @@ public class Camera1 extends BaseCamera
 
     public Camera1(Activity activity, View preview, int cameraId)
     {
-        super(activity, preview, cameraId);
-        if (preview instanceof SurfaceView)
-            mSurfaceView = (SurfaceView) preview;
-        else if (preview instanceof TextureView)
-            mTextureView = (TextureView) preview;
-        else
-            throw new IllegalArgumentException("Preview must be SurfaceView or TextureView");
+        super(activity, preview);
+        this.mCameraId = cameraId;
     }
 
     // region BaseCamera
@@ -123,13 +117,20 @@ public class Camera1 extends BaseCamera
     }
 
     @Override
-    public void setFacing(int facing)
+    public void setCameraId(int cameraId)
     {
-
+        if (mCameraId == cameraId)
+            return;
+        mCameraId = cameraId;
+        if (isCameraOpened())
+        {
+            close();
+            open();
+        }
     }
 
     @Override
-    public int getFacing()
+    public int getCameraId()
     {
         return mCameraId;
     }
@@ -194,22 +195,10 @@ public class Camera1 extends BaseCamera
         mDisplayOrientation = orientation;
         if (isCameraOpened())
         {
-            // mParameters.setRotation(calcCameraRotation(orientation));
-            // mCamera.setParameters(mParameters);
+            mParameters.setRotation(calcCameraRotation(orientation));
+            mCamera.setParameters(mParameters);
             mCamera.setDisplayOrientation(calcDisplayOrientation());
         }
-    }
-
-    public void setMaxSize(int width, int height)
-    {
-        this.mMaxWidth = width;
-        this.mMaxHeight = height;
-        mAspectRatio = AspectRatio.of(width, height).inverse();
-    }
-
-    public void setCallback(Callback callback)
-    {
-        this.mCallback = callback;
     }
 
     private boolean checkCameraId()
@@ -266,8 +255,6 @@ public class Camera1 extends BaseCamera
         mPictureSizes.clear();
         for (Camera.Size size : mParameters.getSupportedPictureSizes())
             mPictureSizes.add(new Size(size.width, size.height));
-        if (mAspectRatio == null)
-            mAspectRatio = AspectRatio.DEFAULT;
     }
 
     /**
@@ -289,6 +276,7 @@ public class Camera1 extends BaseCamera
             mCamera.stopPreview();
         mParameters.setPreviewSize(previewSize.getWidth(), previewSize.getHeight());
         mParameters.setPictureSize(pictureSize.getWidth(), pictureSize.getHeight());
+        mParameters.setRotation(calcCameraRotation(mDisplayOrientation));
         setAutoFocusInternal(isAutoFocus);
         setFlashInternal(mFlash);
         mCamera.setParameters(mParameters);

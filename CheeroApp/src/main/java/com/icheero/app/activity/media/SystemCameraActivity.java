@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CameraActivity extends BaseActivity
+public class SystemCameraActivity extends BaseActivity
 {
     public static final String KEY_REQUEST_CODE = "requestCode";
     private File destination;

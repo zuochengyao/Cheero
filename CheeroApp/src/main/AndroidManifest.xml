@@ -39,13 +39,17 @@
         <activity android:name=".activity.network.WebViewActivity"/>
         <activity android:name=".activity.network.ImageDownloadActivity"/>
         <activity android:name=".activity.network.DownloadActivity"/>
-        <activity android:name=".activity.media.CameraActivity"/>
+        <activity android:name=".activity.media.SystemCameraActivity"/>
         <activity
             android:name=".activity.media.SurfaceViewActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activity.media.TextureViewActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activity.media.Camera2Activity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.data.CustomSettingActivity"/>

@@ -5,6 +5,7 @@ import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.TextureView;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -13,7 +14,7 @@ import android.widget.Toast;
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.IOManager;
-import com.icheero.sdk.core.media.camera.Camera1;
+import com.icheero.sdk.core.media.camera.Camera2;
 import com.icheero.sdk.core.media.camera.extract.BaseCamera;
 import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.Log;
@@ -28,8 +29,10 @@ public class TextureViewActivity extends BaseActivity implements TextureView.Sur
     TextureView mTextureView;
     @BindView(R.id.take_picture)
     ImageView mTakePicture;
+    @BindView(R.id.switch_camera)
+    ImageView mSwitchCamera;
 
-    private Camera1 mCamera;
+    private BaseCamera mCamera;
     private int mScreenHeight, mScreenWidth;
 
     @Override
@@ -53,7 +56,7 @@ public class TextureViewActivity extends BaseActivity implements TextureView.Sur
     private void doInitView()
     {
         ButterKnife.bind(this);
-        mCamera = new Camera1(this, mTextureView);
+        mCamera = new Camera2(this, mTextureView);
         mCamera.setCallback(this);
         if (!isPortrait())
             mCamera.setDisplayOrientation(90);
@@ -65,10 +68,18 @@ public class TextureViewActivity extends BaseActivity implements TextureView.Sur
         mTextureView.setSurfaceTextureListener(this);
     }
 
-    @OnClick(R.id.take_picture)
-    public void OnClickEvent()
+    @OnClick({R.id.take_picture, R.id.switch_camera})
+    public void OnClickEvent(View v)
     {
-        mCamera.takePicture();
+        switch (v.getId())
+        {
+            case R.id.switch_camera:
+                mCamera.setCameraId(mCamera.getCameraId() ^ 1);
+                break;
+            case R.id.take_picture:
+                mCamera.takePicture();
+                break;
+        }
     }
 
     @Override

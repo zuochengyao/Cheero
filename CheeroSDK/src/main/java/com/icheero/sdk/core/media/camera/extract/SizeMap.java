@@ -1,6 +1,7 @@
 package com.icheero.sdk.core.media.camera.extract;
 
-import java.util.HashMap;
+import android.util.ArrayMap;
+
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -9,7 +10,7 @@ import java.util.TreeSet;
 
 public class SizeMap
 {
-    private final Map<AspectRatio, SortedSet<Size>> mRatios = new HashMap<>();
+    private final Map<AspectRatio, SortedSet<Size>> mRatios = new ArrayMap<>();
 
     public boolean add(Size size)
     {

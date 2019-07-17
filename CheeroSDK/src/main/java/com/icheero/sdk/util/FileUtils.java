@@ -215,7 +215,7 @@ public class FileUtils
         FileOutputStream fos = null;
         try
         {
-            String fullFileName = DIR_PATH_CHEERO_IMAGES + "/" + fileName;
+            String fullFileName = DIR_PATH_CHEERO_IMAGES + fileName;
             fos = new FileOutputStream(fullFileName);
             bos = new BufferedOutputStream(fos);
             bos.write(data);

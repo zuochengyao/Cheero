@@ -128,6 +128,12 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/to_camera2_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Camera2Activity"/>
+
+            <Button
                 android:id="@+id/to_texture_view_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
