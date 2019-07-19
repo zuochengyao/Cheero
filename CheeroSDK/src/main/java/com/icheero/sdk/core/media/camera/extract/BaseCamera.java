@@ -93,13 +93,23 @@ public abstract class BaseCamera
             return null;
     }
 
+    public void setCameraId(int cameraId)
+    {
+        if (mCameraId == cameraId)
+            return;
+        mCameraId = cameraId;
+        if (isCameraOpened())
+        {
+            close();
+            open();
+        }
+    }
+
     public abstract boolean open();
 
     public abstract void close();
 
     public abstract boolean isCameraOpened();
-
-    public abstract void setCameraId(int facing);
 
     public abstract int getCameraId();
 

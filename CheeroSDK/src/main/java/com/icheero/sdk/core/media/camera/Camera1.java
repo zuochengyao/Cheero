@@ -117,19 +117,6 @@ public class Camera1 extends BaseCamera
     }
 
     @Override
-    public void setCameraId(int cameraId)
-    {
-        if (mCameraId == cameraId)
-            return;
-        mCameraId = cameraId;
-        if (isCameraOpened())
-        {
-            close();
-            open();
-        }
-    }
-
-    @Override
     public int getCameraId()
     {
         return mCameraId;
