@@ -76,9 +76,9 @@ public class SystemCameraActivity extends BaseActivity
     private void openSystemCamera()
     {
         if (requestCode == CameraManager.REQUEST_CODE_IMAGE)
-            CameraManager.getInstance().openSystemImageCamera(this, destination);
+            CameraManager.openSystemImageCamera(this, destination);
         else if (requestCode == CameraManager.REQUEST_CODE_VIDEO)
-            CameraManager.getInstance().openSystemVideoCamera(this, destination);
+            CameraManager.openSystemVideoCamera(this, destination);
     }
 
     @Override

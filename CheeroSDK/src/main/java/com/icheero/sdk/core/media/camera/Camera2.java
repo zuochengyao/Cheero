@@ -308,7 +308,6 @@ public class Camera2 extends BaseCamera
                         isSupported = false;
                         break;
                     }
-                    //
                     if (cameraId.equals(String.valueOf(CAMERA_FACINGS.get(mCameraId))))
                         isSupported = true;
                     if (cameraId.equals(CAMERA_FACINGS.get(mCameraId) + ""))

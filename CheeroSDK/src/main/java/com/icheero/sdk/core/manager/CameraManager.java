@@ -4,7 +4,13 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.view.View;
+
+import com.icheero.sdk.core.media.camera.Camera1;
+import com.icheero.sdk.core.media.camera.Camera2;
+import com.icheero.sdk.core.media.camera.extract.BaseCamera;
 
 import java.io.File;
 
@@ -12,30 +18,23 @@ public class CameraManager
 {
     public static final int REQUEST_CODE_IMAGE = 100;
     public static final int REQUEST_CODE_VIDEO = 101;
-    private static volatile CameraManager mInstance;
+    private BaseCamera mCamera;
 
-    private CameraManager()
-    { }
-
-    public static CameraManager getInstance()
+    public CameraManager(Activity activity, View view)
     {
-        if (mInstance == null)
-        {
-            synchronized (CameraManager.class)
-            {
-                if (mInstance == null)
-                    mInstance = new CameraManager();
-            }
-        }
-        return mInstance;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            mCamera = new Camera2(activity, view);
+        else
+            mCamera = new Camera1(activity, view);
     }
 
-    public void openSystemImageCamera(Activity activity) throws ActivityNotFoundException
+    public static void openSystemImageCamera(Activity activity) throws ActivityNotFoundException
     {
-        if (activity != null) openSystemImageCamera(activity, null);
+        if (activity != null)
+            openSystemImageCamera(activity, null);
     }
 
-    public void openSystemImageCamera(Activity activity, File file) throws ActivityNotFoundException
+    public static void openSystemImageCamera(Activity activity, File file) throws ActivityNotFoundException
     {
         if (activity != null)
         {
@@ -45,7 +44,7 @@ public class CameraManager
         }
     }
 
-    public void openSystemVideoCamera(Activity activity, File file) throws ActivityNotFoundException
+    public static void openSystemVideoCamera(Activity activity, File file) throws ActivityNotFoundException
     {
         if (activity != null)
         {

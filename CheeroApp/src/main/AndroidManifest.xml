@@ -48,10 +48,6 @@
             android:name=".activity.media.TextureViewActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-            android:name=".activity.media.Camera2Activity"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.data.CustomSettingActivity"/>
         <activity
             android:name=".activity.data.SystemSettingActivity"

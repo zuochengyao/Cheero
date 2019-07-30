@@ -17,7 +17,6 @@ import com.icheero.app.activity.data.SystemSettingActivity;
 import com.icheero.app.activity.data.ViewModelActivity;
 import com.icheero.app.activity.feature.LollipopActivity;
 import com.icheero.app.activity.feature.oreo.NotificationActivity;
-import com.icheero.app.activity.media.Camera2Activity;
 import com.icheero.app.activity.media.SystemCameraActivity;
 import com.icheero.app.activity.media.SurfaceViewActivity;
 import com.icheero.app.activity.media.TextureViewActivity;
@@ -90,8 +89,6 @@ public class MainActivity extends BaseActivity
     Button toSurfaceViewActivity;
     @BindView(R.id.to_texture_view_activity)
     Button toTextureViewActivity;
-    @BindView(R.id.to_camera2_activity)
-    Button toCamera2Activity;
     @BindView(R.id.to_custom_setting_activity)
     Button toCustomSettingActivity;
     @BindView(R.id.to_system_setting_activity)
@@ -164,7 +161,7 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @OnClick({R.id.to_camera2_activity, R.id.to_texture_view_activity, R.id.to_surface_view_activity, R.id.to_camera_activity})
+    @OnClick({R.id.to_texture_view_activity, R.id.to_surface_view_activity, R.id.to_camera_activity})
     public void OnMediaClickEvent(View v)
     {
         Intent intent = new Intent();
@@ -184,11 +181,6 @@ public class MainActivity extends BaseActivity
             case R.id.to_texture_view_activity:
             {
                 intent.setClass(this, TextureViewActivity.class);
-                break;
-            }
-            case R.id.to_camera2_activity:
-            {
-                intent.setClass(this, Camera2Activity.class);
                 break;
             }
         }
