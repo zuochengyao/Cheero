@@ -9,6 +9,8 @@ import com.icheero.sdk.base.CheeroNative;
 @SuppressWarnings("unused")
 public class Log
 {
+    private static final Class TAG = Log.class;
+
     public static final int TRACE_MODE_ON_SCREEN = 0;
     public static final int TRACE_MODE_ON_FILE = 1;
     public static final int TRACE_MODE_OFF = 2;
@@ -50,6 +52,24 @@ public class Log
     public static void traceFilePath(String filePath)
     {
         CheeroNative.nativeSetTraceFilePath(filePath);
+    }
+
+    private static String getFunctionName()
+    {
+        StackTraceElement[] sts = Thread.currentThread().getStackTrace();
+        if (sts == null)
+            return null;
+        for (StackTraceElement st : sts)
+        {
+            if (st.isNativeMethod())
+                continue;
+            if (st.getClassName().equals(Thread.class.getName()))
+                continue;
+            if (st.getClassName().equals(TAG.getName()))
+                continue;
+            return st.getFileName() + "[Line: " + st.getLineNumber() + "] ";
+        }
+        return null;
     }
 
     private static void trace(Class<?> cls, String log, int prio)

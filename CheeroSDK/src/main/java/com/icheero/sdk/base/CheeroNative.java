@@ -3,6 +3,7 @@ package com.icheero.sdk.base;
 public class CheeroNative
 {
     private static final Class TAG = CheeroNative.class;
+    String i = "";
 
     public static native void nativeHelloWorld();
 

@@ -39,7 +39,8 @@ public class CameraManager
         if (activity != null)
         {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (file != null) intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+            if (file != null)
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
             activity.startActivityForResult(intent, REQUEST_CODE_IMAGE);
         }
     }

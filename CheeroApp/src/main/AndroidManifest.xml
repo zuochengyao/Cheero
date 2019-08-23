@@ -41,6 +41,10 @@
         <activity android:name=".activity.network.DownloadActivity"/>
         <activity android:name=".activity.media.SystemCameraActivity"/>
         <activity
+            android:name=".activity.media.GLSurfaceViewActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
             android:name=".activity.media.SurfaceViewActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar"/>
