@@ -374,18 +374,14 @@ public class Camera2 extends BaseCamera
         mImageReader.setOnImageAvailableListener(imageAvailableListener, null);
     }
 
-    private final ImageReader.OnImageAvailableListener imageAvailableListener = new ImageReader.OnImageAvailableListener() {
-        @Override
-        public void onImageAvailable(ImageReader reader)
-        {
-            try (Image image = reader.acquireNextImage()) {
-                Image.Plane[] planes = image.getPlanes();
-                if (planes.length > 0) {
-                    ByteBuffer buffer = planes[0].getBuffer();
-                    byte[] data = new byte[buffer.remaining()];
-                    buffer.get(data);
-                    mCallback.onPictureTaken(data);
-                }
+    private final ImageReader.OnImageAvailableListener imageAvailableListener = reader -> {
+        try (Image image = reader.acquireNextImage()) {
+            Image.Plane[] planes = image.getPlanes();
+            if (planes.length > 0) {
+                ByteBuffer buffer = planes[0].getBuffer();
+                byte[] data = new byte[buffer.remaining()];
+                buffer.get(data);
+                mCallback.onPictureTaken(data);
             }
         }
     };

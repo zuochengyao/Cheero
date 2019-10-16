@@ -9,7 +9,7 @@ import com.icheero.sdk.util.FileUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 
 public class MultipartEntity extends AbstractHttpEntity
 {
@@ -84,22 +84,23 @@ public class MultipartEntity extends AbstractHttpEntity
 
     private void write(String contentEncoding, String contentType, byte[] data, String key, String fileName) throws IOException
     {
+        Charset utf8 = Charset.forName(HttpApi.ENCODING_UTF8);
         // boundary line
-        mOutputStream.write((DASH_DASH + mBoundary + NEW_LINE).getBytes(HttpApi.ENCODING_UTF8));
+        mOutputStream.write((DASH_DASH + mBoundary + NEW_LINE).getBytes(utf8));
         // content-disposition line
-        mOutputStream.write(getContentDisposition(key, fileName).getBytes(HttpApi.ENCODING_UTF8));
+        mOutputStream.write(getContentDisposition(key, fileName).getBytes(utf8));
         // content-type line
-        mOutputStream.write((HEADER_CONTENT_TYPE + contentType + NEW_LINE).getBytes(HttpApi.ENCODING_UTF8));
+        mOutputStream.write((HEADER_CONTENT_TYPE + contentType + NEW_LINE).getBytes(utf8));
         // content-length line
-        mOutputStream.write((HEADER_CONTENT_LENGTH + data.length + NEW_LINE).getBytes(HttpApi.ENCODING_UTF8));
+        mOutputStream.write((HEADER_CONTENT_LENGTH + data.length + NEW_LINE).getBytes(utf8));
         // content-encoding line
-        mOutputStream.write((contentEncoding + NEW_LINE).getBytes(HttpApi.ENCODING_UTF8));
+        mOutputStream.write((contentEncoding + NEW_LINE).getBytes(utf8));
         // new line
-        mOutputStream.write(NEW_LINE.getBytes(HttpApi.ENCODING_UTF8));
+        mOutputStream.write(NEW_LINE.getBytes(utf8));
         // data line
         mOutputStream.write(data);
         // new line
-        mOutputStream.write(NEW_LINE.getBytes(HttpApi.ENCODING_UTF8));
+        mOutputStream.write(NEW_LINE.getBytes(utf8));
     }
 
     private String getContentDisposition(String key, String fileName)

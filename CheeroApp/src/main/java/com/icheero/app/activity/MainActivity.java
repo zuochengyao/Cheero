@@ -17,6 +17,8 @@ import com.icheero.app.activity.data.SystemSettingActivity;
 import com.icheero.app.activity.data.ViewModelActivity;
 import com.icheero.app.activity.feature.LollipopActivity;
 import com.icheero.app.activity.feature.oreo.NotificationActivity;
+import com.icheero.app.activity.framework.EventBusActivity;
+import com.icheero.app.activity.framework.RxJavaActivity;
 import com.icheero.app.activity.media.GLSurfaceViewActivity;
 import com.icheero.app.activity.media.SystemCameraActivity;
 import com.icheero.app.activity.media.SurfaceViewActivity;
@@ -116,6 +118,10 @@ public class MainActivity extends BaseActivity
     Button toXposedActivity;
     @BindView(R.id.to_faceid_activity)
     Button toFaceIDActivity;
+    @BindView(R.id.to_rx_java_activity)
+    Button toRxJavaActivity;
+    @BindView(R.id.to_event_bus_activity)
+    Button toEventBusActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -355,6 +361,26 @@ public class MainActivity extends BaseActivity
     {
         if (v.getId() == R.id.to_xposed_activity)
             startActivity(new Intent(this, XposedActivity.class));
+    }
+
+    @OnClick({R.id.to_rx_java_activity, R.id.to_event_bus_activity})
+    public void onFrameworkClickEvent(View v)
+    {
+        Intent intent = new Intent();
+        switch (v.getId())
+        {
+            case R.id.to_rx_java_activity:
+            {
+                intent.setClass(this, RxJavaActivity.class);
+                break;
+            }
+            case R.id.to_event_bus_activity:
+            {
+                intent.setClass(this, EventBusActivity.class);
+                break;
+            }
+        }
+        startActivity(intent);
     }
 
     @Override

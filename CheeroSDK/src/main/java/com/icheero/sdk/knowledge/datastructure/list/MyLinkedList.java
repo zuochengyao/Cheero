@@ -41,14 +41,13 @@ public class MyLinkedList<E> extends MyList
 			{
 				mHeader.next = newNode;
 				newNode.prev = mHeader;
-				mLast = newNode;
 			}
 			else
 			{
 				mLast.next = newNode;
 				newNode.prev = mLast;
-				mLast = newNode;
 			}
+			mLast = newNode;
 		}
 		mSize++;
 		return true;
@@ -61,11 +60,8 @@ public class MyLinkedList<E> extends MyList
 			add(e);
 		else 
 		{
-			MyNode<E> newNode = new MyNode<E>(null, e, null);
 			MyNode<E> preNode = getNode(index - 1);
-			newNode.prev = preNode;
-			newNode.next = preNode.next;
-			preNode.next = newNode;
+			preNode.next = new MyNode<>(preNode, e, preNode.next);
 			mSize++;
 		}
 		return true;

@@ -290,4 +290,29 @@
         </LinearLayout>
     </HorizontalScrollView>
 
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/to_rx_java_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RxJavaActivity"/>
+
+            <Button
+                android:id="@+id/to_event_bus_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EventBusActivity"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
 </LinearLayout>
