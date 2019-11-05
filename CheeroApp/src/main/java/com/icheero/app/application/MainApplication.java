@@ -6,6 +6,8 @@ import android.content.res.Configuration;
 import com.icheero.sdk.base.BaseApplication;
 import com.icheero.sdk.core.manager.ApplicationManager;
 
+import androidx.multidex.MultiDex;
+
 
 public class MainApplication extends BaseApplication
 {
@@ -13,6 +15,7 @@ public class MainApplication extends BaseApplication
     protected void attachBaseContext(Context base)
     {
         super.attachBaseContext(base);
+        MultiDex.install(base);
         ApplicationManager.getInstance().attachBaseContext(base);
     }
 

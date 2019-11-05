@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.icheero.app"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.icheero.app">
 
     <application
         android:name=".application.MainApplication"
@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ActionBar"
         tools:ignore="GoogleAppIndexingWarning">
+
         <!-- region Activities -->
         <activity
             android:name=".activity.MainActivity"
@@ -22,8 +23,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.framework.EventBusActivity"/>
-        <activity android:name=".activity.framework.RxJavaActivity"/>
+        <activity android:name=".activity.framework.EventBusActivity" />
+        <activity android:name=".activity.framework.RxJavaActivity" />
+        <activity android:name=".activity.framework.xposed.XposedActivity" />
+        <activity
+            android:name=".activity.framework.FlutterContainerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.binder.UserAidlClientActivity" />
         <activity android:name=".activity.ui.StyledActivity" />
         <activity android:name=".activity.ui.CustomViewActivity" />
@@ -68,8 +73,6 @@
         <activity android:name=".activity.reverse.DisposeManifestActivity" />
         <activity android:name=".activity.reverse.DisposeResourceActivity" />
         <activity android:name=".activity.reverse.DisposeDexActivity" />
-        <activity android:name=".activity.xposed.XposedActivity" />
-
         <meta-data
             android:name="xposedmodule"
             android:value="true" />

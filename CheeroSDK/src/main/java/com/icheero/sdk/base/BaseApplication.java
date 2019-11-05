@@ -1,7 +1,6 @@
 package com.icheero.sdk.base;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.StrictMode;
@@ -19,20 +18,11 @@ import com.icheero.sdk.core.network.http.HttpConfig;
 import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.Log;
 
-import androidx.multidex.MultiDex;
-
 public class BaseApplication extends Application
 {
     private static final Class TAG = BaseApplication.class;
 
     private static BaseApplication mInstance;
-
-    @Override
-    protected void attachBaseContext(Context base)
-    {
-        super.attachBaseContext(base);
-        MultiDex.install(base);
-    }
 
     @Override
     public void onCreate()

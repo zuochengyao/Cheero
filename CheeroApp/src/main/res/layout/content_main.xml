@@ -301,6 +301,12 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/to_flutter_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FlutterActivity"/>
+
+            <Button
                 android:id="@+id/to_rx_java_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -9,6 +9,7 @@ android {
         targetSdkVersion versions.build.target_sdk
         versionCode versions.build.code
         versionName versions.build.name
+        multiDexEnabled true
     }
 
     signingConfigs {
@@ -64,6 +65,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':CheeroSDK')
+    implementation project(':flutter')
     if (isLibrary) {
         implementation project(':CheeroPlugin')
         implementation project(':CheeroFaceID')

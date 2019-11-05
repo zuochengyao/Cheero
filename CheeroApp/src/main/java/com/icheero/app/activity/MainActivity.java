@@ -18,10 +18,11 @@ import com.icheero.app.activity.data.ViewModelActivity;
 import com.icheero.app.activity.feature.LollipopActivity;
 import com.icheero.app.activity.feature.oreo.NotificationActivity;
 import com.icheero.app.activity.framework.EventBusActivity;
+import com.icheero.app.activity.framework.FlutterContainerActivity;
 import com.icheero.app.activity.framework.RxJavaActivity;
 import com.icheero.app.activity.media.GLSurfaceViewActivity;
-import com.icheero.app.activity.media.SystemCameraActivity;
 import com.icheero.app.activity.media.SurfaceViewActivity;
+import com.icheero.app.activity.media.SystemCameraActivity;
 import com.icheero.app.activity.media.TextureViewActivity;
 import com.icheero.app.activity.network.DownloadActivity;
 import com.icheero.app.activity.network.ImageDownloadActivity;
@@ -42,7 +43,7 @@ import com.icheero.app.activity.ui.SectionsActivity;
 import com.icheero.app.activity.ui.StyledActivity;
 import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
-import com.icheero.app.activity.xposed.XposedActivity;
+import com.icheero.app.activity.framework.xposed.XposedActivity;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.CameraManager;
 import com.icheero.sdk.core.manager.IOManager;
@@ -122,6 +123,8 @@ public class MainActivity extends BaseActivity
     Button toRxJavaActivity;
     @BindView(R.id.to_event_bus_activity)
     Button toEventBusActivity;
+    @BindView(R.id.to_flutter_activity)
+    Button toFlutterActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -131,9 +134,13 @@ public class MainActivity extends BaseActivity
 
         ButterKnife.bind(this);
         if (!mPermissionManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+        {
             mPermissionManager.permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
         else
+        {
             IOManager.getInstance().createRootFolder();
+        }
     }
 
     @Override
@@ -222,7 +229,10 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @OnClick({R.id.to_move_view_activity, R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity, R.id.to_dialog_activity, R.id.to_option_activity, R.id.to_touch_pan_scroll_activity, R.id.to_touch_pan_gesture_scroll_activity})
+    @OnClick({
+            R.id.to_move_view_activity, R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity, R.id.to_dialog_activity, R.id.to_option_activity,
+            R.id.to_touch_pan_scroll_activity, R.id.to_touch_pan_gesture_scroll_activity
+    })
     public void OnUIClickEvent(View v)
     {
         Intent toActivity = new Intent();
@@ -232,32 +242,28 @@ public class MainActivity extends BaseActivity
             {
                 toActivity.setClass(this, StyledActivity.class);
                 toActivity.putExtra("transition", "explode");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                    startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             }
             case R.id.to_custom_view_activity:
             {
                 toActivity.setClass(this, CustomViewActivity.class);
                 toActivity.putExtra("transition", "slide");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                    startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             }
             case R.id.to_sections_activity:
             {
                 toActivity.setClass(this, SectionsActivity.class);
                 toActivity.putExtra("transition", "fade");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                    startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             }
             case R.id.to_anim_activity:
             {
                 toActivity.setClass(this, AnimActivity.class);
                 toActivity.putExtra("transition", "fade");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                    startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             }
             case R.id.to_move_view_activity:
@@ -356,14 +362,7 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @OnClick({R.id.to_xposed_activity})
-    public void onXposedClickEvent(View v)
-    {
-        if (v.getId() == R.id.to_xposed_activity)
-            startActivity(new Intent(this, XposedActivity.class));
-    }
-
-    @OnClick({R.id.to_rx_java_activity, R.id.to_event_bus_activity})
+    @OnClick({R.id.to_rx_java_activity, R.id.to_event_bus_activity, R.id.to_xposed_activity, R.id.to_flutter_activity})
     public void onFrameworkClickEvent(View v)
     {
         Intent intent = new Intent();
@@ -379,6 +378,16 @@ public class MainActivity extends BaseActivity
                 intent.setClass(this, EventBusActivity.class);
                 break;
             }
+            case R.id.to_xposed_activity:
+            {
+                intent.setClass(this, XposedActivity.class);
+                break;
+            }
+            case R.id.to_flutter_activity:
+            {
+                intent.setClass(this, FlutterContainerActivity.class);
+                break;
+            }
         }
         startActivity(intent);
     }
@@ -390,9 +399,13 @@ public class MainActivity extends BaseActivity
         if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
         {
             if (isGranted)
+            {
                 IOManager.getInstance().createRootFolder();
+            }
             else
+            {
                 Common.toast(this, "请打开读写权限！", Toast.LENGTH_SHORT);
+            }
         }
     }
 }

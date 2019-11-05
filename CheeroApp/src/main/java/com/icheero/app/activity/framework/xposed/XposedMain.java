@@ -1,4 +1,4 @@
-package com.icheero.app.activity.xposed;
+package com.icheero.app.activity.framework.xposed;
 
 import android.util.Log;
 
