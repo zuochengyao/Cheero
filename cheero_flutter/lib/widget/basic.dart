@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cheero_flutter/model/app_bar_choice.dart';
+import 'package:flutter/services.dart';
 
 const List<AppBarChoice> choices = const <AppBarChoice>[
   const AppBarChoice(title: 'Car', icon: Icons.directions_car),
@@ -20,6 +21,8 @@ class Basic extends StatefulWidget {
 }
 
 class _BasicState extends State<Basic> {
+  static const toAndroidPlugin = const MethodChannel('com.icheero.app.activity/flutter');
+
   AppBarChoice _choice = choices[0];
 
   void setChoice(AppBarChoice choice) {
@@ -33,7 +36,13 @@ class _BasicState extends State<Basic> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      _toNative(index);
     });
+  }
+
+  Future<Null> _toNative(int index) async {
+    String result = await toAndroidPlugin.invokeMethod(index.toString());
+    print(result);
   }
 
   @override
