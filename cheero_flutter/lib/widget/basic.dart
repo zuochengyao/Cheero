@@ -21,9 +21,18 @@ class Basic extends StatefulWidget {
 }
 
 class _BasicState extends State<Basic> {
-  static const toAndroidPlugin = const MethodChannel('com.icheero.app.activity/flutter');
+  static const toAndroidPlugin =
+      const MethodChannel('com.icheero.app.activity/fta');
+  static const fromAndroidPlugin =
+      const EventChannel('com.icheero.app.activity/atf');
 
   AppBarChoice _choice = choices[0];
+
+  @override
+  void initState() {
+    super.initState();
+    _fromAndroid();
+  }
 
   void setChoice(AppBarChoice choice) {
     setState(() {
@@ -36,13 +45,39 @@ class _BasicState extends State<Basic> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      _toNative(index);
+      _toAndroid(index);
     });
   }
 
-  Future<Null> _toNative(int index) async {
+  // 发送数据给Android端
+  Future<Null> _toAndroid(int index) async {
     String result = await toAndroidPlugin.invokeMethod(index.toString());
     print(result);
+  }
+
+  var _fromAndroidSub;
+  var _nativeParams;
+
+  void _fromAndroid() {
+    if (_fromAndroidSub == null) {
+      _fromAndroidSub = fromAndroidPlugin
+          .receiveBroadcastStream()
+          .listen(_onFromAndroidEvent, onError: _onFromAndroidError);
+    }
+  }
+
+  void _onFromAndroidEvent(Object event) {
+    setState(() {
+      _nativeParams = event;
+      print(_nativeParams);
+    });
+  }
+
+  void _onFromAndroidError(Object error) {
+    setState(() {
+      _nativeParams = "error";
+      print(error);
+    });
   }
 
   @override

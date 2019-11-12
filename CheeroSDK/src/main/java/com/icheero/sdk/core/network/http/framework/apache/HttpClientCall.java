@@ -26,6 +26,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -122,6 +123,8 @@ public class HttpClientCall extends AbstractAsyncHttpCall
                                 byte[] data = (byte[]) value;
                                 builder.addBinaryBody(entry.getKey(), data, ContentType.parse(HttpApi.MEDIA_TYPE_MULTIPART), entry.getKey());
                             }
+                            else if (value instanceof InputStream)
+                                builder.addBinaryBody(entry.getKey(), (InputStream) value, ContentType.parse(HttpApi.MEDIA_TYPE_MULTIPART), entry.getKey());
                             else
                                 builder.addTextBody(entry.getKey(), value.toString(), ContentType.parse(HttpApi.MEDIA_TYPE_TEXT));
                         }
