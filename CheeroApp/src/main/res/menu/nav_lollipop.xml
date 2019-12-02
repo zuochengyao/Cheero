@@ -1,31 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/navigation_idcard"
-            android:icon="@drawable/ic_home_black_24dp"
-            android:title="@string/module_faceid_idcard"/>
-
-        <item
-            android:id="@+id/navigation_meglive"
-            android:icon="@drawable/ic_dashboard_black_24dp"
-            android:title="@string/module_faceid_liveness"/>
-
-        <item
-            android:id="@+id/navigation_lite"
-            android:icon="@drawable/ic_notifications_black_24dp"
-            android:title="@string/module_faceid_lite"/>
-    </group>
-
     <item android:title="@string/cheero_other">
         <menu>
             <item
                 android:icon="@drawable/ic_dashboard_black_24dp"
-                android:title="@string/cheero_setting"/>
+                android:title="@string/cheero_setting" />
 
             <item
                 android:icon="@drawable/ic_dashboard_black_24dp"
-                android:title="@string/cheero_about"/>
+                android:title="@string/cheero_about" />
         </menu>
     </item>
 </menu>

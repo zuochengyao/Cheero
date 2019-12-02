@@ -68,7 +68,6 @@ dependencies {
     implementation project(':flutter')
     if (isLibrary) {
         implementation project(':CheeroPlugin')
-        implementation project(':CheeroFaceID')
     }
     implementation versions.deps.butterknife.runtime
     implementation versions.deps.support.v4

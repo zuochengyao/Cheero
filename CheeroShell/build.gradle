@@ -4,7 +4,7 @@ android {
     compileSdkVersion versions.build.compile_sdk
 
     defaultConfig {
-        applicationId "com.machipopo.media17"
+        applicationId "com.icheero.shell"
         minSdkVersion versions.build.min_sdk
         targetSdkVersion versions.build.target_sdk
         versionCode versions.build.code

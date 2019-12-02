@@ -20,6 +20,7 @@ import com.icheero.app.activity.feature.oreo.NotificationActivity;
 import com.icheero.app.activity.framework.EventBusActivity;
 import com.icheero.app.activity.framework.FlutterContainerActivity;
 import com.icheero.app.activity.framework.RxJavaActivity;
+import com.icheero.app.activity.framework.xposed.XposedActivity;
 import com.icheero.app.activity.media.GLSurfaceViewActivity;
 import com.icheero.app.activity.media.SurfaceViewActivity;
 import com.icheero.app.activity.media.SystemCameraActivity;
@@ -43,7 +44,6 @@ import com.icheero.app.activity.ui.SectionsActivity;
 import com.icheero.app.activity.ui.StyledActivity;
 import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
-import com.icheero.app.activity.framework.xposed.XposedActivity;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.CameraManager;
 import com.icheero.sdk.core.manager.IOManager;
@@ -117,8 +117,6 @@ public class MainActivity extends BaseActivity
     Button toLoadPluginActivity;
     @BindView(R.id.to_xposed_activity)
     Button toXposedActivity;
-    @BindView(R.id.to_faceid_activity)
-    Button toFaceIDActivity;
     @BindView(R.id.to_rx_java_activity)
     Button toRxJavaActivity;
     @BindView(R.id.to_event_bus_activity)
@@ -131,16 +129,11 @@ public class MainActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         ButterKnife.bind(this);
         if (!mPermissionManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-        {
             mPermissionManager.permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
         else
-        {
             IOManager.getInstance().createRootFolder();
-        }
     }
 
     @Override
@@ -344,7 +337,7 @@ public class MainActivity extends BaseActivity
         startActivity(intent);
     }
 
-    @OnClick({R.id.to_load_plugin_activity, R.id.to_faceid_activity})
+    @OnClick({R.id.to_load_plugin_activity})
     public void OnModuleClickEvent(View v)
     {
         switch (v.getId())
@@ -352,11 +345,6 @@ public class MainActivity extends BaseActivity
             case R.id.to_load_plugin_activity:
             {
                 ARouter.getInstance().build("/plugin/index").navigation();
-                break;
-            }
-            case R.id.to_faceid_activity:
-            {
-                ARouter.getInstance().build("/faceid/index").navigation();
                 break;
             }
         }

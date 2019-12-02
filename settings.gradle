@@ -1,4 +1,4 @@
-include ':CheeroApp', ':CheeroSDK', ':CheeroPlugin', ':CheeroFaceID', ':CheeroShell'
+include ':CheeroApp', ':CheeroSDK', ':CheeroPlugin', ':CheeroShell'
 
 setBinding(new Binding([gradle: this]))
 evaluate(new File(

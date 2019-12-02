@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name_cheero">Cheero</string>
-    <string name="app_name_faceid">CheeroFaceID</string>
     <string name="app_name_plugin">CheeroPlugin</string>
     <string name="app_name_reverse">CheeroReverse</string>
 
