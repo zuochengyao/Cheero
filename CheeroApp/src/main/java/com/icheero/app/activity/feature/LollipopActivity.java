@@ -107,6 +107,11 @@ public class LollipopActivity extends BaseActivity
         mTabFragments.add(new CardViewFragment());
         mTabFragments.add(new RecyclerViewFragment());
         mTabFragments.add(new RecyclerViewFragment());
+        // 创建Bundle对象
+        Bundle data = new Bundle();
+        data.putString("name", "Cheero");
+        data.putInt("age", 28);
+        mTabFragments.get(0).setArguments(data);
         FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), mTabFragments, Arrays.asList(mFeatures));
         mViewPager.setAdapter(fragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager, false);

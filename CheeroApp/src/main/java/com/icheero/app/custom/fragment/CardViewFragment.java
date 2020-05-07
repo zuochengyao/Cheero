@@ -8,6 +8,7 @@ import android.widget.SeekBar;
 
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseFragment;
+import com.icheero.sdk.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,8 @@ import butterknife.ButterKnife;
 
 public class CardViewFragment extends BaseFragment  implements SeekBar.OnSeekBarChangeListener
 {
+    private static final Class TAG = CardViewFragment.class;
+
     @BindView(R.id.seek_bar_radius)
     SeekBar mSeekBarRadius;
     @BindView(R.id.seek_bar_shadow)
@@ -36,6 +39,24 @@ public class CardViewFragment extends BaseFragment  implements SeekBar.OnSeekBar
         mSeekBarShadow.setOnSeekBarChangeListener(this);
         mSeekBarContentPadding.setOnSeekBarChangeListener(this);
         return view;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        if (isAdded())
+        {
+            String name = getArguments().getString("name");
+            int age = getArguments().getInt("age", -1);
+            Log.i(TAG, name + ":" + age);
+        }
     }
 
     @Override

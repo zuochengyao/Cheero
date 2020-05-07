@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <service
+            android:name=".service.CheeroIntentService"
+            android:exported="false">
+        </service>
         <!-- region Activities -->
         <activity
             android:name=".activity.MainActivity"
@@ -73,6 +76,7 @@
         <activity android:name=".activity.reverse.DisposeManifestActivity" />
         <activity android:name=".activity.reverse.DisposeResourceActivity" />
         <activity android:name=".activity.reverse.DisposeDexActivity" />
+
         <meta-data
             android:name="xposedmodule"
             android:value="true" />
