@@ -11,13 +11,13 @@ import android.widget.Button;
 import com.icheero.app.IUserAidl;
 import com.icheero.app.R;
 import com.icheero.app.model.User;
+import com.icheero.sdk.base.BaseActivity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class UserAidlClientActivity extends AppCompatActivity
+public class UserAidlClientActivity extends BaseActivity
 {
     private IUserAidl mUserAidl;
 

@@ -57,15 +57,21 @@ android {
         daoPackage 'com.icheero.sdk.core.database.greendao'
         targetGenDir 'src/main/java'
     }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
 }
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     // Support libraries
-    api versions.deps.support.design
-    api versions.deps.support.v4
-    api versions.deps.support.v7
-    api versions.deps.support.constraint
+    api versions.deps.androidx.appcompat
+    api versions.deps.androidx.annotation
+    api versions.deps.androidx.constraintlayout
+    api versions.deps.androidx.v4
+    api versions.deps.androidx.design
+    api versions.deps.androidx.multidex
     // apache HttpClient
     api versions.deps.apache.httpandroid
     api(versions.deps.apache.httpmime) {
@@ -94,8 +100,6 @@ dependencies {
     api versions.deps.retrofit.runtime
     api versions.deps.retrofit.adapter
     api versions.deps.retrofit.converter_gson
-    // multidex
-    api versions.deps.multidex
     // facebook stetho
     implementation versions.deps.stetho
     // Gson

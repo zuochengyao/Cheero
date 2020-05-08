@@ -1,14 +1,8 @@
 package com.icheero.app.service;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
+import com.icheero.sdk.base.BaseService;
 
-public class CheeroService extends Service
+public class CheeroService extends BaseService
 {
-    @Override
-    public IBinder onBind(Intent intent)
-    {
-        return null;
-    }
+
 }

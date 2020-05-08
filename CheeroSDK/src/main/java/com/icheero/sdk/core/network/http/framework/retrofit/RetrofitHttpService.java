@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.network.http.framework.retrofit;
 
-import io.reactivex.Observable;
+import io.reactivex.rxjava3.core.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.Body;

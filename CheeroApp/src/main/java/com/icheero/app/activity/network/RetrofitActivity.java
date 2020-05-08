@@ -22,14 +22,14 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableOnSubscribe;
+import io.reactivex.rxjava3.core.ObservableSource;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @SuppressWarnings("unused")
 public class RetrofitActivity extends Activity
@@ -66,8 +66,8 @@ public class RetrofitActivity extends Activity
         students[0] = new Student("Zero", courses);
         students[1] = new Student("Cheero", courses);
         Observable.fromArray(students)
-        .flatMap((Function<Student, ObservableSource<Course>>) student -> Observable.fromIterable(student.getCourses()).delay(1, TimeUnit.SECONDS))
-        .subscribe(course -> Log.d(TAG, "Course: " + course.getName()));
+                  .flatMap((Function<Student, ObservableSource<Course>>) student -> Observable.fromIterable(student.getCourses()).delay(1, TimeUnit.SECONDS))
+                  .subscribe(course -> Log.d(TAG, "Course: " + course.getName()));
     }
 
     private void testMap()

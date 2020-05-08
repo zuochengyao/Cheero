@@ -32,6 +32,13 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
     }
 
     @Override
+    protected void onStart()
+    {
+        super.onStart();
+        Log.i(TAG, TAG.getSimpleName() + " onStart");
+    }
+
+    @Override
     protected void onSaveInstanceState(@NonNull Bundle outState)
     {
         super.onSaveInstanceState(outState);
@@ -39,40 +46,38 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState)
-    {
-        super.onRestoreInstanceState(savedInstanceState);
-        Log.i(TAG, TAG.getSimpleName() + " onRestoreInstanceState");
-    }
-
-    @Override
-    protected void onStart()
-    {
-        super.onStart();
-    }
-
-    @Override
     protected void onResume()
     {
         super.onResume();
+        Log.i(TAG, TAG.getSimpleName() + " onResume");
     }
 
     @Override
     protected void onPause()
     {
         super.onPause();
+        Log.i(TAG, TAG.getSimpleName() + " onPause");
     }
 
     @Override
     protected void onStop()
     {
         super.onStop();
+        Log.i(TAG, TAG.getSimpleName() + " onStop");
     }
 
     @Override
     protected void onRestart()
     {
         super.onRestart();
+        Log.i(TAG, TAG.getSimpleName() + " onRestart");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.i(TAG, TAG.getSimpleName() + " onRestoreInstanceState");
     }
 
     @Override

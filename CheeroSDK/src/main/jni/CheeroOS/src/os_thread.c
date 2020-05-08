@@ -5,6 +5,7 @@
  */
 
 #include "os_porting.h"
+#include "trace.h"
 
 #ifndef os_malloc
     #define os_malloc(S) malloc(S)
@@ -116,7 +117,7 @@ struct os_sem *os_sem_init(unsigned int value)
     if (sem != NULL)
     {
         memset(sem, 0, sizeof(os_sem_t));
-        if (sem_init(sem, 0, value) == 0)
+        if (sem_init((sem_t *) sem, 0, value) == 0)
             return (struct os_sem *) sem;
     }
     os_free(sem);

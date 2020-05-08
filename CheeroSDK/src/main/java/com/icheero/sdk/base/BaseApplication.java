@@ -1,6 +1,5 @@
 package com.icheero.sdk.base;
 
-import android.app.Application;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.StrictMode;
@@ -18,7 +17,9 @@ import com.icheero.sdk.core.network.http.HttpConfig;
 import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.Log;
 
-public class BaseApplication extends Application
+import androidx.multidex.MultiDexApplication;
+
+public class BaseApplication extends MultiDexApplication
 {
     private static final Class TAG = BaseApplication.class;
 
