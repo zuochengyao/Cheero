@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.service.AboutServiceActivity">
+
+    <Button
+        android:id="@+id/start_cheero_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cheero_app_about_service_start_cheero_service" />
+
+    <Button
+        android:id="@+id/stop_cheero_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cheero_app_about_service_stop_cheero_service" />
+
+    <Button
+        android:id="@+id/bind_cheero_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cheero_app_about_service_bind_cheero_service" />
+
+    <Button
+        android:id="@+id/unbind_cheero_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cheero_app_about_service_unbind_cheero_service" />
+
+    <Button
+        android:id="@+id/call_cheero_service_method"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cheero_app_about_service_call_cheero_service" />
+
+    <Button
+        android:id="@+id/start_cheero_intent_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/cheero_app_about_service_start_cheero_intent_service" />
+
+</LinearLayout>

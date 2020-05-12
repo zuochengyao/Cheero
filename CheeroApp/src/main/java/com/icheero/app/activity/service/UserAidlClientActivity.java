@@ -1,4 +1,4 @@
-package com.icheero.app.activity.binder;
+package com.icheero.app.activity.service;
 
 import android.content.ComponentName;
 import android.content.Intent;

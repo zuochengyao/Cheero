@@ -35,6 +35,8 @@ import com.icheero.app.activity.reverse.DisposeManifestActivity;
 import com.icheero.app.activity.reverse.DisposeResourceActivity;
 import com.icheero.app.activity.reverse.DisposeSoActivity;
 import com.icheero.app.activity.reverse.JniActivity;
+import com.icheero.app.activity.service.AboutServiceActivity;
+import com.icheero.app.activity.service.UserAidlClientActivity;
 import com.icheero.app.activity.ui.AnimActivity;
 import com.icheero.app.activity.ui.CustomViewActivity;
 import com.icheero.app.activity.ui.DialogActivity;
@@ -123,6 +125,10 @@ public class MainActivity extends BaseActivity
     Button toEventBusActivity;
     @BindView(R.id.to_flutter_activity)
     Button toFlutterActivity;
+    @BindView(R.id.to_user_aidl_client_activity)
+    Button toUserAidlClientActivity;
+    @BindView(R.id.to_about_service_activity)
+    Button toAboutServiceActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -376,6 +382,22 @@ public class MainActivity extends BaseActivity
                 intent.setClass(this, FlutterContainerActivity.class);
                 break;
             }
+        }
+        startActivity(intent);
+    }
+
+    @OnClick({R.id.to_user_aidl_client_activity, R.id.to_about_service_activity})
+    public void onServiceClickEvent(View v)
+    {
+        Intent intent = new Intent();
+        switch (v.getId())
+        {
+            case R.id.to_user_aidl_client_activity:
+                intent.setClass(this, UserAidlClientActivity.class);
+                break;
+            case  R.id.to_about_service_activity:
+                intent.setClass(this, AboutServiceActivity.class);
+                break;
         }
         startActivity(intent);
     }

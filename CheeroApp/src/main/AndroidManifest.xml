@@ -29,8 +29,8 @@
         <activity
             android:name=".activity.framework.FlutterContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.binder.AboutServiceActivity" />
-        <activity android:name=".activity.binder.UserAidlClientActivity" />
+        <activity android:name=".activity.service.AboutServiceActivity" />
+        <activity android:name=".activity.service.UserAidlClientActivity" />
         <activity android:name=".activity.ui.StyledActivity" />
         <activity android:name=".activity.ui.CustomViewActivity" />
         <activity android:name=".activity.ui.SectionsActivity" />
@@ -75,14 +75,12 @@
         <activity android:name=".activity.reverse.DisposeResourceActivity" />
         <activity android:name=".activity.reverse.DisposeDexActivity" />
         <!-- endregion -->
-
         <meta-data
             android:name="xposedmodule"
             android:value="true" />
         <meta-data
             android:name="xposeddescription"
             android:value="Hook信息" />
-
         <meta-data
             android:name="xposedminversion"
             android:value="54" />
@@ -91,8 +89,8 @@
         <service
             android:name=".service.UserAidlServerService"
             android:enabled="true"
-            android:exported="true" />
-
+            android:exported="true"
+            android:permission="TODO" />
         <service
             android:name=".service.CheeroService"
             android:enabled="true"
@@ -101,11 +99,9 @@
                 <action android:name="com.icheero.app.service.CheeroService" />
             </intent-filter>
         </service>
-
         <service
             android:name=".service.CheeroIntentService"
-            android:exported="false" />
-
+            android:exported="false"/>
         <!-- endregion -->
     </application>
 
