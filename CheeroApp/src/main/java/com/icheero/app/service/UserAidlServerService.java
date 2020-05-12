@@ -1,13 +1,11 @@
 package com.icheero.app.service;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
+import android.os.Binder;
 import android.os.RemoteException;
 
 import com.icheero.app.IUserAidl;
 import com.icheero.app.model.User;
-import com.icheero.sdk.util.Log;
+import com.icheero.sdk.base.BaseService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,21 +13,18 @@ import java.util.List;
 /**
  * AIDL 服务端
  */
-public class UserAidlServerService extends Service
+public class UserAidlServerService extends BaseService
 {
-    private static final Class TAG = UserAidlServerService.class;
-
     private List<User> mUsers;
 
     @Override
-    public IBinder onBind(Intent intent)
+    protected Binder getBinder()
     {
         mUsers = new ArrayList<>();
-        Log.i(TAG, "onBind");
         return mIBinder;
     }
 
-    private IBinder mIBinder = new IUserAidl.Stub()
+    private Binder mIBinder = new IUserAidl.Stub()
     {
         @Override
         public void addUser(User user) throws RemoteException

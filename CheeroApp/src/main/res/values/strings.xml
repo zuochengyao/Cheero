@@ -10,9 +10,11 @@
     <string name="cheero_app_about_service_bind_cheero_service">绑定CheeroService</string>
     <string name="cheero_app_about_service_unbind_cheero_service">解绑CheeroService</string>
     <string name="cheero_app_about_service_call_cheero_service">调用CheeroService的方法</string>
-
     <string name="cheero_app_about_service_start_cheero_intent_service">启动CheeroIntentService</string>
     <string name="cheero_app_about_service_stop_cheero_intent_service">关闭CheeroIntentService</string>
+    <!--  UserAidlClientActivity  -->
+    <string name="cheero_app_user_aidl_client_add_user">添加用户</string>
+    <string name="cheero_app_user_aidl_client_get_list">用户列表</string>
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
     <string name="pref_title_social_recommendations">Enable social recommendations</string>

@@ -11,7 +11,6 @@ public class User implements Parcelable
 
     public User()
     {
-
     }
 
     protected User(Parcel in)

@@ -5,12 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.service.UserAidlClientActivity">
 
     <Button
-        android:id="@+id/aidl_button"
+        android:id="@+id/aidl_add_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="AddUser"/>
+        android:text="@string/cheero_app_user_aidl_client_add_user"/>
+
+    <Button
+        android:id="@+id/aidl_get_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cheero_app_user_aidl_client_get_list"/>
 
 </LinearLayout>
