@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpManager;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -60,12 +61,18 @@ public class WebImageView extends AppCompatImageView
     private class DownloadTask extends AsyncTask<String, Void, Bitmap>
     {
         @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+        }
+
+        @Override
         protected Bitmap doInBackground(String... strings)
         {
             byte[] data = new byte[0];
             try
             {
-                data = OkHttpManager.getInstance().syncDownload(strings[0]).body().bytes();
+                data = Objects.requireNonNull(OkHttpManager.getInstance().syncDownload(strings[0]).body()).bytes();
             }
             catch (IOException e)
             {
@@ -79,8 +86,13 @@ public class WebImageView extends AppCompatImageView
         {
             super.onPostExecute(bitmap);
             mImage = new BitmapDrawable(getContext().getResources(), bitmap);
-            if (mImage != null)
-                setImageDrawable(mImage);
+            setImageDrawable(mImage);
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values)
+        {
+            super.onProgressUpdate(values);
         }
     }
 }

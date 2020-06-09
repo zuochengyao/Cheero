@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activity.MainActivity"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText,ButtonStyle">
 
     <HorizontalScrollView
         android:layout_width="wrap_content"
@@ -23,55 +22,55 @@
                 android:id="@+id/to_move_view_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MoveViewActivity"/>
+                android:text="MoveViewActivity" />
 
             <Button
                 android:id="@+id/to_styled_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="StyledActivity"/>
+                android:text="StyledActivity" />
 
             <Button
                 android:id="@+id/to_custom_view_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CustomViewActivity"/>
+                android:text="CustomViewActivity" />
 
             <Button
                 android:id="@+id/to_sections_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SectionsActivity"/>
+                android:text="SectionsActivity" />
 
             <Button
                 android:id="@+id/to_anim_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="AnimActivity"/>
+                android:text="AnimActivity" />
 
             <Button
                 android:id="@+id/to_dialog_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DialogActivity"/>
+                android:text="DialogActivity" />
 
             <Button
                 android:id="@+id/to_option_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="OptionActivity"/>
+                android:text="OptionActivity" />
 
             <Button
                 android:id="@+id/to_touch_pan_gesture_scroll_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PanGestureScrollActivity"/>
+                android:text="PanGestureScrollActivity" />
 
             <Button
                 android:id="@+id/to_touch_pan_scroll_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PanScrollActivity"/>
+                android:text="PanScrollActivity" />
         </LinearLayout>
     </HorizontalScrollView>
 
@@ -89,31 +88,31 @@
                 android:id="@+id/to_web_view_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="WebViewActivity"/>
+                android:text="WebViewActivity" />
 
             <Button
                 android:id="@+id/to_image_download_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ImageDownloadActivity"/>
+                android:text="ImageDownloadActivity" />
 
             <Button
                 android:id="@+id/to_download_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DownloadActivity"/>
+                android:text="DownloadActivity" />
 
             <Button
                 android:id="@+id/to_retrofit_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RetrofitActivity"/>
+                android:text="RetrofitActivity" />
 
             <Button
                 android:id="@+id/to_request_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RequestActivity"/>
+                android:text="RequestActivity" />
         </LinearLayout>
     </HorizontalScrollView>
 
@@ -131,25 +130,25 @@
                 android:id="@+id/to_glsurface_view_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="GLSurfaceViewActivity"/>
+                android:text="GLSurfaceViewActivity" />
 
             <Button
                 android:id="@+id/to_texture_view_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextureViewActivity"/>
+                android:text="TextureViewActivity" />
 
             <Button
                 android:id="@+id/to_surface_view_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SurfaceViewActivity"/>
+                android:text="SurfaceViewActivity" />
 
             <Button
                 android:id="@+id/to_camera_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CameraActivity"/>
+                android:text="CameraActivity" />
 
         </LinearLayout>
     </HorizontalScrollView>
@@ -168,25 +167,25 @@
                 android:id="@+id/to_custom_setting_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CustomSettingActivity"/>
+                android:text="CustomSettingActivity" />
 
             <Button
                 android:id="@+id/to_system_setting_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SystemSettingActivity"/>
+                android:text="SystemSettingActivity" />
 
             <Button
                 android:id="@+id/to_database_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DatabaseActivity"/>
+                android:text="DatabaseActivity" />
 
             <Button
                 android:id="@+id/to_view_model_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ViewModelActivity"/>
+                android:text="ViewModelActivity" />
 
         </LinearLayout>
     </HorizontalScrollView>
@@ -205,31 +204,31 @@
                 android:id="@+id/to_dispose_dex_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DisposeDexActivity"/>
+                android:text="DisposeDexActivity" />
 
             <Button
                 android:id="@+id/to_dispose_resource_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DisposeResourceActivity"/>
+                android:text="DisposeResourceActivity" />
 
             <Button
                 android:id="@+id/to_dispose_manifest_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DisposeManifestActivity"/>
+                android:text="DisposeManifestActivity" />
 
             <Button
                 android:id="@+id/to_dispose_so_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DisposeSoActivity"/>
+                android:text="DisposeSoActivity" />
 
             <Button
                 android:id="@+id/to_jni_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="JniActivity"/>
+                android:text="JniActivity" />
 
         </LinearLayout>
     </HorizontalScrollView>
@@ -248,16 +247,10 @@
                 android:id="@+id/to_load_plugin_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LoadPluginActivity"/>
+                android:text="LoadPluginActivity" />
 
         </LinearLayout>
     </HorizontalScrollView>
-
-    <Button
-        android:id="@+id/to_xposed_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="XposedActivity"/>
 
     <HorizontalScrollView
         android:layout_width="wrap_content"
@@ -273,13 +266,13 @@
                 android:id="@+id/to_lollipop_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LollipopActivity"/>
+                android:text="LollipopActivity" />
 
             <Button
                 android:id="@+id/to_notification_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NotificationActivity"/>
+                android:text="NotificationActivity" />
 
         </LinearLayout>
     </HorizontalScrollView>
@@ -295,22 +288,28 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/to_xposed_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XposedActivity" />
+
+            <Button
                 android:id="@+id/to_flutter_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FlutterActivity"/>
+                android:text="FlutterActivity" />
 
             <Button
                 android:id="@+id/to_rx_java_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RxJavaActivity"/>
+                android:text="RxJavaActivity" />
 
             <Button
                 android:id="@+id/to_event_bus_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="EventBusActivity"/>
+                android:text="EventBusActivity" />
 
         </LinearLayout>
     </HorizontalScrollView>
@@ -329,13 +328,33 @@
                 android:id="@+id/to_user_aidl_client_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="UserAidlClientActivity"/>
+                android:text="UserAidlClientActivity" />
 
             <Button
                 android:id="@+id/to_about_service_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="AboutServiceActivity"/>
+                android:text="AboutServiceActivity" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/to_async_task_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AsyncTaskActivity" />
 
         </LinearLayout>
 

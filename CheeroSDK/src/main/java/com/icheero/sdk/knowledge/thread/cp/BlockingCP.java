@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
 public class BlockingCP
 {
     private int mQueueSize = 10;
-    private PriorityQueue<Integer> mQueue = new PriorityQueue<>(mQueueSize);
+    private final PriorityQueue<Integer> mQueue = new PriorityQueue<>(mQueueSize);
 
     public class Consumer extends Thread
     {

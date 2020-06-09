@@ -60,8 +60,8 @@ public class MyArrayList<E> extends MyList
 		{
 			this.mCapacity += LIST_DEFAULT_SIZE;
 			Object[] newData = new Object[this.mCapacity];
-			for (int i = 0; i < current; i++)
-				newData[i] = this.mData[i];
+			if (current >= 0)
+				System.arraycopy(this.mData, 0, newData, 0, current);
 			mData = newData;
 		}
 	}

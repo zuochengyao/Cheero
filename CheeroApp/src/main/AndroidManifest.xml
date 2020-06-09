@@ -23,9 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.framework.EventBusActivity" />
-        <activity android:name=".activity.framework.RxJavaActivity" />
-        <activity android:name=".activity.framework.xposed.XposedActivity" />
         <activity
             android:name=".activity.framework.FlutterContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -45,6 +42,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.ui.MoveViewActivity" />
         <activity android:name=".activity.feature.oreo.NotificationActivity" />
+        <activity android:name=".activity.framework.eventbus.EventBusActivity" />
+        <activity android:name=".activity.framework.RxJavaActivity" />
+        <activity android:name=".activity.framework.xposed.XposedActivity" />
         <activity android:name=".activity.network.WebViewActivity" />
         <activity android:name=".activity.network.ImageDownloadActivity" />
         <activity android:name=".activity.network.DownloadActivity" />
@@ -74,6 +74,7 @@
         <activity android:name=".activity.reverse.DisposeManifestActivity" />
         <activity android:name=".activity.reverse.DisposeResourceActivity" />
         <activity android:name=".activity.reverse.DisposeDexActivity" />
+        <activity android:name=".activity.thread.AsyncTaskActivity"/>
         <!-- endregion -->
         <meta-data
             android:name="xposedmodule"
@@ -83,9 +84,7 @@
             android:value="Hook信息" />
         <meta-data
             android:name="xposedminversion"
-            android:value="54" />
-
-        <!-- region Services -->
+            android:value="54" /> <!-- region Services -->
         <service
             android:name=".service.UserAidlServerService"
             android:enabled="true"
@@ -101,8 +100,7 @@
         </service>
         <service
             android:name=".service.CheeroIntentService"
-            android:exported="false"/>
-        <!-- endregion -->
+            android:exported="false" />
     </application>
 
 </manifest>

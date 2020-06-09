@@ -74,3 +74,7 @@ dependencies {
     compileOnly versions.deps.xposed
     annotationProcessor versions.deps.butterknife.compiler
 }
+
+repositories {
+    google()
+}

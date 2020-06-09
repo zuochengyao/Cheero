@@ -12,15 +12,46 @@ public class ThreadMain
 {
     public static void main(String[] args) throws Exception
     {
-        // doStopThread();
+        // doInterruptThread();
         // blockingCP();
-        nonBlockingCP();
+        //        nonBlockingCP();
+        //        doJoinThread();
+        //        doShareData();
+        doDeadLock();
     }
 
-    // region 测试线程终止
+    // region 测试线程函数
 
-    private static void doStopThread() throws InterruptedException
+    private static void doInterruptThread() throws InterruptedException
     {
+        class MoonRunner implements Runnable
+        {
+            private long i;
+
+            @Override
+            public void run()
+            {
+                Lock lock = new ReentrantLock();
+                lock.lock();
+                try
+                {
+                    while (!Thread.currentThread().isInterrupted())
+                    {
+                        System.out.println(Thread.currentThread().getName() + ":" + (++i));
+                    }
+                }
+                catch (Exception e)
+                {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+                finally
+                {
+                    lock.unlock();
+                }
+                System.out.println(Thread.currentThread().getName() + ": Stop");
+            }
+        }
         MoonRunner runner1 = new MoonRunner();
         Thread thread1 = new Thread(runner1, "MoonThread1");
         Thread thread2 = new Thread(runner1, "MoonThread2");
@@ -31,32 +62,143 @@ public class ThreadMain
         thread2.interrupt();
     }
 
-    private static class MoonRunner implements Runnable
+    private static void doJoinThread()
     {
-        private long i;
-
-        @Override
-        public void run()
+        System.out.println(Thread.currentThread().getName() + "主线程运行开始!");
+        class ThreadJoin extends Thread
         {
-            Lock lock = new ReentrantLock();
-            lock.lock();
-            try
+            private String mName;
+
+            private ThreadJoin(String name)
             {
-                while (!Thread.currentThread().isInterrupted())
+                this.mName = name;
+            }
+
+            @Override
+            public void run()
+            {
+                for (int i = 0; i < 5; i++)
                 {
-                    System.out.println(Thread.currentThread().getName() + ":" + (++i));
+                    System.out.println("子线程" + mName + "运行 : " + i);
+                    try
+                    {
+                        sleep((int) (Math.random() * 100));
+                    }
+                    catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                System.out.println(Thread.currentThread().getName() + " 线程运行结束!");
+            }
+        }
+        ThreadJoin t1 = new ThreadJoin("A");
+        ThreadJoin t2 = new ThreadJoin("B");
+        t1.start();
+        t2.start();
+        try
+        {
+            t1.join();
+            t2.join();
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+        System.out.println(Thread.currentThread().getName() + "主线程运行结束!");
+    }
+
+    private static void doSyncThread()
+    {
+        class MyRunnable implements Runnable
+        {
+            private String name;
+            private final Object obj;
+
+            MyRunnable(String name, Object obj)
+            {
+                this.name = name;
+                this.obj = obj;
+            }
+
+            @Override
+            public void run()
+            {
+                int count = 5;
+                while (count > 0)
+                {
+                    synchronized (obj)
+                    {
+                        System.out.println(name);
+                        count--;
+                        notify();
+                    }
+                    try
+                    {
+                        obj.wait();
+                    }
+                    catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
             }
-            catch (Exception e)
-            {
-                Thread.currentThread().interrupt();
-            }
-            finally
-            {
-                lock.unlock();
-            }
-            System.out.println(Thread.currentThread().getName() + ": Stop");
         }
+    }
+
+    private static void doShareData()
+    {
+        class MyRunnable implements Runnable
+        {
+            private int count = 100;
+            private final Object lock = new Object();
+            private boolean flag = true;
+
+            @Override
+            public void run()
+            {
+                while (flag)
+                {
+                    synchronized (lock)
+                    {
+                        if (count > 0)
+                        {
+                            try
+                            {
+                                Thread.sleep(10);
+                            }
+                            catch (InterruptedException e)
+                            {
+                                e.printStackTrace();
+                            }
+                            System.out.println(Thread.currentThread().getName() + " count: " + count--);
+                        }
+                        else
+                        {
+                            flag = false;
+                        }
+                    }
+                }
+            }
+        }
+
+        MyRunnable runnable = new MyRunnable();
+        Thread t1 = new Thread(runnable);
+        Thread t2 = new Thread(runnable);
+        Thread t3 = new Thread(runnable);
+        Thread t4 = new Thread(runnable);
+        t1.start();
+        t2.start();
+        t3.start();
+        t4.start();
+    }
+
+    private static void doDeadLock()
+    {
+        Thread t1 = new Thread(new MyRunnable(true));
+        Thread t2 = new Thread(new MyRunnable(false));
+        t1.start();
+        t2.start();
     }
 
     // endregion
@@ -91,4 +233,53 @@ public class ThreadMain
     }
 
     // endregion
+}
+
+class LockObj
+{
+    static final Object lockA = new Object();
+    static final Object lockB = new Object();
+}
+
+class MyRunnable implements Runnable
+{
+    private boolean flag;
+
+    MyRunnable(boolean flag)
+    {
+        this.flag = flag;
+    }
+
+    @Override
+    public void run()
+    {
+        if (flag)
+        {
+            while (true)
+            {
+                synchronized (LockObj.lockA)
+                {
+                    System.out.println("A");
+                    synchronized (LockObj.lockB)
+                    {
+                        System.out.println("B");
+                    }
+                }
+            }
+        }
+        else
+        {
+            while (true)
+            {
+                synchronized (LockObj.lockB)
+                {
+                    System.out.println("C");
+                    synchronized (LockObj.lockA)
+                    {
+                        System.out.println("D");
+                    }
+                }
+            }
+        }
+    }
 }

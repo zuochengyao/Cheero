@@ -68,3 +68,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':CheeroSDK')
 }
+
+repositories {
+    google()
+}

@@ -26,7 +26,7 @@ public abstract class BaseService extends Service
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        Log.i(TAG, TAG.getSimpleName() + " onStartCommand, startId = " + startId);
+        Log.i(TAG, TAG.getSimpleName() + " onStartCommand flags = " + flags + ", startId = " + startId);
         return super.onStartCommand(intent, flags, startId);
     }
 

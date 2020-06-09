@@ -7,6 +7,8 @@ import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.FileUtils;
 import com.icheero.sdk.util.Log;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -40,7 +42,7 @@ public class IOManager
             private AtomicInteger mInteger = new AtomicInteger(1);
 
             @Override
-            public Thread newThread(Runnable r)
+            public Thread newThread(@NotNull Runnable r)
             {
                 return new Thread(r, "Download Thread #" + mInteger.getAndIncrement());
             }

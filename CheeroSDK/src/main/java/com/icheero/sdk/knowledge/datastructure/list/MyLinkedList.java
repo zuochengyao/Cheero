@@ -117,7 +117,7 @@ public class MyLinkedList<E> extends MyList
 	}
 	
 	@SuppressWarnings("hiding")
-	class MyNode<E>
+	static class MyNode<E>
 	{
 		E e;
 		MyNode<E> next;

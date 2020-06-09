@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -13,14 +14,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.Log;
 
 
-public class WebViewActivity extends Activity
+public class WebViewActivity extends BaseActivity
 {
-    private static final Class<WebViewActivity> TAG = WebViewActivity.class;
-
     private static final String WEB_BAIDU_URL = "https://www.baidu.com/";
     private static final String WEB_ASSETS_URL = "file:///android_asset/web/index.html";
     private static final String WEB_GOOGLE_URL = "https://www.google.com";
@@ -34,22 +34,34 @@ public class WebViewActivity extends Activity
     private static final String KEY_ELEMENT_ID = "emailAddress";
     private static final String KEY_BRIDGE = "BRIDGE";
 
-    private int mType = TYPE_ASSETS;
+    private int mType = TYPE_NETWORK;
+
+    private WebView mWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        WebView webView = new WebView(this);
-        WebSettings settings = webView.getSettings();
+        mWebView = new WebView(this);
+        WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);
-        webView.setWebViewClient(mClient);
-        webView.addJavascriptInterface(new MyJavaScriptInterface(), KEY_BRIDGE);
+        mWebView.setWebViewClient(mClient);
+        // 关闭硬件加速
+        mWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        mWebView.addJavascriptInterface(new MyJavaScriptInterface(), KEY_BRIDGE);
+        setContentView(mWebView);
         if (mType == TYPE_ASSETS)
-            webView.loadUrl(WEB_ASSETS_URL);
+            mWebView.loadUrl(WEB_ASSETS_URL);
         else if (mType == TYPE_NETWORK)
-            webView.loadUrl(WEB_BAIDU_URL);
-        setContentView(webView);
+            mWebView.loadUrl(WEB_BAIDU_URL);
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        mWebView.removeAllViews();
+        mWebView.destroy();
     }
 
     private WebViewClient mClient = new WebViewClient()
@@ -85,7 +97,7 @@ public class WebViewActivity extends Activity
                 else
                 {
                     Common.toast(WebViewActivity.this, "Sorry, buddy!", Toast.LENGTH_SHORT);
-                    view.stopLoading();
+                    // view.stopLoading();
                 }
             }
             else if (mType == TYPE_ASSETS)
@@ -109,7 +121,7 @@ public class WebViewActivity extends Activity
             Log.d(TAG, "MyJavaScriptInterface storeElement mType = " + mType);
             SharedPreferences.Editor editor = getPreferences(Activity.MODE_PRIVATE).edit();
             editor.putString(id, element);
-            editor.commit();
+            editor.apply();
             if (!TextUtils.isEmpty(element))
                 Common.toast(WebViewActivity.this, element, Toast.LENGTH_SHORT);
         }

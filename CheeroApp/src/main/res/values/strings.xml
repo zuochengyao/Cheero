@@ -15,6 +15,9 @@
     <!--  UserAidlClientActivity  -->
     <string name="cheero_app_user_aidl_client_add_user">添加用户</string>
     <string name="cheero_app_user_aidl_client_get_list">用户列表</string>
+    <!--  AsyncTaskActivity  -->
+    <string name="cheero_app_async_task_add">添加任务</string>
+    <string name="cheero_app_async_task_execute">执行任务</string>
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
     <string name="pref_title_social_recommendations">Enable social recommendations</string>

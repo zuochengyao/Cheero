@@ -17,7 +17,7 @@ import com.icheero.app.activity.data.SystemSettingActivity;
 import com.icheero.app.activity.data.ViewModelActivity;
 import com.icheero.app.activity.feature.LollipopActivity;
 import com.icheero.app.activity.feature.oreo.NotificationActivity;
-import com.icheero.app.activity.framework.EventBusActivity;
+import com.icheero.app.activity.framework.eventbus.EventBusActivity;
 import com.icheero.app.activity.framework.FlutterContainerActivity;
 import com.icheero.app.activity.framework.RxJavaActivity;
 import com.icheero.app.activity.framework.xposed.XposedActivity;
@@ -37,6 +37,7 @@ import com.icheero.app.activity.reverse.DisposeSoActivity;
 import com.icheero.app.activity.reverse.JniActivity;
 import com.icheero.app.activity.service.AboutServiceActivity;
 import com.icheero.app.activity.service.UserAidlClientActivity;
+import com.icheero.app.activity.thread.AsyncTaskActivity;
 import com.icheero.app.activity.ui.AnimActivity;
 import com.icheero.app.activity.ui.CustomViewActivity;
 import com.icheero.app.activity.ui.DialogActivity;
@@ -129,6 +130,9 @@ public class MainActivity extends BaseActivity
     Button toUserAidlClientActivity;
     @BindView(R.id.to_about_service_activity)
     Button toAboutServiceActivity;
+    @BindView(R.id.to_async_task_activity)
+    Button toAsyncTaskActivity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -357,7 +361,7 @@ public class MainActivity extends BaseActivity
     }
 
     @OnClick({R.id.to_rx_java_activity, R.id.to_event_bus_activity, R.id.to_xposed_activity, R.id.to_flutter_activity})
-    public void onFrameworkClickEvent(View v)
+    public void OnFrameworkClickEvent(View v)
     {
         Intent intent = new Intent();
         switch (v.getId())
@@ -387,7 +391,7 @@ public class MainActivity extends BaseActivity
     }
 
     @OnClick({R.id.to_user_aidl_client_activity, R.id.to_about_service_activity})
-    public void onServiceClickEvent(View v)
+    public void OnServiceClickEvent(View v)
     {
         Intent intent = new Intent();
         switch (v.getId())
@@ -397,6 +401,19 @@ public class MainActivity extends BaseActivity
                 break;
             case  R.id.to_about_service_activity:
                 intent.setClass(this, AboutServiceActivity.class);
+                break;
+        }
+        startActivity(intent);
+    }
+
+    @OnClick({R.id.to_async_task_activity})
+    public void OnThreadClickEvent(View v)
+    {
+        Intent intent = new Intent();
+        switch (v.getId())
+        {
+            case R.id.to_async_task_activity:
+                intent.setClass(this, AsyncTaskActivity.class);
                 break;
         }
         startActivity(intent);
