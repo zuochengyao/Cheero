@@ -12,7 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-
         <!-- region Activities -->
         <activity
             android:name=".activity.MainActivity"
@@ -43,6 +42,7 @@
         <activity android:name=".activity.ui.MoveViewActivity" />
         <activity android:name=".activity.feature.oreo.NotificationActivity" />
         <activity android:name=".activity.framework.eventbus.EventBusActivity" />
+        <activity android:name=".activity.framework.eventbus.EventBusSecondActivity"/>
         <activity android:name=".activity.framework.RxJavaActivity" />
         <activity android:name=".activity.framework.xposed.XposedActivity" />
         <activity android:name=".activity.network.WebViewActivity" />
@@ -74,8 +74,7 @@
         <activity android:name=".activity.reverse.DisposeManifestActivity" />
         <activity android:name=".activity.reverse.DisposeResourceActivity" />
         <activity android:name=".activity.reverse.DisposeDexActivity" />
-        <activity android:name=".activity.thread.AsyncTaskActivity"/>
-        <!-- endregion -->
+        <activity android:name=".activity.thread.AsyncTaskActivity" /> <!-- endregion -->
         <meta-data
             android:name="xposedmodule"
             android:value="true" />

@@ -19,12 +19,6 @@ android {
             storeFile file(versions.sign.release.filepath)
             storePassword versions.sign.release.store
         }
-        debug {
-            keyAlias versions.sign.debug.alias
-            keyPassword versions.sign.debug.password
-            storeFile file(versions.sign.debug.filepath)
-            storePassword versions.sign.debug.store
-        }
     }
 
     buildTypes {
@@ -35,7 +29,7 @@ android {
         }
         debug {
             minifyEnabled false
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
     }
 
