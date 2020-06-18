@@ -40,7 +40,7 @@ public class ViewModelActivity extends BaseActivity
         mUser.setName("Cheero");
         mUser.setPhoneNumber("18513141213");
         binding.setUser(mUser);
-        mHandler.sendEmptyMessageDelayed(0, 3000);
+        mHandler.sendEmptyMessageDelayed(0, 10 * 1000);
     }
 
     @Override
@@ -63,15 +63,11 @@ public class ViewModelActivity extends BaseActivity
         public void handleMessage(Message msg)
         {
             super.handleMessage(msg);
-            switch (msg.what)
+            if (msg.what == 0)
             {
-                case 0:
-                {
-                    mActivity.get().mUser.setAge(20);
-                    mActivity.get().mUser.setName("Zero");
-                    mActivity.get().binding.setUser(mActivity.get().mUser);
-                    break;
-                }
+                mActivity.get().mUser.setAge(20);
+                mActivity.get().mUser.setName("Zero");
+                mActivity.get().binding.setUser(mActivity.get().mUser);
             }
         }
     }

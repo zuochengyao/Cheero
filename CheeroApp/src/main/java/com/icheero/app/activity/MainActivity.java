@@ -17,14 +17,15 @@ import com.icheero.app.activity.data.SystemSettingActivity;
 import com.icheero.app.activity.data.ViewModelActivity;
 import com.icheero.app.activity.feature.LollipopActivity;
 import com.icheero.app.activity.feature.oreo.NotificationActivity;
-import com.icheero.app.activity.framework.eventbus.EventBusActivity;
 import com.icheero.app.activity.framework.FlutterContainerActivity;
 import com.icheero.app.activity.framework.RxJavaActivity;
+import com.icheero.app.activity.framework.eventbus.EventBusActivity;
 import com.icheero.app.activity.framework.xposed.XposedActivity;
 import com.icheero.app.activity.media.GLSurfaceViewActivity;
 import com.icheero.app.activity.media.SurfaceViewActivity;
 import com.icheero.app.activity.media.SystemCameraActivity;
 import com.icheero.app.activity.media.TextureViewActivity;
+import com.icheero.app.activity.memory.WeakHandlerActivity;
 import com.icheero.app.activity.network.DownloadActivity;
 import com.icheero.app.activity.network.ImageDownloadActivity;
 import com.icheero.app.activity.network.RequestActivity;
@@ -47,6 +48,7 @@ import com.icheero.app.activity.ui.SectionsActivity;
 import com.icheero.app.activity.ui.StyledActivity;
 import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
+import com.icheero.app.activity.ui.touch.TouchEventActivity;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.CameraManager;
 import com.icheero.sdk.core.manager.IOManager;
@@ -74,6 +76,8 @@ public class MainActivity extends BaseActivity
     Button toPanGestureScrollActivity;
     @BindView(R.id.to_touch_pan_scroll_activity)
     Button toPanScrollActivity;
+    @BindView(R.id.to_touch_event_activity)
+    Button toTouchEventActivity;
     @BindView(R.id.to_move_view_activity)
     Button toMoveViewActivity;
     @BindView(R.id.to_notification_activity)
@@ -132,6 +136,8 @@ public class MainActivity extends BaseActivity
     Button toAboutServiceActivity;
     @BindView(R.id.to_async_task_activity)
     Button toAsyncTaskActivity;
+    @BindView(R.id.to_weak_handler_activity)
+    Button toWeakHandlerActivity;
 
 
     @Override
@@ -141,9 +147,13 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         if (!mPermissionManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+        {
             mPermissionManager.permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
         else
+        {
             IOManager.getInstance().createRootFolder();
+        }
     }
 
     @Override
@@ -234,7 +244,7 @@ public class MainActivity extends BaseActivity
 
     @OnClick({
             R.id.to_move_view_activity, R.id.to_styled_activity, R.id.to_custom_view_activity, R.id.to_sections_activity, R.id.to_anim_activity, R.id.to_dialog_activity, R.id.to_option_activity,
-            R.id.to_touch_pan_scroll_activity, R.id.to_touch_pan_gesture_scroll_activity
+            R.id.to_touch_pan_scroll_activity, R.id.to_touch_pan_gesture_scroll_activity, R.id.to_touch_event_activity
     })
     public void OnUIClickEvent(View v)
     {
@@ -245,28 +255,32 @@ public class MainActivity extends BaseActivity
             {
                 toActivity.setClass(this, StyledActivity.class);
                 toActivity.putExtra("transition", "explode");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             }
             case R.id.to_custom_view_activity:
             {
                 toActivity.setClass(this, CustomViewActivity.class);
                 toActivity.putExtra("transition", "slide");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             }
             case R.id.to_sections_activity:
             {
                 toActivity.setClass(this, SectionsActivity.class);
                 toActivity.putExtra("transition", "fade");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             }
             case R.id.to_anim_activity:
             {
                 toActivity.setClass(this, AnimActivity.class);
                 toActivity.putExtra("transition", "fade");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             }
             case R.id.to_move_view_activity:
@@ -296,6 +310,12 @@ public class MainActivity extends BaseActivity
             case R.id.to_touch_pan_scroll_activity:
             {
                 toActivity.setClass(this, PanScrollActivity.class);
+                startActivity(toActivity);
+                break;
+            }
+            case R.id.to_touch_event_activity:
+            {
+                toActivity.setClass(this, TouchEventActivity.class);
                 startActivity(toActivity);
                 break;
             }
@@ -399,7 +419,7 @@ public class MainActivity extends BaseActivity
             case R.id.to_user_aidl_client_activity:
                 intent.setClass(this, UserAidlClientActivity.class);
                 break;
-            case  R.id.to_about_service_activity:
+            case R.id.to_about_service_activity:
                 intent.setClass(this, AboutServiceActivity.class);
                 break;
         }
@@ -419,6 +439,19 @@ public class MainActivity extends BaseActivity
         startActivity(intent);
     }
 
+    @OnClick(R.id.to_weak_handler_activity)
+    public void onMemoryClickEvent(View v)
+    {
+        Intent intent = new Intent();
+        switch (v.getId())
+        {
+            case R.id.to_weak_handler_activity:
+                intent.setClass(this, WeakHandlerActivity.class);
+                break;
+        }
+        startActivity(intent);
+    }
+
     @Override
     public void onPermissionRequest(boolean isGranted, String permission)
     {
@@ -426,13 +459,10 @@ public class MainActivity extends BaseActivity
         if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
         {
             if (isGranted)
-            {
                 IOManager.getInstance().createRootFolder();
-            }
             else
-            {
                 Common.toast(this, "请打开读写权限！", Toast.LENGTH_SHORT);
-            }
         }
     }
+
 }

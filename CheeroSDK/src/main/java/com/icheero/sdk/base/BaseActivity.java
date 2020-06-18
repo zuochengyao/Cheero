@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class BaseActivity extends AppCompatActivity implements PermissionManager.PermissionListener
 {
-    protected Class TAG;
+    protected static Class TAG;
     protected PermissionManager mPermissionManager;
 
     // region Activity's Lifecycle
