@@ -2,7 +2,6 @@ package com.icheero.app.activity;
 
 import android.Manifest;
 import android.app.ActivityOptions;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -21,10 +20,11 @@ import com.icheero.app.activity.framework.FlutterContainerActivity;
 import com.icheero.app.activity.framework.RxJavaActivity;
 import com.icheero.app.activity.framework.eventbus.EventBusActivity;
 import com.icheero.app.activity.framework.xposed.XposedActivity;
-import com.icheero.app.activity.media.GLSurfaceViewActivity;
-import com.icheero.app.activity.media.SurfaceViewActivity;
-import com.icheero.app.activity.media.SystemCameraActivity;
-import com.icheero.app.activity.media.TextureViewActivity;
+import com.icheero.app.activity.media.camera.GLSurfaceViewActivity;
+import com.icheero.app.activity.media.camera.SurfaceViewActivity;
+import com.icheero.app.activity.media.camera.SystemCameraActivity;
+import com.icheero.app.activity.media.camera.TextureViewActivity;
+import com.icheero.app.activity.media.video.AudioExtractorActivity;
 import com.icheero.app.activity.memory.WeakHandlerActivity;
 import com.icheero.app.activity.network.DownloadActivity;
 import com.icheero.app.activity.network.ImageDownloadActivity;
@@ -60,6 +60,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity
 {
+    // region ButterKnife Views
     @BindView(R.id.to_styled_activity)
     Button toStyledActivity;
     @BindView(R.id.to_custom_view_activity)
@@ -102,6 +103,8 @@ public class MainActivity extends BaseActivity
     Button toTextureViewActivity;
     @BindView(R.id.to_glsurface_view_activity)
     Button toGLSurfaceViewActivity;
+    @BindView(R.id.to_audio_extractor_activity)
+    Button toAudioExtractorActivity;
     @BindView(R.id.to_custom_setting_activity)
     Button toCustomSettingActivity;
     @BindView(R.id.to_system_setting_activity)
@@ -138,7 +141,7 @@ public class MainActivity extends BaseActivity
     Button toAsyncTaskActivity;
     @BindView(R.id.to_weak_handler_activity)
     Button toWeakHandlerActivity;
-
+    // endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -147,13 +150,9 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         if (!mPermissionManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-        {
             mPermissionManager.permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
         else
-        {
             IOManager.getInstance().createRootFolder();
-        }
     }
 
     @Override
@@ -169,54 +168,56 @@ public class MainActivity extends BaseActivity
         {
             case R.id.to_custom_setting_activity:
             {
-                startActivity(new Intent(this, CustomSettingActivity.class));
+                openActivity(CustomSettingActivity.class);
                 break;
             }
             case R.id.to_system_setting_activity:
             {
-                startActivity(new Intent(this, SystemSettingActivity.class));
+                openActivity(SystemSettingActivity.class);
                 break;
             }
             case R.id.to_database_activity:
             {
-                startActivity(new Intent(this, DatabaseActivity.class));
+                openActivity(DatabaseActivity.class);
                 break;
             }
             case R.id.to_view_model_activity:
             {
-                startActivity(new Intent(this, ViewModelActivity.class));
+                openActivity(ViewModelActivity.class);
                 break;
             }
         }
     }
 
-    @OnClick({R.id.to_glsurface_view_activity, R.id.to_texture_view_activity, R.id.to_surface_view_activity, R.id.to_camera_activity})
+    @OnClick({R.id.to_audio_extractor_activity, R.id.to_glsurface_view_activity, R.id.to_texture_view_activity, R.id.to_surface_view_activity, R.id.to_camera_activity})
     public void OnMediaClickEvent(View v)
     {
-        Intent intent = new Intent();
         switch (v.getId())
         {
             case R.id.to_camera_activity:
             {
-                intent.setClass(this, SystemCameraActivity.class);
-                intent.putExtra(SystemCameraActivity.KEY_REQUEST_CODE, CameraManager.REQUEST_CODE_IMAGE);
+                Bundle bundle = new Bundle();
+                bundle.putInt(SystemCameraActivity.KEY_REQUEST_CODE, CameraManager.REQUEST_CODE_IMAGE);
+                openActivity(SystemCameraActivity.class, bundle);
                 break;
             }
             case R.id.to_surface_view_activity:
             {
-                intent.setClass(this, SurfaceViewActivity.class);
+                openActivity(SurfaceViewActivity.class);
                 break;
             }
             case R.id.to_texture_view_activity:
             {
-                intent.setClass(this, TextureViewActivity.class);
+                openActivity(TextureViewActivity.class);
                 break;
             }
             case R.id.to_glsurface_view_activity:
-                intent.setClass(this, GLSurfaceViewActivity.class);
+                openActivity(GLSurfaceViewActivity.class);
+                break;
+            case R.id.to_audio_extractor_activity:
+                openActivity(AudioExtractorActivity.class);
                 break;
         }
-        startActivity(intent);
     }
 
     @OnClick({R.id.to_download_activity, R.id.to_image_download_activity, R.id.to_web_view_activity, R.id.to_retrofit_activity, R.id.to_request_activity})
@@ -225,19 +226,19 @@ public class MainActivity extends BaseActivity
         switch (v.getId())
         {
             case R.id.to_web_view_activity:
-                startActivity(new Intent(this, WebViewActivity.class));
+                openActivity(WebViewActivity.class);
                 break;
             case R.id.to_image_download_activity:
-                startActivity(new Intent(this, ImageDownloadActivity.class));
+                openActivity(ImageDownloadActivity.class);
                 break;
             case R.id.to_download_activity:
-                startActivity(new Intent(this, DownloadActivity.class));
+                openActivity(DownloadActivity.class);
                 break;
             case R.id.to_retrofit_activity:
-                startActivity(new Intent(this, RetrofitActivity.class));
+                openActivity(RetrofitActivity.class);
                 break;
             case R.id.to_request_activity:
-                startActivity(new Intent(this, RequestActivity.class));
+                openActivity(RequestActivity.class);
                 break;
         }
     }
@@ -248,75 +249,72 @@ public class MainActivity extends BaseActivity
     })
     public void OnUIClickEvent(View v)
     {
-        Intent toActivity = new Intent();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+
+            switch (v.getId())
+            {
+
+            }
+        }
         switch (v.getId())
         {
             case R.id.to_styled_activity:
             {
-                toActivity.setClass(this, StyledActivity.class);
-                toActivity.putExtra("transition", "explode");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                    startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
+                bundle.putString("transition", "explode");
+                openActivity(StyledActivity.class, bundle);
                 break;
             }
             case R.id.to_custom_view_activity:
             {
-                toActivity.setClass(this, CustomViewActivity.class);
-                toActivity.putExtra("transition", "slide");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                    startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
+                bundle.putString("transition", "slide");
+                openActivity(CustomViewActivity.class, bundle);
                 break;
             }
             case R.id.to_sections_activity:
             {
-                toActivity.setClass(this, SectionsActivity.class);
-                toActivity.putExtra("transition", "fade");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                    startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
+                bundle.putString("transition", "fade");
+                openActivity(SectionsActivity.class, bundle);
                 break;
             }
             case R.id.to_anim_activity:
             {
-                toActivity.setClass(this, AnimActivity.class);
-                toActivity.putExtra("transition", "fade");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                    startActivity(toActivity, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
+                bundle.putString("transition", "fade");
+                openActivity(AnimActivity.class, bundle);
                 break;
             }
             case R.id.to_move_view_activity:
             {
-                toActivity.setClass(this, MoveViewActivity.class);
-                startActivity(toActivity);
+                openActivity(MoveViewActivity.class);
                 break;
             }
             case R.id.to_dialog_activity:
             {
-                toActivity.setClass(this, DialogActivity.class);
-                startActivity(toActivity);
+                openActivity(DialogActivity.class);
                 break;
             }
             case R.id.to_option_activity:
             {
-                toActivity.setClass(this, OptionActivity.class);
-                startActivity(toActivity);
+                openActivity(OptionActivity.class);
                 break;
             }
             case R.id.to_touch_pan_gesture_scroll_activity:
             {
-                toActivity.setClass(this, PanGestureScrollActivity.class);
-                startActivity(toActivity);
+                openActivity(PanGestureScrollActivity.class);
                 break;
             }
             case R.id.to_touch_pan_scroll_activity:
             {
-                toActivity.setClass(this, PanScrollActivity.class);
-                startActivity(toActivity);
+                openActivity(PanScrollActivity.class);
                 break;
             }
             case R.id.to_touch_event_activity:
             {
-                toActivity.setClass(this, TouchEventActivity.class);
-                startActivity(toActivity);
+                openActivity(TouchEventActivity.class);
                 break;
             }
         }
@@ -325,46 +323,42 @@ public class MainActivity extends BaseActivity
     @OnClick({R.id.to_lollipop_activity, R.id.to_notification_activity})
     public void OnFeatureClickEvent(View v)
     {
-        Intent toActivity = new Intent();
         switch (v.getId())
         {
             case R.id.to_notification_activity:
             {
-                toActivity.setClass(this, NotificationActivity.class);
+                openActivity(NotificationActivity.class);
                 break;
             }
             case R.id.to_lollipop_activity:
             {
-                toActivity.setClass(this, LollipopActivity.class);
+                openActivity(LollipopActivity.class);
                 break;
             }
         }
-        startActivity(toActivity);
     }
 
     @OnClick({R.id.to_jni_activity, R.id.to_dispose_so_activity, R.id.to_dispose_manifest_activity, R.id.to_dispose_resource_activity, R.id.to_dispose_dex_activity})
     public void OnReverseClickEvent(View v)
     {
-        Intent intent = new Intent();
         switch (v.getId())
         {
             case R.id.to_jni_activity:
-                intent.setClass(this, JniActivity.class);
+                openActivity(JniActivity.class);
                 break;
             case R.id.to_dispose_so_activity:
-                intent.setClass(this, DisposeSoActivity.class);
+                openActivity(DisposeSoActivity.class);
                 break;
             case R.id.to_dispose_manifest_activity:
-                intent.setClass(this, DisposeManifestActivity.class);
+                openActivity(DisposeManifestActivity.class);
                 break;
             case R.id.to_dispose_resource_activity:
-                intent.setClass(this, DisposeResourceActivity.class);
+                openActivity(DisposeResourceActivity.class);
                 break;
             case R.id.to_dispose_dex_activity:
-                intent.setClass(this, DisposeDexActivity.class);
+                openActivity(DisposeDexActivity.class);
                 break;
         }
-        startActivity(intent);
     }
 
     @OnClick({R.id.to_load_plugin_activity})
@@ -383,73 +377,65 @@ public class MainActivity extends BaseActivity
     @OnClick({R.id.to_rx_java_activity, R.id.to_event_bus_activity, R.id.to_xposed_activity, R.id.to_flutter_activity})
     public void OnFrameworkClickEvent(View v)
     {
-        Intent intent = new Intent();
         switch (v.getId())
         {
             case R.id.to_rx_java_activity:
             {
-                intent.setClass(this, RxJavaActivity.class);
+                openActivity(RxJavaActivity.class);
                 break;
             }
             case R.id.to_event_bus_activity:
             {
-                intent.setClass(this, EventBusActivity.class);
+                openActivity(EventBusActivity.class);
                 break;
             }
             case R.id.to_xposed_activity:
             {
-                intent.setClass(this, XposedActivity.class);
+                openActivity(XposedActivity.class);
                 break;
             }
             case R.id.to_flutter_activity:
             {
-                intent.setClass(this, FlutterContainerActivity.class);
+                openActivity(FlutterContainerActivity.class);
                 break;
             }
         }
-        startActivity(intent);
     }
 
     @OnClick({R.id.to_user_aidl_client_activity, R.id.to_about_service_activity})
     public void OnServiceClickEvent(View v)
     {
-        Intent intent = new Intent();
         switch (v.getId())
         {
             case R.id.to_user_aidl_client_activity:
-                intent.setClass(this, UserAidlClientActivity.class);
+                openActivity(UserAidlClientActivity.class);
                 break;
             case R.id.to_about_service_activity:
-                intent.setClass(this, AboutServiceActivity.class);
+                openActivity(AboutServiceActivity.class);
                 break;
         }
-        startActivity(intent);
     }
 
     @OnClick({R.id.to_async_task_activity})
     public void OnThreadClickEvent(View v)
     {
-        Intent intent = new Intent();
         switch (v.getId())
         {
             case R.id.to_async_task_activity:
-                intent.setClass(this, AsyncTaskActivity.class);
+                openActivity(AsyncTaskActivity.class);
                 break;
         }
-        startActivity(intent);
     }
 
     @OnClick(R.id.to_weak_handler_activity)
     public void onMemoryClickEvent(View v)
     {
-        Intent intent = new Intent();
         switch (v.getId())
         {
             case R.id.to_weak_handler_activity:
-                intent.setClass(this, WeakHandlerActivity.class);
+                openActivity(WeakHandlerActivity.class);
                 break;
         }
-        startActivity(intent);
     }
 
     @Override

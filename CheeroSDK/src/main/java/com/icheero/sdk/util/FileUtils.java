@@ -29,6 +29,7 @@ public class FileUtils
     public static final String DIR_PATH_CHEERO_ROOT = DIR_PATH_BASE + "/Cheero";
     public static final String DIR_PATH_CHEERO_IMAGES = DIR_PATH_CHEERO_ROOT + "/images/";
     public static final String DIR_PATH_CHEERO_VIDEOS = DIR_PATH_CHEERO_ROOT + "/videos/";
+    public static final String DIR_PATH_CHEERO_AUDIOS = DIR_PATH_CHEERO_ROOT + "/audios/";
     public static final String DIR_PATH_CHEERO_LOGS = DIR_PATH_CHEERO_ROOT + "/logs/";
     public static final String DIR_PATH_CHEERO_PATCHES = DIR_PATH_CHEERO_ROOT + "/patches/";
     public static final String DIR_PATH_CHEERO_CACHE = DIR_PATH_CHEERO_ROOT + "/cache/";
@@ -57,13 +58,14 @@ public class FileUtils
      */
     public static boolean createDir(String dirPath)
     {
-        boolean flag = false;
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_REMOVED))
         {
-            File file = new File(dirPath);
-            if (!file.exists()) flag = file.mkdir();
+            File dir = new File(dirPath);
+            if (dir.exists())
+                return true;
+            return dir.mkdir();
         }
-        return flag;
+        return false;
     }
 
     /**
@@ -122,8 +124,7 @@ public class FileUtils
                 InputStream in = new FileInputStream(file);
                 byte[] buffer = new byte[4 * 1024];
                 int len;
-                while ((len = in.read(buffer)) != -1)
-                    out.write(buffer, 0, len);
+                while ((len = in.read(buffer)) != -1) out.write(buffer, 0, len);
                 data = out.toByteArray();
                 out.close();
             }
@@ -154,8 +155,7 @@ public class FileUtils
         byte[] data = new byte[1024];
         try
         {
-            while ((length = body.read(data)) != -1)
-                outputStream.write(data, 0, length);
+            while ((length = body.read(data)) != -1) outputStream.write(data, 0, length);
             return outputStream.toByteArray();
         }
         catch (IOException e)
@@ -186,8 +186,7 @@ public class FileUtils
         byte[] data = new byte[1024];
         try
         {
-            while ((length = body.read(data)) != -1)
-                outputStream.write(data, 0, length);
+            while ((length = body.read(data)) != -1) outputStream.write(data, 0, length);
             return outputStream.toByteArray();
         }
         catch (IOException e)
@@ -279,8 +278,7 @@ public class FileUtils
 
     public static byte[] copyBytes(byte[] src, int start)
     {
-        if (src == null)
-            return null;
+        if (src == null) return null;
         byte[] dest = new byte[src.length - start];
         System.arraycopy(src, start, dest, 0, dest.length);
         return dest;
@@ -288,8 +286,7 @@ public class FileUtils
 
     public static byte[] copyBytes(byte[] src, int start, int count)
     {
-        if (src == null)
-            return null;
+        if (src == null) return null;
         byte[] dest = new byte[count];
         System.arraycopy(src, start, dest, 0, count);
         return dest;
@@ -326,8 +323,7 @@ public class FileUtils
         ByteBuffer byteBuffer = ByteBuffer.allocate(4);
         byteBuffer.order(byteOrder()).put(data).getInt();
         */
-        if (byteOrder() == ByteOrder.LITTLE_ENDIAN)
-            data = reverseBytes(data);
+        if (byteOrder() == ByteOrder.LITTLE_ENDIAN) data = reverseBytes(data);
         return data[3] & 0xFF | (data[2] & 0xFF) << 8 | (data[1] & 0xFF) << 16 | (data[0] & 0xFF) << 24;
     }
 
@@ -339,15 +335,13 @@ public class FileUtils
         byteBuffer.put(data);
         return byteBuffer.getShort(0);
         */
-        if (byteOrder() == ByteOrder.LITTLE_ENDIAN)
-            data = reverseBytes(data);
+        if (byteOrder() == ByteOrder.LITTLE_ENDIAN) data = reverseBytes(data);
         return (short) (data[1] & 0xff | (data[0] & 0xff) << 8);
     }
 
     public static byte[] reverseBytes(byte[] bytes)
     {
-        if (bytes == null || (bytes.length == 1))
-            return bytes;
+        if (bytes == null || (bytes.length == 1)) return bytes;
         byte[] newBytes = copyBytes(bytes, 0, bytes.length);
         int offset = bytes.length / 2;
         // 1 2

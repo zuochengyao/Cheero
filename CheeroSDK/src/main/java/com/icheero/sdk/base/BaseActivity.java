@@ -1,5 +1,7 @@
 package com.icheero.sdk.base;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +11,8 @@ import com.icheero.sdk.core.manager.ViewManager;
 import com.icheero.sdk.util.Log;
 import com.icheero.sdk.util.RefInvoke;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Arrays;
 
 import androidx.annotation.IdRes;
@@ -17,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class BaseActivity extends AppCompatActivity implements PermissionManager.PermissionListener
 {
-    protected static Class TAG;
+    protected static Class<? extends BaseActivity> TAG;
     protected PermissionManager mPermissionManager;
 
     // region Activity's Lifecycle
@@ -74,7 +78,7 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    protected void onRestoreInstanceState(@NotNull Bundle savedInstanceState)
     {
         super.onRestoreInstanceState(savedInstanceState);
         Log.i(TAG, TAG.getSimpleName() + " onRestoreInstanceState");
@@ -94,6 +98,21 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
     protected <T extends View> T $(@IdRes int resId)
     {
         return super.findViewById(resId);
+    }
+
+    protected void openActivity(Class<? extends Activity> activityClass)
+    {
+        assert activityClass != null;
+        openActivity(activityClass, null);
+    }
+
+    protected void openActivity(Class<? extends Activity> activityClass, Bundle bundle)
+    {
+        Intent _Intent = new Intent();
+        _Intent.setClass(this, activityClass);
+        if (bundle != null && bundle.size() > 0)
+            _Intent.putExtras(bundle);
+        startActivity(_Intent);
     }
 
     protected final int getStatusBarHeight()

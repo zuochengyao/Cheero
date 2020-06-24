@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 
 public class RecyclerViewFragment extends BaseFragment
 {
-    private String[] nameDataList = new String[]{"智能","红润","日系","自然","艺术黑白","甜美","蜜粉","清新","夏日阳光","唯美","蜜粉"};
+    private String[] nameDataList = new String[]{"智能", "红润", "日系", "自然", "艺术黑白", "甜美", "蜜粉", "清新", "夏日阳光", "唯美", "蜜粉"};
 
     @BindView(R.id.tab_recycler)
     RecyclerView mTabRecycler;

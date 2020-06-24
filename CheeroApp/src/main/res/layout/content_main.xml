@@ -133,6 +133,12 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/to_audio_extractor_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="toAudioExtractorActivity"/>
+
+            <Button
                 android:id="@+id/to_glsurface_view_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

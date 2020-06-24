@@ -11,9 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ActionBar"
+        android:requestLegacyExternalStorage="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.ui.touch.TouchEventActivity">
-        </activity>
         <!-- region Activities -->
         <activity
             android:name=".activity.MainActivity"
@@ -37,6 +36,7 @@
         <activity android:name=".activity.ui.OptionActivity" />
         <activity android:name=".activity.ui.touch.PanGestureScrollActivity" />
         <activity android:name=".activity.ui.touch.PanScrollActivity" />
+        <activity android:name=".activity.ui.touch.TouchEventActivity"/>
         <activity
             android:name=".activity.feature.LollipopActivity"
             android:label="@string/cheero_app_activity_feature_lollipop"
@@ -50,19 +50,20 @@
         <activity android:name=".activity.network.WebViewActivity" />
         <activity android:name=".activity.network.ImageDownloadActivity" />
         <activity android:name=".activity.network.DownloadActivity" />
-        <activity android:name=".activity.media.SystemCameraActivity" />
+        <activity android:name=".activity.media.camera.SystemCameraActivity" />
         <activity
-            android:name=".activity.media.GLSurfaceViewActivity"
+            android:name=".activity.media.camera.GLSurfaceViewActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.media.SurfaceViewActivity"
+            android:name=".activity.media.camera.SurfaceViewActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.media.TextureViewActivity"
+            android:name=".activity.media.camera.TextureViewActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.media.video.AudioExtractorActivity"/>
         <activity android:name=".activity.data.CustomSettingActivity" />
         <activity
             android:name=".activity.data.SystemSettingActivity"
