@@ -56,6 +56,11 @@ android {
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
+
+    compileOptions {
+        sourceCompatibility versions.build.java
+        targetCompatibility versions.build.java
+    }
 }
 
 dependencies {

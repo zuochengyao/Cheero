@@ -8,10 +8,10 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name_cheero"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ActionBar"
-        android:requestLegacyExternalStorage="true"
         tools:ignore="GoogleAppIndexingWarning">
         <!-- region Activities -->
         <activity
@@ -23,6 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="io.flutter.embedding.android.FlutterActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.framework.FlutterContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -36,7 +41,7 @@
         <activity android:name=".activity.ui.OptionActivity" />
         <activity android:name=".activity.ui.touch.PanGestureScrollActivity" />
         <activity android:name=".activity.ui.touch.PanScrollActivity" />
-        <activity android:name=".activity.ui.touch.TouchEventActivity"/>
+        <activity android:name=".activity.ui.touch.TouchEventActivity" />
         <activity
             android:name=".activity.feature.LollipopActivity"
             android:label="@string/cheero_app_activity_feature_lollipop"
@@ -63,7 +68,7 @@
             android:name=".activity.media.camera.TextureViewActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.media.video.AudioExtractorActivity"/>
+        <activity android:name=".activity.media.video.AudioExtractorActivity" />
         <activity android:name=".activity.data.CustomSettingActivity" />
         <activity
             android:name=".activity.data.SystemSettingActivity"

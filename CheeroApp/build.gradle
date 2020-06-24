@@ -35,11 +35,6 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility versions.build.java
-        targetCompatibility versions.build.java
-    }
-
     dataBinding {
         enabled true
     }
@@ -56,12 +51,17 @@ android {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/rxjava.properties'
     }
+
+    compileOptions {
+        sourceCompatibility versions.build.java
+        targetCompatibility versions.build.java
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':CheeroSDK')
-    implementation project(':CheeroFlutter')
+    implementation project(':flutter')
     if (isLibrary) {
         implementation project(':CheeroPlugin')
     }

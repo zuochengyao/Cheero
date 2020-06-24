@@ -1,8 +1,8 @@
-include ':CheeroApp', ':CheeroSDK', ':CheeroPlugin', ':CheeroShell'
+include ':CheeroApp', ':CheeroSDK', ':CheeroPlugin', ':CheeroShell', ':CheeroFlutter'
 
 setBinding(new Binding([gradle: this]))
 evaluate(new File(
-        settingsDir.parentFile,
-        'CheeroFlutter/android/include_flutter.groovy'
+        settingsDir,
+        'CheeroFlutter/.android/include_flutter.groovy'
 ))
-include ':CheeroFlutter'
+project(':CheeroFlutter').projectDir = new File('CheeroFlutter')

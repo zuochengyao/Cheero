@@ -7,4 +7,4 @@ version:
   revision: 1ad9baa8b99a2897c20f9e6e54d3b9b359ade314
   channel: stable
 
-project_type: app
+project_type: module
