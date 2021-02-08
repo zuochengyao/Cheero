@@ -31,7 +31,7 @@ android {
         debug {
             minifyEnabled false
             signingConfig signingConfigs.release
-            applicationIdSuffix '.debug'
+            // applicationIdSuffix '.debug'
         }
     }
 
@@ -61,7 +61,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':CheeroSDK')
-    implementation project(':flutter')
+//    implementation project(':flutter')
     if (isLibrary) {
         implementation project(':CheeroPlugin')
     }

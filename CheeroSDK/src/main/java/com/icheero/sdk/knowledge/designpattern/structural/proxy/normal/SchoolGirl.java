@@ -1,4 +1,4 @@
-package com.icheero.sdk.knowledge.designpattern.structural.proxy;
+package com.icheero.sdk.knowledge.designpattern.structural.proxy.normal;
 
 public class SchoolGirl
 {

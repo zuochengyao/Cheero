@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 public class TouchViewGroupB extends LinearLayout
 {
     private final Class<TouchViewGroupB> TAG = TouchViewGroupB.class;
+
     public TouchViewGroupB(Context context)
     {
         super(context);
@@ -54,6 +55,6 @@ public class TouchViewGroupB extends LinearLayout
     @Override
     public String toString()
     {
-        return "TouchViewGroupB";
+        return getClass().getSimpleName();
     }
 }

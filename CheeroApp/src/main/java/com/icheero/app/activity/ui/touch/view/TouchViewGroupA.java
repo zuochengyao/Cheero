@@ -33,14 +33,14 @@ public class TouchViewGroupA extends LinearLayout
     public boolean dispatchTouchEvent(MotionEvent ev)
     {
         Log.i(TAG, toString() + " dispatchTouchEvent" + ", action: " + ev.getAction());
-        return super.dispatchTouchEvent(ev);
+        return false;
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev)
     {
         Log.i(TAG, toString() + " onInterceptTouchEvent" + ", action: " + ev.getAction());
-        return super.onInterceptTouchEvent(ev);
+        return false;
     }
 
     @Override
@@ -54,6 +54,6 @@ public class TouchViewGroupA extends LinearLayout
     @Override
     public String toString()
     {
-        return "TouchViewGroupA";
+        return getClass().getSimpleName();
     }
 }

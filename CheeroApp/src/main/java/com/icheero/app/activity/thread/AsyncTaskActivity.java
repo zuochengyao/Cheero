@@ -66,7 +66,7 @@ public class AsyncTaskActivity extends BaseActivity
         }
     }
 
-    private class MyAsyncTask extends AsyncTask<String, Integer , String>
+    private class MyAsyncTask extends AsyncTask<String, Integer, String>
     {
         @Override
         protected void onPreExecute()
@@ -91,7 +91,8 @@ public class AsyncTaskActivity extends BaseActivity
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result)
+        {
             super.onPostExecute(result);
             Log.i(TAG, "onPostExecute");
         }

@@ -19,6 +19,12 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/to_touch_event_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TouchEventActivity"/>
+
+            <Button
                 android:id="@+id/to_move_view_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,11 +78,6 @@
                 android:layout_height="wrap_content"
                 android:text="PanScrollActivity" />
 
-            <Button
-                android:id="@+id/to_touch_event_activity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TouchEventActivity"/>
         </LinearLayout>
     </HorizontalScrollView>
 

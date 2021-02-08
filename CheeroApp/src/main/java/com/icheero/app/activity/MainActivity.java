@@ -16,7 +16,6 @@ import com.icheero.app.activity.data.SystemSettingActivity;
 import com.icheero.app.activity.data.ViewModelActivity;
 import com.icheero.app.activity.feature.LollipopActivity;
 import com.icheero.app.activity.feature.oreo.NotificationActivity;
-import com.icheero.app.activity.framework.FlutterContainerActivity;
 import com.icheero.app.activity.framework.RxJavaActivity;
 import com.icheero.app.activity.framework.eventbus.EventBusActivity;
 import com.icheero.app.activity.framework.xposed.XposedActivity;
@@ -392,11 +391,6 @@ public class MainActivity extends BaseActivity
             case R.id.to_xposed_activity:
             {
                 openActivity(XposedActivity.class);
-                break;
-            }
-            case R.id.to_flutter_activity:
-            {
-                openActivity(FlutterContainerActivity.class);
                 break;
             }
         }

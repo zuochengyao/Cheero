@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class IOManager
 {
-    private static final Class TAG = IOManager.class;
+    private static final Class<IOManager> TAG = IOManager.class;
 
     private static final int CPU_COUNT = Runtime.getRuntime().availableProcessors();
     private static final int INIT_THREAD_COUNT = CPU_COUNT + 1;

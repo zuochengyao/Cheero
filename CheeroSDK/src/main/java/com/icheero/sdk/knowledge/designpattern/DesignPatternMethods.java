@@ -46,8 +46,13 @@ import com.icheero.sdk.knowledge.designpattern.behavioral.visitor.idea.ConcreteE
 import com.icheero.sdk.knowledge.designpattern.behavioral.visitor.idea.ConcreteVisitorA;
 import com.icheero.sdk.knowledge.designpattern.behavioral.visitor.idea.ConcreteVisitorB;
 import com.icheero.sdk.knowledge.designpattern.behavioral.visitor.idea.ObjectStructure;
+import com.icheero.sdk.knowledge.designpattern.structural.proxy.dynamic.IStudent;
+import com.icheero.sdk.knowledge.designpattern.structural.proxy.dynamic.OrdinaryStudent;
 import com.icheero.sdk.util.Log;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,10 +80,14 @@ import java.util.List;
  */
 
 
-@SuppressWarnings("unused")
 public class DesignPatternMethods
 {
     private static final Class<DesignPatternMethods> TAG = DesignPatternMethods.class;
+
+    public static void main(String[] args)
+    {
+        dynamicProxyStudent();
+    }
 
     public static void doCompositeIdea()
     {
@@ -309,5 +318,34 @@ public class DesignPatternMethods
         p.accept(failing);
         Success success = new Success();
         p.accept(success);
+    }
+
+    public static void dynamicProxyStudent()
+    {
+        IStudent ordinaryStudent = new OrdinaryStudent();
+        ordinaryStudent.eat();
+        ordinaryStudent.write();
+
+        IStudent proxyStudent = (IStudent) Proxy.newProxyInstance(IStudent.class.getClassLoader(), new Class[]{IStudent.class}, new InvocationHandler() {
+            @Override
+            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
+            {
+                if (method.getName().equals("eat"))
+                {
+                    method.invoke(ordinaryStudent, args);
+                    System.out.println("代理吃");
+                    return null;
+                }
+                if (method.getName().equals("write"))
+                {
+                    method.invoke(ordinaryStudent, args);
+                    System.out.println("代理写作文");
+                    return null;
+                }
+                return null;
+            }
+        });
+        proxyStudent.eat();
+        proxyStudent.write();
     }
 }

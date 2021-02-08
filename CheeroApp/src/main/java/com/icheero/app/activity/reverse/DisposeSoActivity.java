@@ -37,7 +37,7 @@ public class DisposeSoActivity extends BaseActivity
         switch (v.getId())
         {
             case R.id.so_dispose:
-                mSoData = FileUtils.readRawResource(this, R.raw.libairtalkee);
+                mSoData = FileUtils.readRawResource(this, R.raw.libptt);
                 if (mSoData == null)
                 {
                     Log.e(TAG, "Read file failed!");

@@ -164,7 +164,7 @@ public class HttpHeader implements Map<String, String>
     @Override
     public boolean containsKey(@Nullable Object key)
     {
-        return mMap.containsValue(key);
+        return mMap.containsKey(key);
     }
 
     @Override

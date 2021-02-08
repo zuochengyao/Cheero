@@ -17,6 +17,7 @@ public class WeakHandlerActivity extends BaseActivity
 {
     private WeakHandler mWeakHandler;
     private ImageView mImageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -25,32 +26,55 @@ public class WeakHandlerActivity extends BaseActivity
         mImageView.setImageResource(R.drawable.nini);
         setContentView(mImageView);
         mWeakHandler = new WeakHandler(this);
-        mWeakHandler.sendEmptyMessageDelayed(0, 0);
-        mWeakHandler.sendEmptyMessageDelayed(0, 30);
+        mWeakHandler.sendEmptyMessageDelayed(0, 2 * 1000);
+        mWeakHandler.sendEmptyMessageDelayed(0, 10 * 1000);
+        mWeakHandler.sendEmptyMessageDelayed(1, 3 * 1000);
+        mWeakHandler.sendEmptyMessageDelayed(1, 13 * 1000);
     }
 
-    private void test()
+    @Override
+    protected void onDestroy()
     {
-        Log.i(TAG, "test");
+        super.onDestroy();
+        gc();
+    }
+
+    private void gc()
+    {
+        Log.i(TAG, "gc");
+        System.gc();
     }
 
     private static class WeakHandler extends Handler
     {
-        private WeakReference<WeakHandlerActivity> mWeakActivity;
+        private final WeakReference<WeakHandlerActivity> mWeakActivity;
 
         WeakHandler(WeakHandlerActivity activity)
         {
             this.mWeakActivity = new WeakReference<>(activity);
         }
+
         @Override
         public void handleMessage(@NonNull Message msg)
         {
             super.handleMessage(msg);
-            WeakHandlerActivity activity = mWeakActivity.get();
-            Log.i(TAG, "MyHandler - handleMessage ------ 消息到达了  activity is NULL:" + (activity == null));
-            assert activity != null;
-            Log.i(TAG, "MyHandler - handleMessage ------ 消息到达了  activity is NULL:" + (activity == null));
-            activity.test();
+            Log.i(TAG, "MyHandler - handleMessage");
+            switch (msg.what)
+            {
+                case 0:
+                {
+                    Log.i(TAG, mWeakActivity.get().toString());
+                    mWeakActivity.get().gc();
+                    Log.i(TAG, mWeakActivity.get().toString());
+                    break;
+                }
+                case 1:
+                {
+                    mWeakActivity.get().finish();
+                    // mWeakActivity.clear();
+                    break;
+                }
+            }
         }
     }
 }

@@ -54,7 +54,7 @@ public class HttpManager
     {
         try
         {
-            HttpRequestProvider.getInstance().getHttpCall(request).enqueue();
+            mHttpRequestFactory.getHttpCall(request).enqueue();
         }
         catch (IOException e)
         {

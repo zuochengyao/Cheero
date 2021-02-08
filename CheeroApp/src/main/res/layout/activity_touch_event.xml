@@ -10,7 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ff0033"
+        android:orientation="vertical"
         android:gravity="center">
+
+        <com.icheero.app.activity.ui.touch.view.TouchViewGroupB
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#336699"
+            android:orientation="horizontal"
+            android:layout_marginBottom="30dp"/>
 
         <com.icheero.app.activity.ui.touch.view.TouchViewGroupB
             android:layout_width="match_parent"

@@ -12,7 +12,7 @@ public class HttpApi
 {
     public static final String ENCODING_UTF8 = "utf-8";
     /**
-     * "com.icheero.application/x-www-form-urlencoded"，是默认的MIME内容编码类型，一般可以用于所有的情况，但是在传输比较大的二进制或者文本数据时效率低。
+     * "application/x-www-form-urlencoded"，是默认的MIME内容编码类型，一般可以用于所有的情况，但是在传输比较大的二进制或者文本数据时效率低。
      * 这时候应该使用"multipart/form-data"。如上传文件或者二进制数据和非ASCII数据。
      */
     public static final String MEDIA_TYPE_NORMAL = "application/x-www-form-urlencoded;charset=utf-8";
