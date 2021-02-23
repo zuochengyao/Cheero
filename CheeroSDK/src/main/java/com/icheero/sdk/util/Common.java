@@ -2,6 +2,7 @@ package com.icheero.sdk.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -208,6 +209,43 @@ public class Common
         }
     }
 
+    /**
+     * 获取当前应用的第一个Activity的name
+     *
+     * @param context
+     * @param pmName
+     * @return
+     */
+    public static String getHostClzName(Context context, String pmName) {
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo = context.getPackageManager().getPackageInfo(pmName, PackageManager
+                    .GET_ACTIVITIES);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return "";
+        }
+        ActivityInfo[] activities = packageInfo.activities;
+        if (activities == null || activities.length == 0) {
+            return "";
+        }
+        ActivityInfo activityInfo = activities[0];
+        return activityInfo.name;
+
+    }
+
+    /**
+     * 获取包名
+     *
+     * @param context
+     * @return
+     */
+    public static String getPMName(Context context) {
+        // 获取当前进程已经注册的 activity
+        Context applicationContext = context.getApplicationContext();
+        return applicationContext.getPackageName();
+    }
+
     @SuppressLint("PackageManagerGetSignatures")
     public static String getSignature()
     {
@@ -228,5 +266,32 @@ public class Common
             e.printStackTrace();
         }
         return "";
+    }
+
+    /**
+     * 设备系统版本是不是大于等于29(Android 10)
+     */
+    public static boolean isSdkOverIncluding29()
+    {
+        int SDK_INT = Build.VERSION.SDK_INT;
+        return SDK_INT >= 29;
+    }
+
+    /**
+     * 设备系统版本是不是大于等于28(Android 9.0 Pie)
+     */
+    public static boolean isSdkOverIncluding28()
+    {
+        int SDK_INT = Build.VERSION.SDK_INT;
+        return SDK_INT >= 28;
+    }
+
+    /**
+     * 设备系统版本是不是大于等于26(Android 8.0 Oreo)
+     */
+    public static boolean isSdkOverIncluding26()
+    {
+        int SDK_INT = Build.VERSION.SDK_INT;
+        return SDK_INT >= 26;
     }
 }

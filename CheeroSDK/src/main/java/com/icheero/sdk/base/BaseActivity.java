@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class BaseActivity extends AppCompatActivity implements PermissionManager.PermissionListener
 {
-    protected static Class<? extends BaseActivity> TAG;
+    protected Class<? extends BaseActivity> TAG;
     protected PermissionManager mPermissionManager;
 
     // region Activity's Lifecycle
@@ -102,8 +102,8 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
 
     protected void openActivity(Class<? extends Activity> activityClass)
     {
-        assert activityClass != null;
-        openActivity(activityClass, null);
+        if (activityClass != null)
+            openActivity(activityClass, null);
     }
 
     protected void openActivity(Class<? extends Activity> activityClass, Bundle bundle)

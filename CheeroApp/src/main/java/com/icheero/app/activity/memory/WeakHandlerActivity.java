@@ -58,19 +58,22 @@ public class WeakHandlerActivity extends BaseActivity
         public void handleMessage(@NonNull Message msg)
         {
             super.handleMessage(msg);
-            Log.i(TAG, "MyHandler - handleMessage");
+            final WeakHandlerActivity activity = mWeakActivity.get();
+            if (activity == null)
+                return;
+            Log.i(activity.TAG, "MyHandler - handleMessage");
             switch (msg.what)
             {
                 case 0:
                 {
-                    Log.i(TAG, mWeakActivity.get().toString());
-                    mWeakActivity.get().gc();
-                    Log.i(TAG, mWeakActivity.get().toString());
+                    Log.i(activity.TAG, mWeakActivity.get().toString());
+                    activity.gc();
+                    Log.i(activity.TAG, mWeakActivity.get().toString());
                     break;
                 }
                 case 1:
                 {
-                    mWeakActivity.get().finish();
+                    activity.finish();
                     // mWeakActivity.clear();
                     break;
                 }

@@ -66,6 +66,8 @@ dependencies {
         implementation project(':CheeroPlugin')
     }
     implementation versions.deps.butterknife.runtime
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     compileOnly versions.deps.xposed
     annotationProcessor versions.deps.butterknife.compiler
 }

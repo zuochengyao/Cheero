@@ -30,6 +30,7 @@ import com.icheero.app.activity.network.ImageDownloadActivity;
 import com.icheero.app.activity.network.RequestActivity;
 import com.icheero.app.activity.network.RetrofitActivity;
 import com.icheero.app.activity.network.WebViewActivity;
+import com.icheero.app.activity.plugin.PluginActivity;
 import com.icheero.app.activity.reverse.DisposeDexActivity;
 import com.icheero.app.activity.reverse.DisposeManifestActivity;
 import com.icheero.app.activity.reverse.DisposeResourceActivity;
@@ -140,6 +141,8 @@ public class MainActivity extends BaseActivity
     Button toAsyncTaskActivity;
     @BindView(R.id.to_weak_handler_activity)
     Button toWeakHandlerActivity;
+    @BindView(R.id.to_plugin_activity)
+    Button toPluginActivity;
     // endregion
 
     @Override
@@ -373,7 +376,7 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @OnClick({R.id.to_rx_java_activity, R.id.to_event_bus_activity, R.id.to_xposed_activity, R.id.to_flutter_activity})
+    @OnClick({R.id.to_plugin_activity, R.id.to_rx_java_activity, R.id.to_event_bus_activity, R.id.to_xposed_activity, R.id.to_flutter_activity})
     public void OnFrameworkClickEvent(View v)
     {
         switch (v.getId())
@@ -391,6 +394,11 @@ public class MainActivity extends BaseActivity
             case R.id.to_xposed_activity:
             {
                 openActivity(XposedActivity.class);
+                break;
+            }
+            case R.id.to_plugin_activity:
+            {
+                openActivity(PluginActivity.class);
                 break;
             }
         }

@@ -75,7 +75,8 @@
         <activity android:name=".activity.reverse.DisposeResourceActivity" />
         <activity android:name=".activity.reverse.DisposeDexActivity" />
         <activity android:name=".activity.thread.AsyncTaskActivity" />
-        <activity android:name=".activity.memory.WeakHandlerActivity" /> <!-- endregion -->
+        <activity android:name=".activity.memory.WeakHandlerActivity" />
+        <activity android:name=".activity.plugin.PluginActivity"/> <!-- endregion -->
         <meta-data
             android:name="xposedmodule"
             android:value="true" />
