@@ -20,6 +20,8 @@ public class Log
     private static final int ANDROID_LOG_DEBUG = 2;
     private static final int ANDROID_LOG_WARN = 3;
 
+    private static int mTraceMode = TRACE_MODE_OFF;
+
     public static void i(Class<?> cls, String... logs)
     {
         for (String log : logs)
@@ -46,6 +48,7 @@ public class Log
 
     public static void traceMode(int mode)
     {
+        mTraceMode = mode;
         CheeroNative.nativeSetTraceMode(mode);
     }
 

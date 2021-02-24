@@ -59,19 +59,24 @@ public class NotificationManager
 
     private boolean isNotificationEnable()
     {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT_WATCH)
-            return true;
-        else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1)
         {
             AppOpsManager appOps = (AppOpsManager) mContext.getSystemService(Context.APP_OPS_SERVICE);
             ApplicationInfo appInfo = mContext.getApplicationInfo();
             String className = AppOpsManager.class.getName();
-            Class[] paramType = new Class[3];
+            Class<?>[] paramType = new Class[3];
             paramType[0] = Integer.TYPE;
             paramType[1] = Integer.TYPE;
             paramType[2] = String.class;
             Object[] paramValue = new Object[3];
-            paramValue[0] = RefUtils.getFieldObject(className, Integer.class, FILED_NAME);
+            try
+            {
+                paramValue[0] = RefUtils.getObjectDeclaredFieldValue(className, FILED_NAME);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
             paramValue[1] = appInfo.uid;
             paramValue[2] = mContext.getPackageName();
             return ((int) RefUtils.invokeMethod(AppOpsManager.class.getName(), METHOD_NAME, appOps, paramType, paramValue)) == AppOpsManager.MODE_ALLOWED;

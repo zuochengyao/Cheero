@@ -49,7 +49,7 @@ void TRACE(const char *tag, int level, const char *log, ...)
         }
         va_list ap;
         va_start(ap, log);
-        __android_log_vprint(prio, "Cheero", log, ap);
+        __android_log_vprint(prio, tag, log, ap);
         va_end(ap);
     }
     else if (tMode == TRACE_ON_FILE)

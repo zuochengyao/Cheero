@@ -75,6 +75,7 @@ public class BaseApplication extends MultiDexApplication
         try
         {
             HookHelper.hookActivityManagerService();
+            HookHelper.hookActivityThreadHandler();
         }
         catch (Exception e)
         {

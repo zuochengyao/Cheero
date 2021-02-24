@@ -1,5 +1,7 @@
 package com.icheero.sdk.core.plugin;
 
+import android.os.Handler;
+
 import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.RefUtils;
 
@@ -34,8 +36,8 @@ public class HookHelper
             iActivityManagerClazz = RefUtils.getClass(RefUtils.CLASS_I_ACTIVITY_MANAGER);
         }
         // Singleton<IActivityTaskManager> 对象
-        Object singletonActivityManager = RefUtils.getFieldObject(className, null, filedName);
-        Field mInstanceField = RefUtils.getField(RefUtils.CLASS_SINGLETON, RefUtils.FILED_M_INSTANCE);
+        Object singletonActivityManager = RefUtils.getStaticDeclaredFieldValue(className, filedName);
+        Field mInstanceField = RefUtils.getDeclaredField(RefUtils.CLASS_SINGLETON, RefUtils.FILED_M_INSTANCE);
         Object iActivityManager = mInstanceField.get(singletonActivityManager);
         if (iActivityManager == null)
         {
@@ -52,6 +54,17 @@ public class HookHelper
 
     public static void hookActivityThreadHandler()
     {
-        
+        try
+        {
+            // 获取 ActivityThread 实例
+            Object currentActivityThread = RefUtils.getObjectDeclaredFieldValue(RefUtils.CLASS_ACTIVITY_THREAD, null, RefUtils.FILED_S_CURRENT_ACTIVITY_THREAD);
+            // 获取 ActivityThread 中 mH 属性
+            Handler mH = (Handler) RefUtils.getObjectDeclaredFieldValue(RefUtils.CLASS_ACTIVITY_THREAD, RefUtils.FILED_M_H, currentActivityThread);
+            RefUtils.setFieldObject(Handler.class, RefUtils.FILED_M_CALLBACK, mH, new HookHandlerCallback(mH));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

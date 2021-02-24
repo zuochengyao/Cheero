@@ -76,24 +76,22 @@ public class ShellApplication extends Application
                 byte[] apkData = readDexFileFromApk();
                 splitPayLoadFromDex(apkData);
             }
-            Object currentActivityThread = RefUtils.invokeStaticMethod(RefUtils.CLASS_ACTIVITY_THREAD, RefUtils.METHOD_CURRENT_ACTIVITY_THREAD, new Class[]{ }, new Object[]{ });
+            Object currentActivityThread = RefUtils.invokeStaticMethod(RefUtils.CLASS_ACTIVITY_THREAD, RefUtils.METHOD_CURRENT_ACTIVITY_THREAD, new Class[] { }, new Object[] { });
             String packageName = getPackageName();
-            ArrayMap mPackages = (ArrayMap) RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_PACKAGES);
-            WeakReference weakRef = (WeakReference) mPackages.get(packageName);
-            DexClassLoader dexLoader = new DexClassLoader(apkFileName, odexPath, libPath, (ClassLoader) RefUtils.getFieldObject(RefUtils.CLASS_LOADED_APK, weakRef.get(), APP_FILED_NAME_CLASSLOADER));
+            ArrayMap<?, ?> mPackages = (ArrayMap<?, ?>) RefUtils.getObjectDeclaredFieldValue(RefUtils.CLASS_ACTIVITY_THREAD,
+                                                                                             APP_FILED_NAME_PACKAGES, currentActivityThread);
+            WeakReference<?> weakRef = (WeakReference<?>) mPackages.get(packageName);
+            DexClassLoader dexLoader = new DexClassLoader(apkFileName, odexPath, libPath,
+                                                          (ClassLoader) RefUtils.getObjectDeclaredFieldValue(RefUtils.CLASS_LOADED_APK, APP_FILED_NAME_CLASSLOADER, weakRef.get()));
             RefUtils.setFieldObject(RefUtils.CLASS_LOADED_APK, APP_FILED_NAME_CLASSLOADER, weakRef.get(), dexLoader);
             Log.i(TAG, "Classloader: " + dexLoader);
             Object actObj = dexLoader.loadClass(RefUtils.CLASS_MAIN_ACTIVITY);
-            if (actObj != null) Log.i(TAG, "actObj: " + actObj);
+            if (actObj != null)
+                Log.i(TAG, "actObj: " + actObj);
         }
-        catch (IOException e)
+        catch (Exception e)
         {
             e.printStackTrace();
-        }
-        catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
-            Log.i(TAG, "activity: " + android.util.Log.getStackTraceString(e));
         }
     }
 
@@ -108,9 +106,7 @@ public class ShellApplication extends Application
             ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = appInfo.metaData;
             if (bundle != null && bundle.containsKey(APP_KEY))
-            {
                 appClassName = bundle.getString(APP_KEY);
-            }
             else
             {
                 Log.i(TAG, "There is no classname in application!");
@@ -121,39 +117,40 @@ public class ShellApplication extends Application
         {
             Log.i(TAG, "error: " + e.getMessage());
         }
-        Object currentActivityThread = RefUtils.invokeStaticMethod(RefUtils.CLASS_ACTIVITY_THREAD, RefUtils.METHOD_CURRENT_ACTIVITY_THREAD, new Class[]{ }, new Object[]{ });
-        Object mBoundApplication = RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_BOUND_APPLICATION);
-        Object loadedApkInfo = RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD_APP_BIND_DATA, mBoundApplication, APP_FILED_NAME_INFO);
-
-        RefUtils.setFieldObject(RefUtils.CLASS_LOADED_APK, APP_FILED_NAME_APPLICATION, loadedApkInfo, null);
-        Object oldApplication = RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_INITIAL_APPLICATION);
-        List<Application> allApplications = (ArrayList<Application>) RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_ALL_APPLICATION);
-        allApplications.remove(oldApplication);
-
-        ApplicationInfo loadedApkApplicationInfo = (ApplicationInfo) RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD, loadedApkInfo, APP_FILED_NAME_APPLICATION_INFO);
-        ApplicationInfo bindDataApplicationInfo = (ApplicationInfo) RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD_APP_BIND_DATA, mBoundApplication, APP_FILED_NAME_APP_INFO);
-        loadedApkApplicationInfo.className = appClassName;
-        bindDataApplicationInfo.className = appClassName;
-        Application app = (Application) RefUtils.invokeMethod(RefUtils.CLASS_LOADED_APK, APP_FILED_NAME_MAKE_APPLICATION, loadedApkInfo, new Class[]{
-                boolean.class, Instrumentation.class
-        }, new Object[]{false, null});
-        RefUtils.setFieldObject(RefUtils.CLASS_ACTIVITY_THREAD, APP_FILED_NAME_INITIAL_APPLICATION, currentActivityThread, app);
-
-        ArrayMap mProviderMap = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
+        try
         {
-            mProviderMap = (ArrayMap) RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_PROVIDER_MAP);
+            Object currentActivityThread = RefUtils.invokeStaticMethod(RefUtils.CLASS_ACTIVITY_THREAD, RefUtils.METHOD_CURRENT_ACTIVITY_THREAD, new Class[] { }, new Object[] { });
+            Object mBoundApplication = RefUtils.getObjectDeclaredFieldValue(RefUtils.CLASS_ACTIVITY_THREAD, APP_FILED_NAME_BOUND_APPLICATION, currentActivityThread);
+            Object loadedApkInfo = RefUtils.getObjectDeclaredFieldValue(RefUtils.CLASS_ACTIVITY_THREAD_APP_BIND_DATA, APP_FILED_NAME_INFO, mBoundApplication);
+
+            RefUtils.setFieldObject(RefUtils.CLASS_LOADED_APK, APP_FILED_NAME_APPLICATION, loadedApkInfo, null);
+            Object oldApplication = RefUtils.getObjectDeclaredFieldValue(RefUtils.CLASS_ACTIVITY_THREAD, APP_FILED_NAME_INITIAL_APPLICATION, currentActivityThread);
+            List<Application> allApplications = (ArrayList<Application>) RefUtils.getObjectDeclaredFieldValue(RefUtils.CLASS_ACTIVITY_THREAD, APP_FILED_NAME_ALL_APPLICATION);
+            allApplications.remove(oldApplication);
+
+            ApplicationInfo loadedApkApplicationInfo = (ApplicationInfo) RefUtils.getObjectDeclaredFieldValue(RefUtils.CLASS_ACTIVITY_THREAD, APP_FILED_NAME_APPLICATION_INFO, loadedApkInfo);
+            ApplicationInfo bindDataApplicationInfo = (ApplicationInfo) RefUtils.getObjectDeclaredFieldValue(RefUtils.CLASS_ACTIVITY_THREAD_APP_BIND_DATA, APP_FILED_NAME_APP_INFO, mBoundApplication);
+            loadedApkApplicationInfo.className = appClassName;
+            bindDataApplicationInfo.className = appClassName;
+            Application app = (Application) RefUtils.invokeMethod(RefUtils.CLASS_LOADED_APK, APP_FILED_NAME_MAKE_APPLICATION, loadedApkInfo, new Class[] {boolean.class, Instrumentation.class}, new Object[] {false, null});
+            RefUtils.setFieldObject(RefUtils.CLASS_ACTIVITY_THREAD, APP_FILED_NAME_INITIAL_APPLICATION, currentActivityThread, app);
+
+            ArrayMap mProviderMap = (ArrayMap) RefUtils.getObjectDeclaredFieldValue(RefUtils.CLASS_ACTIVITY_THREAD, APP_FILED_NAME_PROVIDER_MAP, currentActivityThread);
+            Iterator it = mProviderMap.values().iterator();
+            while (it.hasNext())
+            {
+                Object providerClientRecord = it.next();
+                Object localProvider = RefUtils.getObjectDeclaredFieldValue(RefUtils.CLASS_ACTIVITY_THREAD_PROVIDER_CLIENT_RECORD, APP_FILED_NAME_LOCAL_PROVIDER, providerClientRecord);
+                RefUtils.setFieldObject(RefUtils.CLASS_CONTENT_PROVIDER, APP_FILED_NAME_CONTEXT, localProvider, app);
+            }
+            Log.i(TAG, "app: " + app);
+            app.onCreate();
         }
-        Iterator it = mProviderMap.values().iterator();
-        while (it.hasNext())
+        catch (Exception e)
         {
-            Object providerClientRecord = it.next();
-            Object localProvider = RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD_PROVIDER_CLIENT_RECORD, providerClientRecord, APP_FILED_NAME_LOCAL_PROVIDER);
-            RefUtils.setFieldObject(RefUtils.CLASS_CONTENT_PROVIDER, APP_FILED_NAME_CONTEXT, localProvider, app);
+            e.printStackTrace();
         }
 
-        Log.i(TAG, "app: " + app);
-        app.onCreate();
     }
 
     /**
@@ -217,12 +214,14 @@ public class ShellApplication extends Application
         while (true)
         {
             ZipEntry localZipEntry = localZipInputStream.getNextEntry();
-            if (localZipEntry == null) break;
+            if (localZipEntry == null)
+                break;
             if (localZipEntry.getName().equals("classes.dex"))
             {
                 byte[] data = new byte[1024];
                 int i = 0;
-                while ((i = localZipInputStream.read(data)) != -1) dexOutputStream.write(data, 0, i);
+                while ((i = localZipInputStream.read(data)) != -1)
+                    dexOutputStream.write(data, 0, i);
                 localZipInputStream.closeEntry();
             }
         }
