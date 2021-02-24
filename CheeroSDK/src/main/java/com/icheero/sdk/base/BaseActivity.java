@@ -9,7 +9,7 @@ import android.view.View;
 import com.icheero.sdk.core.manager.PermissionManager;
 import com.icheero.sdk.core.manager.ViewManager;
 import com.icheero.sdk.util.Log;
-import com.icheero.sdk.util.RefInvoke;
+import com.icheero.sdk.util.RefUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -120,7 +120,7 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
         int resId, startBarHeight = 0;
         try
         {
-            Object obj = RefInvoke.getFieldObject("com.android.internal.R$dimen", "status_bar_height");
+            Object obj = RefUtils.getFieldObject("com.android.internal.R$dimen", "status_bar_height");
             if (obj == null)
                 return 0;
             resId = Integer.parseInt(obj.toString());

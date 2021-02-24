@@ -7,10 +7,10 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.ArrayMap;
-import android.util.Log;
 
 import com.icheero.sdk.util.FileUtils;
-import com.icheero.sdk.util.RefInvoke;
+import com.icheero.sdk.util.Log;
+import com.icheero.sdk.util.RefUtils;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -31,18 +31,9 @@ import dalvik.system.DexClassLoader;
 
 public class ShellApplication extends Application
 {
-    private static final String TAG = "ShellApplication";
+    private static final Class<?> TAG = ShellApplication.class;
 
     private static final String APP_KEY = "APPLICATION_CLASS_NAME";
-
-    private static final String APP_CLASS_NAME_ACTIVITY_THREAD = "android.app.ActivityThread";
-    private static final String APP_CLASS_NAME_ACTIVITY_THREAD_APP_BIND_DATA = "android.app.ActivityThread$AppBindData";
-    private static final String APP_CLASS_NAME_ACTIVITY_THREAD_PROVIDER_CLIENT_RECORD = "android.app.ActivityThread$ProviderClientRecord";
-    private static final String APP_CLASS_NAME_LOADED_APK = "android.app.LoadedApk";
-    private static final String APP_CLASS_NAME_MAIN_ACTIVITY = "com.icheero.app.MainActivity";
-    private static final String APP_CLASS_NAME_CONTENT_PROVIDER = "android.content.ContentProvider";
-
-    private static final String APP_METHOD_NAME = "currentActivityThread";
 
     private static final String APP_FILED_NAME_PACKAGES = "mPackages";
     private static final String APP_FILED_NAME_APPLICATION = "mApplication";
@@ -85,18 +76,15 @@ public class ShellApplication extends Application
                 byte[] apkData = readDexFileFromApk();
                 splitPayLoadFromDex(apkData);
             }
-            Object currentActivityThread = RefInvoke.invokeStaticMethod(APP_CLASS_NAME_ACTIVITY_THREAD, APP_METHOD_NAME, new Class[] {}, new Object[] {});
+            Object currentActivityThread = RefUtils.invokeStaticMethod(RefUtils.CLASS_ACTIVITY_THREAD, RefUtils.METHOD_CURRENT_ACTIVITY_THREAD, new Class[]{ }, new Object[]{ });
             String packageName = getPackageName();
-            ArrayMap mPackages = null;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
-                mPackages = (ArrayMap) RefInvoke.getFieldObject(APP_CLASS_NAME_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_PACKAGES);
+            ArrayMap mPackages = (ArrayMap) RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_PACKAGES);
             WeakReference weakRef = (WeakReference) mPackages.get(packageName);
-            DexClassLoader dexLoader = new DexClassLoader(apkFileName, odexPath, libPath, (ClassLoader) RefInvoke.getFieldObject(APP_CLASS_NAME_LOADED_APK, weakRef.get(), APP_FILED_NAME_CLASSLOADER));
-            RefInvoke.setFieldObject(APP_CLASS_NAME_LOADED_APK, APP_FILED_NAME_CLASSLOADER, weakRef.get(), dexLoader);
+            DexClassLoader dexLoader = new DexClassLoader(apkFileName, odexPath, libPath, (ClassLoader) RefUtils.getFieldObject(RefUtils.CLASS_LOADED_APK, weakRef.get(), APP_FILED_NAME_CLASSLOADER));
+            RefUtils.setFieldObject(RefUtils.CLASS_LOADED_APK, APP_FILED_NAME_CLASSLOADER, weakRef.get(), dexLoader);
             Log.i(TAG, "Classloader: " + dexLoader);
-            Object actObj = dexLoader.loadClass(APP_CLASS_NAME_MAIN_ACTIVITY);
-            if (actObj != null)
-                Log.i(TAG, "actObj: " + actObj);
+            Object actObj = dexLoader.loadClass(RefUtils.CLASS_MAIN_ACTIVITY);
+            if (actObj != null) Log.i(TAG, "actObj: " + actObj);
         }
         catch (IOException e)
         {
@@ -120,7 +108,9 @@ public class ShellApplication extends Application
             ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = appInfo.metaData;
             if (bundle != null && bundle.containsKey(APP_KEY))
+            {
                 appClassName = bundle.getString(APP_KEY);
+            }
             else
             {
                 Log.i(TAG, "There is no classname in application!");
@@ -129,35 +119,37 @@ public class ShellApplication extends Application
         }
         catch (PackageManager.NameNotFoundException e)
         {
-            Log.i(TAG, "error: " + Log.getStackTraceString(e));
+            Log.i(TAG, "error: " + e.getMessage());
         }
-        Object currentActivityThread = RefInvoke.invokeStaticMethod(APP_CLASS_NAME_ACTIVITY_THREAD, APP_METHOD_NAME, new Class[] {}, new Object[] {});
-        Object mBoundApplication = RefInvoke.getFieldObject(APP_CLASS_NAME_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_BOUND_APPLICATION);
-        Object loadedApkInfo = RefInvoke.getFieldObject(APP_CLASS_NAME_ACTIVITY_THREAD_APP_BIND_DATA, mBoundApplication, APP_FILED_NAME_INFO);
+        Object currentActivityThread = RefUtils.invokeStaticMethod(RefUtils.CLASS_ACTIVITY_THREAD, RefUtils.METHOD_CURRENT_ACTIVITY_THREAD, new Class[]{ }, new Object[]{ });
+        Object mBoundApplication = RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_BOUND_APPLICATION);
+        Object loadedApkInfo = RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD_APP_BIND_DATA, mBoundApplication, APP_FILED_NAME_INFO);
 
-        RefInvoke.setFieldObject(APP_CLASS_NAME_LOADED_APK, APP_FILED_NAME_APPLICATION, loadedApkInfo, null);
-        Object oldApplication = RefInvoke.getFieldObject(APP_CLASS_NAME_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_INITIAL_APPLICATION);
-        List<Application> allApplications = (ArrayList<Application>) RefInvoke.getFieldObject(APP_CLASS_NAME_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_ALL_APPLICATION);
+        RefUtils.setFieldObject(RefUtils.CLASS_LOADED_APK, APP_FILED_NAME_APPLICATION, loadedApkInfo, null);
+        Object oldApplication = RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_INITIAL_APPLICATION);
+        List<Application> allApplications = (ArrayList<Application>) RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_ALL_APPLICATION);
         allApplications.remove(oldApplication);
 
-        ApplicationInfo loadedApkApplicationInfo = (ApplicationInfo) RefInvoke.getFieldObject(APP_CLASS_NAME_ACTIVITY_THREAD, loadedApkInfo, APP_FILED_NAME_APPLICATION_INFO);
-        ApplicationInfo bindDataApplicationInfo = (ApplicationInfo) RefInvoke.getFieldObject(APP_CLASS_NAME_ACTIVITY_THREAD_APP_BIND_DATA, mBoundApplication, APP_FILED_NAME_APP_INFO);
+        ApplicationInfo loadedApkApplicationInfo = (ApplicationInfo) RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD, loadedApkInfo, APP_FILED_NAME_APPLICATION_INFO);
+        ApplicationInfo bindDataApplicationInfo = (ApplicationInfo) RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD_APP_BIND_DATA, mBoundApplication, APP_FILED_NAME_APP_INFO);
         loadedApkApplicationInfo.className = appClassName;
         bindDataApplicationInfo.className = appClassName;
-        Application app = (Application) RefInvoke.invokeMethod(APP_CLASS_NAME_LOADED_APK, APP_FILED_NAME_MAKE_APPLICATION, loadedApkInfo, new Class[]{
+        Application app = (Application) RefUtils.invokeMethod(RefUtils.CLASS_LOADED_APK, APP_FILED_NAME_MAKE_APPLICATION, loadedApkInfo, new Class[]{
                 boolean.class, Instrumentation.class
         }, new Object[]{false, null});
-        RefInvoke.setFieldObject(APP_CLASS_NAME_ACTIVITY_THREAD, APP_FILED_NAME_INITIAL_APPLICATION, currentActivityThread, app);
+        RefUtils.setFieldObject(RefUtils.CLASS_ACTIVITY_THREAD, APP_FILED_NAME_INITIAL_APPLICATION, currentActivityThread, app);
 
         ArrayMap mProviderMap = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
-            mProviderMap = (ArrayMap) RefInvoke.getFieldObject(APP_CLASS_NAME_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_PROVIDER_MAP);
+        {
+            mProviderMap = (ArrayMap) RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD, currentActivityThread, APP_FILED_NAME_PROVIDER_MAP);
+        }
         Iterator it = mProviderMap.values().iterator();
         while (it.hasNext())
         {
             Object providerClientRecord = it.next();
-            Object localProvider = RefInvoke.getFieldObject(APP_CLASS_NAME_ACTIVITY_THREAD_PROVIDER_CLIENT_RECORD, providerClientRecord, APP_FILED_NAME_LOCAL_PROVIDER);
-            RefInvoke.setFieldObject(APP_CLASS_NAME_CONTENT_PROVIDER, APP_FILED_NAME_CONTEXT, localProvider, app);
+            Object localProvider = RefUtils.getFieldObject(RefUtils.CLASS_ACTIVITY_THREAD_PROVIDER_CLIENT_RECORD, providerClientRecord, APP_FILED_NAME_LOCAL_PROVIDER);
+            RefUtils.setFieldObject(RefUtils.CLASS_CONTENT_PROVIDER, APP_FILED_NAME_CONTEXT, localProvider, app);
         }
 
         Log.i(TAG, "app: " + app);

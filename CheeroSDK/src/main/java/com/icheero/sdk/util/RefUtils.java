@@ -3,8 +3,32 @@ package com.icheero.sdk.util;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-public class RefInvoke
+public class RefUtils
 {
+    public static final String CLASS_MAIN_ACTIVITY = "com.icheero.app.MainActivity";
+
+    public static final String CLASS_ACTIVITY_THREAD = "android.app.ActivityThread";
+    public static final String CLASS_ACTIVITY_THREAD_APP_BIND_DATA = "android.app.ActivityThread$AppBindData";
+    public static final String CLASS_ACTIVITY_THREAD_PROVIDER_CLIENT_RECORD = "android.app.ActivityThread$ProviderClientRecord";
+    public static final String CLASS_LOADED_APK = "android.app.LoadedApk";
+    public static final String CLASS_CONTENT_PROVIDER = "android.content.ContentProvider";
+    public static final String CLASS_SINGLETON = "android.util.Singleton";
+    public static final String CLASS_I_ACTIVITY_MANAGER = "android.app.IActivityManager";
+    public static final String CLASS_I_ACTIVITY_TASK_MANAGER = "android.app.IActivityTaskManager";
+    public static final String CLASS_ACTIVITY_MANAGER = "android.app.ActivityManager";
+    public static final String CLASS_ACTIVITY_TASK_MANAGER = "android.app.ActivityTaskManager";
+    public static final String CLASS_ACTIVITY_MANAGER_NATIVE = "android.app.ActivityManagerNative";
+
+    public static final String METHOD_GET = "get";
+    public static final String METHOD_CURRENT_ACTIVITY_THREAD = "currentActivityThread";
+
+    public static final String FILED_M_INSTANCE = "mInstance";
+    public static final String FILED_G_DEFAULT = "gDefault";
+    public static final String FILED_I_ACTIVITY_MANAGER_SINGLETON = "IActivityManagerSingleton";
+    public static final String FILED_I_ACTIVITY_TASK_MANAGER_SINGLETON = "IActivityTaskManagerSingleton";
+
+
+
     public static Class<?> getClass(String className) throws ClassNotFoundException
     {
         return Class.forName(className);

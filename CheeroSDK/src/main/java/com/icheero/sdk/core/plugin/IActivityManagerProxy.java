@@ -14,14 +14,13 @@ public class IActivityManagerProxy implements InvocationHandler
     private static final String NAME_PACKAGE = "com.icheero.app";
     private static final String NAME_PLUGIN_ACTIVITY = ".activity.plugin.PluginActivity";
 
-
-    private Object mActivityManager;
-    String packageName;//这两个String是用来构建Intent的ComponentName的
-    String clz;
+    private final Object mActivityManager;
+    private final String packageName;
+    private final String clz;
 
     public IActivityManagerProxy(Object activityManager)
     {
-        this.mActivityManager = activityManager;
+        this(activityManager, NAME_PACKAGE, NAME_PLUGIN_ACTIVITY);
     }
 
     public IActivityManagerProxy(Object activityManager, String packageName, String clz)
@@ -49,7 +48,7 @@ public class IActivityManagerProxy implements InvocationHandler
                 index++;
             }
             Intent pluginIntent = new Intent();
-            pluginIntent.setClassName(NAME_PACKAGE, NAME_PACKAGE + NAME_PLUGIN_ACTIVITY);
+            pluginIntent.setClassName(packageName, packageName + clz);
             pluginIntent.putExtra(HookHelper.TARGET_INTENT, intent);
             args[index] = pluginIntent;
         }

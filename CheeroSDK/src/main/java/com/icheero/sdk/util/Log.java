@@ -9,7 +9,7 @@ import com.icheero.sdk.base.CheeroNative;
 @SuppressWarnings("unused")
 public class Log
 {
-    private static final Class TAG = Log.class;
+    private static final Class<?> TAG = Log.class;
 
     public static final int TRACE_MODE_ON_SCREEN = 0;
     public static final int TRACE_MODE_ON_FILE = 1;

@@ -13,7 +13,7 @@ import android.provider.Settings;
 import com.icheero.sdk.R;
 import com.icheero.sdk.base.BaseApplication;
 import com.icheero.sdk.core.xml.ChannelXmlReader;
-import com.icheero.sdk.util.RefInvoke;
+import com.icheero.sdk.util.RefUtils;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -71,10 +71,10 @@ public class NotificationManager
             paramType[1] = Integer.TYPE;
             paramType[2] = String.class;
             Object[] paramValue = new Object[3];
-            paramValue[0] = RefInvoke.getFieldObject(className, Integer.class, FILED_NAME);
+            paramValue[0] = RefUtils.getFieldObject(className, Integer.class, FILED_NAME);
             paramValue[1] = appInfo.uid;
             paramValue[2] = mContext.getPackageName();
-            return ((int) RefInvoke.invokeMethod(AppOpsManager.class.getName(), METHOD_NAME, appOps, paramType, paramValue)) == AppOpsManager.MODE_ALLOWED;
+            return ((int) RefUtils.invokeMethod(AppOpsManager.class.getName(), METHOD_NAME, appOps, paramType, paramValue)) == AppOpsManager.MODE_ALLOWED;
         }
         else
             return NotificationManagerCompat.from(mContext).areNotificationsEnabled();
