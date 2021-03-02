@@ -14,7 +14,6 @@ import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.core.manager.NotificationManager;
 import com.icheero.sdk.core.network.download.DownloadConfig;
 import com.icheero.sdk.core.network.http.HttpConfig;
-import com.icheero.sdk.core.plugin.HookHelper;
 import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.Log;
 
@@ -71,15 +70,6 @@ public class BaseApplication extends MultiDexApplication
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
             StrictMode.setVmPolicy(builder.build());
             builder.detectFileUriExposure();
-        }
-        try
-        {
-            HookHelper.hookActivityManagerService();
-            HookHelper.hookActivityThreadHandler();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
         }
     }
 

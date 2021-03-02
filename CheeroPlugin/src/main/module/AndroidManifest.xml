@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".activity.PluginActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -23,7 +23,7 @@
         <activity android:name=".activity.AndFixActivity"/>
         <activity android:name=".activity.TinkerActivity"/>
 
-        <service android:name=".framework.andfix.AndFixService"/>
+        <service android:name=".hotfix.andfix.AndFixService"/>
 
         <meta-data android:name="TINKER_ID"
                    android:value="tinker_id_1.0.2"/>

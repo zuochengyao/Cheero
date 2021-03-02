@@ -9,8 +9,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.icheero.plugin.R;
 import com.icheero.sdk.base.BaseActivity;
 
-@Route(path = "/plugin/index")
-public class PluginActivity extends BaseActivity implements View.OnClickListener
+@Route(path = "/plugin/main")
+public class MainActivity extends BaseActivity implements View.OnClickListener
 {
     private Button mToCustom;
     private Button mToAndFix;

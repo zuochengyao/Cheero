@@ -30,7 +30,6 @@ import com.icheero.app.activity.network.ImageDownloadActivity;
 import com.icheero.app.activity.network.RequestActivity;
 import com.icheero.app.activity.network.RetrofitActivity;
 import com.icheero.app.activity.network.WebViewActivity;
-import com.icheero.app.activity.plugin.PluginActivity;
 import com.icheero.app.activity.reverse.DisposeDexActivity;
 import com.icheero.app.activity.reverse.DisposeManifestActivity;
 import com.icheero.app.activity.reverse.DisposeResourceActivity;
@@ -370,7 +369,7 @@ public class MainActivity extends BaseActivity
         {
             case R.id.to_load_plugin_activity:
             {
-                ARouter.getInstance().build("/plugin/index").navigation();
+                ARouter.getInstance().build("/plugin/main").navigation();
                 break;
             }
         }
@@ -398,7 +397,7 @@ public class MainActivity extends BaseActivity
             }
             case R.id.to_plugin_activity:
             {
-                openActivity(PluginActivity.class);
+                openActivity(com.icheero.plugin.activity.MainActivity.class);
                 break;
             }
         }

@@ -1,10 +1,10 @@
-package com.icheero.plugin.framework.tinker;
+package com.icheero.plugin.hotfix.tinker;
 
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
-import com.icheero.plugin.framework.andfix.AndFixPatchManager;
+import com.icheero.plugin.hotfix.andfix.AndFixPatchManager;
 import com.tencent.tinker.anno.DefaultLifeCycle;
 import com.tencent.tinker.entry.ApplicationLike;
 import com.tencent.tinker.loader.shareutil.ShareConstants;

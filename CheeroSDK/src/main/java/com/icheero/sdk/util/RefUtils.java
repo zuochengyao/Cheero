@@ -10,21 +10,24 @@ public class RefUtils
     public static final String CLASS_ACTIVITY_THREAD = "android.app.ActivityThread";
     public static final String CLASS_ACTIVITY_THREAD_APP_BIND_DATA = "android.app.ActivityThread$AppBindData";
     public static final String CLASS_ACTIVITY_THREAD_PROVIDER_CLIENT_RECORD = "android.app.ActivityThread$ProviderClientRecord";
-    public static final String CLASS_LOADED_APK = "android.app.LoadedApk";
-    public static final String CLASS_CONTENT_PROVIDER = "android.content.ContentProvider";
-    public static final String CLASS_SINGLETON = "android.util.Singleton";
-    public static final String CLASS_I_ACTIVITY_MANAGER = "android.app.IActivityManager";
-    public static final String CLASS_I_ACTIVITY_TASK_MANAGER = "android.app.IActivityTaskManager";
     public static final String CLASS_ACTIVITY_MANAGER = "android.app.ActivityManager";
     public static final String CLASS_ACTIVITY_TASK_MANAGER = "android.app.ActivityTaskManager";
     public static final String CLASS_ACTIVITY_MANAGER_NATIVE = "android.app.ActivityManagerNative";
+    public static final String CLASS_CONTENT_PROVIDER = "android.content.ContentProvider";
+    public static final String CLASS_I_ACTIVITY_MANAGER = "android.app.IActivityManager";
+    public static final String CLASS_I_ACTIVITY_TASK_MANAGER = "android.app.IActivityTaskManager";
+    public static final String CLASS_LOADED_APK = "android.app.LoadedApk";
+    public static final String CLASS_LAUNCH_ACTIVITY_ITEM = "android.app.servertransaction.LaunchActivityItem";
+    public static final String CLASS_SINGLETON = "android.util.Singleton";
 
     public static final String METHOD_GET = "get";
     public static final String METHOD_CURRENT_ACTIVITY_THREAD = "currentActivityThread";
 
     public static final String FILED_M_H = "mH";
     public static final String FILED_M_INSTANCE = "mInstance";
+    public static final String FILED_M_INTENT = "mIntent";
     public static final String FILED_M_CALLBACK = "mCallback";
+    public static final String FILED_M_ACTIVITY_CALLBACKS = "mActivityCallbacks";
     public static final String FILED_G_DEFAULT = "gDefault";
     public static final String FILED_I_ACTIVITY_MANAGER_SINGLETON = "IActivityManagerSingleton";
     public static final String FILED_I_ACTIVITY_TASK_MANAGER_SINGLETON = "IActivityTaskManagerSingleton";
@@ -50,7 +53,6 @@ public class RefUtils
 
     /**
      * 根据 classname 获取 所有成员变量，不包括基类
-     *
      * @param filedName 要获取的成员变量名称
      * @return 属性字段
      */
@@ -63,7 +65,6 @@ public class RefUtils
 
     /**
      * 根据 clazz 获取 所有成员变量，不包括基类
-     *
      * @param filedName 要获取的成员变量名称
      * @return 属性字段
      */
@@ -76,7 +77,6 @@ public class RefUtils
 
     /**
      * 根据 classname，获取该类中静态字段 field 的属性值
-     *
      * @param className 类名称
      * @param filedName 属性名称
      * @return 属性值
@@ -89,7 +89,6 @@ public class RefUtils
 
     /**
      * 获取 class 类中静态字段 field 的属性值
-     *
      * @param clazz 类名称
      * @param filedName 属性名称
      * @return 属性值
@@ -102,7 +101,6 @@ public class RefUtils
 
     /**
      * 创建 className 的实例对象，并获取该对象的 Field 属性值
-     *
      * @param filedName 属性名称
      * @param className 类名称
      * @return 属性值
@@ -116,7 +114,6 @@ public class RefUtils
 
     /**
      * 根据 classname 获取该 obj 对象的 Field 属性值
-     *
      * @param className 类名称
      * @param filedName 属性名称
      * @param obj 对象实例
@@ -133,7 +130,6 @@ public class RefUtils
 
     /**
      * 根据 class 获取该 obj 对象的 Field 属性值
-     *
      * @param clazz class类
      * @param filedName 属性名称
      * @param obj 对象实例

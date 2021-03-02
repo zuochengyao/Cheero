@@ -1,7 +1,8 @@
-package com.icheero.sdk.core.plugin;
+package com.icheero.plugin.load.proxy;
 
 import android.content.Intent;
 
+import com.icheero.plugin.load.GlobalActivityHookHelper;
 import com.icheero.sdk.util.Log;
 
 import java.lang.reflect.InvocationHandler;
@@ -49,7 +50,7 @@ public class IActivityManagerProxy implements InvocationHandler
             }
             Intent pluginIntent = new Intent();
             pluginIntent.setClassName(packageName, packageName + clz);
-            pluginIntent.putExtra(HookHelper.TARGET_INTENT, intent);
+            pluginIntent.putExtra(GlobalActivityHookHelper.TARGET_INTENT, intent);
             args[index] = pluginIntent;
         }
         return method.invoke(mActivityManager, args);

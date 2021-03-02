@@ -374,10 +374,13 @@ public class Camera2 extends BaseCamera
         mImageReader.setOnImageAvailableListener(imageAvailableListener, null);
     }
 
-    private final ImageReader.OnImageAvailableListener imageAvailableListener = reader -> {
-        try (Image image = reader.acquireNextImage()) {
+    private final ImageReader.OnImageAvailableListener imageAvailableListener = reader ->
+    {
+        try (Image image = reader.acquireNextImage())
+        {
             Image.Plane[] planes = image.getPlanes();
-            if (planes.length > 0) {
+            if (planes.length > 0)
+            {
                 ByteBuffer buffer = planes[0].getBuffer();
                 byte[] data = new byte[buffer.remaining()];
                 buffer.get(data);
@@ -419,9 +422,7 @@ public class Camera2 extends BaseCamera
         if (isAutoFocus)
         {
             int[] modes = mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AF_AVAILABLE_MODES);
-            if (modes == null ||
-                modes.length == 0 ||
-                (modes.length == 1 && modes[0] == CameraCharacteristics.CONTROL_AF_MODE_OFF))
+            if (modes == null || modes.length == 0 || (modes.length == 1 && modes[0] == CameraCharacteristics.CONTROL_AF_MODE_OFF))
             {
                 isAutoFocus = false;
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_OFF);
@@ -545,7 +546,8 @@ public class Camera2 extends BaseCamera
                 mCameraSession.capture(builder.build(), new CameraCaptureSession.CaptureCallback()
                 {
                     @Override
-                    public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result)
+                    public void onCaptureCompleted(@NonNull CameraCaptureSession session,
+                            @NonNull CaptureRequest request, @NonNull TotalCaptureResult result)
                     {
                         unlockFocus();
                     }
@@ -577,13 +579,15 @@ public class Camera2 extends BaseCamera
         }
 
         @Override
-        public void onCaptureProgressed(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull CaptureResult partialResult)
+        public void onCaptureProgressed(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request,
+                @NonNull CaptureResult partialResult)
         {
             process(partialResult);
         }
 
         @Override
-        public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result)
+        public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request,
+                @NonNull TotalCaptureResult result)
         {
             process(result);
         }
@@ -595,7 +599,8 @@ public class Camera2 extends BaseCamera
                 case CAMERA_STATE_LOCKING:
                 {
                     Integer af = result.get(CaptureResult.CONTROL_AF_STATE);
-                    if (af == null) break;
+                    if (af == null)
+                        break;
                     if (af == CaptureResult.CONTROL_AF_STATE_FOCUSED_LOCKED || af == CaptureResult.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED)
                     {
                         Integer ae = result.get(CaptureResult.CONTROL_AE_STATE);

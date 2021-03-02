@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.icheero.plugin.R;
-import com.icheero.plugin.framework.tinker.TinkerManager;
+import com.icheero.plugin.hotfix.tinker.TinkerManager;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.util.FileUtils;
 

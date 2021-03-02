@@ -1,4 +1,4 @@
-package com.icheero.plugin.framework.andfix;
+package com.icheero.plugin.hotfix.andfix;
 
 import android.app.Service;
 import android.content.Intent;
@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 
-import com.icheero.plugin.model.Patch;
+import com.icheero.plugin.hotfix.andfix.model.Patch;
 import com.icheero.sdk.core.api.CheeroApi;
 import com.icheero.sdk.core.network.listener.IResponseListener;
 

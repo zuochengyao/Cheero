@@ -1,4 +1,4 @@
-package com.icheero.plugin.model;
+package com.icheero.plugin.hotfix.andfix.model;
 
 import java.io.Serializable;
 

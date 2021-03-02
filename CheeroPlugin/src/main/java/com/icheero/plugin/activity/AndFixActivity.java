@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.icheero.plugin.R;
-import com.icheero.plugin.framework.andfix.AndFixPatchManager;
+import com.icheero.plugin.hotfix.andfix.AndFixPatchManager;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.util.Common;

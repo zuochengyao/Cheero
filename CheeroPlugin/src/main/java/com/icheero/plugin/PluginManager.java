@@ -1,4 +1,4 @@
-package com.icheero.plugin.framework;
+package com.icheero.plugin;
 
 import android.app.Activity;
 import android.content.res.AssetManager;

@@ -78,7 +78,7 @@ public class Log
     private static void trace(Class<?> cls, String log, int prio)
     {
         log += "\n";
-        CheeroNative.nativeTrace(cls.getName(), log, prio);
+        CheeroNative.nativeTrace(mTraceMode == TRACE_MODE_ON_SCREEN ? cls.getSimpleName() : cls.getName(), log, prio);
     }
 
     public static void print()

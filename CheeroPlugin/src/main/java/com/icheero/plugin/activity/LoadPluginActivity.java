@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.icheero.plugin.R;
-import com.icheero.plugin.framework.PluginManager;
+import com.icheero.plugin.PluginManager;
 import com.icheero.sdk.base.BaseActivity;
 
 import java.io.File;
@@ -31,7 +31,7 @@ public class LoadPluginActivity extends BaseActivity implements View.OnClickList
             requestPermissions(perms, 200);
         doInitView();
     }
-    
+
     @Override
     public void onClick(View v)
     {
@@ -51,7 +51,8 @@ public class LoadPluginActivity extends BaseActivity implements View.OnClickList
             if (apk.exists())
             {
                 // 加载到内存
-                DexClassLoader classLoader = new DexClassLoader(apk.getAbsolutePath(), this.getDir(PluginManager.PLUGIN_NAME, Context.MODE_PRIVATE).getAbsolutePath(), null, getClassLoader());
+                DexClassLoader classLoader = new DexClassLoader(apk.getAbsolutePath(), this.getDir(PluginManager.PLUGIN_NAME, Context.MODE_PRIVATE)
+                                                                                           .getAbsolutePath(), null, getClassLoader());
                 // 获取本地资源
                 // Drawable drawable = this.getResources().getDrawable(R.drawable.volume_bigger);
                 try
@@ -84,7 +85,7 @@ public class LoadPluginActivity extends BaseActivity implements View.OnClickList
                 PluginManager.loadPlugin(this); // 加载插件
         }
     }
-    
+
     private void doInitView()
     {
         ImageView ivVolumeBigger = $(R.id.image_volume_bigger);

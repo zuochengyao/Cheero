@@ -1,4 +1,4 @@
-package com.icheero.plugin.framework.andfix;
+package com.icheero.plugin.hotfix.andfix;
 
 import android.content.Context;
 

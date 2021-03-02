@@ -1,4 +1,4 @@
-package com.icheero.plugin.framework.tinker;
+package com.icheero.plugin.hotfix.tinker;
 
 import android.content.Context;
 
