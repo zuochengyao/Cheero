@@ -260,7 +260,7 @@
                 android:id="@+id/to_load_plugin_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LoadPluginActivity" />
+                android:text="PluginMainActivity" />
 
         </LinearLayout>
     </HorizontalScrollView>
@@ -299,12 +299,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/to_plugin_activity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PluginActivity" />
 
             <Button
                 android:id="@+id/to_xposed_activity"

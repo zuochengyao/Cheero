@@ -140,8 +140,6 @@ public class MainActivity extends BaseActivity
     Button toAsyncTaskActivity;
     @BindView(R.id.to_weak_handler_activity)
     Button toWeakHandlerActivity;
-    @BindView(R.id.to_plugin_activity)
-    Button toPluginActivity;
     // endregion
 
     @Override
@@ -375,7 +373,7 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @OnClick({R.id.to_plugin_activity, R.id.to_rx_java_activity, R.id.to_event_bus_activity, R.id.to_xposed_activity, R.id.to_flutter_activity})
+    @OnClick({R.id.to_rx_java_activity, R.id.to_event_bus_activity, R.id.to_xposed_activity, R.id.to_flutter_activity})
     public void OnFrameworkClickEvent(View v)
     {
         switch (v.getId())
@@ -393,11 +391,6 @@ public class MainActivity extends BaseActivity
             case R.id.to_xposed_activity:
             {
                 openActivity(XposedActivity.class);
-                break;
-            }
-            case R.id.to_plugin_activity:
-            {
-                openActivity(com.icheero.plugin.activity.MainActivity.class);
                 break;
             }
         }
