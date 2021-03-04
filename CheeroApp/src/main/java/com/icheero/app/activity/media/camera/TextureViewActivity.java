@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
-import com.icheero.sdk.core.manager.IOManager;
+import com.icheero.sdk.core.manager.FileManager;
 import com.icheero.sdk.core.media.camera.Camera2;
 import com.icheero.sdk.core.media.camera.extract.BaseCamera;
 import com.icheero.sdk.util.Common;
@@ -139,7 +139,7 @@ public class TextureViewActivity extends BaseActivity implements TextureView.Sur
     @Override
     public void onPictureTaken(byte[] data)
     {
-        String filePath = IOManager.getInstance().saveImageFile(data);
+        String filePath = FileManager.getInstance().saveImageFile(data);
         Common.toast(this, filePath, Toast.LENGTH_SHORT);
     }
 }

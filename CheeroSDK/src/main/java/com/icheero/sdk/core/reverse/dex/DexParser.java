@@ -14,7 +14,7 @@ import com.icheero.sdk.core.reverse.dex.model.TypeIdItem;
 import com.icheero.sdk.core.reverse.dex.model.TypeItem;
 import com.icheero.sdk.core.reverse.dex.model.Uleb128;
 import com.icheero.sdk.util.Common;
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 import com.icheero.sdk.util.Log;
 
 import java.util.ArrayList;
@@ -69,29 +69,29 @@ public class DexParser
 
     private void parseDexHeader()
     {
-        FileUtils.copyBytes(mDexData, 0, mDexHeader.magic);
-        FileUtils.copyBytes(mDexData, 8, mDexHeader.checkSum);
-        FileUtils.copyBytes(mDexData, 12, mDexHeader.signature);
-        FileUtils.copyBytes(mDexData, 32, mDexHeader.fileSize);
-        FileUtils.copyBytes(mDexData, 36, mDexHeader.headerSize);
-        FileUtils.copyBytes(mDexData, 40, mDexHeader.endianTag);
-        FileUtils.copyBytes(mDexData, 44, mDexHeader.linkSize);
-        FileUtils.copyBytes(mDexData, 48, mDexHeader.linkOff);
-        FileUtils.copyBytes(mDexData, 52, mDexHeader.mapOff);
-        FileUtils.copyBytes(mDexData, 56, mDexHeader.stringIdsSize);
-        FileUtils.copyBytes(mDexData, 60, mDexHeader.stringIdsOff);
-        FileUtils.copyBytes(mDexData, 64, mDexHeader.typeIdsSize);
-        FileUtils.copyBytes(mDexData, 68, mDexHeader.typeIdsOff);
-        FileUtils.copyBytes(mDexData, 72, mDexHeader.protoIdsSize);
-        FileUtils.copyBytes(mDexData, 76, mDexHeader.protoIdsOff);
-        FileUtils.copyBytes(mDexData, 80, mDexHeader.fieldIdsSize);
-        FileUtils.copyBytes(mDexData, 84, mDexHeader.fieldIdsOff);
-        FileUtils.copyBytes(mDexData, 88, mDexHeader.methodIdsSize);
-        FileUtils.copyBytes(mDexData, 92, mDexHeader.methodIdsOff);
-        FileUtils.copyBytes(mDexData, 96, mDexHeader.classDefsSize);
-        FileUtils.copyBytes(mDexData, 100, mDexHeader.classDefsOff);
-        FileUtils.copyBytes(mDexData, 104, mDexHeader.dataSize);
-        FileUtils.copyBytes(mDexData, 108, mDexHeader.dataOff);
+        IOUtils.copyBytes(mDexData, 0, mDexHeader.magic);
+        IOUtils.copyBytes(mDexData, 8, mDexHeader.checkSum);
+        IOUtils.copyBytes(mDexData, 12, mDexHeader.signature);
+        IOUtils.copyBytes(mDexData, 32, mDexHeader.fileSize);
+        IOUtils.copyBytes(mDexData, 36, mDexHeader.headerSize);
+        IOUtils.copyBytes(mDexData, 40, mDexHeader.endianTag);
+        IOUtils.copyBytes(mDexData, 44, mDexHeader.linkSize);
+        IOUtils.copyBytes(mDexData, 48, mDexHeader.linkOff);
+        IOUtils.copyBytes(mDexData, 52, mDexHeader.mapOff);
+        IOUtils.copyBytes(mDexData, 56, mDexHeader.stringIdsSize);
+        IOUtils.copyBytes(mDexData, 60, mDexHeader.stringIdsOff);
+        IOUtils.copyBytes(mDexData, 64, mDexHeader.typeIdsSize);
+        IOUtils.copyBytes(mDexData, 68, mDexHeader.typeIdsOff);
+        IOUtils.copyBytes(mDexData, 72, mDexHeader.protoIdsSize);
+        IOUtils.copyBytes(mDexData, 76, mDexHeader.protoIdsOff);
+        IOUtils.copyBytes(mDexData, 80, mDexHeader.fieldIdsSize);
+        IOUtils.copyBytes(mDexData, 84, mDexHeader.fieldIdsOff);
+        IOUtils.copyBytes(mDexData, 88, mDexHeader.methodIdsSize);
+        IOUtils.copyBytes(mDexData, 92, mDexHeader.methodIdsOff);
+        IOUtils.copyBytes(mDexData, 96, mDexHeader.classDefsSize);
+        IOUtils.copyBytes(mDexData, 100, mDexHeader.classDefsOff);
+        IOUtils.copyBytes(mDexData, 104, mDexHeader.dataSize);
+        IOUtils.copyBytes(mDexData, 108, mDexHeader.dataOff);
         Log.i(TAG, mDexHeader.toString().split("\n"));
     }
 
@@ -103,9 +103,9 @@ public class DexParser
             for (int i = 0; i < mDexHeader.getStringIdsSizeValue(); i++)
             {
                 StringIdItem stringId = new StringIdItem();
-                FileUtils.copyBytes(mDexData, mDexHeader.getStringIdsOffValue() + i * 4, stringId.stringDataOff);
-                stringId.stringData.val = Uleb128.from(FileUtils.copyBytes(mDexData, stringId.getStringDataOffValue()));
-                stringId.stringData.data = FileUtils.copyBytes(mDexData, stringId.getStringDataOffValue() + stringId.stringData.getLength(), stringId.stringData.getValue());
+                IOUtils.copyBytes(mDexData, mDexHeader.getStringIdsOffValue() + i * 4, stringId.stringDataOff);
+                stringId.stringData.val = Uleb128.from(IOUtils.copyBytes(mDexData, stringId.getStringDataOffValue()));
+                stringId.stringData.data = IOUtils.copyBytes(mDexData, stringId.getStringDataOffValue() + stringId.stringData.getLength(), stringId.stringData.getValue());
                 Log.i(TAG, stringId.toString());
                 mDex.stringIds.add(stringId);
                 mStringList.add(stringId.stringData.getDataStr());
@@ -121,7 +121,7 @@ public class DexParser
             for (int i = 0; i < mDexHeader.getTypeIdsSizeValue(); i++)
             {
                 TypeIdItem typeId = new TypeIdItem();
-                FileUtils.copyBytes(mDexData, mDexHeader.getTypeIdsOffValue() + i * 4, typeId.descriptorIdx);
+                IOUtils.copyBytes(mDexData, mDexHeader.getTypeIdsOffValue() + i * 4, typeId.descriptorIdx);
                 String type = mDex.stringIds.get(typeId.getDescriptorIdx()).stringData.getDataStr();
                 Log.i(TAG, typeId.toString().concat(", Type: " + Common.signature2JavaType(type)));
                 mDex.typeIds.add(typeId);
@@ -138,16 +138,16 @@ public class DexParser
             for (int i = 0; i < mDexHeader.getProtoIdsSizeValue(); i++)
             {
                 ProtoIdItem protoId = new ProtoIdItem();
-                FileUtils.copyBytes(mDexData, mDexHeader.getProtoIdsOffValue() + i * 12, protoId.shortyIdx);
-                FileUtils.copyBytes(mDexData, mDexHeader.getProtoIdsOffValue() + i * 12 + 4, protoId.returnTypeIdx);
-                FileUtils.copyBytes(mDexData, mDexHeader.getProtoIdsOffValue() + i * 12 + 8, protoId.parametersOff);
+                IOUtils.copyBytes(mDexData, mDexHeader.getProtoIdsOffValue() + i * 12, protoId.shortyIdx);
+                IOUtils.copyBytes(mDexData, mDexHeader.getProtoIdsOffValue() + i * 12 + 4, protoId.returnTypeIdx);
+                IOUtils.copyBytes(mDexData, mDexHeader.getProtoIdsOffValue() + i * 12 + 8, protoId.parametersOff);
                 if (protoId.getParametersOffValue() > 0)
                 {
-                    int size = FileUtils.byte2Int(FileUtils.copyBytes(mDexData, protoId.getParametersOffValue(), 4));
+                    int size = IOUtils.byte2Int(IOUtils.copyBytes(mDexData, protoId.getParametersOffValue(), 4));
                     for (int j = 0; j < size; j++)
                     {
                         TypeItem type = new TypeItem();
-                        FileUtils.copyBytes(mDexData, protoId.getParametersOffValue() + 4 + j * 2, type.typeIdx);
+                        IOUtils.copyBytes(mDexData, protoId.getParametersOffValue() + 4 + j * 2, type.typeIdx);
                         protoId.parameters.size = size;
                         protoId.parameters.list.add(type);
                     }
@@ -166,9 +166,9 @@ public class DexParser
             for (int i = 0; i < mDexHeader.getFieldIdsSizeValue(); i++)
             {
                 FieldIdItem fieldId = new FieldIdItem();
-                FileUtils.copyBytes(mDexData, mDexHeader.getFieldIdsOffValue() + i * 8, fieldId.classIdx);
-                FileUtils.copyBytes(mDexData, mDexHeader.getFieldIdsOffValue() + i * 8 + 2, fieldId.typeIdx);
-                FileUtils.copyBytes(mDexData, mDexHeader.getFieldIdsOffValue() + i * 8 + 4, fieldId.nameIdx);
+                IOUtils.copyBytes(mDexData, mDexHeader.getFieldIdsOffValue() + i * 8, fieldId.classIdx);
+                IOUtils.copyBytes(mDexData, mDexHeader.getFieldIdsOffValue() + i * 8 + 2, fieldId.typeIdx);
+                IOUtils.copyBytes(mDexData, mDexHeader.getFieldIdsOffValue() + i * 8 + 4, fieldId.nameIdx);
                 Log.i(TAG, fieldId.toString());
                 mDex.fieldIds.add(fieldId);
             }
@@ -183,9 +183,9 @@ public class DexParser
             for (int i = 0; i < mDexHeader.getMethodIdsSizeValue(); i++)
             {
                 MethodIdItem methodId = new MethodIdItem();
-                FileUtils.copyBytes(mDexData, mDexHeader.getMethodIdsOffValue() + i * 8, methodId.classIdx);
-                FileUtils.copyBytes(mDexData, mDexHeader.getMethodIdsOffValue() + i * 8 + 2, methodId.protoIdx);
-                FileUtils.copyBytes(mDexData, mDexHeader.getMethodIdsOffValue() + i * 8 + 4, methodId.nameIdx);
+                IOUtils.copyBytes(mDexData, mDexHeader.getMethodIdsOffValue() + i * 8, methodId.classIdx);
+                IOUtils.copyBytes(mDexData, mDexHeader.getMethodIdsOffValue() + i * 8 + 2, methodId.protoIdx);
+                IOUtils.copyBytes(mDexData, mDexHeader.getMethodIdsOffValue() + i * 8 + 4, methodId.nameIdx);
                 Log.i(TAG, methodId.toString());
                 mDex.methodIds.add(methodId);
             }
@@ -200,18 +200,18 @@ public class DexParser
             for (int i = 0; i < mDexHeader.getClassDefsSizeValue(); i++)
             {
                 ClassDefItem classDef = new ClassDefItem();
-                FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32, classDef.classIdx);
-                FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 4, classDef.accessFlags);
-                FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 8, classDef.superclassIdx);
-                FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 12, classDef.interfacesOff);
-                FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 16, classDef.sourceFileIdx);
-                FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 20, classDef.annotationsOff);
-                FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 24, classDef.classDataOff);
-                FileUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 28, classDef.staticValueOff);
+                IOUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32, classDef.classIdx);
+                IOUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 4, classDef.accessFlags);
+                IOUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 8, classDef.superclassIdx);
+                IOUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 12, classDef.interfacesOff);
+                IOUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 16, classDef.sourceFileIdx);
+                IOUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 20, classDef.annotationsOff);
+                IOUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 24, classDef.classDataOff);
+                IOUtils.copyBytes(mDexData, mDexHeader.getClassDefsOffValue() + i * 32 + 28, classDef.staticValueOff);
                 Log.i(TAG, classDef.toString());
                 if (classDef.getClassDataOffValue() > 0)
                 {
-                    ClassDataItem classData = parseClassDataItem(FileUtils.copyBytes(mDexData, classDef.getClassDataOffValue()));
+                    ClassDataItem classData = parseClassDataItem(IOUtils.copyBytes(mDexData, classDef.getClassDataOffValue()));
                     Log.i(TAG, classData.toString());
                 }
                 if (classDef.getStaticValueOffValue() > 0)
@@ -232,20 +232,20 @@ public class DexParser
             classData = new ClassDataItem();
             classData.staticFieldsSize = Uleb128.from(src);
             offset += classData.staticFieldsSize.getLength();
-            classData.instanceFieldsSize = Uleb128.from(FileUtils.copyBytes(src, offset));
+            classData.instanceFieldsSize = Uleb128.from(IOUtils.copyBytes(src, offset));
             offset += classData.instanceFieldsSize.getLength();
-            classData.directMethodsSize = Uleb128.from(FileUtils.copyBytes(src, offset));
+            classData.directMethodsSize = Uleb128.from(IOUtils.copyBytes(src, offset));
             offset += classData.directMethodsSize.getLength();
-            classData.virtualMethodsSize = Uleb128.from(FileUtils.copyBytes(src, offset));
+            classData.virtualMethodsSize = Uleb128.from(IOUtils.copyBytes(src, offset));
             offset += classData.virtualMethodsSize.getLength();
 
             classData.staticFields = new EncodedField[(int) classData.staticFieldsSize.asLong()];
             for (int i = 0; i < classData.staticFields.length; i++)
             {
                 EncodedField staticField = new EncodedField();
-                staticField.filedIdxDiff = Uleb128.from(FileUtils.copyBytes(src, offset));
+                staticField.filedIdxDiff = Uleb128.from(IOUtils.copyBytes(src, offset));
                 offset += staticField.filedIdxDiff.getLength();
-                staticField.accessFlags = Uleb128.from(FileUtils.copyBytes(src, offset));
+                staticField.accessFlags = Uleb128.from(IOUtils.copyBytes(src, offset));
                 offset += staticField.accessFlags.getLength();
                 classData.staticFields[i] = staticField;
             }
@@ -254,9 +254,9 @@ public class DexParser
             for (int i = 0; i < classData.instanceFields.length; i++)
             {
                 EncodedField staticField = new EncodedField();
-                staticField.filedIdxDiff = Uleb128.from(FileUtils.copyBytes(src, offset));
+                staticField.filedIdxDiff = Uleb128.from(IOUtils.copyBytes(src, offset));
                 offset += staticField.filedIdxDiff.getLength();
-                staticField.accessFlags = Uleb128.from(FileUtils.copyBytes(src, offset));
+                staticField.accessFlags = Uleb128.from(IOUtils.copyBytes(src, offset));
                 offset += staticField.accessFlags.getLength();
                 classData.instanceFields[i] = staticField;
             }
@@ -265,11 +265,11 @@ public class DexParser
             for (int i = 0; i < classData.directMethods.length; i++)
             {
                 EncodedMethod directMethod = new EncodedMethod();
-                directMethod.methodIdxDiff = Uleb128.from(FileUtils.copyBytes(src, offset));
+                directMethod.methodIdxDiff = Uleb128.from(IOUtils.copyBytes(src, offset));
                 offset += directMethod.methodIdxDiff.getLength();
-                directMethod.accessFlags = Uleb128.from(FileUtils.copyBytes(src, offset));
+                directMethod.accessFlags = Uleb128.from(IOUtils.copyBytes(src, offset));
                 offset += directMethod.accessFlags.getLength();
-                directMethod.codeOff = Uleb128.from(FileUtils.copyBytes(src, offset));
+                directMethod.codeOff = Uleb128.from(IOUtils.copyBytes(src, offset));
                 offset += directMethod.codeOff.getLength();
                 classData.directMethods[i] = directMethod;
             }
@@ -278,11 +278,11 @@ public class DexParser
             for (int i = 0; i < classData.virtualMethods.length; i++)
             {
                 EncodedMethod directMethod = new EncodedMethod();
-                directMethod.methodIdxDiff = Uleb128.from(FileUtils.copyBytes(src, offset));
+                directMethod.methodIdxDiff = Uleb128.from(IOUtils.copyBytes(src, offset));
                 offset += directMethod.methodIdxDiff.getLength();
-                directMethod.accessFlags = Uleb128.from(FileUtils.copyBytes(src, offset));
+                directMethod.accessFlags = Uleb128.from(IOUtils.copyBytes(src, offset));
                 offset += directMethod.accessFlags.getLength();
-                directMethod.codeOff = Uleb128.from(FileUtils.copyBytes(src, offset));
+                directMethod.codeOff = Uleb128.from(IOUtils.copyBytes(src, offset));
                 offset += directMethod.codeOff.getLength();
                 classData.virtualMethods[i] = directMethod;
             }

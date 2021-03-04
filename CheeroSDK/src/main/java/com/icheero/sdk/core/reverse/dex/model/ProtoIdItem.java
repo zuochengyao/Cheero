@@ -1,7 +1,7 @@
 package com.icheero.sdk.core.reverse.dex.model;
 
 import com.icheero.sdk.core.reverse.dex.DexParser;
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 
 import androidx.annotation.NonNull;
 
@@ -19,17 +19,17 @@ public class ProtoIdItem
 
     public int getShortyIdxValue()
     {
-        return FileUtils.byte2Int(shortyIdx);
+        return IOUtils.byte2Int(shortyIdx);
     }
 
     public int getReturnTypeIdxValue()
     {
-        return FileUtils.byte2Int(returnTypeIdx);
+        return IOUtils.byte2Int(returnTypeIdx);
     }
 
     public int getParametersOffValue()
     {
-        return FileUtils.byte2Int(parametersOff);
+        return IOUtils.byte2Int(parametersOff);
     }
 
     public String getReturnType()

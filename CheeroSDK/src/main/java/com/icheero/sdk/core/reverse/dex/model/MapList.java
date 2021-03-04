@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.reverse.dex.model;
 
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,6 @@ public class MapList
 
     public int getSizeValue()
     {
-        return FileUtils.byte2Int(size);
+        return IOUtils.byte2Int(size);
     }
 }

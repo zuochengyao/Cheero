@@ -13,7 +13,7 @@ import com.icheero.sdk.core.reverse.resource.model.ResTableRef;
 import com.icheero.sdk.core.reverse.resource.model.ResTableType;
 import com.icheero.sdk.core.reverse.resource.model.ResTableTypeSpec;
 import com.icheero.sdk.core.reverse.resource.model.ResValue;
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 import com.icheero.sdk.util.Log;
 
 import java.io.UnsupportedEncodingException;
@@ -42,22 +42,22 @@ public class ResourceParser implements IParser
         Log.e(TAG, "Parse resource start!");
         while (nextChunkOffset < mResourceData.length)
         {
-            mResChunkHeader = parseResChunkHeader(FileUtils.copyBytes(mResourceData, nextChunkOffset, ResChunkHeader.getHeaderLength()));
+            mResChunkHeader = parseResChunkHeader(IOUtils.copyBytes(mResourceData, nextChunkOffset, ResChunkHeader.getHeaderLength()));
             int headerSize = mResChunkHeader.getHeaderSizeValue();
             int chunkSize = mResChunkHeader.getSizeValue();
             switch (mResChunkHeader.getTypeValue())
             {
                 case ResChunkHeader.RES_TABLE_TYPE:
-                    ResTableHeader resTableHeader = parseResTableHeader(FileUtils.copyBytes(mResourceData, nextChunkOffset, headerSize));
+                    ResTableHeader resTableHeader = parseResTableHeader(IOUtils.copyBytes(mResourceData, nextChunkOffset, headerSize));
                     Log.i(TAG, resTableHeader.toString().split("\n"));
                     nextChunkOffset += headerSize;
                     break;
                 case ResChunkHeader.RES_STRING_POOL_TYPE:
-                    mStringPoolList = parseResStringPoolChunk(FileUtils.copyBytes(mResourceData, nextChunkOffset, chunkSize));
+                    mStringPoolList = parseResStringPoolChunk(IOUtils.copyBytes(mResourceData, nextChunkOffset, chunkSize));
                     nextChunkOffset += chunkSize;
                     break;
                 case ResChunkHeader.RES_TABLE_PACKAGE_TYPE:
-                    parseResTablePackageType(FileUtils.copyBytes(mResourceData, nextChunkOffset, chunkSize));
+                    parseResTablePackageType(IOUtils.copyBytes(mResourceData, nextChunkOffset, chunkSize));
                     nextChunkOffset += chunkSize;
                     break;
             }
@@ -69,7 +69,7 @@ public class ResourceParser implements IParser
     private ResTableHeader parseResTableHeader(byte[] resTableHeaderSrc)
     {
         ResTableHeader resTableHeader = new ResTableHeader(mResChunkHeader);
-        resTableHeader.packageCount = FileUtils.copyBytes(resTableHeaderSrc, 8, 4);
+        resTableHeader.packageCount = IOUtils.copyBytes(resTableHeaderSrc, 8, 4);
         return resTableHeader;
     }
     // endregion
@@ -77,24 +77,24 @@ public class ResourceParser implements IParser
     // region 解析StringPoolType
     private List<String> parseResStringPoolChunk(byte[] stringPoolSrc)
     {
-        ResStringPoolHeader resStringPoolHeader = parseResStringPoolHeader(FileUtils.copyBytes(stringPoolSrc, 0, ResStringPoolHeader.getHeaderLength()));
+        ResStringPoolHeader resStringPoolHeader = parseResStringPoolHeader(IOUtils.copyBytes(stringPoolSrc, 0, ResStringPoolHeader.getHeaderLength()));
         Log.i(TAG, resStringPoolHeader.toString().split("\n"));
         // 解析StringPool偏移量
         int stringCount = resStringPoolHeader.getStringCountValue();
-        List<Integer> stringOffsets = parseResOffsets(FileUtils.copyBytes(stringPoolSrc, ResStringPoolHeader.getHeaderLength(), stringCount * 4), stringCount);
+        List<Integer> stringOffsets = parseResOffsets(IOUtils.copyBytes(stringPoolSrc, ResStringPoolHeader.getHeaderLength(), stringCount * 4), stringCount);
         // 解析StringPool中字符串内容
         int stringStart = resStringPoolHeader.getStringsStartValue();
-        return parseResStringPoolStr(FileUtils.copyBytes(stringPoolSrc, stringStart, stringPoolSrc.length - stringStart), stringOffsets, resStringPoolHeader.getFlagsValueEncode());
+        return parseResStringPoolStr(IOUtils.copyBytes(stringPoolSrc, stringStart, stringPoolSrc.length - stringStart), stringOffsets, resStringPoolHeader.getFlagsValueEncode());
     }
 
     private ResStringPoolHeader parseResStringPoolHeader(byte[] resStringPoolSrc)
     {
         ResStringPoolHeader resStringPoolHeader = new ResStringPoolHeader(mResChunkHeader);
-        resStringPoolHeader.stringCount = FileUtils.copyBytes(resStringPoolSrc, 8, 4);
-        resStringPoolHeader.styleCount = FileUtils.copyBytes(resStringPoolSrc, 12, 4);
-        resStringPoolHeader.flags = FileUtils.copyBytes(resStringPoolSrc, 16, 4);
-        resStringPoolHeader.stringsStart = FileUtils.copyBytes(resStringPoolSrc, 20, 4);
-        resStringPoolHeader.stylesStart = FileUtils.copyBytes(resStringPoolSrc, 24, 4);
+        resStringPoolHeader.stringCount = IOUtils.copyBytes(resStringPoolSrc, 8, 4);
+        resStringPoolHeader.styleCount = IOUtils.copyBytes(resStringPoolSrc, 12, 4);
+        resStringPoolHeader.flags = IOUtils.copyBytes(resStringPoolSrc, 16, 4);
+        resStringPoolHeader.stringsStart = IOUtils.copyBytes(resStringPoolSrc, 20, 4);
+        resStringPoolHeader.stylesStart = IOUtils.copyBytes(resStringPoolSrc, 24, 4);
         return resStringPoolHeader;
     }
 
@@ -103,14 +103,14 @@ public class ResourceParser implements IParser
         List<String> stringList = new ArrayList<>();
         for (int i = 0; i < stringOffsets.size(); i++)
         {
-            byte[] sizeBytes = FileUtils.copyBytes(resStringPoolStr, stringOffsets.get(i), 2);
+            byte[] sizeBytes = IOUtils.copyBytes(resStringPoolStr, stringOffsets.get(i), 2);
             int size = sizeBytes[1] & 0x7F;
             String strValue = "";
             if (size != 0)
             {
                 try
                 {
-                    strValue = new String(FileUtils.copyBytes(resStringPoolStr, stringOffsets.get(i) + 2, size), encoding);
+                    strValue = new String(IOUtils.copyBytes(resStringPoolStr, stringOffsets.get(i) + 2, size), encoding);
                 }
                 catch (UnsupportedEncodingException e)
                 {
@@ -118,7 +118,7 @@ public class ResourceParser implements IParser
                 }
             }
             stringList.add(strValue);
-            Log.i(TAG, "StringData[" + i + "]:" + FileUtils.byte2HexString(sizeBytes) + "(" + strValue + ")");
+            Log.i(TAG, "StringData[" + i + "]:" + IOUtils.byte2HexString(sizeBytes) + "(" + strValue + ")");
         }
         return stringList;
     }
@@ -128,7 +128,7 @@ public class ResourceParser implements IParser
 
     private void parseResTablePackageType(byte[] packageTypeSrc)
     {
-        ResTablePackage resTablePackageHeader = parseResTablePackageHeader(FileUtils.copyBytes(packageTypeSrc, 0, mResChunkHeader.getHeaderSizeValue()));
+        ResTablePackage resTablePackageHeader = parseResTablePackageHeader(IOUtils.copyBytes(packageTypeSrc, 0, mResChunkHeader.getHeaderSizeValue()));
         Log.i(TAG, resTablePackageHeader.toString().split("\n"));
         int nextChunkOffset = mResChunkHeader.getHeaderSizeValue();
         // 解析TypeString
@@ -137,18 +137,18 @@ public class ResourceParser implements IParser
         nextChunkOffset += parseResTableKeyString(packageTypeSrc, resTablePackageHeader.getKeyStringsValue());
         while (nextChunkOffset < packageTypeSrc.length)
         {
-            mResChunkHeader = parseResChunkHeader(FileUtils.copyBytes(packageTypeSrc, nextChunkOffset, ResChunkHeader.getHeaderLength()));
+            mResChunkHeader = parseResChunkHeader(IOUtils.copyBytes(packageTypeSrc, nextChunkOffset, ResChunkHeader.getHeaderLength()));
             int chunkSize = mResChunkHeader.getSizeValue();
             switch (mResChunkHeader.getTypeValue())
             {
                 case ResChunkHeader.RES_TABLE_TYPE_SPEC_TYPE:
-                    ResTableTypeSpec resTableTypeSpec = parseResTableTypeSpec(FileUtils.copyBytes(packageTypeSrc, nextChunkOffset, chunkSize));
+                    ResTableTypeSpec resTableTypeSpec = parseResTableTypeSpec(IOUtils.copyBytes(packageTypeSrc, nextChunkOffset, chunkSize));
                     Log.i(TAG, "type_name:" + mStringTypeList.get(resTableTypeSpec.id - 1));
                     Log.i(TAG, resTableTypeSpec.toString().split("\n"));
                     nextChunkOffset += chunkSize;
                     break;
                 case ResChunkHeader.RES_TABLE_TYPE_TYPE:
-                    ResTableType resTableType = parseResTableType(FileUtils.copyBytes(packageTypeSrc, nextChunkOffset, chunkSize));
+                    ResTableType resTableType = parseResTableType(IOUtils.copyBytes(packageTypeSrc, nextChunkOffset, chunkSize));
                     Log.i(TAG, "type_name:" + mStringTypeList.get(resTableType.id - 1));
                     Log.i(TAG, resTableType.toString().split("\n"));
                     nextChunkOffset += chunkSize;
@@ -160,28 +160,28 @@ public class ResourceParser implements IParser
     private ResTablePackage parseResTablePackageHeader(byte[] packageHeaderSrc)
     {
         ResTablePackage header = new ResTablePackage(mResChunkHeader);
-        FileUtils.copyBytes(packageHeaderSrc, 8, header.id);
+        IOUtils.copyBytes(packageHeaderSrc, 8, header.id);
         packId = header.getIdValue();
-        FileUtils.copyBytes(packageHeaderSrc, 12, header.name);
-        FileUtils.copyBytes(packageHeaderSrc, 268, header.typeStrings);
-        FileUtils.copyBytes(packageHeaderSrc, 272, header.lastPublicType);
-        FileUtils.copyBytes(packageHeaderSrc, 276, header.keyStrings);
-        FileUtils.copyBytes(packageHeaderSrc, 280, header.lastPublicKey);
+        IOUtils.copyBytes(packageHeaderSrc, 12, header.name);
+        IOUtils.copyBytes(packageHeaderSrc, 268, header.typeStrings);
+        IOUtils.copyBytes(packageHeaderSrc, 272, header.lastPublicType);
+        IOUtils.copyBytes(packageHeaderSrc, 276, header.keyStrings);
+        IOUtils.copyBytes(packageHeaderSrc, 280, header.lastPublicKey);
         return header;
     }
 
     private int parseResTableTypeString(byte[] packageTypeSrc, int start)
     {
-        mResChunkHeader = parseResChunkHeader(FileUtils.copyBytes(packageTypeSrc, start, ResChunkHeader.getHeaderLength()));
-        byte[] typeStringSrc = FileUtils.copyBytes(packageTypeSrc, start, mResChunkHeader.getSizeValue());
+        mResChunkHeader = parseResChunkHeader(IOUtils.copyBytes(packageTypeSrc, start, ResChunkHeader.getHeaderLength()));
+        byte[] typeStringSrc = IOUtils.copyBytes(packageTypeSrc, start, mResChunkHeader.getSizeValue());
         mStringTypeList = parseResStringPoolChunk(typeStringSrc);
         return mResChunkHeader.getSizeValue();
     }
 
     private int parseResTableKeyString(byte[] packageTypeSrc, int start)
     {
-        mResChunkHeader = parseResChunkHeader(FileUtils.copyBytes(packageTypeSrc, start, ResChunkHeader.getHeaderLength()));
-        byte[] keyStringSrc = FileUtils.copyBytes(packageTypeSrc, start, mResChunkHeader.getSizeValue());
+        mResChunkHeader = parseResChunkHeader(IOUtils.copyBytes(packageTypeSrc, start, ResChunkHeader.getHeaderLength()));
+        byte[] keyStringSrc = IOUtils.copyBytes(packageTypeSrc, start, mResChunkHeader.getSizeValue());
         mStringKeyList = parseResStringPoolChunk(keyStringSrc);
         return mResChunkHeader.getSizeValue();
     }
@@ -196,11 +196,11 @@ public class ResourceParser implements IParser
         resTableTypeSpec.id = typeSpecSrc[8];
         resTypeId = resTableTypeSpec.getIdValue();
         resTableTypeSpec.res0 = typeSpecSrc[9];
-        FileUtils.copyBytes(typeSpecSrc, 10, resTableTypeSpec.res1);
-        FileUtils.copyBytes(typeSpecSrc, 12, resTableTypeSpec.entryCount);
+        IOUtils.copyBytes(typeSpecSrc, 10, resTableTypeSpec.res1);
+        IOUtils.copyBytes(typeSpecSrc, 12, resTableTypeSpec.entryCount);
         for (int i = 0; i < resTableTypeSpec.getEntryCountValue(); i++)
         {
-            int element = FileUtils.byte2Int(FileUtils.copyBytes(typeSpecSrc, resTableTypeSpec.getHeaderLength() + i * 4, 4));
+            int element = IOUtils.byte2Int(IOUtils.copyBytes(typeSpecSrc, resTableTypeSpec.getHeaderLength() + i * 4, 4));
             resTableTypeSpec.configMask.add(element);
         }
         return resTableTypeSpec;
@@ -211,22 +211,22 @@ public class ResourceParser implements IParser
         ResTableType resTableType = new ResTableType(mResChunkHeader);
         resTableType.id = typeSrc[8];
         resTableType.res0 = typeSrc[9];
-        FileUtils.copyBytes(typeSrc, 10, resTableType.res1);
-        FileUtils.copyBytes(typeSrc, 12, resTableType.entryCount);
-        FileUtils.copyBytes(typeSrc, 16, resTableType.entriesStart);
-        resTableType.resConfig = parseResTableConfig(FileUtils.copyBytes(typeSrc, 20, ResTableConfig.getLength()));
+        IOUtils.copyBytes(typeSrc, 10, resTableType.res1);
+        IOUtils.copyBytes(typeSrc, 12, resTableType.entryCount);
+        IOUtils.copyBytes(typeSrc, 16, resTableType.entriesStart);
+        resTableType.resConfig = parseResTableConfig(IOUtils.copyBytes(typeSrc, 20, ResTableConfig.getLength()));
         int count = resTableType.getEntryCountValue();
         if (count > 0)
         {
-            List<Integer> entryOffsets = parseResOffsets(FileUtils.copyBytes(typeSrc, mResChunkHeader.getHeaderSizeValue(), count * 4), count);
+            List<Integer> entryOffsets = parseResOffsets(IOUtils.copyBytes(typeSrc, mResChunkHeader.getHeaderSizeValue(), count * 4), count);
             for (int i = 0; i < count; i++)
             {
                 int resId = getResId(i);
-                Log.i(TAG, "resId:" + FileUtils.byte2HexString(FileUtils.int2Byte(resId)));
+                Log.i(TAG, "resId:" + IOUtils.byte2HexString(IOUtils.int2Byte(resId)));
                 if (entryOffsets.get(i) < 0)
                     continue;
                 // 先判断flags，如果是1，则是ResTableMapEntry，否则为ResTableEntry
-                short flags = FileUtils.byte2Short(FileUtils.copyBytes(typeSrc, resTableType.getEntriesStartValue() + 2, 2));
+                short flags = IOUtils.byte2Short(IOUtils.copyBytes(typeSrc, resTableType.getEntriesStartValue() + 2, 2));
                 if (flags == 1)
                 {
                     ResTableMapEntry mapEntry = parseResTableMapEntry(typeSrc, entryOffsets.get(i));
@@ -249,9 +249,9 @@ public class ResourceParser implements IParser
     private ResTableEntry parseResTableEntry(byte[] entrySrc, int start)
     {
         ResTableEntry entry = new ResTableEntry();
-        FileUtils.copyBytes(entrySrc, start, entry.size);
-        FileUtils.copyBytes(entrySrc, start + 2, entry.flags);
-        FileUtils.copyBytes(entrySrc, start + 4, entry.key.index);
+        IOUtils.copyBytes(entrySrc, start, entry.size);
+        IOUtils.copyBytes(entrySrc, start + 2, entry.flags);
+        IOUtils.copyBytes(entrySrc, start + 4, entry.key.index);
         return entry;
 
     }
@@ -259,10 +259,10 @@ public class ResourceParser implements IParser
     private ResValue parseResValue(byte[] valueSrc, int start)
     {
         ResValue value = new ResValue();
-        FileUtils.copyBytes(valueSrc, start, value.size);
+        IOUtils.copyBytes(valueSrc, start, value.size);
         value.res0 = valueSrc[start + 2];
         value.dataType = valueSrc[start + 3];
-        FileUtils.copyBytes(valueSrc, start + 4, value.data);
+        IOUtils.copyBytes(valueSrc, start + 4, value.data);
         return value;
     }
 
@@ -270,15 +270,15 @@ public class ResourceParser implements IParser
     {
         ResTableMapEntry mapEntry = new ResTableMapEntry();
         mapEntry.entry = parseResTableEntry(mapEntrySrc, start);
-        FileUtils.copyBytes(mapEntrySrc, start + 8, mapEntry.parent.ident);
-        FileUtils.copyBytes(mapEntrySrc, start + 12, mapEntry.count);
+        IOUtils.copyBytes(mapEntrySrc, start + 8, mapEntry.parent.ident);
+        IOUtils.copyBytes(mapEntrySrc, start + 12, mapEntry.count);
         return mapEntry;
     }
 
     private ResTableMap parseResTableMap(byte[] mapSrc, int start)
     {
         ResTableMap map = new ResTableMap();
-        FileUtils.copyBytes(mapSrc, start, map.name.ident);
+        IOUtils.copyBytes(mapSrc, start, map.name.ident);
         map.value = parseResValue(mapSrc, start + ResTableRef.getLength());
         return map;
     }
@@ -290,80 +290,80 @@ public class ResourceParser implements IParser
     {
         ResTableConfig config = new ResTableConfig();
 
-        byte[] sizeByte = FileUtils.copyBytes(src, 0, 4);
-        config.size = FileUtils.byte2Int(sizeByte);
+        byte[] sizeByte = IOUtils.copyBytes(src, 0, 4);
+        config.size = IOUtils.byte2Int(sizeByte);
 
         //以下结构是Union
-        byte[] mccByte = FileUtils.copyBytes(src, 4, 2);
-        config.mcc = FileUtils.byte2Short(mccByte);
-        byte[] mncByte = FileUtils.copyBytes(src, 6, 2);
-        config.mnc = FileUtils.byte2Short(mncByte);
-        byte[] imsiByte = FileUtils.copyBytes(src, 4, 4);
-        config.imsi = FileUtils.byte2Int(imsiByte);
+        byte[] mccByte = IOUtils.copyBytes(src, 4, 2);
+        config.mcc = IOUtils.byte2Short(mccByte);
+        byte[] mncByte = IOUtils.copyBytes(src, 6, 2);
+        config.mnc = IOUtils.byte2Short(mncByte);
+        byte[] imsiByte = IOUtils.copyBytes(src, 4, 4);
+        config.imsi = IOUtils.byte2Int(imsiByte);
 
         //以下结构是Union
-        config.language = FileUtils.copyBytes(src, 8, 2);
-        config.country = FileUtils.copyBytes(src, 10, 2);
-        byte[] localeByte = FileUtils.copyBytes(src, 8, 4);
-        config.locale = FileUtils.byte2Int(localeByte);
+        config.language = IOUtils.copyBytes(src, 8, 2);
+        config.country = IOUtils.copyBytes(src, 10, 2);
+        byte[] localeByte = IOUtils.copyBytes(src, 8, 4);
+        config.locale = IOUtils.byte2Int(localeByte);
 
         //以下结构是Union
-        byte[] orientationByte = FileUtils.copyBytes(src, 12, 1);
+        byte[] orientationByte = IOUtils.copyBytes(src, 12, 1);
         config.orientation = orientationByte[0];
-        byte[] touchscreenByte = FileUtils.copyBytes(src, 13, 1);
+        byte[] touchscreenByte = IOUtils.copyBytes(src, 13, 1);
         config.touchscreen = touchscreenByte[0];
-        byte[] densityByte = FileUtils.copyBytes(src, 14, 2);
-        config.density = FileUtils.byte2Short(densityByte);
-        byte[] screenTypeByte = FileUtils.copyBytes(src, 12, 4);
-        config.screenType = FileUtils.byte2Int(screenTypeByte);
+        byte[] densityByte = IOUtils.copyBytes(src, 14, 2);
+        config.density = IOUtils.byte2Short(densityByte);
+        byte[] screenTypeByte = IOUtils.copyBytes(src, 12, 4);
+        config.screenType = IOUtils.byte2Int(screenTypeByte);
 
         //以下结构是Union
-        byte[] keyboardByte = FileUtils.copyBytes(src, 16, 1);
+        byte[] keyboardByte = IOUtils.copyBytes(src, 16, 1);
         config.keyboard = keyboardByte[0];
-        byte[] navigationByte = FileUtils.copyBytes(src, 17, 1);
+        byte[] navigationByte = IOUtils.copyBytes(src, 17, 1);
         config.navigation = navigationByte[0];
-        byte[] inputFlagsByte = FileUtils.copyBytes(src, 18, 1);
+        byte[] inputFlagsByte = IOUtils.copyBytes(src, 18, 1);
         config.inputFlags = inputFlagsByte[0];
-        byte[] inputPad0Byte = FileUtils.copyBytes(src, 19, 1);
+        byte[] inputPad0Byte = IOUtils.copyBytes(src, 19, 1);
         config.inputPad0 = inputPad0Byte[0];
-        byte[] inputByte = FileUtils.copyBytes(src, 16, 4);
-        config.input = FileUtils.byte2Int(inputByte);
+        byte[] inputByte = IOUtils.copyBytes(src, 16, 4);
+        config.input = IOUtils.byte2Int(inputByte);
 
         //以下结构是Union
-        byte[] screenWidthByte = FileUtils.copyBytes(src, 20, 2);
-        config.screenWidth = FileUtils.byte2Short(screenWidthByte);
-        byte[] screenHeightByte = FileUtils.copyBytes(src, 22, 2);
-        config.screenHeight = FileUtils.byte2Short(screenHeightByte);
-        byte[] screenSizeByte = FileUtils.copyBytes(src, 20, 4);
-        config.screenSize = FileUtils.byte2Int(screenSizeByte);
+        byte[] screenWidthByte = IOUtils.copyBytes(src, 20, 2);
+        config.screenWidth = IOUtils.byte2Short(screenWidthByte);
+        byte[] screenHeightByte = IOUtils.copyBytes(src, 22, 2);
+        config.screenHeight = IOUtils.byte2Short(screenHeightByte);
+        byte[] screenSizeByte = IOUtils.copyBytes(src, 20, 4);
+        config.screenSize = IOUtils.byte2Int(screenSizeByte);
 
         //以下结构是Union
-        byte[] sdVersionByte = FileUtils.copyBytes(src, 24, 2);
-        config.sdVersion = FileUtils.byte2Short(sdVersionByte);
-        byte[] minorVersionByte = FileUtils.copyBytes(src, 26, 2);
-        config.minorVersion = FileUtils.byte2Short(minorVersionByte);
-        byte[] versionByte = FileUtils.copyBytes(src, 24, 4);
-        config.version = FileUtils.byte2Int(versionByte);
+        byte[] sdVersionByte = IOUtils.copyBytes(src, 24, 2);
+        config.sdVersion = IOUtils.byte2Short(sdVersionByte);
+        byte[] minorVersionByte = IOUtils.copyBytes(src, 26, 2);
+        config.minorVersion = IOUtils.byte2Short(minorVersionByte);
+        byte[] versionByte = IOUtils.copyBytes(src, 24, 4);
+        config.version = IOUtils.byte2Int(versionByte);
 
         //以下结构是Union
-        byte[] screenLayoutByte = FileUtils.copyBytes(src, 28, 1);
+        byte[] screenLayoutByte = IOUtils.copyBytes(src, 28, 1);
         config.screenLayout = screenLayoutByte[0];
-        byte[] uiModeByte = FileUtils.copyBytes(src, 29, 1);
+        byte[] uiModeByte = IOUtils.copyBytes(src, 29, 1);
         config.uiMode = uiModeByte[0];
-        byte[] smallestScreenWidthDpByte = FileUtils.copyBytes(src, 30, 2);
-        config.smallestScreenWidthDp = FileUtils.byte2Short(smallestScreenWidthDpByte);
-        byte[] screenConfigByte = FileUtils.copyBytes(src, 28, 4);
-        config.screenConfig = FileUtils.byte2Int(screenConfigByte);
+        byte[] smallestScreenWidthDpByte = IOUtils.copyBytes(src, 30, 2);
+        config.smallestScreenWidthDp = IOUtils.byte2Short(smallestScreenWidthDpByte);
+        byte[] screenConfigByte = IOUtils.copyBytes(src, 28, 4);
+        config.screenConfig = IOUtils.byte2Int(screenConfigByte);
 
         //以下结构是Union
-        byte[] screenWidthDpByte = FileUtils.copyBytes(src, 32, 2);
-        config.screenWidthDp = FileUtils.byte2Short(screenWidthDpByte);
-        byte[] screenHeightDpByte = FileUtils.copyBytes(src, 34, 2);
-        config.screenHeightDp = FileUtils.byte2Short(screenHeightDpByte);
-        byte[] screenSizeDpByte = FileUtils.copyBytes(src, 32, 4);
-        config.screenSizeDp = FileUtils.byte2Int(screenSizeDpByte);
-        config.localeScript = FileUtils.copyBytes(src, 36, 4);
-        config.localeVariant = FileUtils.copyBytes(src, 40, 8);
+        byte[] screenWidthDpByte = IOUtils.copyBytes(src, 32, 2);
+        config.screenWidthDp = IOUtils.byte2Short(screenWidthDpByte);
+        byte[] screenHeightDpByte = IOUtils.copyBytes(src, 34, 2);
+        config.screenHeightDp = IOUtils.byte2Short(screenHeightDpByte);
+        byte[] screenSizeDpByte = IOUtils.copyBytes(src, 32, 4);
+        config.screenSizeDp = IOUtils.byte2Int(screenSizeDpByte);
+        config.localeScript = IOUtils.copyBytes(src, 36, 4);
+        config.localeVariant = IOUtils.copyBytes(src, 40, 8);
         return config;
     }
 
@@ -371,9 +371,9 @@ public class ResourceParser implements IParser
     private ResChunkHeader parseResChunkHeader(byte[] resChunkHeaderSrc)
     {
         ResChunkHeader resChunkHeader = new ResChunkHeader();
-        FileUtils.copyBytes(resChunkHeaderSrc, 0, resChunkHeader.type);
-        FileUtils.copyBytes(resChunkHeaderSrc, 2, resChunkHeader.headerSize);
-        FileUtils.copyBytes(resChunkHeaderSrc, 4, resChunkHeader.size);
+        IOUtils.copyBytes(resChunkHeaderSrc, 0, resChunkHeader.type);
+        IOUtils.copyBytes(resChunkHeaderSrc, 2, resChunkHeader.headerSize);
+        IOUtils.copyBytes(resChunkHeaderSrc, 4, resChunkHeader.size);
         return resChunkHeader;
     }
 
@@ -382,10 +382,10 @@ public class ResourceParser implements IParser
         List<Integer> stringOffsets = new ArrayList<>(count);
         for (int i = 0; i < count; i++)
         {
-            byte[] offsetByte = FileUtils.copyBytes(resStringPoolOffsets, 4 * i, 4);
-            int offsetValue = FileUtils.byte2Int(offsetByte);
+            byte[] offsetByte = IOUtils.copyBytes(resStringPoolOffsets, 4 * i, 4);
+            int offsetValue = IOUtils.byte2Int(offsetByte);
             stringOffsets.add(offsetValue);
-            Log.i(TAG, "ResOffset[" + i + "]:" + FileUtils.byte2HexString(offsetByte) + "(" + offsetValue + ")");
+            Log.i(TAG, "ResOffset[" + i + "]:" + IOUtils.byte2HexString(offsetByte) + "(" + offsetValue + ")");
         }
         return stringOffsets;
     }

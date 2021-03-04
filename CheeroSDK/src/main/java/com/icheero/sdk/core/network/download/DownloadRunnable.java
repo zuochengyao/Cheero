@@ -4,6 +4,7 @@ import android.os.Process;
 
 import com.icheero.sdk.core.database.DBHelper;
 import com.icheero.sdk.core.database.entity.Download;
+import com.icheero.sdk.core.manager.FileManager;
 import com.icheero.sdk.core.network.http.HttpRequest;
 import com.icheero.sdk.core.network.http.HttpRequestProvider;
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
@@ -11,7 +12,6 @@ import com.icheero.sdk.core.network.http.encapsulation.HttpStatus;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpResponse;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
 import com.icheero.sdk.util.Common;
-import com.icheero.sdk.util.FileUtils;
 import com.icheero.sdk.util.Log;
 
 import java.io.File;
@@ -59,14 +59,15 @@ public class DownloadRunnable implements Runnable
             else
             {
                 DBHelper.getInstance().insertDownload(mEntity);
-                File file = FileUtils.createFile(FileUtils.DIR_PATH_CHEERO_CACHE + Common.md5(mEntity.getDownloadUrl()));
+                File file = FileManager.getInstance().createDownloadFile(Common.md5(mEntity.getDownloadUrl()));
                 RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rwd");
                 randomAccessFile.seek(mStart);
                 byte[] buffer = new byte[500 * 1024];
                 int len;
                 long progress = mEntity.getProgress();
                 InputStream in = httpResponse.getBody();
-                Log.d(TAG, String.format(Locale.getDefault(), "Thread-%s, from %d bytes to %d bytes", Thread.currentThread().getName(), mStart, mEnd));
+                Log.d(TAG, String.format(Locale.getDefault(), "Thread-%s, from %d bytes to %d bytes", Thread.currentThread()
+                                                                                                            .getName(), mStart, mEnd));
                 while ((len = in.read(buffer, 0, buffer.length)) != -1)
                 {
                     randomAccessFile.write(buffer, 0, len);

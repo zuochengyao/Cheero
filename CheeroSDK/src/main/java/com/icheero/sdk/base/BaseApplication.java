@@ -10,7 +10,7 @@ import com.icheero.sdk.core.database.DBHelper;
 import com.icheero.sdk.core.manager.ApplicationManager;
 import com.icheero.sdk.core.manager.DownloadManager;
 import com.icheero.sdk.core.manager.HttpManager;
-import com.icheero.sdk.core.manager.IOManager;
+import com.icheero.sdk.core.manager.FileManager;
 import com.icheero.sdk.core.manager.NotificationManager;
 import com.icheero.sdk.core.network.download.DownloadConfig;
 import com.icheero.sdk.core.network.http.HttpConfig;
@@ -21,7 +21,7 @@ import androidx.multidex.MultiDexApplication;
 
 public class BaseApplication extends MultiDexApplication
 {
-    private static final Class TAG = BaseApplication.class;
+    private static final Class<?> TAG = BaseApplication.class;
 
     private static BaseApplication mInstance;
 
@@ -34,7 +34,9 @@ public class BaseApplication extends MultiDexApplication
         Log.i(TAG, TAG.getSimpleName() + " onCreate");
         CheeroNative.nativeIsOwnApp();
         // 初始化 IO管理器
-        IOManager.getInstance();
+        FileManager.getInstance().init(mInstance);
+        String path = getFilesDir().getAbsolutePath();
+        String cache = getCacheDir().getAbsolutePath();
         // 初始化 网络请求
         HttpConfig httpConfig = new HttpConfig.Builder()
                 .setConnectTimeout(60)

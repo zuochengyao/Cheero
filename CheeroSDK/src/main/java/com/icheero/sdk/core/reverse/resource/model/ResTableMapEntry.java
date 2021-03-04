@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.reverse.resource.model;
 
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 
 import androidx.annotation.NonNull;
 
@@ -34,7 +34,7 @@ public class ResTableMapEntry
 
     public int getCountValue()
     {
-        return FileUtils.byte2Int(count);
+        return IOUtils.byte2Int(count);
     }
 
     public static int getLength()
@@ -49,7 +49,7 @@ public class ResTableMapEntry
         StringBuilder builder = new StringBuilder("------------------ ResTableMapEntry ------------------\n");
         builder.append("Entry: ").append(entry.toString()).append("\n");
         builder.append("Parent: ").append(parent.toString()).append("\n");
-        builder.append("Count: ").append(FileUtils.byte2HexString(count)).append("(").append(getCountValue()).append(")").append("\n");
+        builder.append("Count: ").append(IOUtils.byte2HexString(count)).append("(").append(getCountValue()).append(")").append("\n");
         return builder.toString();
     }
 }

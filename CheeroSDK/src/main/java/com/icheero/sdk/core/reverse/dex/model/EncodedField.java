@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.reverse.dex.model;
 
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 
 public class EncodedField
 {
@@ -10,6 +10,6 @@ public class EncodedField
     @Override
     public String toString()
     {
-        return "filedIdxDiff:" + FileUtils.byte2HexString(filedIdxDiff.asBytes()) + ", accessFlags:" + FileUtils.byte2HexString(accessFlags.asBytes());
+        return "filedIdxDiff:" + IOUtils.byte2HexString(filedIdxDiff.asBytes()) + ", accessFlags:" + IOUtils.byte2HexString(accessFlags.asBytes());
     }
 }

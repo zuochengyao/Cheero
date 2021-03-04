@@ -3,7 +3,6 @@ package com.icheero.plugin.application;
 import android.app.Application;
 
 import com.icheero.plugin.hotfix.andfix.AndFixPatchManager;
-import com.icheero.plugin.load.GlobalActivityHookHelper;
 import com.icheero.sdk.base.ModuleApplication;
 
 public class PluginApplication extends ModuleApplication
@@ -15,7 +14,7 @@ public class PluginApplication extends ModuleApplication
         AndFixPatchManager.getInstance().init(application);
         try
         {
-            GlobalActivityHookHelper.hook();
+//            GlobalActivityHookHelper.hook();
         }
         catch (Exception e)
         {

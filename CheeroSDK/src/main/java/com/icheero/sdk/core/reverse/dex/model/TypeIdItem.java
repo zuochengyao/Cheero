@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.reverse.dex.model;
 
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 
 import androidx.annotation.NonNull;
 
@@ -15,13 +15,13 @@ public class TypeIdItem
 
     public int getDescriptorIdx()
     {
-        return FileUtils.byte2Int(descriptorIdx);
+        return IOUtils.byte2Int(descriptorIdx);
     }
 
     @NonNull
     @Override
     public String toString()
     {
-        return "TypeId: " + FileUtils.byte2HexString(descriptorIdx) + "(" + getDescriptorIdx() + ")";
+        return "TypeId: " + IOUtils.byte2HexString(descriptorIdx) + "(" + getDescriptorIdx() + ")";
     }
 }

@@ -1,7 +1,7 @@
 package com.icheero.plugin.activity;
 
+import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.drawable.AnimationDrawable;
@@ -10,8 +10,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.icheero.plugin.R;
 import com.icheero.plugin.PluginManager;
+import com.icheero.plugin.R;
 import com.icheero.sdk.base.BaseActivity;
 
 import java.io.File;
@@ -26,10 +26,17 @@ public class LoadPluginActivity extends BaseActivity implements View.OnClickList
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_plugin);
-        String[] perms = {"android.permission.WRITE_EXTERNAL_STORAGE"};
-        if (checkSelfPermission(perms[0]) == PackageManager.PERMISSION_DENIED)
-            requestPermissions(perms, 200);
+        if (!mPermissionManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            mPermissionManager.permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         doInitView();
+    }
+
+    private void doInitView()
+    {
+        ImageView ivVolumeBigger = findViewById(R.id.image_volume_bigger);
+        ivVolumeBigger.setOnClickListener(this);
+        ImageView ivVolumeSmaller = findViewById(R.id.image_volume_smaller);
+        ivVolumeSmaller.setOnClickListener(this);
     }
 
     @Override
@@ -51,14 +58,14 @@ public class LoadPluginActivity extends BaseActivity implements View.OnClickList
             if (apk.exists())
             {
                 // 加载到内存
-                DexClassLoader classLoader = new DexClassLoader(apk.getAbsolutePath(), this.getDir(PluginManager.PLUGIN_NAME, Context.MODE_PRIVATE)
+                DexClassLoader classLoader = new DexClassLoader(apk.getAbsolutePath(), this.getDir("PluginManager.PLUGIN_NAME", Context.MODE_PRIVATE)
                                                                                            .getAbsolutePath(), null, getClassLoader());
                 // 获取本地资源
                 // Drawable drawable = this.getResources().getDrawable(R.drawable.volume_bigger);
                 try
                 {
                     // 获取插件资源 - 利用反射
-                    Class<?> loadClass = classLoader.loadClass(PluginManager.PLUGIN_PACKAGE_NAME + ".R$drawable");
+                    Class<?> loadClass = classLoader.loadClass("PluginManager.PLUGIN_PACKAGE_NAME" + ".R$drawable");
                     Field[] declareField = loadClass.getDeclaredFields();
                     for (Field field : declareField)
                     {
@@ -82,16 +89,8 @@ public class LoadPluginActivity extends BaseActivity implements View.OnClickList
                 }
             }
             else
-                PluginManager.loadPlugin(this); // 加载插件
+                PluginManager.loadPlugin(this, ""); // 加载插件
         }
-    }
-
-    private void doInitView()
-    {
-        ImageView ivVolumeBigger = $(R.id.image_volume_bigger);
-        ivVolumeBigger.setOnClickListener(this);
-        ImageView ivVolumeSmaller = $(R.id.image_volume_smaller);
-        ivVolumeSmaller.setOnClickListener(this);
     }
 
     private void handleAnim(View v)

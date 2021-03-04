@@ -3,8 +3,8 @@ package com.icheero.plugin.hotfix.andfix;
 import android.content.Context;
 
 import com.alipay.euler.andfix.patch.PatchManager;
+import com.icheero.sdk.core.manager.FileManager;
 import com.icheero.sdk.util.Common;
-import com.icheero.sdk.util.FileUtils;
 
 
 /**
@@ -20,8 +20,7 @@ public class AndFixPatchManager
     private PatchManager mPatchManager;
 
     private AndFixPatchManager()
-    {
-    }
+    { }
 
     public static AndFixPatchManager getInstance()
     {
@@ -38,8 +37,8 @@ public class AndFixPatchManager
 
     public void init(Context context)
     {
-        mPatchManager = new PatchManager(context.getApplicationContext());
-        mPatchManager.init(Common.getVersionName(context.getApplicationContext()));
+        mPatchManager = new PatchManager(context);
+        mPatchManager.init(Common.getVersionName(context));
         mPatchManager.loadPatch();
     }
 
@@ -48,7 +47,7 @@ public class AndFixPatchManager
         try
         {
             if (mPatchManager != null)
-                mPatchManager.addPatch(FileUtils.DIR_PATH_CHEERO_PATCHES.concat("cheero").concat(AndFixPatchManager.PATCH_EXTENSION));
+                mPatchManager.addPatch(FileManager.DIR_FILES_APATCH.concat("/cheero").concat(AndFixPatchManager.PATCH_EXTENSION));
         }
         catch (Exception e)
         {

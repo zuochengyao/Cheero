@@ -13,21 +13,20 @@ import java.lang.reflect.Method;
 
 public class PluginManager
 {
-    public static final String PLUGIN_NAME = "CheeroPlugin.apk";
     private static final String PLUGIN_ASSET_PATH = "plugin/apk/";
-    public static final String PLUGIN_FILE_PATH = Environment.getExternalStorageDirectory() + File.separator + PLUGIN_NAME;
-    public static final String PLUGIN_PACKAGE_NAME = "com.icheero.plugins";
+    public static final String PLUGIN_FILE_PATH = Environment.DIRECTORY_DOWNLOADS + File.separator;
 
-    public static void loadPlugin(Activity context)
+    public static void loadPlugin(Activity context, String pluginName)
     {
+        File filePath = context.getExternalFilesDir(PLUGIN_FILE_PATH);
         InputStream is = null;
         FileOutputStream fos;
         int len;
         byte[] buffer = new byte[1024];
         try
         {
-            is = context.getAssets().open(PLUGIN_ASSET_PATH + PLUGIN_NAME);
-            fos = new FileOutputStream(PLUGIN_FILE_PATH);
+            is = context.getAssets().open(PLUGIN_ASSET_PATH + pluginName);
+            fos = new FileOutputStream(PLUGIN_FILE_PATH + pluginName);
             while ((len = is.read(buffer)) != -1)
                 fos.write(buffer, 0, len);
             Toast.makeText(context, "插件下载成功", Toast.LENGTH_SHORT).show();

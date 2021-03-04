@@ -2,7 +2,7 @@ package com.icheero.sdk.core.reverse.dex.model;
 
 import com.icheero.sdk.core.reverse.dex.DexParser;
 import com.icheero.sdk.util.Common;
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 
 import androidx.annotation.NonNull;
 
@@ -17,17 +17,17 @@ public class MethodIdItem
 
     public short getClassIdxValue()
     {
-        return FileUtils.byte2Short(classIdx);
+        return IOUtils.byte2Short(classIdx);
     }
 
     public short getProtoIdxValue()
     {
-        return FileUtils.byte2Short(protoIdx);
+        return IOUtils.byte2Short(protoIdx);
     }
 
     public int getNameIdxValue()
     {
-        return FileUtils.byte2Int(nameIdx);
+        return IOUtils.byte2Int(nameIdx);
     }
 
     @NonNull

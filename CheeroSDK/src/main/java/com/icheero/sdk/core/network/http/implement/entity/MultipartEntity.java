@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.icheero.sdk.core.network.http.HttpApi;
 import com.icheero.sdk.core.network.http.encapsulation.AbstractHttpEntity;
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -67,7 +67,7 @@ public class MultipartEntity extends AbstractHttpEntity
         try
         {
             mMap.put(key, file);
-            write(ENCODING_BINARY, HttpApi.MEDIA_TYPE_MULTIPART, FileUtils.getFileBytes(file), key, file.getName());
+            write(ENCODING_BINARY, HttpApi.MEDIA_TYPE_MULTIPART, IOUtils.getFileBytes(file), key, file.getName());
         }
         catch (IOException e)
         {

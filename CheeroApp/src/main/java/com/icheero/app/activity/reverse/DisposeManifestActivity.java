@@ -8,7 +8,7 @@ import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.reverse.IParser;
 import com.icheero.sdk.core.reverse.manifest.ManifestParser;
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 import com.icheero.sdk.util.Log;
 
 import butterknife.BindView;
@@ -39,10 +39,10 @@ public class DisposeManifestActivity extends BaseActivity
         switch (v.getId())
         {
             case R.id.manifest_dispose_1:
-                mManifestData = FileUtils.readRawResource(this, R.raw.pocmanifest);
+                mManifestData = IOUtils.readRawResource(this, R.raw.pocmanifest);
                 break;
             case R.id.manifest_dispose_2:
-                mManifestData = FileUtils.readRawResource(this, R.raw.manifest2);
+                mManifestData = IOUtils.readRawResource(this, R.raw.manifest2);
                 break;
         }
         if (mManifestData == null)

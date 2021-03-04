@@ -1,9 +1,9 @@
 package com.icheero.sdk.core.network.http.framework.okhttp;
 
+import com.icheero.sdk.core.manager.FileManager;
 import com.icheero.sdk.core.network.http.HttpSecure;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
 import com.icheero.sdk.util.Common;
-import com.icheero.sdk.util.FileUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,9 +31,8 @@ public class OkHttpManager
 
     private OkHttpManager()
     {
-        this.mBuilder = new OkHttpClient.Builder()
-                .hostnameVerifier(HttpSecure.hv)
-                .sslSocketFactory(HttpSecure.getSocketFactory(), HttpSecure.initX509TrustManager()); // 支持https
+        this.mBuilder = new OkHttpClient.Builder().hostnameVerifier(HttpSecure.hv)
+                                                  .sslSocketFactory(HttpSecure.getSocketFactory(), HttpSecure.initX509TrustManager()); // 支持https
     }
 
     public static OkHttpManager getInstance()
@@ -101,7 +100,7 @@ public class OkHttpManager
         return null;
     }
 
-    public void  asyncDownload(@NonNull Request request, @NonNull Callback callback)
+    public void asyncDownload(@NonNull Request request, @NonNull Callback callback)
     {
         getOkHttpClient().newCall(request).enqueue(callback);
     }
@@ -123,7 +122,7 @@ public class OkHttpManager
                     listener.onFailure(response.code(), response.message());
                 else
                 {
-                    File file = FileUtils.createFile(FileUtils.DIR_PATH_CHEERO_CACHE + Common.md5(request.url().toString()));
+                    File file = FileManager.getInstance().createDownloadFile(Common.md5(request.url().toString()));
                     byte[] buffer = new byte[500 * 1024];
                     int len;
                     int progress = 0;

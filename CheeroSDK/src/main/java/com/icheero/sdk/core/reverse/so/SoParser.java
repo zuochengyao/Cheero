@@ -1,7 +1,7 @@
 package com.icheero.sdk.core.reverse.so;
 
 import com.icheero.sdk.core.reverse.IParser;
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 import com.icheero.sdk.util.Log;
 
 public class SoParser implements IParser
@@ -21,17 +21,17 @@ public class SoParser implements IParser
     public void parse()
     {
         Log.i(TAG, "+++++++++++++++++++Elf Header+++++++++++++++++");
-        parseHeader(FileUtils.copyBytes(mSoData, 0, 52));
+        parseHeader(IOUtils.copyBytes(mSoData, 0, 52));
         Log.i(TAG, "header:\n" + mElf32.hdr.toString());
 
         Log.i(TAG, "+++++++++++++++++++Program Header+++++++++++++++++");
-        int p_header_offset = FileUtils.byte2Int(mElf32.hdr.e_phoff); // 52;
+        int p_header_offset = IOUtils.byte2Int(mElf32.hdr.e_phoff); // 52;
         Log.i(TAG, "offset:" + p_header_offset);
         parseProgramHeaderList(mSoData, p_header_offset);
         mElf32.printPhdrList();
 
         Log.i(TAG, "+++++++++++++++++++Section Header++++++++++++++++++");
-        int s_header_offset = FileUtils.byte2Int(mElf32.hdr.e_shoff); // 12592;
+        int s_header_offset = IOUtils.byte2Int(mElf32.hdr.e_shoff); // 12592;
         Log.i(TAG, "offset:" + s_header_offset);
         parseSectionHeaderList(mSoData, s_header_offset);
         mElf32.printShdrList();
@@ -47,20 +47,20 @@ public class SoParser implements IParser
             Log.i(TAG, "Header is null");
             return;
         }
-        FileUtils.copyBytes(header, 0, mElf32.hdr.e_ident);
-        FileUtils.copyBytes(header, 16, mElf32.hdr.e_type);
-        FileUtils.copyBytes(header, 18, mElf32.hdr.e_machine);
-        FileUtils.copyBytes(header, 20, mElf32.hdr.e_version);
-        FileUtils.copyBytes(header, 24, mElf32.hdr.e_entry);
-        FileUtils.copyBytes(header, 28, mElf32.hdr.e_phoff);
-        FileUtils.copyBytes(header, 32, mElf32.hdr.e_shoff);
-        FileUtils.copyBytes(header, 36, mElf32.hdr.e_flags);
-        FileUtils.copyBytes(header, 40, mElf32.hdr.e_ehsize);
-        FileUtils.copyBytes(header, 42, mElf32.hdr.e_phentsize);
-        FileUtils.copyBytes(header, 44, mElf32.hdr.e_phnum);
-        FileUtils.copyBytes(header, 46, mElf32.hdr.e_shentsize);
-        FileUtils.copyBytes(header, 48, mElf32.hdr.e_shnum);
-        FileUtils.copyBytes(header, 50, mElf32.hdr.e_shstrndx);
+        IOUtils.copyBytes(header, 0, mElf32.hdr.e_ident);
+        IOUtils.copyBytes(header, 16, mElf32.hdr.e_type);
+        IOUtils.copyBytes(header, 18, mElf32.hdr.e_machine);
+        IOUtils.copyBytes(header, 20, mElf32.hdr.e_version);
+        IOUtils.copyBytes(header, 24, mElf32.hdr.e_entry);
+        IOUtils.copyBytes(header, 28, mElf32.hdr.e_phoff);
+        IOUtils.copyBytes(header, 32, mElf32.hdr.e_shoff);
+        IOUtils.copyBytes(header, 36, mElf32.hdr.e_flags);
+        IOUtils.copyBytes(header, 40, mElf32.hdr.e_ehsize);
+        IOUtils.copyBytes(header, 42, mElf32.hdr.e_phentsize);
+        IOUtils.copyBytes(header, 44, mElf32.hdr.e_phnum);
+        IOUtils.copyBytes(header, 46, mElf32.hdr.e_shentsize);
+        IOUtils.copyBytes(header, 48, mElf32.hdr.e_shnum);
+        IOUtils.copyBytes(header, 50, mElf32.hdr.e_shstrndx);
 
     }
 
@@ -70,7 +70,7 @@ public class SoParser implements IParser
     private void parseSectionHeaderList(byte[] header, int offset)
     {
         int headerSize = 40;//40个字节
-        int headerCount = FileUtils.byte2Short(mElf32.hdr.e_shnum);//头部的个数
+        int headerCount = IOUtils.byte2Short(mElf32.hdr.e_shnum);//头部的个数
         byte[] des = new byte[headerSize];
         for (int i = 0; i < headerCount; i++)
         {
@@ -81,16 +81,16 @@ public class SoParser implements IParser
 
     private Elf32.Elf32_Shdr parseSectionHeader(byte[] header){
         Elf32.Elf32_Shdr shdr = new Elf32.Elf32_Shdr();
-        FileUtils.copyBytes(header, 0, shdr.sh_name);
-        FileUtils.copyBytes(header, 4, shdr.sh_type);
-        FileUtils.copyBytes(header, 8, shdr.sh_flags);
-        FileUtils.copyBytes(header, 12, shdr.sh_addr);
-        FileUtils.copyBytes(header, 16, shdr.sh_offset);
-        FileUtils.copyBytes(header, 20, shdr.sh_size);
-        FileUtils.copyBytes(header, 24, shdr.sh_link);
-        FileUtils.copyBytes(header, 28, shdr.sh_info);
-        FileUtils.copyBytes(header, 32, shdr.sh_addralign);
-        FileUtils.copyBytes(header, 36, shdr.sh_entsize);
+        IOUtils.copyBytes(header, 0, shdr.sh_name);
+        IOUtils.copyBytes(header, 4, shdr.sh_type);
+        IOUtils.copyBytes(header, 8, shdr.sh_flags);
+        IOUtils.copyBytes(header, 12, shdr.sh_addr);
+        IOUtils.copyBytes(header, 16, shdr.sh_offset);
+        IOUtils.copyBytes(header, 20, shdr.sh_size);
+        IOUtils.copyBytes(header, 24, shdr.sh_link);
+        IOUtils.copyBytes(header, 28, shdr.sh_info);
+        IOUtils.copyBytes(header, 32, shdr.sh_addralign);
+        IOUtils.copyBytes(header, 36, shdr.sh_entsize);
         return shdr;
     }
 
@@ -102,7 +102,7 @@ public class SoParser implements IParser
         // header占用32个字节
         int headerSize = 32;
         // header个数
-        int headerCount = FileUtils.byte2Short(mElf32.hdr.e_phnum);
+        int headerCount = IOUtils.byte2Short(mElf32.hdr.e_phnum);
         byte[] des = new byte[headerSize];
         for (int i = 0; i < headerCount; i++)
         {
@@ -114,14 +114,14 @@ public class SoParser implements IParser
     private Elf32.Elf32_Phdr parseProgramHeader(byte[] header)
     {
         Elf32.Elf32_Phdr phdr = new Elf32.Elf32_Phdr();
-        FileUtils.copyBytes(header, 0, phdr.p_type);
-        FileUtils.copyBytes(header, 4, phdr.p_offset);
-        FileUtils.copyBytes(header, 8, phdr.p_vaddr);
-        FileUtils.copyBytes(header, 12, phdr.p_paddr);
-        FileUtils.copyBytes(header, 16, phdr.p_filesz);
-        FileUtils.copyBytes(header, 20, phdr.p_memsz);
-        FileUtils.copyBytes(header, 24, phdr.p_flags);
-        FileUtils.copyBytes(header, 28, phdr.p_align);
+        IOUtils.copyBytes(header, 0, phdr.p_type);
+        IOUtils.copyBytes(header, 4, phdr.p_offset);
+        IOUtils.copyBytes(header, 8, phdr.p_vaddr);
+        IOUtils.copyBytes(header, 12, phdr.p_paddr);
+        IOUtils.copyBytes(header, 16, phdr.p_filesz);
+        IOUtils.copyBytes(header, 20, phdr.p_memsz);
+        IOUtils.copyBytes(header, 24, phdr.p_flags);
+        IOUtils.copyBytes(header, 28, phdr.p_align);
         return phdr;
     }
 

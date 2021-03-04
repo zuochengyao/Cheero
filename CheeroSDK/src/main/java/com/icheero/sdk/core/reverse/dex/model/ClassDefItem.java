@@ -1,7 +1,7 @@
 package com.icheero.sdk.core.reverse.dex.model;
 
 import com.icheero.sdk.core.reverse.dex.DexParser;
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 
 import androidx.annotation.NonNull;
 
@@ -58,7 +58,7 @@ public class ClassDefItem
 
     public int getClassIdxValue()
     {
-        return FileUtils.byte2Int(classIdx);
+        return IOUtils.byte2Int(classIdx);
     }
 
     public String getClassIdxString()
@@ -68,39 +68,39 @@ public class ClassDefItem
 
     public int getAccessFlagsValue()
     {
-        return FileUtils.byte2Int(accessFlags);
+        return IOUtils.byte2Int(accessFlags);
     }
 
     public String getSuperclassIdxString()
     {
-        int superClassIdx = FileUtils.byte2Int(superclassIdx);
+        int superClassIdx = IOUtils.byte2Int(superclassIdx);
         return DexParser.getInstance().getTypeString(superClassIdx);
     }
 
     public int getInterfacesOffValue()
     {
-        return FileUtils.byte2Int(interfacesOff);
+        return IOUtils.byte2Int(interfacesOff);
     }
 
     public String getSourceFileIdxString()
     {
-        int sourceIdx = FileUtils.byte2Int(sourceFileIdx);
+        int sourceIdx = IOUtils.byte2Int(sourceFileIdx);
         return DexParser.getInstance().getDataString(sourceIdx);
     }
 
     public int getAnnotationsOffValue()
     {
-        return FileUtils.byte2Int(annotationsOff);
+        return IOUtils.byte2Int(annotationsOff);
     }
 
     public int getClassDataOffValue()
     {
-        return FileUtils.byte2Int(classDataOff);
+        return IOUtils.byte2Int(classDataOff);
     }
 
     public int getStaticValueOffValue()
     {
-        return FileUtils.byte2Int(staticValueOff);
+        return IOUtils.byte2Int(staticValueOff);
     }
 
     @NonNull

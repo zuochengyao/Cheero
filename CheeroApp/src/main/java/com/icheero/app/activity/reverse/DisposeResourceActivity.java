@@ -8,7 +8,7 @@ import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.reverse.IParser;
 import com.icheero.sdk.core.reverse.resource.ResourceParser;
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 import com.icheero.sdk.util.Log;
 
 import butterknife.BindView;
@@ -31,7 +31,7 @@ public class DisposeResourceActivity extends BaseActivity
     @OnClick(R.id.resource_dispose)
     public void onResourceDisposeClickEvent(View v)
     {
-        byte[] resourceData = FileUtils.readRawResource(this, R.raw.resources_gdt);
+        byte[] resourceData = IOUtils.readRawResource(this, R.raw.resources_gdt);
         if (resourceData == null)
         {
             Log.e(TAG, "Read file failed!");

@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.reverse.dex.model;
 
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 
 import androidx.annotation.NonNull;
 
@@ -16,14 +16,14 @@ public class StringIdItem
 
     public int getStringDataOffValue()
     {
-        return FileUtils.byte2Int(stringDataOff);
+        return IOUtils.byte2Int(stringDataOff);
     }
 
     @NonNull
     @Override
     public String toString()
     {
-        String str = "StringId: " + FileUtils.byte2HexString(stringDataOff) + "(" + getStringDataOffValue() + ")";
+        String str = "StringId: " + IOUtils.byte2HexString(stringDataOff) + "(" + getStringDataOffValue() + ")";
         if (stringData.data != null)
             str += ", " + stringData.toString();
         return str;

@@ -7,7 +7,6 @@ import android.widget.Toast;
 import com.icheero.plugin.R;
 import com.icheero.plugin.hotfix.andfix.AndFixPatchManager;
 import com.icheero.sdk.base.BaseActivity;
-import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.util.Common;
 import com.icheero.sdk.util.Log;
 
@@ -23,11 +22,9 @@ public class AndFixActivity extends BaseActivity
         setContentView(R.layout.activity_andfix);
         if (!mPermissionManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
             mPermissionManager.permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        else
-            IOManager.getInstance().createRootFolder();
         initClassLoader();
-        $(R.id.create_bug).setOnClickListener(v -> createBug());
-        $(R.id.fix_bug).setOnClickListener(v -> fixBug());
+        findViewById(R.id.create_bug).setOnClickListener(v -> createBug());
+        findViewById(R.id.fix_bug).setOnClickListener(v -> fixBug());
     }
 
     private void initClassLoader()
@@ -61,9 +58,7 @@ public class AndFixActivity extends BaseActivity
         super.onPermissionRequest(isGranted, permission);
         if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
         {
-            if (isGranted)
-                IOManager.getInstance().createRootFolder();
-            else
+            if (!isGranted)
                 Common.toast(this, "请打开读写权限！", Toast.LENGTH_SHORT);
         }
     }

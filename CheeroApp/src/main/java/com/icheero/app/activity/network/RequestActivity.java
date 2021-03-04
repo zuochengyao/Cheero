@@ -10,7 +10,7 @@ import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.api.CheeroApi;
 import com.icheero.sdk.core.api.FaceIDApi;
-import com.icheero.sdk.core.manager.IOManager;
+import com.icheero.sdk.core.manager.FileManager;
 import com.icheero.sdk.core.network.listener.IResponseListener;
 import com.icheero.sdk.util.Log;
 
@@ -44,21 +44,22 @@ public class RequestActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request);
         ButterKnife.bind(this);
-        CheeroApi.getFaceIDConfig("http://10.155.2.130:8080/cheero/getFaceIDConfig.action", new IResponseListener<Key>()
-        {
-            @Override
-            public void onSuccess(Key data)
-            {
-                mFaceIDConfig = data;
-                Log.i(TAG, "success:[" + data.toString() + "]");
-            }
-
-            @Override
-            public void onFailure(int errorCode, String errorMessage)
-            {
-                Log.i(TAG, "error:[" + errorCode + ":" + errorMessage + "]");
-            }
-        });
+        String p = Environment.getExternalStorageDirectory().getAbsolutePath();
+//        CheeroApi.getFaceIDConfig("http://10.155.2.130:8080/cheero/getFaceIDConfig.action", new IResponseListener<Key>()
+//        {
+//            @Override
+//            public void onSuccess(Key data)
+//            {
+//                mFaceIDConfig = data;
+//                Log.i(TAG, "success:[" + data.toString() + "]");
+//            }
+//
+//            @Override
+//            public void onFailure(int errorCode, String errorMessage)
+//            {
+//                Log.i(TAG, "error:[" + errorCode + ":" + errorMessage + "]");
+//            }
+//        });
     }
 
     @OnClick({R.id.request_hello_btn, R.id.request_idcard_ocr_btn})
@@ -86,7 +87,7 @@ public class RequestActivity extends BaseActivity
             }
             case R.id.request_idcard_ocr_btn:
             {
-                byte[] imageRef = IOManager.getInstance().bitmapToByte(BitmapFactory.decodeResource(getResources(), R.drawable.me));
+                byte[] imageRef = FileManager.getInstance().bitmapToByte(BitmapFactory.decodeResource(getResources(), R.drawable.me));
                 File file = new File(PATH_DETECT);
                 if (file.exists())
                 {

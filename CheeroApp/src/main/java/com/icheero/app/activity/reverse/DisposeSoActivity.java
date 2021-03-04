@@ -7,7 +7,7 @@ import android.widget.Button;
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.reverse.so.SoParser;
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 import com.icheero.sdk.util.Log;
 
 import butterknife.BindView;
@@ -37,7 +37,7 @@ public class DisposeSoActivity extends BaseActivity
         switch (v.getId())
         {
             case R.id.so_dispose:
-                mSoData = FileUtils.readRawResource(this, R.raw.libptt);
+                mSoData = IOUtils.readRawResource(this, R.raw.libptt);
                 if (mSoData == null)
                 {
                     Log.e(TAG, "Read file failed!");

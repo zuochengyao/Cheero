@@ -1,7 +1,7 @@
 package com.icheero.sdk.core.reverse.resource.model;
 
 import com.icheero.sdk.core.reverse.resource.ResourceParser;
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 
 /**
  * @author zcy 2019-04-02 16:08:48
@@ -177,12 +177,12 @@ public class ResValue
 
     public short getSizeValue()
     {
-        return FileUtils.byte2Short(size);
+        return IOUtils.byte2Short(size);
     }
 
     public int getDataValue()
     {
-        return FileUtils.byte2Int(data);
+        return IOUtils.byte2Int(data);
     }
 
     public String getTypeStr()

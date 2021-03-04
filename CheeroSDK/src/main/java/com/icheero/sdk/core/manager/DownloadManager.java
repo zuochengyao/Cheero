@@ -13,7 +13,6 @@ import com.icheero.sdk.core.network.http.encapsulation.HttpStatus;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
 import com.icheero.sdk.core.network.listener.IResponseListener;
 import com.icheero.sdk.util.Common;
-import com.icheero.sdk.util.FileUtils;
 import com.icheero.sdk.util.Log;
 
 import java.io.IOException;
@@ -131,7 +130,7 @@ public class DownloadManager
             long start;
             long end;
             // 如果文件存在，则继续下载
-            if (FileUtils.exists(FileUtils.DIR_PATH_CHEERO_CACHE + Common.md5(url)))
+            if (FileManager.getInstance().downloadFileExist(Common.md5(url)))
             {
                 start = entity.getStart() + entity.getProgress();
                 end = entity.getEnd();
@@ -235,7 +234,7 @@ public class DownloadManager
                     if (progress >= 100)
                     {
                         mListener.onProgress(100);
-                        mListener.onSuccess(IOManager.getInstance().getCacheFileByName(mUrl));
+                        mListener.onSuccess(FileManager.getInstance().getCacheFileByName(mUrl));
                         mDownloadCaches.clear();
                         return;
                     }

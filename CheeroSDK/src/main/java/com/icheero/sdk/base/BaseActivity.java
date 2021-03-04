@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.view.View;
 
 import com.icheero.sdk.core.manager.PermissionManager;
 import com.icheero.sdk.core.manager.ViewManager;
@@ -15,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
-import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -95,11 +93,6 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
     // endregion
 
     // region Extra Methods
-    protected <T extends View> T $(@IdRes int resId)
-    {
-        return super.findViewById(resId);
-    }
-
     protected void openActivity(Class<? extends Activity> activityClass)
     {
         if (activityClass != null)

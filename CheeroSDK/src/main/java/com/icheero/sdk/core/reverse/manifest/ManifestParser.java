@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.icheero.sdk.core.reverse.IParser;
 import com.icheero.sdk.util.Common;
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 import com.icheero.sdk.util.Log;
 import com.icheero.sdk.util.XmlUtils;
 
@@ -37,9 +37,9 @@ public class ManifestParser implements IParser
         Log.e(TAG, "Parse manifest start!");
         while (nextChunkOffset < mManifestData.length)
         {
-            byte[] signature = FileUtils.copyBytes(mManifestData, nextChunkOffset, 4);
-            int signatureValue = FileUtils.byte2Int(signature);
-            byte[] size = FileUtils.copyBytes(mManifestData, nextChunkOffset + 4, 4);
+            byte[] signature = IOUtils.copyBytes(mManifestData, nextChunkOffset, 4);
+            int signatureValue = IOUtils.byte2Int(signature);
+            byte[] size = IOUtils.copyBytes(mManifestData, nextChunkOffset + 4, 4);
             if (nextChunkOffset == 0)
             {
                 // 判断：如果文件Header部分不是Manifest类型，则抛出异常
@@ -53,8 +53,8 @@ public class ManifestParser implements IParser
             }
             else
             {
-                sizeValue = FileUtils.byte2Int(size);
-                byte[] source = FileUtils.copyBytes(mManifestData, nextChunkOffset, sizeValue);
+                sizeValue = IOUtils.byte2Int(size);
+                byte[] source = IOUtils.copyBytes(mManifestData, nextChunkOffset, sizeValue);
                 switch (signatureValue)
                 {
                     case Manifest.MANIFEST_STRING_CHUNK:
@@ -148,13 +148,13 @@ public class ManifestParser implements IParser
 
     private void parseStringChunk(byte[] stringChunk)
     {
-        mManifest.getStringChunk().scSignature = FileUtils.copyBytes(stringChunk, 0, 4);
-        mManifest.getStringChunk().scSize = FileUtils.copyBytes(stringChunk, 4, 4);
-        mManifest.getStringChunk().scStringCount = FileUtils.copyBytes(stringChunk, 8, 4);
-        mManifest.getStringChunk().scStyleCount = FileUtils.copyBytes(stringChunk, 12, 4);
-        mManifest.getStringChunk().scUnknown = FileUtils.copyBytes(stringChunk, 16, 4);
-        mManifest.getStringChunk().scStringPoolOffset = FileUtils.copyBytes(stringChunk, 20, 4);
-        mManifest.getStringChunk().scStylePoolOffset = FileUtils.copyBytes(stringChunk, 24, 4);
+        mManifest.getStringChunk().scSignature = IOUtils.copyBytes(stringChunk, 0, 4);
+        mManifest.getStringChunk().scSize = IOUtils.copyBytes(stringChunk, 4, 4);
+        mManifest.getStringChunk().scStringCount = IOUtils.copyBytes(stringChunk, 8, 4);
+        mManifest.getStringChunk().scStyleCount = IOUtils.copyBytes(stringChunk, 12, 4);
+        mManifest.getStringChunk().scUnknown = IOUtils.copyBytes(stringChunk, 16, 4);
+        mManifest.getStringChunk().scStringPoolOffset = IOUtils.copyBytes(stringChunk, 20, 4);
+        mManifest.getStringChunk().scStylePoolOffset = IOUtils.copyBytes(stringChunk, 24, 4);
         parseScStringPoolContent(stringChunk);
     }
 
@@ -162,16 +162,16 @@ public class ManifestParser implements IParser
     {
         int scStringCountValue = mManifest.getStringChunk().getStringCountValue();
         int scStringPoolOffsetValue = mManifest.getStringChunk().getStringPoolOffsetValue();
-        mManifest.getStringChunk().scStringPoolContent = FileUtils.copyBytes(chunk, scStringPoolOffsetValue, chunk.length - scStringPoolOffsetValue);
+        mManifest.getStringChunk().scStringPoolContent = IOUtils.copyBytes(chunk, scStringPoolOffsetValue, chunk.length - scStringPoolOffsetValue);
         mManifest.getStringChunk().scStringPoolContentList = new ArrayList<>(scStringCountValue);
         int endStringIndex = 0;
         for (int i = 0; i < scStringCountValue; i++)
         {
             // 这里的格式是：偏移值开始的两个字节是字符串的长度，接着是字符串的内容，后面跟着两个字符串的结束符00
-            byte[] stringSize = FileUtils.copyBytes(mManifest.getStringChunk().scStringPoolContent, endStringIndex, 2);
+            byte[] stringSize = IOUtils.copyBytes(mManifest.getStringChunk().scStringPoolContent, endStringIndex, 2);
             // 一个字符对应两个字节，所以要乘以2
-            int stringSizeValue = FileUtils.byte2Short(stringSize) * 2;
-            String str = new String(FileUtils.copyBytes(mManifest.getStringChunk().scStringPoolContent, endStringIndex + 2, stringSizeValue + 2));
+            int stringSizeValue = IOUtils.byte2Short(stringSize) * 2;
+            String str = new String(IOUtils.copyBytes(mManifest.getStringChunk().scStringPoolContent, endStringIndex + 2, stringSizeValue + 2));
             // 将字符串都放到ArrayList中
             mManifest.getStringChunk().scStringPoolContentList.add(Common.filterStringNull(str));
             endStringIndex += (2 + stringSizeValue + 2);
@@ -184,8 +184,8 @@ public class ManifestParser implements IParser
 
     private void parseResourceIdChunk(byte[] resourceIdChunk)
     {
-        mManifest.getResourceIdChunk().rcSignature = FileUtils.copyBytes(resourceIdChunk, 0, 4);
-        mManifest.getResourceIdChunk().rcSize = FileUtils.copyBytes(resourceIdChunk, 4, 4);
+        mManifest.getResourceIdChunk().rcSignature = IOUtils.copyBytes(resourceIdChunk, 0, 4);
+        mManifest.getResourceIdChunk().rcSize = IOUtils.copyBytes(resourceIdChunk, 4, 4);
         parseResourceIdList(resourceIdChunk);
     }
 
@@ -193,12 +193,12 @@ public class ManifestParser implements IParser
     {
         // chunkSize的值 包含了chunkTag和chunkSize，所以要去除这8个字节
         int resIdSize = mManifest.getResourceIdChunk().getSizeValue();
-        mManifest.getResourceIdChunk().rcResourceId = FileUtils.copyBytes(chunk, 8, resIdSize - 8);
+        mManifest.getResourceIdChunk().rcResourceId = IOUtils.copyBytes(chunk, 8, resIdSize - 8);
         mManifest.getResourceIdChunk().rcResourceIdList = new ArrayList<>(mManifest.getResourceIdChunk().rcResourceId.length / 4);
         for (int i = 0; i < mManifest.getResourceIdChunk().rcResourceId.length / 4; i++)
         {
-            byte[] resId = FileUtils.copyBytes(mManifest.getResourceIdChunk().rcResourceId, i * 4, 4);
-            int resIdValue = FileUtils.byte2Int(resId);
+            byte[] resId = IOUtils.copyBytes(mManifest.getResourceIdChunk().rcResourceId, i * 4, 4);
+            int resIdValue = IOUtils.byte2Int(resId);
             mManifest.getResourceIdChunk().rcResourceIdList.add(resIdValue);
         }
     }
@@ -210,24 +210,24 @@ public class ManifestParser implements IParser
     private Manifest.StartNamespaceChunk parseStartNamespaceChunk(byte[] startNamespaceChunk)
     {
         Manifest.StartNamespaceChunk chunk = mManifest.new StartNamespaceChunk();
-        chunk.sncSignature = FileUtils.copyBytes(startNamespaceChunk, 0, 4);
-        chunk.sncSize = FileUtils.copyBytes(startNamespaceChunk, 4, 4);
-        chunk.sncLineNumber = FileUtils.copyBytes(startNamespaceChunk, 8, 4);
-        chunk.sncUnknown = FileUtils.copyBytes(startNamespaceChunk, 12, 4);
-        chunk.sncPrefix = FileUtils.copyBytes(startNamespaceChunk, 16, 4);
-        chunk.sncUri = FileUtils.copyBytes(startNamespaceChunk, 20, 4);
+        chunk.sncSignature = IOUtils.copyBytes(startNamespaceChunk, 0, 4);
+        chunk.sncSize = IOUtils.copyBytes(startNamespaceChunk, 4, 4);
+        chunk.sncLineNumber = IOUtils.copyBytes(startNamespaceChunk, 8, 4);
+        chunk.sncUnknown = IOUtils.copyBytes(startNamespaceChunk, 12, 4);
+        chunk.sncPrefix = IOUtils.copyBytes(startNamespaceChunk, 16, 4);
+        chunk.sncUri = IOUtils.copyBytes(startNamespaceChunk, 20, 4);
         return chunk;
     }
 
     private Manifest.EndNamespaceChunk parseEndNamespaceChunk(byte[] endNamespaceChunk)
     {
         Manifest.EndNamespaceChunk chunk = mManifest.new EndNamespaceChunk();
-        chunk.encSignature = FileUtils.copyBytes(endNamespaceChunk, 0, 4);
-        chunk.encSize = FileUtils.copyBytes(endNamespaceChunk, 4, 4);
-        chunk.encLineNumber = FileUtils.copyBytes(endNamespaceChunk, 8, 4);
-        chunk.encUnknown = FileUtils.copyBytes(endNamespaceChunk, 12, 4);
-        chunk.encPrefix = FileUtils.copyBytes(endNamespaceChunk, 16, 4);
-        chunk.encUri = FileUtils.copyBytes(endNamespaceChunk, 20, 4);
+        chunk.encSignature = IOUtils.copyBytes(endNamespaceChunk, 0, 4);
+        chunk.encSize = IOUtils.copyBytes(endNamespaceChunk, 4, 4);
+        chunk.encLineNumber = IOUtils.copyBytes(endNamespaceChunk, 8, 4);
+        chunk.encUnknown = IOUtils.copyBytes(endNamespaceChunk, 12, 4);
+        chunk.encPrefix = IOUtils.copyBytes(endNamespaceChunk, 16, 4);
+        chunk.encUri = IOUtils.copyBytes(endNamespaceChunk, 20, 4);
         return chunk;
     }
 
@@ -238,16 +238,16 @@ public class ManifestParser implements IParser
     private Manifest.StartTagChunk parseStartTagChunk(byte[] startTagChunk)
     {
         Manifest.StartTagChunk chunk = mManifest.new StartTagChunk();
-        chunk.stcSignature = FileUtils.copyBytes(startTagChunk, 0, 4);
-        chunk.stcSize = FileUtils.copyBytes(startTagChunk, 4, 4);
-        chunk.stcLineNumber = FileUtils.copyBytes(startTagChunk, 8, 4);
-        chunk.stcUnknown = FileUtils.copyBytes(startTagChunk, 12, 4);
-        chunk.stcNamespaceUri = FileUtils.copyBytes(startTagChunk, 16, 4);
-        chunk.stcName = FileUtils.copyBytes(startTagChunk, 20, 4);
-        chunk.stcFlags = FileUtils.copyBytes(startTagChunk, 24, 4);
-        chunk.stcAttributeCount = FileUtils.copyBytes(startTagChunk, 28, 4);
-        chunk.stcClassAttribute = FileUtils.copyBytes(startTagChunk, 32, 4);
-        chunk.stcAttributeChunk = FileUtils.copyBytes(startTagChunk, 36, startTagChunk.length - 36);
+        chunk.stcSignature = IOUtils.copyBytes(startTagChunk, 0, 4);
+        chunk.stcSize = IOUtils.copyBytes(startTagChunk, 4, 4);
+        chunk.stcLineNumber = IOUtils.copyBytes(startTagChunk, 8, 4);
+        chunk.stcUnknown = IOUtils.copyBytes(startTagChunk, 12, 4);
+        chunk.stcNamespaceUri = IOUtils.copyBytes(startTagChunk, 16, 4);
+        chunk.stcName = IOUtils.copyBytes(startTagChunk, 20, 4);
+        chunk.stcFlags = IOUtils.copyBytes(startTagChunk, 24, 4);
+        chunk.stcAttributeCount = IOUtils.copyBytes(startTagChunk, 28, 4);
+        chunk.stcClassAttribute = IOUtils.copyBytes(startTagChunk, 32, 4);
+        chunk.stcAttributeChunk = IOUtils.copyBytes(startTagChunk, 36, startTagChunk.length - 36);
         parseAttributeChunk(chunk);
         return chunk;
     }
@@ -258,11 +258,11 @@ public class ManifestParser implements IParser
         for (int i = 0; i < chunk.getAttributeCountValue(); i++)
         {
             Manifest.StartTagChunk.AttributeChunk attribute = chunk.new AttributeChunk();
-            attribute.acNamespaceUri = FileUtils.copyBytes(chunk.stcAttributeChunk,  20 * i, 4);
-            attribute.acName = FileUtils.copyBytes(chunk.stcAttributeChunk, 20 * i + 4, 4);
-            attribute.acValueStr = FileUtils.copyBytes(chunk.stcAttributeChunk, 20 * i + 8, 4);
-            attribute.acType = FileUtils.copyBytes(chunk.stcAttributeChunk,   20 * i + 12, 4);
-            attribute.acData = FileUtils.copyBytes(chunk.stcAttributeChunk,   20 * i + 16, 4);
+            attribute.acNamespaceUri = IOUtils.copyBytes(chunk.stcAttributeChunk, 20 * i, 4);
+            attribute.acName = IOUtils.copyBytes(chunk.stcAttributeChunk, 20 * i + 4, 4);
+            attribute.acValueStr = IOUtils.copyBytes(chunk.stcAttributeChunk, 20 * i + 8, 4);
+            attribute.acType = IOUtils.copyBytes(chunk.stcAttributeChunk, 20 * i + 12, 4);
+            attribute.acData = IOUtils.copyBytes(chunk.stcAttributeChunk, 20 * i + 16, 4);
             chunk.stcAttributeList.add(attribute);
         }
     }
@@ -270,12 +270,12 @@ public class ManifestParser implements IParser
     private Manifest.EndTagChunk parseEndTagChunk(byte[] endTagChunk)
     {
         Manifest.EndTagChunk chunk = mManifest.new EndTagChunk();
-        chunk.etcSignature = FileUtils.copyBytes(endTagChunk, 0, 4);
-        chunk.etcSize = FileUtils.copyBytes(endTagChunk, 4, 4);
-        chunk.etcLineNumber = FileUtils.copyBytes(endTagChunk, 8, 4);
-        chunk.etcUnknown = FileUtils.copyBytes(endTagChunk, 12, 4);
-        chunk.etcNamespaceUri = FileUtils.copyBytes(endTagChunk, 16, 4);
-        chunk.etcName = FileUtils.copyBytes(endTagChunk, 20, 4);
+        chunk.etcSignature = IOUtils.copyBytes(endTagChunk, 0, 4);
+        chunk.etcSize = IOUtils.copyBytes(endTagChunk, 4, 4);
+        chunk.etcLineNumber = IOUtils.copyBytes(endTagChunk, 8, 4);
+        chunk.etcUnknown = IOUtils.copyBytes(endTagChunk, 12, 4);
+        chunk.etcNamespaceUri = IOUtils.copyBytes(endTagChunk, 16, 4);
+        chunk.etcName = IOUtils.copyBytes(endTagChunk, 20, 4);
         return chunk;
     }
 

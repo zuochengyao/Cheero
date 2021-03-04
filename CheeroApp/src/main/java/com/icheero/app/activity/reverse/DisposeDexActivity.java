@@ -7,7 +7,7 @@ import android.widget.Button;
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.reverse.dex.DexParser;
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 import com.icheero.sdk.util.Log;
 
 import butterknife.BindView;
@@ -30,7 +30,7 @@ public class DisposeDexActivity extends BaseActivity
     @OnClick(R.id.dex_dispose)
     public void onDexDisposeClickEvent(View v)
     {
-        byte[] resourceData = FileUtils.readRawResource(this, R.raw.pocdex);
+        byte[] resourceData = IOUtils.readRawResource(this, R.raw.pocdex);
         if (resourceData == null)
         {
             Log.e(TAG, "Read file failed!");

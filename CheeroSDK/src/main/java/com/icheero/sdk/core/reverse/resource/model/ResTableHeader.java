@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.reverse.resource.model;
 
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 
 import androidx.annotation.NonNull;
 
@@ -49,7 +49,7 @@ public class ResTableHeader
 
     int getPackageCountValue()
     {
-        return FileUtils.byte2Int(packageCount);
+        return IOUtils.byte2Int(packageCount);
     }
 
     public int getHeaderSize()
@@ -63,7 +63,7 @@ public class ResTableHeader
     {
         StringBuilder builder = new StringBuilder("------------------ ResTableHeader ------------------\n");
         builder.append("Header: ").append("\n").append(header.toString()).append("\n");
-        builder.append("PackageCount: ").append(FileUtils.byte2HexString(packageCount)).append("(").append(getPackageCountValue()).append(")").append("\n");
+        builder.append("PackageCount: ").append(IOUtils.byte2HexString(packageCount)).append("(").append(getPackageCountValue()).append(")").append("\n");
         return builder.toString();
     }
 }

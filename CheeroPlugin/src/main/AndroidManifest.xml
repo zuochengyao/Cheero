@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.icheero.plugin"
-          xmlns:android="http://schemas.android.com/apk/res/android">
-
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    
     <application>
-        <activity android:name=".activity.MainActivity"/>
-        <activity android:name=".activity.AndFixActivity"/>
-        <activity android:name=".activity.LoadPluginActivity"/>
-        <service android:name=".hotfix.andfix.AndFixService"/>
-
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.LoadPluginActivity" />
+        <activity android:name=".activity.LoadMegliveActivity"/>
+        <activity android:name=".activity.AndFixActivity" />
+        
         <meta-data
             android:name="com.icheero.plugin.application.PluginApplication"
-            android:value="AppInit"/>
+            android:value="AppInit" />
+        
+        <service android:name=".hotfix.andfix.AndFixService" />
     </application>
 
 </manifest>

@@ -83,6 +83,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':CheeroSDK')
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     annotationProcessor versions.deps.arouter_compiler
     // Alibaba Andfix
     implementation versions.deps.andfix

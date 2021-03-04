@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.reverse.dex.model;
 
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 
 import androidx.annotation.NonNull;
 
@@ -66,107 +66,107 @@ public class DexHeader
 
     public int getCheckSumValue()
     {
-        return FileUtils.byte2Int(checkSum);
+        return IOUtils.byte2Int(checkSum);
     }
 
     public int getFileSizeValue()
     {
-        return FileUtils.byte2Int(fileSize);
+        return IOUtils.byte2Int(fileSize);
     }
 
     public int getHeaderSizeValue()
     {
-        return FileUtils.byte2Int(headerSize);
+        return IOUtils.byte2Int(headerSize);
     }
 
     public int getEndianTagValue()
     {
-        return FileUtils.byte2Int(endianTag);
+        return IOUtils.byte2Int(endianTag);
     }
 
     public int getLinkSizeValue()
     {
-        return FileUtils.byte2Int(linkSize);
+        return IOUtils.byte2Int(linkSize);
     }
 
     public int getLinkOffValue()
     {
-        return FileUtils.byte2Int(linkOff);
+        return IOUtils.byte2Int(linkOff);
     }
 
     public int getMapOffValue()
     {
-        return FileUtils.byte2Int(mapOff);
+        return IOUtils.byte2Int(mapOff);
     }
 
     public int getStringIdsSizeValue()
     {
-        return FileUtils.byte2Int(stringIdsSize);
+        return IOUtils.byte2Int(stringIdsSize);
     }
 
     public int getStringIdsOffValue()
     {
-        return FileUtils.byte2Int(stringIdsOff);
+        return IOUtils.byte2Int(stringIdsOff);
     }
 
     public int getTypeIdsSizeValue()
     {
-        return FileUtils.byte2Int(typeIdsSize);
+        return IOUtils.byte2Int(typeIdsSize);
     }
 
     public int getTypeIdsOffValue()
     {
-        return FileUtils.byte2Int(typeIdsOff);
+        return IOUtils.byte2Int(typeIdsOff);
     }
 
     public int getProtoIdsSizeValue()
     {
-        return FileUtils.byte2Int(protoIdsSize);
+        return IOUtils.byte2Int(protoIdsSize);
     }
 
     public int getProtoIdsOffValue()
     {
-        return FileUtils.byte2Int(protoIdsOff);
+        return IOUtils.byte2Int(protoIdsOff);
     }
 
     public int getFieldIdsSizeValue()
     {
-        return FileUtils.byte2Int(fieldIdsSize);
+        return IOUtils.byte2Int(fieldIdsSize);
     }
 
     public int getFieldIdsOffValue()
     {
-        return FileUtils.byte2Int(fieldIdsOff);
+        return IOUtils.byte2Int(fieldIdsOff);
     }
 
     public int getMethodIdsSizeValue()
     {
-        return FileUtils.byte2Int(methodIdsSize);
+        return IOUtils.byte2Int(methodIdsSize);
     }
 
     public int getMethodIdsOffValue()
     {
-        return FileUtils.byte2Int(methodIdsOff);
+        return IOUtils.byte2Int(methodIdsOff);
     }
 
     public int getClassDefsSizeValue()
     {
-        return FileUtils.byte2Int(classDefsSize);
+        return IOUtils.byte2Int(classDefsSize);
     }
 
     public int getClassDefsOffValue()
     {
-        return FileUtils.byte2Int(classDefsOff);
+        return IOUtils.byte2Int(classDefsOff);
     }
 
     public int getDataSizeValue()
     {
-        return FileUtils.byte2Int(dataSize);
+        return IOUtils.byte2Int(dataSize);
     }
 
     public int getDataOffValue()
     {
-        return FileUtils.byte2Int(dataOff);
+        return IOUtils.byte2Int(dataOff);
     }
 
     @NonNull
@@ -174,29 +174,29 @@ public class DexHeader
     public String toString()
     {
         StringBuilder builder = new StringBuilder("------------------ DexHeader ------------------\n");
-        builder.append("Magic: ").append(FileUtils.byte2HexString(magic)).append("\n");
-        builder.append("CheckSum: ").append(FileUtils.byte2HexString(checkSum)).append("(").append(Integer.toHexString(getCheckSumValue())).append(")").append("\n");
-        builder.append("Signature: ").append(FileUtils.byte2HexString(signature)).append("\n");
-        builder.append("FileSize: ").append(FileUtils.byte2HexString(fileSize)).append("(").append(getFileSizeValue()).append(")").append("\n");
-        builder.append("HeaderSize: ").append(FileUtils.byte2HexString(headerSize)).append("(").append(getHeaderSizeValue()).append(")").append("\n");
-        builder.append("EndianTag: ").append(FileUtils.byte2HexString(endianTag)).append("(").append(Integer.toHexString(getEndianTagValue())).append(")").append("\n");
-        builder.append("LinkSize: ").append(FileUtils.byte2HexString(linkSize)).append("(").append(getLinkSizeValue()).append(")").append("\n");
-        builder.append("LinkOff: ").append(FileUtils.byte2HexString(linkOff)).append("(").append(getLinkOffValue()).append(")").append("\n");
-        builder.append("MapOff: ").append(FileUtils.byte2HexString(mapOff)).append("(").append(getMapOffValue()).append(")").append("\n");
-        builder.append("StringIdsSize: ").append(FileUtils.byte2HexString(stringIdsSize)).append("(").append(getStringIdsSizeValue()).append(")").append("\n");
-        builder.append("StringIdsOff: ").append(FileUtils.byte2HexString(stringIdsOff)).append("(").append(getStringIdsOffValue()).append(")").append("\n");
-        builder.append("TypeIdsSize: ").append(FileUtils.byte2HexString(typeIdsSize)).append("(").append(getTypeIdsSizeValue()).append(")").append("\n");
-        builder.append("TypeIdsOff: ").append(FileUtils.byte2HexString(typeIdsOff)).append("(").append(getTypeIdsOffValue()).append(")").append("\n");
-        builder.append("ProtoIdsSize: ").append(FileUtils.byte2HexString(protoIdsSize)).append("(").append(getProtoIdsSizeValue()).append(")").append("\n");
-        builder.append("ProtoIdsOff: ").append(FileUtils.byte2HexString(protoIdsOff)).append("(").append(getProtoIdsOffValue()).append(")").append("\n");
-        builder.append("FieldIdsSize: ").append(FileUtils.byte2HexString(fieldIdsSize)).append("(").append(getFieldIdsSizeValue()).append(")").append("\n");
-        builder.append("FieldIdsOff: ").append(FileUtils.byte2HexString(fieldIdsOff)).append("(").append(getFieldIdsOffValue()).append(")").append("\n");
-        builder.append("MethodIdsSize: ").append(FileUtils.byte2HexString(methodIdsSize)).append("(").append(getMethodIdsSizeValue()).append(")").append("\n");
-        builder.append("MethodIdsOff: ").append(FileUtils.byte2HexString(methodIdsOff)).append("(").append(getMethodIdsOffValue()).append(")").append("\n");
-        builder.append("ClassDefsSize: ").append(FileUtils.byte2HexString(classDefsSize)).append("(").append(getClassDefsSizeValue()).append(")").append("\n");
-        builder.append("ClassDefsOff: ").append(FileUtils.byte2HexString(classDefsOff)).append("(").append(getClassDefsOffValue()).append(")").append("\n");
-        builder.append("DataSize: ").append(FileUtils.byte2HexString(dataSize)).append("(").append(getDataSizeValue()).append(")").append("\n");
-        builder.append("DataOff: ").append(FileUtils.byte2HexString(dataOff)).append("(").append(getDataOffValue()).append(")");
+        builder.append("Magic: ").append(IOUtils.byte2HexString(magic)).append("\n");
+        builder.append("CheckSum: ").append(IOUtils.byte2HexString(checkSum)).append("(").append(Integer.toHexString(getCheckSumValue())).append(")").append("\n");
+        builder.append("Signature: ").append(IOUtils.byte2HexString(signature)).append("\n");
+        builder.append("FileSize: ").append(IOUtils.byte2HexString(fileSize)).append("(").append(getFileSizeValue()).append(")").append("\n");
+        builder.append("HeaderSize: ").append(IOUtils.byte2HexString(headerSize)).append("(").append(getHeaderSizeValue()).append(")").append("\n");
+        builder.append("EndianTag: ").append(IOUtils.byte2HexString(endianTag)).append("(").append(Integer.toHexString(getEndianTagValue())).append(")").append("\n");
+        builder.append("LinkSize: ").append(IOUtils.byte2HexString(linkSize)).append("(").append(getLinkSizeValue()).append(")").append("\n");
+        builder.append("LinkOff: ").append(IOUtils.byte2HexString(linkOff)).append("(").append(getLinkOffValue()).append(")").append("\n");
+        builder.append("MapOff: ").append(IOUtils.byte2HexString(mapOff)).append("(").append(getMapOffValue()).append(")").append("\n");
+        builder.append("StringIdsSize: ").append(IOUtils.byte2HexString(stringIdsSize)).append("(").append(getStringIdsSizeValue()).append(")").append("\n");
+        builder.append("StringIdsOff: ").append(IOUtils.byte2HexString(stringIdsOff)).append("(").append(getStringIdsOffValue()).append(")").append("\n");
+        builder.append("TypeIdsSize: ").append(IOUtils.byte2HexString(typeIdsSize)).append("(").append(getTypeIdsSizeValue()).append(")").append("\n");
+        builder.append("TypeIdsOff: ").append(IOUtils.byte2HexString(typeIdsOff)).append("(").append(getTypeIdsOffValue()).append(")").append("\n");
+        builder.append("ProtoIdsSize: ").append(IOUtils.byte2HexString(protoIdsSize)).append("(").append(getProtoIdsSizeValue()).append(")").append("\n");
+        builder.append("ProtoIdsOff: ").append(IOUtils.byte2HexString(protoIdsOff)).append("(").append(getProtoIdsOffValue()).append(")").append("\n");
+        builder.append("FieldIdsSize: ").append(IOUtils.byte2HexString(fieldIdsSize)).append("(").append(getFieldIdsSizeValue()).append(")").append("\n");
+        builder.append("FieldIdsOff: ").append(IOUtils.byte2HexString(fieldIdsOff)).append("(").append(getFieldIdsOffValue()).append(")").append("\n");
+        builder.append("MethodIdsSize: ").append(IOUtils.byte2HexString(methodIdsSize)).append("(").append(getMethodIdsSizeValue()).append(")").append("\n");
+        builder.append("MethodIdsOff: ").append(IOUtils.byte2HexString(methodIdsOff)).append("(").append(getMethodIdsOffValue()).append(")").append("\n");
+        builder.append("ClassDefsSize: ").append(IOUtils.byte2HexString(classDefsSize)).append("(").append(getClassDefsSizeValue()).append(")").append("\n");
+        builder.append("ClassDefsOff: ").append(IOUtils.byte2HexString(classDefsOff)).append("(").append(getClassDefsOffValue()).append(")").append("\n");
+        builder.append("DataSize: ").append(IOUtils.byte2HexString(dataSize)).append("(").append(getDataSizeValue()).append(")").append("\n");
+        builder.append("DataOff: ").append(IOUtils.byte2HexString(dataOff)).append("(").append(getDataOffValue()).append(")");
         return builder.toString();
     }
 }

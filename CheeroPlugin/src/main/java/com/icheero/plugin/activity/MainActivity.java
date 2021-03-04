@@ -6,15 +6,24 @@ import android.view.View;
 import android.widget.Button;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.icheero.plugin.PluginManager;
 import com.icheero.plugin.R;
 import com.icheero.sdk.base.BaseActivity;
+
+import java.io.File;
 
 @Route(path = "/plugin/main")
 public class MainActivity extends BaseActivity implements View.OnClickListener
 {
     private Button mToCustom;
+    private Button mToMeglive;
     private Button mToAndFix;
     private Button mToTinker;
+
+    private static final String PLUGIN_NAME_MEGLIVE = "meglive.apk";
+    private static final String PLUGIN_PACKAGE_MEGLIVE = "com.megvii.meglive_still.demo";
+    private static final String PLUGIN_NAME_CHEERO = "CheeroPlugin.apk";
+    private static final String PLUGIN_PACKAGE_CHEERO = "com.icheero.plugins";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -26,13 +35,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
 
     private void doInitView()
     {
-        mToCustom = $(R.id.to_custom);
-        mToAndFix = $(R.id.to_andfix);
-        mToTinker = $(R.id.to_tinker);
+        mToCustom = findViewById(R.id.to_custom);
+        mToAndFix = findViewById(R.id.to_andfix);
+        mToTinker = findViewById(R.id.to_tinker);
+        mToMeglive = findViewById(R.id.to_meglive);
 
         mToCustom.setOnClickListener(this);
         mToAndFix.setOnClickListener(this);
         mToTinker.setOnClickListener(this);
+        mToMeglive.setOnClickListener(this);
     }
 
     @Override
@@ -46,6 +57,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
             intent = new Intent(this, AndFixActivity.class);
         else if (id == R.id.to_tinker)
             intent = new Intent(this, TinkerActivity.class);
+        else if (id == R.id.to_meglive)
+        {
+            File apk = new File(PluginManager.PLUGIN_FILE_PATH);
+            intent = new Intent(this, LoadMegliveActivity.class);
+        }
         startActivity(intent);
     }
 }

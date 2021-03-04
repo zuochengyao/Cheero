@@ -6,7 +6,6 @@ import android.view.View;
 import com.icheero.plugin.R;
 import com.icheero.plugin.hotfix.tinker.TinkerManager;
 import com.icheero.sdk.base.BaseActivity;
-import com.icheero.sdk.util.FileUtils;
 
 
 public class TinkerActivity extends BaseActivity
@@ -22,6 +21,6 @@ public class TinkerActivity extends BaseActivity
 
     public void loadPatch(View view)
     {
-        TinkerManager.getInstance().loadPatch(FileUtils.DIR_PATH_CHEERO_PATCHES);
+        TinkerManager.getInstance().loadPatch("IOUtils.DIR_PATH_CHEERO_PATCHES");
     }
 }

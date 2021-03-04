@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.reverse.manifest;
 
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +84,7 @@ class Manifest
 
         int getMagicNumberValue()
         {
-            return FileUtils.byte2Int(hMagic);
+            return IOUtils.byte2Int(hMagic);
         }
 
         /**
@@ -92,7 +92,7 @@ class Manifest
          */
         int getSizeValue()
         {
-            return FileUtils.byte2Int(hSize);
+            return IOUtils.byte2Int(hSize);
         }
 
         @NonNull
@@ -100,8 +100,8 @@ class Manifest
         public String toString()
         {
             StringBuilder builder = new StringBuilder("------------------ Header ------------------\n");
-            builder.append("MagicNumber: ").append(FileUtils.byte2HexString(hMagic)).append("(").append(getMagicNumberValue()).append(")").append("\n");
-            builder.append("Size: ").append(FileUtils.byte2HexString(hSize)).append("(").append(getSizeValue()).append(")");
+            builder.append("MagicNumber: ").append(IOUtils.byte2HexString(hMagic)).append("(").append(getMagicNumberValue()).append(")").append("\n");
+            builder.append("Size: ").append(IOUtils.byte2HexString(hSize)).append("(").append(getSizeValue()).append(")");
             return builder.toString();
         }
     }
@@ -130,37 +130,37 @@ class Manifest
 
         int getSignatureValue()
         {
-            return FileUtils.byte2Int(scSignature);
+            return IOUtils.byte2Int(scSignature);
         }
 
         int getSizeValue()
         {
-            return FileUtils.byte2Int(scSize);
+            return IOUtils.byte2Int(scSize);
         }
 
         int getStringCountValue()
         {
-            return FileUtils.byte2Int(scStringCount);
+            return IOUtils.byte2Int(scStringCount);
         }
 
         int getStyleCountValue()
         {
-            return FileUtils.byte2Int(scStyleCount);
+            return IOUtils.byte2Int(scStyleCount);
         }
 
         int getUnknownValue()
         {
-            return FileUtils.byte2Int(scUnknown);
+            return IOUtils.byte2Int(scUnknown);
         }
 
         int getStringPoolOffsetValue()
         {
-            return FileUtils.byte2Int(scStringPoolOffset);
+            return IOUtils.byte2Int(scStringPoolOffset);
         }
 
         int getStylePoolOffsetValue()
         {
-            return FileUtils.byte2Int(scStylePoolOffset);
+            return IOUtils.byte2Int(scStylePoolOffset);
         }
 
         @NonNull
@@ -168,13 +168,13 @@ class Manifest
         public String toString()
         {
             StringBuilder builder = new StringBuilder("------------------ StringChunk ------------------\n");
-            builder.append("Signature: ").append(FileUtils.byte2HexString(scSignature)).append("(").append(getSignatureValue()).append(")").append("\n");
-            builder.append("Size: ").append(FileUtils.byte2HexString(scSize)).append("(").append(getSizeValue()).append(")").append("\n");
-            builder.append("String Count: ").append(FileUtils.byte2HexString(scStringCount)).append("(").append(getStringCountValue()).append(")").append("\n");
-            builder.append("Style Count: ").append(FileUtils.byte2HexString(scStyleCount)).append("(").append(getStyleCountValue()).append(")").append("\n");
-            builder.append("Unknown: ").append(FileUtils.byte2HexString(scUnknown)).append("(").append(getUnknownValue()).append(")").append("\n");
-            builder.append("StringPool Offset: ").append(FileUtils.byte2HexString(scStringPoolOffset)).append("(").append(getStringPoolOffsetValue()).append(")").append("\n");
-            builder.append("StylePool Offset: ").append(FileUtils.byte2HexString(scStylePoolOffset)).append("(").append(getStylePoolOffsetValue()).append(")").append("\n");
+            builder.append("Signature: ").append(IOUtils.byte2HexString(scSignature)).append("(").append(getSignatureValue()).append(")").append("\n");
+            builder.append("Size: ").append(IOUtils.byte2HexString(scSize)).append("(").append(getSizeValue()).append(")").append("\n");
+            builder.append("String Count: ").append(IOUtils.byte2HexString(scStringCount)).append("(").append(getStringCountValue()).append(")").append("\n");
+            builder.append("Style Count: ").append(IOUtils.byte2HexString(scStyleCount)).append("(").append(getStyleCountValue()).append(")").append("\n");
+            builder.append("Unknown: ").append(IOUtils.byte2HexString(scUnknown)).append("(").append(getUnknownValue()).append(")").append("\n");
+            builder.append("StringPool Offset: ").append(IOUtils.byte2HexString(scStringPoolOffset)).append("(").append(getStringPoolOffsetValue()).append(")").append("\n");
+            builder.append("StylePool Offset: ").append(IOUtils.byte2HexString(scStylePoolOffset)).append("(").append(getStylePoolOffsetValue()).append(")").append("\n");
             for (int i = 0; i < scStringPoolContentList.size(); i++)
             {
                 builder.append("str[").append(i).append("]: ").append(scStringPoolContentList.get(i));
@@ -198,12 +198,12 @@ class Manifest
 
         int getSignatureValue()
         {
-            return FileUtils.byte2Int(rcSignature);
+            return IOUtils.byte2Int(rcSignature);
         }
 
         int getSizeValue()
         {
-            return FileUtils.byte2Int(rcSize);
+            return IOUtils.byte2Int(rcSize);
         }
 
         @NonNull
@@ -211,12 +211,12 @@ class Manifest
         public String toString()
         {
             StringBuilder builder = new StringBuilder("------------------ ResourceIdChunk ------------------\n");
-            builder.append("Signature: ").append(FileUtils.byte2HexString(rcSignature)).append("(").append(getSignatureValue()).append(")").append("\n");
-            builder.append("Size: ").append(FileUtils.byte2HexString(rcSize)).append("(").append(getSizeValue()).append(")").append("\n");
+            builder.append("Signature: ").append(IOUtils.byte2HexString(rcSignature)).append("(").append(getSignatureValue()).append(")").append("\n");
+            builder.append("Size: ").append(IOUtils.byte2HexString(rcSize)).append("(").append(getSizeValue()).append(")").append("\n");
             for (int i = 0; i < rcResourceIdList.size(); i++)
             {
                 builder.append("resId[").append(i).append("]: ");
-                builder.append(FileUtils.byte2HexString(FileUtils.int2Byte(rcResourceIdList.get(i))));
+                builder.append(IOUtils.byte2HexString(IOUtils.int2Byte(rcResourceIdList.get(i))));
                 builder.append("(").append(rcResourceIdList.get(i)).append(")");
                 if (i != rcResourceIdList.size() - 1) builder.append("\n");
             }
@@ -243,27 +243,27 @@ class Manifest
 
         int getSignatureValue()
         {
-            return FileUtils.byte2Int(sncSignature);
+            return IOUtils.byte2Int(sncSignature);
         }
 
         int getSizeValue()
         {
-            return FileUtils.byte2Int(sncSize);
+            return IOUtils.byte2Int(sncSize);
         }
 
         int getLineNumberValue()
         {
-            return FileUtils.byte2Int(sncLineNumber);
+            return IOUtils.byte2Int(sncLineNumber);
         }
 
         int getUnknownValue()
         {
-            return FileUtils.byte2Int(sncUnknown);
+            return IOUtils.byte2Int(sncUnknown);
         }
 
         int getPrefixValue()
         {
-            return FileUtils.byte2Int(sncPrefix);
+            return IOUtils.byte2Int(sncPrefix);
         }
 
         String getPrefixStr()
@@ -273,7 +273,7 @@ class Manifest
 
         int getUriValue()
         {
-            return FileUtils.byte2Int(sncUri);
+            return IOUtils.byte2Int(sncUri);
         }
 
         String getUriStr()
@@ -286,13 +286,13 @@ class Manifest
         public String toString()
         {
             StringBuilder builder = new StringBuilder("------------------ StartNamespaceChunk ------------------\n");
-            builder.append("Signature: ").append(FileUtils.byte2HexString(sncSignature)).append("(").append(getSignatureValue()).append(")").append("\n");
-            builder.append("Size: ").append(FileUtils.byte2HexString(sncSize)).append("(").append(getSizeValue()).append(")").append("\n");
-            builder.append("LineNumber: ").append(FileUtils.byte2HexString(sncLineNumber)).append("(").append(getLineNumberValue()).append(")").append("\n");
-            builder.append("Unknown: ").append(FileUtils.byte2HexString(sncUnknown)).append("(").append(getUnknownValue()).append(")").append("\n");
-            builder.append("Prefix: ").append(FileUtils.byte2HexString(sncPrefix)).append("(").append(getPrefixValue()).append(")").append("\n");
+            builder.append("Signature: ").append(IOUtils.byte2HexString(sncSignature)).append("(").append(getSignatureValue()).append(")").append("\n");
+            builder.append("Size: ").append(IOUtils.byte2HexString(sncSize)).append("(").append(getSizeValue()).append(")").append("\n");
+            builder.append("LineNumber: ").append(IOUtils.byte2HexString(sncLineNumber)).append("(").append(getLineNumberValue()).append(")").append("\n");
+            builder.append("Unknown: ").append(IOUtils.byte2HexString(sncUnknown)).append("(").append(getUnknownValue()).append(")").append("\n");
+            builder.append("Prefix: ").append(IOUtils.byte2HexString(sncPrefix)).append("(").append(getPrefixValue()).append(")").append("\n");
             builder.append("Prefix: ").append(getPrefixStr()).append("\n");
-            builder.append("Uri: ").append(FileUtils.byte2HexString(sncUri)).append("(").append(getUriValue()).append(")").append("\n");
+            builder.append("Uri: ").append(IOUtils.byte2HexString(sncUri)).append("(").append(getUriValue()).append(")").append("\n");
             builder.append("Uri: ").append(getUriStr()).append("\n");
             return builder.toString();
         }
@@ -317,32 +317,32 @@ class Manifest
 
         int getSignatureValue()
         {
-            return FileUtils.byte2Int(encSignature);
+            return IOUtils.byte2Int(encSignature);
         }
 
         int getSizeValue()
         {
-            return FileUtils.byte2Int(encSize);
+            return IOUtils.byte2Int(encSize);
         }
 
         int getLineNumberValue()
         {
-            return FileUtils.byte2Int(encLineNumber);
+            return IOUtils.byte2Int(encLineNumber);
         }
 
         int getUnknownValue()
         {
-            return FileUtils.byte2Int(encUnknown);
+            return IOUtils.byte2Int(encUnknown);
         }
 
         int getPrefixValue()
         {
-            return FileUtils.byte2Int(encPrefix);
+            return IOUtils.byte2Int(encPrefix);
         }
 
         int getUriValue()
         {
-            return FileUtils.byte2Int(encUri);
+            return IOUtils.byte2Int(encUri);
         }
 
         @NonNull
@@ -350,13 +350,13 @@ class Manifest
         public String toString()
         {
             StringBuilder builder = new StringBuilder("------------------ EndNamespaceChunk ------------------\n");
-            builder.append("Signature: ").append(FileUtils.byte2HexString(encSignature)).append("(").append(getSignatureValue()).append(")").append("\n");
-            builder.append("Size: ").append(FileUtils.byte2HexString(encSize)).append("(").append(getSizeValue()).append(")").append("\n");
-            builder.append("LineNumber: ").append(FileUtils.byte2HexString(encLineNumber)).append("(").append(getLineNumberValue()).append(")").append("\n");
-            builder.append("Unknown: ").append(FileUtils.byte2HexString(encUnknown)).append("(").append(getUnknownValue()).append(")").append("\n");
-            builder.append("Prefix: ").append(FileUtils.byte2HexString(encPrefix)).append("(").append(getPrefixValue()).append(")").append("\n");
+            builder.append("Signature: ").append(IOUtils.byte2HexString(encSignature)).append("(").append(getSignatureValue()).append(")").append("\n");
+            builder.append("Size: ").append(IOUtils.byte2HexString(encSize)).append("(").append(getSizeValue()).append(")").append("\n");
+            builder.append("LineNumber: ").append(IOUtils.byte2HexString(encLineNumber)).append("(").append(getLineNumberValue()).append(")").append("\n");
+            builder.append("Unknown: ").append(IOUtils.byte2HexString(encUnknown)).append("(").append(getUnknownValue()).append(")").append("\n");
+            builder.append("Prefix: ").append(IOUtils.byte2HexString(encPrefix)).append("(").append(getPrefixValue()).append(")").append("\n");
             builder.append("Prefix: ").append(mStringChunk.scStringPoolContentList.get(getPrefixValue())).append("\n");
-            builder.append("Uri: ").append(FileUtils.byte2HexString(encUri)).append("(").append(getUriValue()).append(")").append("\n");
+            builder.append("Uri: ").append(IOUtils.byte2HexString(encUri)).append("(").append(getUriValue()).append(")").append("\n");
             builder.append("Uri: ").append(mStringChunk.scStringPoolContentList.get(getUriValue())).append("\n");
             return builder.toString();
         }
@@ -397,27 +397,27 @@ class Manifest
 
         int getSignatureValue()
         {
-            return FileUtils.byte2Int(stcSignature);
+            return IOUtils.byte2Int(stcSignature);
         }
 
         int getSizeValue()
         {
-            return FileUtils.byte2Int(stcSize);
+            return IOUtils.byte2Int(stcSize);
         }
 
         int getLineNumberValue()
         {
-            return FileUtils.byte2Int(stcLineNumber);
+            return IOUtils.byte2Int(stcLineNumber);
         }
 
         int getUnknownValue()
         {
-            return FileUtils.byte2Int(stcUnknown);
+            return IOUtils.byte2Int(stcUnknown);
         }
 
         int getNamespaceUriValue()
         {
-            return FileUtils.byte2Int(stcNamespaceUri);
+            return IOUtils.byte2Int(stcNamespaceUri);
         }
 
         String getNamespaceUriStr()
@@ -427,7 +427,7 @@ class Manifest
 
         int getNameValue()
         {
-            return FileUtils.byte2Int(stcName);
+            return IOUtils.byte2Int(stcName);
         }
 
         String getNameStr()
@@ -437,17 +437,17 @@ class Manifest
 
         int getFlagsValue()
         {
-            return FileUtils.byte2Int(stcFlags);
+            return IOUtils.byte2Int(stcFlags);
         }
 
         int getAttributeCountValue()
         {
-            return FileUtils.byte2Int(stcAttributeCount);
+            return IOUtils.byte2Int(stcAttributeCount);
         }
 
         int getClassAttributeValue()
         {
-            return FileUtils.byte2Int(stcClassAttribute);
+            return IOUtils.byte2Int(stcClassAttribute);
         }
 
         @NonNull
@@ -455,19 +455,19 @@ class Manifest
         public String toString()
         {
             StringBuilder builder = new StringBuilder("------------------ StartTagChunk ------------------\n");
-            builder.append("Signature: ").append(FileUtils.byte2HexString(stcSignature)).append("(").append(getSignatureValue()).append(")").append("\n");
-            builder.append("Size: ").append(FileUtils.byte2HexString(stcSize)).append("(").append(getSizeValue()).append(")").append("\n");
-            builder.append("LineNumber: ").append(FileUtils.byte2HexString(stcLineNumber)).append("(").append(getLineNumberValue()).append(")").append("\n");
-            builder.append("Unknown: ").append(FileUtils.byte2HexString(stcUnknown)).append("(").append(getUnknownValue()).append(")").append("\n");
-            builder.append("NamespaceUri: ").append(FileUtils.byte2HexString(stcNamespaceUri)).append("(").append(getNamespaceUriValue()).append(")").append("\n");
+            builder.append("Signature: ").append(IOUtils.byte2HexString(stcSignature)).append("(").append(getSignatureValue()).append(")").append("\n");
+            builder.append("Size: ").append(IOUtils.byte2HexString(stcSize)).append("(").append(getSizeValue()).append(")").append("\n");
+            builder.append("LineNumber: ").append(IOUtils.byte2HexString(stcLineNumber)).append("(").append(getLineNumberValue()).append(")").append("\n");
+            builder.append("Unknown: ").append(IOUtils.byte2HexString(stcUnknown)).append("(").append(getUnknownValue()).append(")").append("\n");
+            builder.append("NamespaceUri: ").append(IOUtils.byte2HexString(stcNamespaceUri)).append("(").append(getNamespaceUriValue()).append(")").append("\n");
             if (getNamespaceUriValue() != -1 && getNamespaceUriValue() < mStringChunk.scStringPoolContentList.size())
                 builder.append("Uri Str: ").append(getNamespaceUriStr()).append("\n");
-            builder.append("TagName: ").append(FileUtils.byte2HexString(stcName)).append("(").append(getNameValue()).append(")").append("\n");
+            builder.append("TagName: ").append(IOUtils.byte2HexString(stcName)).append("(").append(getNameValue()).append(")").append("\n");
             if (getNameValue() != -1 && getNameValue() < mStringChunk.scStringPoolContentList.size())
                 builder.append("TagName Str: ").append(getNameStr()).append("\n");
-            builder.append("Flags: ").append(FileUtils.byte2HexString(stcFlags)).append("(").append(getFlagsValue()).append(")").append("\n");
-            builder.append("AttributeCount: ").append(FileUtils.byte2HexString(stcAttributeCount)).append("(").append(getAttributeCountValue()).append(")").append("\n");
-            builder.append("ClassAttribute: ").append(FileUtils.byte2HexString(stcClassAttribute)).append("(").append(getClassAttributeValue()).append(")").append("\n");
+            builder.append("Flags: ").append(IOUtils.byte2HexString(stcFlags)).append("(").append(getFlagsValue()).append(")").append("\n");
+            builder.append("AttributeCount: ").append(IOUtils.byte2HexString(stcAttributeCount)).append("(").append(getAttributeCountValue()).append(")").append("\n");
+            builder.append("ClassAttribute: ").append(IOUtils.byte2HexString(stcClassAttribute)).append("(").append(getClassAttributeValue()).append(")").append("\n");
             for (int i = 0; i < stcAttributeList.size(); i++)
             {
                 builder.append("Attribute[").append(i).append("]: ");
@@ -487,7 +487,7 @@ class Manifest
 
             private int getNamespaceUriValue()
             {
-                return FileUtils.byte2Int(acNamespaceUri);
+                return IOUtils.byte2Int(acNamespaceUri);
             }
 
             String getNamespaceUriStr()
@@ -497,7 +497,7 @@ class Manifest
 
             private int getNameValue()
             {
-                return FileUtils.byte2Int(acName);
+                return IOUtils.byte2Int(acName);
             }
 
             String getNameStr()
@@ -507,7 +507,7 @@ class Manifest
 
             private int getValueStrValue()
             {
-                return FileUtils.byte2Int(acValueStr);
+                return IOUtils.byte2Int(acValueStr);
             }
 
             String getValueStr()
@@ -517,12 +517,12 @@ class Manifest
 
             private int getTypeValue()
             {
-                return FileUtils.byte2Int(acType) >> 24;
+                return IOUtils.byte2Int(acType) >> 24;
             }
 
             private int getDataValue()
             {
-                return FileUtils.byte2Int(acData);
+                return IOUtils.byte2Int(acData);
             }
 
             String getDataStr()
@@ -536,21 +536,21 @@ class Manifest
             {
                 StringBuilder builder = new StringBuilder();
                 // 当没有android这样的前缀的时候，NamespaceUri是null
-                builder.append("NamespaceUri: ").append(FileUtils.byte2HexString(acNamespaceUri)).append(" (");
+                builder.append("NamespaceUri: ").append(IOUtils.byte2HexString(acNamespaceUri)).append(" (");
                 builder.append(getNamespaceUriStr());
                 builder.append("), ");
 
-                builder.append("AttributeName: ").append(FileUtils.byte2HexString(acName)).append(" (");
+                builder.append("AttributeName: ").append(IOUtils.byte2HexString(acName)).append(" (");
                 builder.append(getNameStr());
                 builder.append("), ");
 
-                builder.append("ValueStr: ").append(FileUtils.byte2HexString(acValueStr)).append(" (");
+                builder.append("ValueStr: ").append(IOUtils.byte2HexString(acValueStr)).append(" (");
                 builder.append(getValueStr());
                 builder.append("), ");
 
-                builder.append("Type: ").append(FileUtils.byte2HexString(acType)).append(" (").append(AttributeType.getAttrType(getTypeValue())).append("),");
+                builder.append("Type: ").append(IOUtils.byte2HexString(acType)).append(" (").append(AttributeType.getAttrType(getTypeValue())).append("),");
                 builder.append("Data: ")
-                       .append(FileUtils.byte2HexString(acData))
+                       .append(IOUtils.byte2HexString(acData))
                        .append("(")
                        .append(getDataStr())
                        .append(")");
@@ -572,27 +572,27 @@ class Manifest
 
         int getSignatureValue()
         {
-            return FileUtils.byte2Int(etcSignature);
+            return IOUtils.byte2Int(etcSignature);
         }
 
         int getSizeValue()
         {
-            return FileUtils.byte2Int(etcSize);
+            return IOUtils.byte2Int(etcSize);
         }
 
         int getLineNumberValue()
         {
-            return FileUtils.byte2Int(etcLineNumber);
+            return IOUtils.byte2Int(etcLineNumber);
         }
 
         int getUnknownValue()
         {
-            return FileUtils.byte2Int(etcUnknown);
+            return IOUtils.byte2Int(etcUnknown);
         }
 
         int getNamespaceUriValue()
         {
-            return FileUtils.byte2Int(etcNamespaceUri);
+            return IOUtils.byte2Int(etcNamespaceUri);
         }
 
         String getNamespaceUriStr()
@@ -602,7 +602,7 @@ class Manifest
 
         int getNameValue()
         {
-            return FileUtils.byte2Int(etcName);
+            return IOUtils.byte2Int(etcName);
         }
 
         String getNameStr()
@@ -615,12 +615,12 @@ class Manifest
         public String toString()
         {
             StringBuilder builder = new StringBuilder("------------------ EndTagChunk ------------------\n");
-            builder.append("Signature: ").append(FileUtils.byte2HexString(etcSignature)).append("(").append(getSignatureValue()).append(")").append("\n");
-            builder.append("Size: ").append(FileUtils.byte2HexString(etcSize)).append("(").append(getSizeValue()).append(")").append("\n");
-            builder.append("LineNumber: ").append(FileUtils.byte2HexString(etcLineNumber)).append("(").append(getLineNumberValue()).append(")").append("\n");
-            builder.append("Unknown: ").append(FileUtils.byte2HexString(etcUnknown)).append("(").append(getUnknownValue()).append(")").append("\n");
-            builder.append("NamespaceUri: ").append(FileUtils.byte2HexString(etcNamespaceUri)).append("(").append(getNamespaceUriStr()).append(")").append("\n");
-            builder.append("TagName: ").append(FileUtils.byte2HexString(etcName)).append("(").append(getNameStr()).append(")").append("\n");
+            builder.append("Signature: ").append(IOUtils.byte2HexString(etcSignature)).append("(").append(getSignatureValue()).append(")").append("\n");
+            builder.append("Size: ").append(IOUtils.byte2HexString(etcSize)).append("(").append(getSizeValue()).append(")").append("\n");
+            builder.append("LineNumber: ").append(IOUtils.byte2HexString(etcLineNumber)).append("(").append(getLineNumberValue()).append(")").append("\n");
+            builder.append("Unknown: ").append(IOUtils.byte2HexString(etcUnknown)).append("(").append(getUnknownValue()).append(")").append("\n");
+            builder.append("NamespaceUri: ").append(IOUtils.byte2HexString(etcNamespaceUri)).append("(").append(getNamespaceUriStr()).append(")").append("\n");
+            builder.append("TagName: ").append(IOUtils.byte2HexString(etcName)).append("(").append(getNameStr()).append(")").append("\n");
             return builder.toString();
         }
     }

@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.reverse.resource.model;
 
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 
 import androidx.annotation.NonNull;
 
@@ -104,17 +104,17 @@ public class ResTableType
 
     public short getRes1Value()
     {
-        return FileUtils.byte2Short(res1);
+        return IOUtils.byte2Short(res1);
     }
 
     public int getEntryCountValue()
     {
-        return FileUtils.byte2Int(entryCount);
+        return IOUtils.byte2Int(entryCount);
     }
 
     public int getEntriesStartValue()
     {
-        return FileUtils.byte2Int(entriesStart);
+        return IOUtils.byte2Int(entriesStart);
     }
 
     public int getHeaderLength()
@@ -128,11 +128,11 @@ public class ResTableType
     {
         StringBuilder builder = new StringBuilder("------------------ ResTableType ------------------\n");
         builder.append("Header: ").append("\n").append(header.toString()).append("\n");
-        builder.append("Id: ").append(FileUtils.byte2HexString(id)).append("(").append(getIdValue()).append(")").append("\n");
-        builder.append("res0: ").append(FileUtils.byte2HexString(res0)).append("(").append(getRes0Value()).append(")").append("\n");
-        builder.append("res1: ").append(FileUtils.byte2HexString(res1)).append("(").append(getRes1Value()).append(")").append("\n");
-        builder.append("EntryCount: ").append(FileUtils.byte2HexString(entryCount)).append("(").append(getEntryCountValue()).append(")").append("\n");
-        builder.append("EntriesStart: ").append(FileUtils.byte2HexString(entriesStart)).append("(").append(getEntriesStartValue()).append(")").append("\n");
+        builder.append("Id: ").append(IOUtils.byte2HexString(id)).append("(").append(getIdValue()).append(")").append("\n");
+        builder.append("res0: ").append(IOUtils.byte2HexString(res0)).append("(").append(getRes0Value()).append(")").append("\n");
+        builder.append("res1: ").append(IOUtils.byte2HexString(res1)).append("(").append(getRes1Value()).append(")").append("\n");
+        builder.append("EntryCount: ").append(IOUtils.byte2HexString(entryCount)).append("(").append(getEntryCountValue()).append(")").append("\n");
+        builder.append("EntriesStart: ").append(IOUtils.byte2HexString(entriesStart)).append("(").append(getEntriesStartValue()).append(")").append("\n");
         builder.append("ResConfig: ").append(resConfig.toString()).append("\n");
         return builder.toString();
     }

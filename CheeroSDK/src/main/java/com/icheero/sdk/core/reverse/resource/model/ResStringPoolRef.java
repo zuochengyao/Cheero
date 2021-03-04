@@ -1,7 +1,7 @@
 package com.icheero.sdk.core.reverse.resource.model;
 
 import com.icheero.sdk.core.reverse.resource.ResourceParser;
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 
 /**
  * @author zcy 2019-04-02 15:23:16
@@ -29,7 +29,7 @@ public class ResStringPoolRef
 
     int getIndexValue()
     {
-        return FileUtils.byte2Int(index);
+        return IOUtils.byte2Int(index);
     }
 
     @Override

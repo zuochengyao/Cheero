@@ -50,7 +50,6 @@ import com.icheero.app.activity.ui.touch.PanScrollActivity;
 import com.icheero.app.activity.ui.touch.TouchEventActivity;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.CameraManager;
-import com.icheero.sdk.core.manager.IOManager;
 import com.icheero.sdk.util.Common;
 
 import butterknife.BindView;
@@ -150,8 +149,6 @@ public class MainActivity extends BaseActivity
         ButterKnife.bind(this);
         if (!mPermissionManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
             mPermissionManager.permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        else
-            IOManager.getInstance().createRootFolder();
     }
 
     @Override
@@ -438,9 +435,7 @@ public class MainActivity extends BaseActivity
         super.onPermissionRequest(isGranted, permission);
         if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
         {
-            if (isGranted)
-                IOManager.getInstance().createRootFolder();
-            else
+            if (!isGranted)
                 Common.toast(this, "请打开读写权限！", Toast.LENGTH_SHORT);
         }
     }

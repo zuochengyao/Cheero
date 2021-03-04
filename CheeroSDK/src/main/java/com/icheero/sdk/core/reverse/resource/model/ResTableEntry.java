@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.reverse.resource.model;
 
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 
 import androidx.annotation.NonNull;
 
@@ -59,12 +59,12 @@ public class ResTableEntry
 
     public int getSizeValue()
     {
-        return FileUtils.byte2Short(size);
+        return IOUtils.byte2Short(size);
     }
 
     public int getFlagsValue()
     {
-        return FileUtils.byte2Short(flags);
+        return IOUtils.byte2Short(flags);
     }
 
     public static int getLength()
@@ -77,8 +77,8 @@ public class ResTableEntry
     public String toString()
     {
         StringBuilder builder = new StringBuilder("------------------ ResTableEntry ------------------\n");
-        builder.append("Size: ").append(FileUtils.byte2HexString(size)).append("(").append(getSizeValue()).append(")").append("\n");
-        builder.append("Flags: ").append(FileUtils.byte2HexString(flags)).append("(").append(getFlagsValue()).append(")").append("\n");
+        builder.append("Size: ").append(IOUtils.byte2HexString(size)).append("(").append(getSizeValue()).append(")").append("\n");
+        builder.append("Flags: ").append(IOUtils.byte2HexString(flags)).append("(").append(getFlagsValue()).append(")").append("\n");
         builder.append("Key: ").append(key.toString()).append("\n");
         return builder.toString();
     }

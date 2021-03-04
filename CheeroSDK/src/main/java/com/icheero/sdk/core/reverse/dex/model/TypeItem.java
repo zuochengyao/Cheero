@@ -2,7 +2,7 @@ package com.icheero.sdk.core.reverse.dex.model;
 
 import com.icheero.sdk.core.reverse.dex.DexParser;
 import com.icheero.sdk.util.Common;
-import com.icheero.sdk.util.FileUtils;
+import com.icheero.sdk.util.IOUtils;
 
 import androidx.annotation.NonNull;
 
@@ -12,7 +12,7 @@ public class TypeItem
 
     private short getTypeIdxValue()
     {
-        return FileUtils.byte2Short(typeIdx);
+        return IOUtils.byte2Short(typeIdx);
     }
 
     @SuppressWarnings("ConstantConditions")
