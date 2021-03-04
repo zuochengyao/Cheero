@@ -1,16 +1,16 @@
-package com.icheero.sdk.core.database;
+package com.icheero.sdk.core.storage.database;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.icheero.sdk.core.database.entity.Download;
-import com.icheero.sdk.core.database.greendao.DaoMaster;
-import com.icheero.sdk.core.database.greendao.DaoSession;
-import com.icheero.sdk.core.database.greendao.DownloadDao;
-import com.icheero.sdk.core.database.greendao.UserDao;
-import com.icheero.sdk.core.database.service.IDownloadService;
-import com.icheero.sdk.core.database.service.IUserService;
+import com.icheero.sdk.core.storage.database.entity.Download;
+import com.icheero.sdk.core.storage.database.greendao.DaoMaster;
+import com.icheero.sdk.core.storage.database.greendao.DaoSession;
+import com.icheero.sdk.core.storage.database.greendao.DownloadDao;
+import com.icheero.sdk.core.storage.database.greendao.UserDao;
+import com.icheero.sdk.core.storage.database.service.IDownloadService;
+import com.icheero.sdk.core.storage.database.service.IUserService;
 import com.icheero.sdk.util.Log;
 
 import java.util.List;

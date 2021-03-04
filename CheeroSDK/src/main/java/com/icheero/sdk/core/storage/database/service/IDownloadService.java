@@ -1,6 +1,6 @@
-package com.icheero.sdk.core.database.service;
+package com.icheero.sdk.core.storage.database.service;
 
-import com.icheero.sdk.core.database.entity.Download;
+import com.icheero.sdk.core.storage.database.entity.Download;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.icheero.sdk.core.database.greendao;
+package com.icheero.sdk.core.storage.database.greendao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

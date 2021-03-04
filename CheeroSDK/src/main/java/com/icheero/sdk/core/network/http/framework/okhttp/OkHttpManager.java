@@ -1,6 +1,6 @@
 package com.icheero.sdk.core.network.http.framework.okhttp;
 
-import com.icheero.sdk.core.manager.FileManager;
+import com.icheero.sdk.core.storage.file.FileScopeManager;
 import com.icheero.sdk.core.network.http.HttpSecure;
 import com.icheero.sdk.core.network.listener.IDownloadListener;
 import com.icheero.sdk.util.Common;
@@ -122,7 +122,7 @@ public class OkHttpManager
                     listener.onFailure(response.code(), response.message());
                 else
                 {
-                    File file = FileManager.getInstance().createDownloadFile(Common.md5(request.url().toString()));
+                    File file = FileScopeManager.getInstance().createDownloadFile(Common.md5(request.url().toString()));
                     byte[] buffer = new byte[500 * 1024];
                     int len;
                     int progress = 0;

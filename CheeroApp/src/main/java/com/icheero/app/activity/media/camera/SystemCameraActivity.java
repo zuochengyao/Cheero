@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.manager.CameraManager;
-import com.icheero.sdk.core.manager.FileManager;
+import com.icheero.sdk.core.storage.file.FileScopeManager;
 import com.icheero.sdk.util.IOUtils;
 
 import java.io.File;
@@ -48,12 +48,12 @@ public class SystemCameraActivity extends BaseActivity
         requestCode = getIntent().getIntExtra("requestCode", CameraManager.REQUEST_CODE_IMAGE);
         if (requestCode == CameraManager.REQUEST_CODE_IMAGE)
         {
-            destination = IOUtils.createFile(getExternalFilesDir(FileManager.DIR_EXTERNAL_FILES_IMAGE), "practice_image.jpg");
+            destination = IOUtils.createFile(getExternalFilesDir(FileScopeManager.DIR_EXTERNAL_FILES_IMAGE), "practice_image.jpg");
             cameraButton.setText("Take a Picture");
         }
         else if (requestCode == CameraManager.REQUEST_CODE_VIDEO)
         {
-            destination = IOUtils.createFile(getExternalFilesDir(FileManager.DIR_EXTERNAL_FILES_VIDEO), "practice_video.mp4");
+            destination = IOUtils.createFile(getExternalFilesDir(FileScopeManager.DIR_EXTERNAL_FILES_VIDEO), "practice_video.mp4");
             cameraButton.setText("Take a Video");
         }
     }

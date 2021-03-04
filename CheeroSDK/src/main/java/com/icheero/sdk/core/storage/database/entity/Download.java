@@ -1,4 +1,4 @@
-package com.icheero.sdk.core.database.entity;
+package com.icheero.sdk.core.storage.database.entity;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;

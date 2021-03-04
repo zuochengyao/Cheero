@@ -1,4 +1,4 @@
-package com.icheero.sdk.core.database.service;
+package com.icheero.sdk.core.storage.database.service;
 
 import android.database.Cursor;
 

@@ -10,7 +10,7 @@ import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
 import com.icheero.sdk.core.api.CheeroApi;
 import com.icheero.sdk.core.api.FaceIDApi;
-import com.icheero.sdk.core.manager.FileManager;
+import com.icheero.sdk.core.storage.file.FileScopeManager;
 import com.icheero.sdk.core.network.listener.IResponseListener;
 import com.icheero.sdk.util.Log;
 
@@ -87,7 +87,7 @@ public class RequestActivity extends BaseActivity
             }
             case R.id.request_idcard_ocr_btn:
             {
-                byte[] imageRef = FileManager.getInstance().bitmapToByte(BitmapFactory.decodeResource(getResources(), R.drawable.me));
+                byte[] imageRef = FileScopeManager.getInstance().bitmapToByte(BitmapFactory.decodeResource(getResources(), R.drawable.me));
                 File file = new File(PATH_DETECT);
                 if (file.exists())
                 {

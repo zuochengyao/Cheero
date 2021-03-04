@@ -49,7 +49,7 @@ android {
 
     greendao {
         schemaVersion 1
-        daoPackage 'com.icheero.sdk.core.database.greendao'
+        daoPackage 'com.icheero.sdk.core.storage.database.greendao'
         targetGenDir 'src/main/java'
     }
 

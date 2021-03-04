@@ -2,9 +2,9 @@ package com.icheero.sdk.core.network.download;
 
 import android.os.Process;
 
-import com.icheero.sdk.core.database.DBHelper;
-import com.icheero.sdk.core.database.entity.Download;
-import com.icheero.sdk.core.manager.FileManager;
+import com.icheero.sdk.core.storage.database.DBHelper;
+import com.icheero.sdk.core.storage.database.entity.Download;
+import com.icheero.sdk.core.storage.file.FileScopeManager;
 import com.icheero.sdk.core.network.http.HttpRequest;
 import com.icheero.sdk.core.network.http.HttpRequestProvider;
 import com.icheero.sdk.core.network.http.encapsulation.HttpMethod;
@@ -59,7 +59,7 @@ public class DownloadRunnable implements Runnable
             else
             {
                 DBHelper.getInstance().insertDownload(mEntity);
-                File file = FileManager.getInstance().createDownloadFile(Common.md5(mEntity.getDownloadUrl()));
+                File file = FileScopeManager.getInstance().createDownloadFile(Common.md5(mEntity.getDownloadUrl()));
                 RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rwd");
                 randomAccessFile.seek(mStart);
                 byte[] buffer = new byte[500 * 1024];

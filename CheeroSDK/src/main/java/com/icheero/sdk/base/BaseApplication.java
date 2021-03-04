@@ -6,11 +6,11 @@ import android.os.StrictMode;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.facebook.stetho.Stetho;
-import com.icheero.sdk.core.database.DBHelper;
+import com.icheero.sdk.core.storage.database.DBHelper;
 import com.icheero.sdk.core.manager.ApplicationManager;
 import com.icheero.sdk.core.manager.DownloadManager;
 import com.icheero.sdk.core.manager.HttpManager;
-import com.icheero.sdk.core.manager.FileManager;
+import com.icheero.sdk.core.storage.file.FileScopeManager;
 import com.icheero.sdk.core.manager.NotificationManager;
 import com.icheero.sdk.core.network.download.DownloadConfig;
 import com.icheero.sdk.core.network.http.HttpConfig;
@@ -34,7 +34,7 @@ public class BaseApplication extends MultiDexApplication
         Log.i(TAG, TAG.getSimpleName() + " onCreate");
         CheeroNative.nativeIsOwnApp();
         // 初始化 IO管理器
-        FileManager.getInstance().init(mInstance);
+        FileScopeManager.getInstance().init(mInstance);
         String path = getFilesDir().getAbsolutePath();
         String cache = getCacheDir().getAbsolutePath();
         // 初始化 网络请求

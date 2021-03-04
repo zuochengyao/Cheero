@@ -10,15 +10,15 @@ import android.widget.SimpleCursorAdapter;
 
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
-import com.icheero.sdk.core.database.DBHelper;
-import com.icheero.sdk.core.database.greendao.UserDao;
+import com.icheero.sdk.core.storage.database.DBHelper;
+import com.icheero.sdk.core.storage.database.greendao.UserDao;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 
-import static com.icheero.sdk.core.database.greendao.UserDao.Properties.Date;
-import static com.icheero.sdk.core.database.greendao.UserDao.Properties.Name;
+import static com.icheero.sdk.core.storage.database.greendao.UserDao.Properties.Date;
+import static com.icheero.sdk.core.storage.database.greendao.UserDao.Properties.Name;
 
 public class DatabaseActivity extends BaseActivity
 {
