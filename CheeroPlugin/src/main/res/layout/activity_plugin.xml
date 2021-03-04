@@ -18,12 +18,6 @@
         android:text="@string/cheero_plugin_to_custom"/>
 
     <Button
-        android:id="@+id/to_andfix"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/cheero_plugin_to_andfix"/>
-
-    <Button
         android:id="@+id/to_tinker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -17,7 +17,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
 {
     private Button mToCustom;
     private Button mToMeglive;
-    private Button mToAndFix;
     private Button mToTinker;
 
     private static final String PLUGIN_NAME_MEGLIVE = "meglive.apk";
@@ -36,12 +35,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
     private void doInitView()
     {
         mToCustom = findViewById(R.id.to_custom);
-        mToAndFix = findViewById(R.id.to_andfix);
         mToTinker = findViewById(R.id.to_tinker);
         mToMeglive = findViewById(R.id.to_meglive);
 
         mToCustom.setOnClickListener(this);
-        mToAndFix.setOnClickListener(this);
         mToTinker.setOnClickListener(this);
         mToMeglive.setOnClickListener(this);
     }
@@ -53,8 +50,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
         Intent intent = null;
         if (id == R.id.to_custom)
             intent = new Intent(this, LoadPluginActivity.class);
-        else if (id == R.id.to_andfix)
-            intent = new Intent(this, AndFixActivity.class);
         else if (id == R.id.to_tinker)
             intent = new Intent(this, TinkerActivity.class);
         else if (id == R.id.to_meglive)

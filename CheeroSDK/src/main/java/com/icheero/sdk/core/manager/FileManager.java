@@ -25,7 +25,6 @@ public class FileManager
     private static volatile FileManager mInstance;
 
     // region 内部存储 /data/data/package/files
-    public static final String DIR_FILES_APATCH = "/apatch";
     public static final String DIR_FILES_PLUGIN = "/plugin";
     // endregion
 

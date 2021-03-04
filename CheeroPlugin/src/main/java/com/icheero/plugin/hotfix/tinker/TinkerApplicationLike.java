@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
-import com.icheero.plugin.hotfix.andfix.AndFixPatchManager;
 import com.tencent.tinker.anno.DefaultLifeCycle;
 import com.tencent.tinker.entry.ApplicationLike;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
@@ -38,6 +37,5 @@ public class TinkerApplicationLike extends ApplicationLike
     public void onCreate()
     {
         super.onCreate();
-        AndFixPatchManager.getInstance().init(mContext);
     }
 }

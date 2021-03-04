@@ -6,13 +6,10 @@
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.LoadPluginActivity" />
         <activity android:name=".activity.LoadMegliveActivity"/>
-        <activity android:name=".activity.AndFixActivity" />
-        
-        <meta-data
+	
+	    <meta-data
             android:name="com.icheero.plugin.application.PluginApplication"
             android:value="AppInit" />
-        
-        <service android:name=".hotfix.andfix.AndFixService" />
     </application>
 
 </manifest>
