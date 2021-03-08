@@ -1,8 +1,9 @@
-package com.icheero.plugin.load.proxy;
+package com.icheero.plugin.hook.proxy;
 
+import android.content.ComponentName;
 import android.content.Intent;
 
-import com.icheero.plugin.load.GlobalActivityHookHelper;
+import com.icheero.plugin.hook.GlobalActivityHookHelper;
 import com.icheero.sdk.util.Log;
 
 import java.lang.reflect.InvocationHandler;
@@ -13,7 +14,7 @@ public class IActivityManagerProxy implements InvocationHandler
     private static final Class<?> TAG = IActivityManagerProxy.class;
     private static final String METHOD_START_ACTIVITY = "startActivity";
     private static final String NAME_PACKAGE = "com.icheero.app";
-    private static final String NAME_PLUGIN_ACTIVITY = ".activity.plugin.PluginActivity";
+    private static final String NAME_PLUGIN_ACTIVITY = "com.icheero.plugin.activity.LoadMegliveActivity";
 
     private final Object mActivityManager;
     private final String packageName;
@@ -48,10 +49,15 @@ public class IActivityManagerProxy implements InvocationHandler
                 }
                 index++;
             }
-            Intent pluginIntent = new Intent();
-            pluginIntent.setClassName(packageName, packageName + clz);
-            pluginIntent.putExtra(GlobalActivityHookHelper.TARGET_INTENT, intent);
-            args[index] = pluginIntent;
+            if (intent.getComponent().getClassName().equals(
+                    "com.megvii.meglive_still.demo.MainActivity"))
+            {
+                Intent pluginIntent = new Intent();
+                pluginIntent.setComponent(new ComponentName(packageName, clz));
+                // pluginIntent.setClassName(packageName, packageName + clz);
+                pluginIntent.putExtra(GlobalActivityHookHelper.TARGET_INTENT, intent);
+                args[index] = pluginIntent;
+            }
         }
         return method.invoke(mActivityManager, args);
     }

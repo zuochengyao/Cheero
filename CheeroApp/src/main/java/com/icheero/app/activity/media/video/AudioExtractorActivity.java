@@ -8,7 +8,6 @@ import android.widget.Button;
 
 import com.icheero.app.R;
 import com.icheero.sdk.base.BaseActivity;
-import com.icheero.sdk.core.storage.file.FileScopeManager;
 import com.icheero.sdk.util.Log;
 
 import java.io.File;
@@ -22,8 +21,8 @@ import butterknife.OnClick;
 
 public class AudioExtractorActivity extends BaseActivity
 {
-    private final String PATH_VIDEO = FileScopeManager.DIR_EXTERNAL_FILES_VIDEO + "/jctq.mp4";
-    private final String PATH_AUDIO = FileScopeManager.DIR_EXTERNAL_FILES_AUDIO + "/jctq.aac";
+    private final String PATH_VIDEO = "/jctq.mp4";
+    private final String PATH_AUDIO = "/jctq.aac";
 
     private final int PROFILE = 2; // AAC LC
     private final int FREQ_INDEX = 4; // 标识 44100

@@ -1,10 +1,10 @@
-package com.icheero.plugin.load.proxy;
+package com.icheero.plugin.hook.proxy;
 
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 
-import com.icheero.plugin.load.GlobalActivityHookHelper;
+import com.icheero.plugin.hook.GlobalActivityHookHelper;
 import com.icheero.sdk.util.Log;
 import com.icheero.sdk.util.RefUtils;
 
@@ -33,18 +33,22 @@ public class HCallbackProxy implements Handler.Callback
             Object r = msg.obj;
             try
             {
-                Field mActivityCallbacksField = RefUtils.getDeclaredField(r.getClass(), RefUtils.FILED_M_ACTIVITY_CALLBACKS);
+                Field mActivityCallbacksField = RefUtils.getDeclaredField(r.getClass(),
+                        RefUtils.FILED_M_ACTIVITY_CALLBACKS);
                 List<?> mActivityCallbacks = (List<?>) mActivityCallbacksField.get(r);
                 if (mActivityCallbacks != null && mActivityCallbacks.size() > 0)
                 {
                     for (Object callback : mActivityCallbacks)
                     {
-                        if (RefUtils.CLASS_LAUNCH_ACTIVITY_ITEM.equals(callback.getClass().getName()))
+                        if (RefUtils.CLASS_LAUNCH_ACTIVITY_ITEM.equals(
+                                callback.getClass().getCanonicalName()))
                         {
-                            Intent pluginIntent = (Intent) RefUtils.getObjectDeclaredFieldValue(callback.getClass(), RefUtils.FILED_M_INTENT, callback);
-                            Intent target = pluginIntent.getParcelableExtra(GlobalActivityHookHelper.TARGET_INTENT);
+                            Intent pluginIntent = (Intent) RefUtils.getObjectDeclaredFieldValue(
+                                    callback.getClass(), RefUtils.FILED_M_INTENT, callback);
+                            Intent target = pluginIntent.getParcelableExtra(
+                                    GlobalActivityHookHelper.TARGET_INTENT);
                             pluginIntent.setComponent(target.getComponent());
-
+                            break;
                         }
                     }
                 }

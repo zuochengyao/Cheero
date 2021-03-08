@@ -1,7 +1,5 @@
 package com.icheero.plugin.activity;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.drawable.AnimationDrawable;
@@ -21,22 +19,60 @@ import dalvik.system.DexClassLoader;
 
 public class LoadPluginActivity extends BaseActivity implements View.OnClickListener
 {
+    private ImageView ivVolumeSmaller;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_plugin);
-        if (!mPermissionManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            mPermissionManager.permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         doInitView();
+        loadPlugin();
     }
 
     private void doInitView()
     {
         ImageView ivVolumeBigger = findViewById(R.id.image_volume_bigger);
         ivVolumeBigger.setOnClickListener(this);
-        ImageView ivVolumeSmaller = findViewById(R.id.image_volume_smaller);
+        ivVolumeSmaller = findViewById(R.id.image_volume_smaller);
         ivVolumeSmaller.setOnClickListener(this);
+    }
+
+    private void loadPlugin()
+    {
+        File apk = PluginManager.get(MainActivity.PLUGIN_NAME_CHEERO);
+        // 加载到内存
+        DexClassLoader classLoader = new DexClassLoader(apk.getAbsolutePath(),
+                getCacheDir().getAbsolutePath(), null, getClassLoader());
+        // 获取本地资源
+        // Drawable drawable = this.getResources().getDrawable(R.drawable.volume_bigger);
+        // 获取插件资源 - 利用反射
+        Class<?> loadClass;
+        try
+        {
+            loadClass = classLoader.loadClass(MainActivity.PLUGIN_PACKAGE_CHEERO + ".R$drawable");
+            Field[] declareField = loadClass.getDeclaredFields();
+            for (Field field : declareField)
+            {
+                if (field.getName().equals("volume_smaller"))
+                {
+                    int animId = field.getInt(R.drawable.class);
+                    AssetManager assetManager = PluginManager.getPluginAssetManager(apk);
+                    if (assetManager != null)
+                    {
+                        Resources resources = new Resources(assetManager,
+                                super.getResources().getDisplayMetrics(),
+                                super.getResources().getConfiguration());
+                        Drawable drawable = resources.getDrawable(animId);
+                        ivVolumeSmaller.setBackground(drawable);
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -44,52 +80,16 @@ public class LoadPluginActivity extends BaseActivity implements View.OnClickList
     {
         int i = v.getId();
         if (i == R.id.image_volume_bigger)
+        {
             handleAnim(v);
+        }
         else if (i == R.id.image_volume_smaller)
         {
             Drawable background = v.getBackground();
             if (background instanceof AnimationDrawable)
             {
                 handleAnim(v);
-                return;
             }
-            File apk = new File(PluginManager.PLUGIN_FILE_PATH);
-            // 检查本地是否有插件apk
-            if (apk.exists())
-            {
-                // 加载到内存
-                DexClassLoader classLoader = new DexClassLoader(apk.getAbsolutePath(), this.getDir("PluginManager.PLUGIN_NAME", Context.MODE_PRIVATE)
-                                                                                           .getAbsolutePath(), null, getClassLoader());
-                // 获取本地资源
-                // Drawable drawable = this.getResources().getDrawable(R.drawable.volume_bigger);
-                try
-                {
-                    // 获取插件资源 - 利用反射
-                    Class<?> loadClass = classLoader.loadClass("PluginManager.PLUGIN_PACKAGE_NAME" + ".R$drawable");
-                    Field[] declareField = loadClass.getDeclaredFields();
-                    for (Field field : declareField)
-                    {
-                        if (field.getName().equals("volume_smaller"))
-                        {
-                            int animId = field.getInt(R.drawable.class);
-                            AssetManager assetManager = PluginManager.getPluginAssetManager(apk);
-                            if (assetManager != null)
-                            {
-                                Resources resources = new Resources(assetManager, super.getResources().getDisplayMetrics(), super.getResources().getConfiguration());
-                                Drawable drawable = resources.getDrawable(animId);
-                                v.setBackground(drawable);
-                                handleAnim(v);
-                            }
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            else
-                PluginManager.loadPlugin(this, ""); // 加载插件
         }
     }
 
@@ -99,9 +99,13 @@ public class LoadPluginActivity extends BaseActivity implements View.OnClickList
         if (animationDrawable != null)
         {
             if (animationDrawable.isRunning())
+            {
                 animationDrawable.stop();
+            }
             else
+            {
                 animationDrawable.start();
+            }
         }
     }
 }

@@ -34,9 +34,7 @@ public class BaseApplication extends MultiDexApplication
         Log.i(TAG, TAG.getSimpleName() + " onCreate");
         CheeroNative.nativeIsOwnApp();
         // 初始化 IO管理器
-        FileScopeManager.getInstance().init(mInstance);
-        String path = getFilesDir().getAbsolutePath();
-        String cache = getCacheDir().getAbsolutePath();
+        FileScopeManager.getInstance().init(this);
         // 初始化 网络请求
         HttpConfig httpConfig = new HttpConfig.Builder()
                 .setConnectTimeout(60)

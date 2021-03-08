@@ -48,12 +48,16 @@ public class SystemCameraActivity extends BaseActivity
         requestCode = getIntent().getIntExtra("requestCode", CameraManager.REQUEST_CODE_IMAGE);
         if (requestCode == CameraManager.REQUEST_CODE_IMAGE)
         {
-            destination = IOUtils.createFile(getExternalFilesDir(FileScopeManager.DIR_EXTERNAL_FILES_IMAGE), "practice_image.jpg");
+            // TODO
+            destination = FileScopeManager.getInstance().createImageFile("practice_image.jpg");
             cameraButton.setText("Take a Picture");
         }
         else if (requestCode == CameraManager.REQUEST_CODE_VIDEO)
         {
-            destination = IOUtils.createFile(getExternalFilesDir(FileScopeManager.DIR_EXTERNAL_FILES_VIDEO), "practice_video.mp4");
+            // TODO
+            // destination = IOUtils.createFile(getExternalFilesDir(FileScopeManager.DIR_EXTERNAL_FILES_VIDEO),
+            // "practice_video.mp4");
+            destination = FileScopeManager.getInstance().createImageFile("practice_video.mp4");
             cameraButton.setText("Take a Video");
         }
     }
