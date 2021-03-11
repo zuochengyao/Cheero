@@ -9,7 +9,8 @@
         android:id="@+id/to_meglive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cheero_plugin_to_meglive"/>
+        android:text="@string/cheero_plugin_to_meglive"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/to_custom"

@@ -72,6 +72,8 @@ dependencies {
     api versions.deps.androidx.v4
     api versions.deps.androidx.design
     api versions.deps.androidx.multidex
+    // kotlin
+    api versions.deps.kotlin.stdlib
     // apache HttpClient
     api versions.deps.apache.httpandroid
     api(versions.deps.apache.httpmime) {

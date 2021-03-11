@@ -1,107 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.icheero.app">
-
-    <!-- android:requestLegacyExternalStorage="true" -->
-    <application
-        android:name=".application.MainApplication"
-        android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name_cheero"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme.ActionBar"
-        tools:ignore="GoogleAppIndexingWarning">
-        <!-- region Activities -->
-        <activity
-            android:name=".activity.MainActivity"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activity.service.AboutServiceActivity" />
-        <activity android:name=".activity.service.UserAidlClientActivity" />
-        <activity android:name=".activity.ui.StyledActivity" />
-        <activity android:name=".activity.ui.CustomViewActivity" />
-        <activity android:name=".activity.ui.SectionsActivity" />
-        <activity android:name=".activity.ui.AnimActivity" />
-        <activity android:name=".activity.ui.DialogActivity" />
-        <activity android:name=".activity.ui.OptionActivity" />
-        <activity android:name=".activity.ui.touch.PanGestureScrollActivity" />
-        <activity android:name=".activity.ui.touch.PanScrollActivity" />
-        <activity android:name=".activity.ui.touch.TouchEventActivity" />
-        <activity
-            android:name=".activity.feature.LollipopActivity"
-            android:label="@string/cheero_app_activity_feature_lollipop"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.ui.MoveViewActivity" />
-        <activity android:name=".activity.feature.oreo.NotificationActivity" />
-        <activity android:name=".activity.framework.eventbus.EventBusActivity" />
-        <activity android:name=".activity.framework.eventbus.EventBusSecondActivity" />
-        <activity android:name=".activity.framework.RxJavaActivity" />
-        <activity android:name=".activity.framework.xposed.XposedActivity" />
-        <activity android:name=".activity.network.WebViewActivity" />
-        <activity android:name=".activity.network.ImageDownloadActivity" />
-        <activity android:name=".activity.network.DownloadActivity" />
-        <activity android:name=".activity.media.camera.SystemCameraActivity" />
-        <activity
-            android:name=".activity.media.camera.GLSurfaceViewActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.media.camera.SurfaceViewActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.media.camera.TextureViewActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.media.video.AudioExtractorActivity" />
-        <activity android:name=".activity.data.CustomSettingActivity" />
-        <activity
-            android:name=".activity.data.SystemSettingActivity"
-            android:label="@string/cheero_app_title_activity_settings" />
-        <activity android:name=".activity.data.DatabaseActivity" />
-        <activity android:name=".activity.data.ViewModelActivity" />
-        <activity android:name=".activity.network.RetrofitActivity" />
-        <activity android:name=".activity.network.RequestActivity" />
-        <activity android:name=".activity.reverse.JniActivity" />
-        <activity android:name=".activity.reverse.DisposeSoActivity" />
-        <activity android:name=".activity.reverse.DisposeManifestActivity" />
-        <activity android:name=".activity.reverse.DisposeResourceActivity" />
-        <activity android:name=".activity.reverse.DisposeDexActivity" />
-        <activity android:name=".activity.thread.AsyncTaskActivity" />
-        <activity android:name=".activity.memory.WeakHandlerActivity" />
-        <!-- endregion -->
-        <meta-data
-            android:name="xposedmodule"
-            android:value="true" />
-        <meta-data
-            android:name="xposeddescription"
-            android:value="Hook信息" />
-        <meta-data
-            android:name="xposedminversion"
-            android:value="54" /> <!-- region Services -->
-        <service
-            android:name=".service.UserAidlServerService"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="TODO" />
-        <service
-            android:name=".service.CheeroService"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter android:priority="1000">
-                <action android:name="com.icheero.app.service.CheeroService" />
-            </intent-filter>
-        </service>
-        <service
-            android:name=".service.CheeroIntentService"
-            android:exported="false" />
-    </application>
+<manifest package="com.icheero.app"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools">
+	
+	<application
+		android:name=".application.MainApplication"
+		android:allowBackup="false"
+		android:icon="@mipmap/ic_launcher"
+		android:label="@string/app_name_cheero"
+		android:roundIcon="@mipmap/ic_launcher_round"
+		android:supportsRtl="true"
+		android:theme="@style/AppTheme.ActionBar"
+		tools:ignore="GoogleAppIndexingWarning">
+		<activity android:name=".activity.feature.KotlinActivity"></activity>
+		<!-- region Activities -->
+		<activity
+			android:name=".activity.MainActivity"
+			android:launchMode="singleTask">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		<activity android:name=".activity.service.AboutServiceActivity" />
+		<activity android:name=".activity.service.UserAidlClientActivity" />
+		<activity android:name=".activity.ui.StyledActivity" />
+		<activity android:name=".activity.ui.CustomViewActivity" />
+		<activity android:name=".activity.ui.SectionsActivity" />
+		<activity android:name=".activity.ui.AnimActivity" />
+		<activity android:name=".activity.ui.DialogActivity" />
+		<activity android:name=".activity.ui.OptionActivity" />
+		<activity android:name=".activity.ui.touch.PanGestureScrollActivity" />
+		<activity android:name=".activity.ui.touch.PanScrollActivity" />
+		<activity android:name=".activity.ui.touch.TouchEventActivity" />
+		<activity
+			android:name=".activity.feature.LollipopActivity"
+			android:label="@string/cheero_app_activity_feature_lollipop"
+			android:theme="@style/AppTheme.NoActionBar" />
+		<activity android:name=".activity.ui.MoveViewActivity" />
+		<activity android:name=".activity.feature.oreo.NotificationActivity" />
+		<activity android:name=".activity.framework.eventbus.EventBusActivity" />
+		<activity android:name=".activity.framework.eventbus.EventBusSecondActivity" />
+		<activity android:name=".activity.framework.RxJavaActivity" />
+		<activity android:name=".activity.framework.xposed.XposedActivity" />
+		<activity android:name=".activity.network.WebViewActivity" />
+		<activity android:name=".activity.network.ImageDownloadActivity" />
+		<activity android:name=".activity.network.DownloadActivity" />
+		<activity android:name=".activity.media.camera.SystemCameraActivity" />
+		<activity
+			android:name=".activity.media.camera.GLSurfaceViewActivity"
+			android:configChanges="orientation|keyboardHidden"
+			android:theme="@style/AppTheme.NoActionBar" />
+		<activity
+			android:name=".activity.media.camera.SurfaceViewActivity"
+			android:configChanges="orientation|keyboardHidden"
+			android:theme="@style/AppTheme.NoActionBar" />
+		<activity
+			android:name=".activity.media.camera.TextureViewActivity"
+			android:configChanges="orientation|keyboardHidden"
+			android:theme="@style/AppTheme.NoActionBar" />
+		<activity android:name=".activity.media.video.AudioExtractorActivity" />
+		<activity android:name=".activity.data.CustomSettingActivity" />
+		<activity
+			android:name=".activity.data.SystemSettingActivity"
+			android:label="@string/cheero_app_title_activity_settings" />
+		<activity android:name=".activity.data.DatabaseActivity" />
+		<activity android:name=".activity.data.ViewModelActivity" />
+		<activity android:name=".activity.network.RetrofitActivity" />
+		<activity android:name=".activity.network.RequestActivity" />
+		<activity android:name=".activity.reverse.JniActivity" />
+		<activity android:name=".activity.reverse.DisposeSoActivity" />
+		<activity android:name=".activity.reverse.DisposeManifestActivity" />
+		<activity android:name=".activity.reverse.DisposeResourceActivity" />
+		<activity android:name=".activity.reverse.DisposeDexActivity" />
+		<activity android:name=".activity.thread.AsyncTaskActivity" />
+		<activity android:name=".activity.memory.WeakHandlerActivity" /> <!-- endregion -->
+		<meta-data
+			android:name="xposedmodule"
+			android:value="true" />
+		<meta-data
+			android:name="xposeddescription"
+			android:value="Hook信息" />
+		<meta-data
+			android:name="xposedminversion"
+			android:value="54" /> <!-- region Services -->
+		<service
+			android:name=".service.UserAidlServerService"
+			android:enabled="true"
+			android:exported="true"
+			android:permission="TODO" />
+		<service
+			android:name=".service.CheeroService"
+			android:enabled="true"
+			android:exported="false">
+			<intent-filter android:priority="1000">
+				<action android:name="com.icheero.app.service.CheeroService" />
+			</intent-filter>
+		</service>
+		<service
+			android:name=".service.CheeroIntentService"
+			android:exported="false" />
+	</application>
 
 </manifest>

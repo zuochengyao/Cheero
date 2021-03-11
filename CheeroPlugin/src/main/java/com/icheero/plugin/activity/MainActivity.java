@@ -1,8 +1,6 @@
 package com.icheero.plugin.activity;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -81,7 +79,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
             loadClass();
             try
             {
-                intent = new Intent(this, RefUtils.getClass(PLUGIN_PACKAGE_MEGLIVE + ".MainActivity"));
+                intent = new Intent(this,
+                        RefUtils.getClass(PLUGIN_PACKAGE_MEGLIVE + ".MainActivity"));
             }
             catch (ClassNotFoundException e)
             {
@@ -110,8 +109,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
             {
                 is = getAssets().open(PLUGIN_ASSET_PATH + filename);
                 fos = new FileOutputStream(apk);
-                while ((len = is.read(buffer)) != -1)
-                    fos.write(buffer, 0, len);
+                while ((len = is.read(buffer)) != -1) fos.write(buffer, 0, len);
                 Toast.makeText(this, "apk download success", Toast.LENGTH_SHORT).show();
             }
             catch (IOException e)
@@ -167,10 +165,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
 
             // 将新的 dexElements 赋值给 dexElements
             hostDexElementsField.set(hostPathList, newDexElements);
-
-            AssetManager assetManager = PluginManager.getPluginAssetManager(apk);
-            Resources pluginResource = new Resources(assetManager,
-                    getResources().getDisplayMetrics(), getResources().getConfiguration());
+            PluginManager.mergePluginResource(getBaseContext(), apk);
         }
         catch (Exception e)
         {
