@@ -1,7 +1,6 @@
 package com.icheero.sdk.base;
 
-public class CheeroNative
-{
+public class CheeroNative {
     private static final Class TAG = CheeroNative.class;
     String i = "";
 
@@ -25,8 +24,7 @@ public class CheeroNative
 
     public static native void nativeIsOwnApp();
 
-    static
-    {
+    static {
         System.loadLibrary("cheero-1.0.0");
     }
 }

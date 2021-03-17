@@ -214,7 +214,7 @@ public class BinaryTree
 			operate(output.pop());
 	}
 	
-	public void levelTranversal(BinaryTreeNode node)
+	public void levelTraversal(BinaryTreeNode node)
 	{
 		if (node == null)
 			return;

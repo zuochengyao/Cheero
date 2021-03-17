@@ -1,25 +1,27 @@
 def build_version = [:]
-build_version.compile_sdk = 29
+build_version.compile_sdk = 30
 build_version.min_sdk = 21
-build_version.target_sdk = 29
+build_version.target_sdk = 30
 build_version.gradle = '4.1.2'
-build_version.code = 5
-build_version.name = "1.0.4"
+build_version.code = 6
+build_version.name = "1.0.5"
 build_version.java = JavaVersion.VERSION_1_8
 
 def dep_version = [:]
 dep_version.androidx = '1.2.0'
+dep_version.androidx_annotation = '1.1.0'
 dep_version.androidx_constraintlayout = '2.0.4'
 dep_version.androidx_v4 = '1.0.0'
 dep_version.androidx_test = "1.2.0"
 dep_version.androidx_espresso = "3.2.0"
 dep_version.androidx_multidex = "2.0.1"
+dep_version.androidx_jetpack = "2.3.3"
 dep_version.kotlin = "1.4.20"
 
 dep_version.retrofit = "2.8.1"
 dep_version.rxjava = "3.0.3"
 dep_version.rxandroid = "3.0.0"
-dep_version.rxpermissions = "2.x.v0.9.3"
+dep_version.rxpermissions = "0.12"
 dep_version.gson = "2.8.6"
 dep_version.butterknife = "10.2.1"
 dep_version.okio = "2.6.0"
@@ -44,15 +46,27 @@ def butterknife = [:]
 butterknife.runtime = "com.jakewharton:butterknife:$dep_version.butterknife"
 butterknife.compiler = "com.jakewharton:butterknife-compiler:$dep_version.butterknife"
 
+def jetpack_navigation = [:]
+jetpack_navigation.fragment = "androidx.navigation:navigation-fragment:$dep_version.androidx_jetpack"
+jetpack_navigation.ui = "androidx.navigation:navigation-ui:$dep_version.androidx_jetpack"
+jetpack_navigation.fragment_ktx = "androidx.navigation:navigation-fragment-ktx:$dep_version.androidx_jetpack"
+jetpack_navigation.ui_ktx = "androidx.navigation:navigation-ui-ktx:$dep_version.androidx_jetpack"
+jetpack_navigation.safe_args = "androidx.navigation:navigation-safe-args-gradle-plugin:$dep_version.androidx_jetpack"
+
+def jetpack = [:]
+jetpack.navigation = jetpack_navigation
+
 def androidx = [:]
+androidx.jetpack = jetpack
 androidx.appcompat = "androidx.appcompat:appcompat:$dep_version.androidx"
-androidx.annotation = "androidx.annotation:annotation:$dep_version.androidx"
+androidx.annotation = "androidx.annotation:annotation:$dep_version.androidx_annotation"
 androidx.constraintlayout = "androidx.constraintlayout:constraintlayout:$dep_version.androidx_constraintlayout"
 androidx.v4 = "androidx.legacy:legacy-support-v4:$dep_version.androidx_v4"
 androidx.design = "com.google.android.material:material:$dep_version.androidx_v4"
 androidx.test = "androidx.test:runner:$dep_version.androidx_test"
 androidx.espresso = "androidx.test.espresso:espresso-core:$dep_version.androidx_espresso"
 androidx.multidex = "androidx.multidex:multidex:$dep_version.androidx_multidex"
+
 
 def rx = [:]
 rx.java = "io.reactivex.rxjava3:rxjava:$dep_version.rxjava"

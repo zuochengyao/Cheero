@@ -2,14 +2,11 @@ buildscript {
     apply from: 'config.gradle'
     addRepositories(repositories)
     dependencies {
-        classpath versions.deps.gradle
-        classpath versions.deps.greendao.classpath
-        classpath versions.deps.tinker.classpath
-        classpath versions.deps.kotlin.gradle_plugin
-    }
-    repositories {
-        jcenter()
-        google()
+        classpath versions.deps.gradle // gradle 插件
+        classpath versions.deps.greendao.classpath // greendao 插件
+        classpath versions.deps.tinker.classpath // tinker 插件
+        classpath versions.deps.kotlin.gradle_plugin // kotlin 插件
+        classpath versions.deps.androidx.jetpack.navigation.safe_args // jetpack-safeargs 插件
     }
 }
 
@@ -17,12 +14,11 @@ allprojects {
     addRepositories(repositories)
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+subprojects {
+    version '1'
 }
 
-repositories {
-    jcenter()
-    google()
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
 

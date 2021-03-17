@@ -14,8 +14,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import io.reactivex.annotations.NonNull;
 
 public class BaseActivity extends AppCompatActivity implements PermissionManager.PermissionListener
 {

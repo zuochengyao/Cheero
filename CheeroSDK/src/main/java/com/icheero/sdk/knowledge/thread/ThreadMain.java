@@ -17,6 +17,7 @@ public class ThreadMain
         //        nonBlockingCP();
         //        doJoinThread();
         //        doShareData();
+        nonBlockingCP();
         doDeadLock();
     }
 

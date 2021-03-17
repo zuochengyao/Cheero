@@ -28,6 +28,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    outputFileName ="Cheero_${defaultConfig.versionName}_${variant.name}.apk"
+                }
+            }
         }
         debug {
             minifyEnabled false

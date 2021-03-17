@@ -8,7 +8,7 @@ import android.os.Build;
 import android.provider.Settings;
 
 import com.icheero.sdk.base.BaseApplication;
-import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.tbruyelle.rxpermissions3.RxPermissions;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
