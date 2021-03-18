@@ -2,71 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-
     defaultConfig {
         applicationId "com.icheero.app"
-        minSdkVersion versions.build.min_sdk
-        targetSdkVersion versions.build.target_sdk
-        versionCode versions.build.code
-        versionName versions.build.name
-        multiDexEnabled true
-    }
-
-    signingConfigs {
-        // 打包签名
-        release {
-            keyAlias versions.sign.release.alias
-            keyPassword versions.sign.release.password
-            storeFile file(versions.sign.release.filepath)
-            storePassword versions.sign.release.store
-        }
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-            applicationVariants.all { variant ->
-                variant.outputs.all { output ->
-                    outputFileName ="Cheero_${defaultConfig.versionName}_${variant.name}.apk"
-                }
-            }
-        }
-        debug {
-            minifyEnabled false
-            signingConfig signingConfigs.release
-            // applicationIdSuffix '.debug'
-        }
-    }
-
-    dataBinding {
-        enabled true
-    }
-
-    lintOptions {
-        abortOnError false
-    }
-
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/rxjava.properties'
-    }
-
-    compileOptions {
-        sourceCompatibility versions.build.java
-        targetCompatibility versions.build.java
     }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(':CheeroSDK')
-//    implementation project(':flutter')
     if (isLibrary) {
         implementation project(':CheeroPlugin')
     }

@@ -165,6 +165,7 @@ JNIEXPORT void JNICALL native_iop(JNIEnv *env, jclass)
     const char *className = "com/icheero/sdk/util/Common";
     jclass common = env->FindClass(className);
     int flag = 0;
+    LOGE("do native_iop");
     if (common == nullptr)
     {
         LOGE("Class not found: %s", className);

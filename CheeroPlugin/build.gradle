@@ -8,34 +8,8 @@ apply plugin: 'kotlin-android'
 android {
 
     defaultConfig {
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
-                includeCompileClasspath true
-            }
-        }
-        // resourcePrefix "cheero_plugin_"
-    }
-
-    signingConfigs {
-        // 打包签名
-        release {
-            keyAlias versions.sign.release.alias
-            keyPassword versions.sign.release.password
-            storeFile file(versions.sign.release.filepath)
-            storePassword versions.sign.release.store
-        }
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-        }
-        debug {
-            minifyEnabled false
-            signingConfig signingConfigs.release
+        if (!isLibrary) {
+            applicationId "com.icheero.plugin"
         }
     }
 
@@ -54,29 +28,9 @@ android {
             }
         }
     }
-
-    lintOptions {
-        abortOnError false
-    }
-
-    compileOptions {
-        sourceCompatibility versions.build.java
-        targetCompatibility versions.build.java
-    }
-
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/rxjava.properties'
-    }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(':CheeroSDK')
     annotationProcessor versions.deps.arouter_compiler
     // Tencent Tinker
     // 生成Application时使用

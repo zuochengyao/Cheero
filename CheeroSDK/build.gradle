@@ -3,13 +3,8 @@ apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion versions.build.compile_sdk
 
     defaultConfig {
-        minSdkVersion versions.build.min_sdk
-        targetSdkVersion versions.build.target_sdk
-        versionCode versions.build.code
-        versionName versions.build.name
         externalNativeBuild {
             cmake {
                 cppFlags "-std=c++11", "-frtti", "-fexceptions"
@@ -21,19 +16,6 @@ android {
         }
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    android {
-        lintOptions {
-            abortOnError false
-        }
-    }
-
     useLibrary 'org.apache.http.legacy'
 
     externalNativeBuild {
@@ -42,30 +24,14 @@ android {
         }
     }
 
-    repositories {
-        flatDir {
-            dirs 'libs'
-        }
-    }
-
     greendao {
         schemaVersion 1
         daoPackage 'com.icheero.sdk.core.storage.database.greendao'
         targetGenDir 'src/main/java'
     }
-
-    packagingOptions {
-        exclude 'META-INF/rxjava.properties'
-    }
-
-    compileOptions {
-        sourceCompatibility versions.build.java
-        targetCompatibility versions.build.java
-    }
 }
 
 dependencies {
-    api fileTree(include: ['*.jar'], dir: 'libs')
     // Support libraries
     api versions.deps.androidx.appcompat
     api versions.deps.androidx.annotation
