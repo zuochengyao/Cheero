@@ -15,7 +15,17 @@ allprojects {
 }
 
 subprojects {
-    version '1'
+    // 添加 group
+    group 'com.icheero'
+    def projectName = project.name
+    println(projectName)
+
+    afterEvaluate { project ->
+        android {
+            compileSdkVersion versions.build.compile_sdk
+        }
+    }
+
 }
 
 task clean(type: Delete) {

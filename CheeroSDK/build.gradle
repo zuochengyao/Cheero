@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion versions.build.compile_sdk

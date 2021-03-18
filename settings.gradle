@@ -1,2 +1,3 @@
+include ':CheeroWelcome'
 include ':CheeroApp', ':CheeroSDK', ':CheeroPlugin'//, ':CheeroShell'
 rootProject.name = 'Cheero'

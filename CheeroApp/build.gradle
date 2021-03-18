@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion versions.build.compile_sdk
 
     defaultConfig {
         applicationId "com.icheero.app"
@@ -74,8 +73,4 @@ dependencies {
     implementation versions.deps.butterknife.runtime
     compileOnly versions.deps.xposed
     annotationProcessor versions.deps.butterknife.compiler
-}
-
-repositories {
-    google()
 }

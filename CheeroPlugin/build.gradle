@@ -3,18 +3,11 @@ if (isLibrary) {
 } else {
     apply plugin: 'com.android.application'
 }
+apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion versions.build.compile_sdk
 
     defaultConfig {
-        if (!isLibrary) {
-            applicationId "com.icheero.plugin"
-        }
-        minSdkVersion versions.build.min_sdk
-        targetSdkVersion versions.build.target_sdk
-        versionCode versions.build.code
-        versionName versions.build.name
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
@@ -25,6 +18,7 @@ android {
     }
 
     signingConfigs {
+        // 打包签名
         release {
             keyAlias versions.sign.release.alias
             keyPassword versions.sign.release.password

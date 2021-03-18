@@ -1,4 +1,5 @@
 def build_version = [:]
+build_version.application_id = "com.icheero"
 build_version.compile_sdk = 30
 build_version.min_sdk = 21
 build_version.target_sdk = 30
