@@ -2,6 +2,7 @@ if (isLibrary) {
     apply plugin: 'com.android.library'
 } else {
     apply plugin: 'com.android.application'
+    apply from: 'tinker.gradle'
 }
 apply plugin: 'kotlin-android'
 
@@ -31,18 +32,9 @@ android {
 }
 
 dependencies {
-    annotationProcessor versions.deps.arouter_compiler
     // Tencent Tinker
     // 生成Application时使用
     compileOnly(versions.deps.tinker.anno)
     // 核心sdk库
     implementation versions.deps.tinker.lib
-}
-
-repositories {
-    google()
-}
-
-if (!isLibrary) {
-    apply from: 'tinker.gradle'
 }

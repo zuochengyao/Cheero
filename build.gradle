@@ -18,7 +18,8 @@ subprojects {
     afterEvaluate { currentProject ->
         String projectName = currentProject.getName()
         boolean isApplication = currentProject.plugins.hasPlugin("com.android.application")
-        println("${projectName}: is application: $isApplication")
+        String type = isApplication ? "application" : "library"
+        println("${projectName} is $type")
 
         android {
             compileSdkVersion versions.build.compile_sdk
@@ -29,17 +30,16 @@ subprojects {
                 versionCode versions.build.code
                 versionName versions.build.name
                 multiDexEnabled true
-                testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+                testInstrumentationRunner versions.deps.androidx.test.plugin
                 javaCompileOptions {
                     annotationProcessorOptions {
                         arguments = [AROUTER_MODULE_NAME: projectName]
-                        includeCompileClasspath true
                     }
                 }
             }
 
-            dataBinding {
-                enabled true
+            buildFeatures {
+                dataBinding true
             }
 
             lintOptions {
@@ -103,9 +103,17 @@ subprojects {
         dependencies {
             implementation fileTree(include: ['*.jar'], dir: 'libs')
             implementation fileTree(include: ['*.aar'], dir: 'libs')
+            // junit
+            testImplementation versions.deps.junit
+            androidTestImplementation versions.deps.androidx.test.junit
+            androidTestImplementation versions.deps.androidx.test.espresso_core
+            // tinker
+            annotationProcessor versions.deps.arouter_compiler
+            // CheeroSDK module
             if (projectName != "CheeroSDK") {
                 implementation project(':CheeroSDK')
             }
+
         }
     }
 
