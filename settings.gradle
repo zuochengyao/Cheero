@@ -1,3 +1,4 @@
-include ':CheeroWelcome'
-include ':CheeroApp', ':CheeroSDK', ':CheeroPlugin'//, ':CheeroShell'
 rootProject.name = 'Cheero'
+include ':CheeroApp'
+include ':CheeroPlugin'
+include ':CheeroSDK'

@@ -16,8 +16,6 @@ android {
         }
     }
 
-    ndkVersion '22.0.7026061'
-
     useLibrary 'org.apache.http.legacy'
 
     externalNativeBuild {

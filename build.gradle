@@ -22,8 +22,8 @@ subprojects {
         println("${projectName} is $type")
 
         android {
+            ndkVersion versions.build.ndk
             compileSdkVersion versions.build.compile_sdk
-
             defaultConfig {
                 minSdkVersion versions.build.min_sdk
                 targetSdkVersion versions.build.target_sdk
@@ -113,7 +113,6 @@ subprojects {
             if (projectName != "CheeroSDK") {
                 implementation project(':CheeroSDK')
             }
-
         }
     }
 

@@ -4,7 +4,6 @@ import android.os.Bundle
 import com.icheero.app.R
 import com.icheero.sdk.base.BaseActivity
 import java.util.*
-import kotlin.collections.HashMap
 
 class KotlinActivity : BaseActivity() {
 

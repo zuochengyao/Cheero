@@ -2,7 +2,6 @@ if (isLibrary) {
     apply plugin: 'com.android.library'
 } else {
     apply plugin: 'com.android.application'
-    apply from: 'tinker.gradle'
 }
 apply plugin: 'kotlin-android'
 
@@ -10,7 +9,7 @@ android {
 
     defaultConfig {
         if (!isLibrary) {
-            applicationId "com.icheero.plugin"
+            applicationId versions.build.application_id + "plugin"
         }
     }
 

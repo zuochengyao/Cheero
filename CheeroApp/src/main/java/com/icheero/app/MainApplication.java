@@ -1,4 +1,4 @@
-package com.icheero.app.application;
+package com.icheero.app;
 
 import android.content.Context;
 import android.content.res.Configuration;

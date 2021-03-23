@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 
 android {
     defaultConfig {
-        applicationId "com.icheero.app"
+        applicationId versions.build.application_id + "app"
     }
 }
 
