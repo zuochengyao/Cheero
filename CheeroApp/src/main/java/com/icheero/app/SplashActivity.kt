@@ -1,12 +1,23 @@
 package com.icheero.app
 
 import android.os.Bundle
-import com.icheero.sdk.base.BaseActivity
+import androidx.appcompat.app.AppCompatActivity
+import com.icheero.app.databinding.ActivitySplashBinding
 
-class SplashActivity : BaseActivity() {
+class SplashActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivitySplashBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+        binding = ActivitySplashBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        initData()
     }
+
+    private fun initData() {
+        binding.name.text = "视图绑定"
+    }
+
 }

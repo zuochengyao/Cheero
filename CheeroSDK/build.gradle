@@ -8,7 +8,7 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags "-std=c++11", "-frtti", "-fexceptions"
-                abiFilters "armeabi-v7a", "arm64-v8a", "x86_64"
+                abiFilters "armeabi-v7a", "arm64-v8a"
             }
             sourceSets.main {
                 jniLibs.srcDirs = ['libs']
@@ -20,6 +20,7 @@ android {
 
     externalNativeBuild {
         cmake {
+            version versions.build.cmake
             path file('src/main/jni/CMakeLists.txt')
         }
     }

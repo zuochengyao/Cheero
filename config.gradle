@@ -9,6 +9,7 @@ build_version.code = 6
 build_version.name = "1.0.5"
 build_version.java = JavaVersion.VERSION_1_8
 build_version.ndk = "22.0.7026061"
+build_version.cmake = "3.18.1"
 // endregion
 
 // region libraries version code
