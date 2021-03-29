@@ -39,7 +39,7 @@
                     android:layout_height="300dp"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/nini"/>
+                    android:src="@drawable/splash_nini"/>
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/tab_toolbar"

@@ -8,7 +8,7 @@ build_version.gradle = '4.1.2'
 build_version.code = 6
 build_version.name = "1.0.5"
 build_version.java = JavaVersion.VERSION_1_8
-build_version.ndk = "22.0.7026061"
+build_version.ndk = "23.0.7196353"
 build_version.cmake = "3.18.1"
 // endregion
 
@@ -21,6 +21,9 @@ dep_version.androidx_constraintlayout = '2.0.4'
 dep_version.androidx_v4 = '1.3.0'
 dep_version.androidx_multidex = "2.0.1"
 dep_version.androidx_jetpack = "2.3.3"
+dep_version.androidx_room = "2.2.6"
+dep_version.dagger = "2.33"
+
 dep_version.test_core = "1.3.0"
 dep_version.test_espresso = "3.3.0"
 dep_version.test_intents = "3.3.0"
@@ -149,14 +152,28 @@ kotlin.gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$dep_version.k
 kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$dep_version.kotlin"
 // endregion
 
+// region dagger
+def dagger = [:]
+dagger.core = "com.google.dagger:dagger:$dep_version.dagger"
+dagger.compiler = "com.google.dagger:dagger-compiler:$dep_version.dagger"
+// endregion
+
+// region arouter
+def arouter = [:]
+arouter.core = "com.alibaba:arouter-api:$dep_version.arouter_api"
+arouter.compiler = "com.alibaba:arouter-compiler:$dep_version.arouter_compiler"
+// endregoin
+
 // region all libraries map
 def deps = [:]
+deps.androidx = androidx
+deps.apache = apache
+deps.arouter = arouter
+deps.dagger = dagger
+deps.greendao = greendao
 deps.kotlin = kotlin
 deps.retrofit = retrofit
-deps.androidx = androidx
 deps.rx = rx
-deps.greendao = greendao
-deps.apache = apache
 deps.tinker = tinker
 deps.gradle = "com.android.tools.build:gradle:$build_version.gradle"
 deps.gson = "com.google.code.gson:gson:$dep_version.gson"
@@ -164,8 +181,6 @@ deps.okio = "com.squareup.okio:okio:$dep_version.okio"
 deps.okhttp = "com.squareup.okhttp3:okhttp:$dep_version.okhttp"
 deps.volley = "com.android.volley:volley:$dep_version.volley"
 deps.junit = "junit:junit:$dep_version.junit"
-deps.arouter_api = "com.alibaba:arouter-api:$dep_version.arouter_api"
-deps.arouter_compiler = "com.alibaba:arouter-compiler:$dep_version.arouter_compiler"
 deps.stetho = "com.facebook.stetho:stetho:$dep_version.stetho"
 deps.xposed = "de.robv.android.xposed:api:$dep_version.xposed"
 deps.eventbus = "org.greenrobot:eventbus:$dep_version.eventbus"

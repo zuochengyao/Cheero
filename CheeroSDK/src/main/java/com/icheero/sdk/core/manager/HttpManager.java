@@ -5,6 +5,7 @@ import com.icheero.sdk.core.network.http.HttpRequest;
 import com.icheero.sdk.core.network.http.HttpRequestProvider;
 import com.icheero.sdk.core.network.http.encapsulation.IHttpRequestFactory;
 import com.icheero.sdk.core.network.http.framework.okhttp.OkHttpRequestFactory;
+import com.icheero.sdk.core.network.http.framework.retrofit.RetrofitHttpRequestFactory;
 import com.icheero.sdk.util.Log;
 
 import java.io.IOException;
@@ -44,6 +45,10 @@ public class HttpManager
         {
             ((OkHttpRequestFactory) mHttpRequestFactory).setWriteTimeout(config.getWriteTimeout());
             ((OkHttpRequestFactory) mHttpRequestFactory).setRetryOnConnectionFailure(config.isRetryOnConnectionFailure());
+        } else if (mHttpRequestFactory instanceof RetrofitHttpRequestFactory)
+        {
+            ((RetrofitHttpRequestFactory) mHttpRequestFactory).setWriteTimeout(config.getWriteTimeout());
+            ((RetrofitHttpRequestFactory) mHttpRequestFactory).setRetryOnConnectionFailure(config.isRetryOnConnectionFailure());
         }
     }
 

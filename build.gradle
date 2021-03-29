@@ -40,7 +40,6 @@ subprojects {
 
             buildFeatures {
                 dataBinding true
-                viewBinding true
             }
 
             lintOptions {
@@ -108,8 +107,9 @@ subprojects {
             testImplementation versions.deps.junit
             androidTestImplementation versions.deps.androidx.test.junit
             androidTestImplementation versions.deps.androidx.test.espresso_core
-            // tinker
-            annotationProcessor versions.deps.arouter_compiler
+            // arouter
+            annotationProcessor versions.deps.arouter.compiler
+            annotationProcessor versions.deps.dagger.compiler
             // CheeroSDK module
             if (projectName != "CheeroSDK") {
                 implementation project(':CheeroSDK')

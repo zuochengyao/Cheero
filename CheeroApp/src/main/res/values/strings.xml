@@ -1,4 +1,5 @@
 <resources>
+    <string name="cheero_app_splash_skip">%s 跳过</string>
     <string name="cheero_app_title_activity_main">MainActivity</string>
     <string name="cheero_app_title_activity_settings">Settings</string>
     <!-- RequestActivity -->

@@ -13,7 +13,6 @@ public class MainApplication extends BaseApplication
     protected void attachBaseContext(Context base)
     {
         super.attachBaseContext(base);
-
         ApplicationManager.getInstance().attachBaseContext(base);
     }
 

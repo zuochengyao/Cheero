@@ -1,37 +1,68 @@
-package com.icheero.sdk.base
+package com.icheero.sdk.base.ui
 
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.icheero.sdk.core.manager.PermissionManager
 import com.icheero.sdk.core.manager.PermissionManager.PermissionListener
 import com.icheero.sdk.core.manager.ViewManager
 import com.icheero.sdk.util.Log
 import com.icheero.sdk.util.RefUtils
+import java.lang.reflect.ParameterizedType
 import java.util.*
 
-abstract class BaseViewModelActivity<binding : ViewDataBinding, viewModel : BaseViewModel> :
-        AppCompatActivity(), PermissionListener {
+abstract class BaseActivity<VDB : ViewDataBinding, VM : BaseViewModel> : AppCompatActivity(), PermissionListener {
 
     @JvmField
     protected var mPermissionManager: PermissionManager? = null
     protected lateinit var TAG: Class<*>
-    lateinit var binding: binding
-    lateinit var viewModel: viewModel
+    lateinit var mBinding: VDB
+    lateinit var mViewModel: VM
+
+    // region abstract methods
+    @get: LayoutRes
+    abstract val layoutId: Int
+
+    private fun initViewModel() {
+        val type = javaClass.genericSuperclass
+        val viewModelClass = if (type is ParameterizedType) {
+            type.actualTypeArguments[1] as Class<BaseViewModel>
+        } else {
+            BaseViewModel::class.java
+        }
+        mViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application)).get(viewModelClass) as VM
+        if (variableId() > 0) {
+            mBinding.setVariable(variableId(), mViewModel)
+        }
+    }
+
+    abstract fun variableId(): Int
+
+    protected open fun init() {
+        mPermissionManager = PermissionManager(this)
+    }
+
+    // endregion
 
     // region Activity's Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         TAG = javaClass
         Log.i(TAG, "onCreate")
-        binding = DataBindingUtil.setContentView(this, layoutId())
-        viewModel = viewModel()
-        // binding.setVariable()
-        mPermissionManager = PermissionManager(this)
+        mBinding = DataBindingUtil.setContentView(this, layoutId)
+        mBinding.lifecycleOwner = this
+        initViewModel()
+        // binding.setVariable(bindingVariable(), viewModel)
+        // binding.executePendingBindings()
+        // initViewModelClass()
+        init()
         ViewManager.getInstance().addActivity(this)
     }
 
@@ -78,23 +109,15 @@ abstract class BaseViewModelActivity<binding : ViewDataBinding, viewModel : Base
 
     // endregion
 
-    // region abstract methods
-    abstract fun layoutId():Int
-
-    abstract fun viewModel():viewModel
-    // endregion
-
     // region Extra Methods
     protected fun openActivity(activityClass: Class<out Activity?>?) {
-        if (activityClass != null)
-            openActivity(activityClass, null)
+        if (activityClass != null) openActivity(activityClass, null)
     }
 
     protected fun openActivity(activityClass: Class<out Activity?>?, bundle: Bundle?) {
         val intent = Intent()
         intent.setClass(this, activityClass!!)
-        if (bundle != null && bundle.size() > 0)
-            intent.putExtras(bundle)
+        if (bundle != null && bundle.size() > 0) intent.putExtras(bundle)
         startActivity(intent)
     }
 

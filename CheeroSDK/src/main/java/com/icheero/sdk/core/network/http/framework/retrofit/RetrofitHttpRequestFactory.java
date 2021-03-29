@@ -5,7 +5,6 @@ import com.icheero.sdk.core.network.http.encapsulation.IHttpCall;
 
 import retrofit2.Retrofit;
 
-// TODO
 public class RetrofitHttpRequestFactory implements IRetrofitRequestFactory
 {
     private Retrofit mRetrofit;
@@ -18,7 +17,7 @@ public class RetrofitHttpRequestFactory implements IRetrofitRequestFactory
     @Override
     public void setWriteTimeout(int readTimeout)
     {
-
+        
     }
 
     @Override

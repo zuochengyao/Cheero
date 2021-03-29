@@ -23,7 +23,7 @@ public class WeakHandlerActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
         mImageView = new ImageView(this);
-        mImageView.setImageResource(R.drawable.nini);
+        mImageView.setImageResource(R.drawable.splash_nini);
         setContentView(mImageView);
         mWeakHandler = new WeakHandler(this);
         mWeakHandler.sendEmptyMessageDelayed(0, 2 * 1000);

@@ -31,7 +31,7 @@ public class BaseApplication extends MultiDexApplication
         super.onCreate();
         mInstance = this;
         Log.traceMode(Log.TRACE_MODE_ON_SCREEN);
-        Log.i(TAG, TAG.getSimpleName() + " onCreate");
+        Log.i(TAG, TAG.getSimpleName() + " onCreate:" + getApplicationInfo().nativeLibraryDir );
         CheeroNative.nativeIsOwnApp();
         // 初始化 IO管理器
         FileScopeManager.getInstance().init(this);

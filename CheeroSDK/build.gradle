@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
 
@@ -29,6 +30,10 @@ android {
         schemaVersion 1
         daoPackage 'com.icheero.sdk.core.storage.database.greendao'
         targetGenDir 'src/main/java'
+    }
+
+    kapt {
+        generateStubs = true
     }
 }
 
@@ -63,7 +68,7 @@ dependencies {
     api versions.deps.androidx.design
     api versions.deps.androidx.multidex
     // Alibaba ARouter
-    api versions.deps.arouter_api
+    api versions.deps.arouter.core
     // rx series
     api versions.deps.rx.java
     api versions.deps.rx.android
@@ -78,7 +83,12 @@ dependencies {
     api versions.deps.gson
     // greendao
     api versions.deps.greendao.impl
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     compileOnly versions.deps.greendao.generator
     // EventBus
     api versions.deps.eventbus
+    // Dagger
+    api versions.deps.dagger.core
+    // LiveData
+
 }
