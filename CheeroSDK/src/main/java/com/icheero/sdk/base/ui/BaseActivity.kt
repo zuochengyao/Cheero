@@ -3,7 +3,12 @@ package com.icheero.sdk.base.ui
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -15,6 +20,7 @@ import com.icheero.sdk.core.manager.PermissionManager.PermissionListener
 import com.icheero.sdk.core.manager.ViewManager
 import com.icheero.sdk.util.Log
 import com.icheero.sdk.util.RefUtils
+import com.icheero.sdk.util.StatusBarUtils
 import java.lang.reflect.ParameterizedType
 import java.util.*
 
@@ -56,6 +62,7 @@ abstract class BaseActivity<VDB : ViewDataBinding, VM : BaseViewModel> : AppComp
         super.onCreate(savedInstanceState)
         TAG = javaClass
         Log.i(TAG, "onCreate")
+        StatusBarUtils.immersive(this)
         mBinding = DataBindingUtil.setContentView(this, layoutId)
         mBinding.lifecycleOwner = this
         initViewModel()

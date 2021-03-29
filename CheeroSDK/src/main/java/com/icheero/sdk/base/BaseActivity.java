@@ -9,6 +9,7 @@ import com.icheero.sdk.core.manager.PermissionManager;
 import com.icheero.sdk.core.manager.ViewManager;
 import com.icheero.sdk.util.Log;
 import com.icheero.sdk.util.RefUtils;
+import com.icheero.sdk.util.StatusBarUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -29,6 +30,7 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
         super.onCreate(savedInstanceState);
         TAG = getClass();
         Log.i(TAG, TAG.getSimpleName() + " onCreate");
+        StatusBarUtils.immersive(this);
         mPermissionManager = new PermissionManager(this);
         ViewManager.getInstance().addActivity(this);
     }

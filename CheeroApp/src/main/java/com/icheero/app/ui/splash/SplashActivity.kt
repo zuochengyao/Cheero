@@ -7,6 +7,7 @@ import com.icheero.app.R
 import com.icheero.app.activity.MainActivity
 import com.icheero.app.databinding.ActivitySplashBinding
 import com.icheero.sdk.base.ui.BaseActivity
+import com.icheero.sdk.util.StatusBarUtils
 
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
 
