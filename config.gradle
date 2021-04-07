@@ -5,8 +5,8 @@ build_version.compile_sdk = 30
 build_version.min_sdk = 21
 build_version.target_sdk = 30
 build_version.gradle = '4.1.2'
-build_version.code = 6
-build_version.name = "1.0.5"
+build_version.code = 7
+build_version.name = "1.0.6"
 build_version.java = JavaVersion.VERSION_1_8
 build_version.ndk = "23.0.7196353"
 build_version.cmake = "3.18.1"
@@ -14,33 +14,36 @@ build_version.cmake = "3.18.1"
 
 // region libraries version code
 def dep_version = [:]
-dep_version.androidx_appcompat = '1.2.0'
-dep_version.androidx_core = '1.3.2'
-dep_version.androidx_annotation = '1.1.0'
-dep_version.androidx_constraintlayout = '2.0.4'
-dep_version.androidx_v4 = '1.3.0'
-dep_version.androidx_multidex = "2.0.1"
-dep_version.androidx_jetpack = "2.3.3"
-dep_version.androidx_room = "2.2.6"
-dep_version.dagger = "2.33"
+dep_version.jetpack_appcompat = '1.2.0'
+dep_version.jetpack_core = '1.3.2'
+dep_version.jetpack_annotation = '1.1.0'
+dep_version.jetpack_constraintlayout = '2.0.4'
+dep_version.jetpack_v4 = '1.3.0'
+dep_version.jetpack_multidex = "2.0.1"
+dep_version.jetpack_nav = "2.3.3"
+dep_version.jetpack_room = "2.2.6"
+dep_version.jetpack_lifecycle = "2.2.0"
 
-dep_version.test_core = "1.3.0"
-dep_version.test_espresso = "3.3.0"
-dep_version.test_intents = "3.3.0"
-dep_version.test_junit = "1.1.2"
-dep_version.test_monitor = "1.3.0"
-dep_version.test_orchestrator = "1.3.0"
-dep_version.test_runner = "1.3.0"
-dep_version.test_rules = "1.3.0"
-dep_version.test_truth = "1.3.0"
+dep_version.jetpack_test_core = "1.3.0"
+dep_version.jetpack_test_espresso = "3.3.0"
+dep_version.jetpack_test_intents = "3.3.0"
+dep_version.jetpack_test_junit = "1.1.2"
+dep_version.jetpack_test_monitor = "1.3.0"
+dep_version.jetpack_test_orchestrator = "1.3.0"
+dep_version.jetpack_test_runner = "1.3.0"
+dep_version.jetpack_test_rules = "1.3.0"
+dep_version.jetpack_test_truth = "1.3.0"
+dep_version.jetpack_test_services = "1.3.0"
+
+dep_version.kotlin = "1.4.31"
+dep_version.gson = "2.8.6"
+dep_version.dagger = "2.33"
 dep_version.test_truth_google = "1.3.0"
-dep_version.test_services = "1.3.0"
-dep_version.kotlin = "1.4.20"
+
 dep_version.retrofit = "2.8.1"
 dep_version.rxjava = "3.0.4"
 dep_version.rxandroid = "3.0.0"
 dep_version.rxpermissions = "0.12"
-dep_version.gson = "2.8.6"
 dep_version.okio = "2.6.0"
 dep_version.okhttp = "4.6.0"
 dep_version.volley = "1.1.1"
@@ -68,48 +71,43 @@ butterknife.compiler = "com.jakewharton:butterknife-compiler:$dep_version.butter
 
 // region jetpack navigation
 def jetpack_navigation = [:]
-jetpack_navigation.fragment = "androidx.navigation:navigation-fragment:$dep_version.androidx_jetpack"
-jetpack_navigation.ui = "androidx.navigation:navigation-ui:$dep_version.androidx_jetpack"
-jetpack_navigation.fragment_ktx = "androidx.navigation:navigation-fragment-ktx:$dep_version.androidx_jetpack"
-jetpack_navigation.ui_ktx = "androidx.navigation:navigation-ui-ktx:$dep_version.androidx_jetpack"
-jetpack_navigation.safe_args = "androidx.navigation:navigation-safe-args-gradle-plugin:$dep_version.androidx_jetpack"
+jetpack_navigation.fragment = "androidx.navigation:navigation-fragment:$dep_version.jetpack_nav"
+jetpack_navigation.ui = "androidx.navigation:navigation-ui:$dep_version.jetpack_nav"
+jetpack_navigation.fragment_ktx = "androidx.navigation:navigation-fragment-ktx:$dep_version.jetpack_nav"
+jetpack_navigation.ui_ktx = "androidx.navigation:navigation-ui-ktx:$dep_version.jetpack_nav"
+jetpack_navigation.safe_args = "androidx.navigation:navigation-safe-args-gradle-plugin:$dep_version.jetpack_nav"
+// endregion
+
+// region androidx junit test
+def jetpack_test = [:]
+jetpack_test.plugin = "androidx.test.runner.AndroidJUnitRunner"
+jetpack_test.core = "androidx.test:core:$dep_version.jetpack_test_core"
+jetpack_test.runner = "androidx.test:runner:$dep_version.jetpack_test_runner"
+jetpack_test.rules = "androidx.test:rules:$dep_version.jetpack_test_rules"
+jetpack_test.junit = "androidx.test.ext:junit:$dep_version.jetpack_test_junit"
+jetpack_test.truth = "androidx.test.ext:truth:$dep_version.jetpack_test_truth"
+jetpack_test.espresso_core = "androidx.test.espresso:espresso-core:$dep_version.jetpack_test_espresso"
+jetpack_test.espresso_contrib = "androidx.test.espresso:espresso-contrib:$dep_version.jetpack_test_espresso"
+jetpack_test.espresso_intents = "androidx.test.espresso:espresso-intents:$dep_version.jetpack_test_espresso"
+jetpack_test.espresso_accessibility = "androidx.test.espresso:espresso-accessibility:$dep_version.jetpack_test_intents"
+jetpack_test.espresso_web = "androidx.test.espresso:espresso-web:$dep_version.jetpack_test_espresso"
+jetpack_test.espresso_idling_c = "androidx.test.espresso.idling:idling-concurrent:$dep_version.jetpack_test_espresso"
+jetpack_test.espresso_idling_r = "androidx.test.espresso:espresso-idling-resource:$dep_version.jetpack_test_espresso"
+jetpack_test.google_truth = "com.google.truth:truth:$dep_version.test_truth_google"
 // endregion
 
 // region jetpack
 def jetpack = [:]
 jetpack.navigation = jetpack_navigation
-// endregion
-
-// region androidx junit test
-def unit_test = [:]
-unit_test.plugin = "androidx.test.runner.AndroidJUnitRunner"
-unit_test.core = "androidx.test:core:$dep_version.test_core"
-unit_test.runner = "androidx.test:runner:$dep_version.test_runner"
-unit_test.rules = "androidx.test:rules:$dep_version.test_rules"
-unit_test.junit = "androidx.test.ext:junit:$dep_version.test_junit"
-unit_test.truth = "androidx.test.ext:truth:$dep_version.test_truth"
-unit_test.google_truth = "com.google.truth:truth:$dep_version.test_truth_google"
-unit_test.espresso_core = "androidx.test.espresso:espresso-core:$dep_version.test_espresso"
-unit_test.espresso_contrib = "androidx.test.espresso:espresso-contrib:$dep_version.test_espresso"
-unit_test.espresso_intents = "androidx.test.espresso:espresso-intents:$dep_version.test_espresso"
-unit_test.espresso_accessibility = "androidx.test.espresso:espresso-accessibility:$dep_version.test_intents"
-unit_test.espresso_web = "androidx.test.espresso:espresso-web:$dep_version.test_espresso"
-unit_test.espresso_idling_c = "androidx.test.espresso.idling:idling-concurrent:$dep_version.test_espresso"
-unit_test.espresso_idling_r = "androidx.test.espresso:espresso-idling-resource:$dep_version.test_espresso"
-// endregion
-
-// region androidx
-def androidx = [:]
-androidx.jetpack = jetpack
-androidx.test = unit_test
-androidx.core = "androidx.core:core:$dep_version.androidx_core"
-androidx.core_ktx = "androidx.core:core-ktx:$dep_version.androidx_core"
-androidx.appcompat = "androidx.appcompat:appcompat:$dep_version.androidx_appcompat"
-androidx.annotation = "androidx.annotation:annotation:$dep_version.androidx_annotation"
-androidx.constraintlayout = "androidx.constraintlayout:constraintlayout:$dep_version.androidx_constraintlayout"
-androidx.v4 = "androidx.legacy:legacy-support-v4:$dep_version.androidx_v4"
-androidx.design = "com.google.android.material:material:$dep_version.androidx_v4"
-androidx.multidex = "androidx.multidex:multidex:$dep_version.androidx_multidex"
+jetpack.test = jetpack_test
+jetpack.core = "androidx.core:core:$dep_version.jetpack_core"
+jetpack.core_ktx = "androidx.core:core-ktx:$dep_version.jetpack_core"
+jetpack.appcompat = "androidx.appcompat:appcompat:$dep_version.jetpack_appcompat"
+jetpack.annotation = "androidx.annotation:annotation:$dep_version.jetpack_annotation"
+jetpack.constraintlayout = "androidx.constraintlayout:constraintlayout:$dep_version.jetpack_constraintlayout"
+jetpack.design = "com.google.android.material:material:$dep_version.jetpack_v4"
+jetpack.multidex = "androidx.multidex:multidex:$dep_version.jetpack_multidex"
+jetpack.lifecycle = "androidx.lifecycle:lifecycle-extensions:$dep_version.jetpack_lifecycle"
 // endregion
 
 // region rxjava
@@ -166,7 +164,7 @@ arouter.compiler = "com.alibaba:arouter-compiler:$dep_version.arouter_compiler"
 
 // region all libraries map
 def deps = [:]
-deps.androidx = androidx
+deps.jetpack = jetpack
 deps.apache = apache
 deps.arouter = arouter
 deps.dagger = dagger

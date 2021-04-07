@@ -46,6 +46,7 @@ abstract class BaseActivity<VDB : ViewDataBinding, VM : BaseViewModel> : AppComp
         mViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application)).get(viewModelClass) as VM
         if (variableId() > 0) {
             mBinding.setVariable(variableId(), mViewModel)
+            mBinding.executePendingBindings()
         }
     }
 
@@ -66,9 +67,6 @@ abstract class BaseActivity<VDB : ViewDataBinding, VM : BaseViewModel> : AppComp
         mBinding = DataBindingUtil.setContentView(this, layoutId)
         mBinding.lifecycleOwner = this
         initViewModel()
-        // binding.setVariable(bindingVariable(), viewModel)
-        // binding.executePendingBindings()
-        // initViewModelClass()
         init()
         ViewManager.getInstance().addActivity(this)
     }

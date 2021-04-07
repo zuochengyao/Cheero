@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.guide.GuideActivity"></activity>
         <!-- region Activities -->
         <activity
             android:name=".ui.splash.SplashActivity"

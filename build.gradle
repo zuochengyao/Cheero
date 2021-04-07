@@ -6,7 +6,7 @@ buildscript {
         classpath versions.deps.greendao.classpath // greendao 插件
         classpath versions.deps.tinker.classpath // tinker 插件
         classpath versions.deps.kotlin.gradle_plugin // kotlin 插件
-        classpath versions.deps.androidx.jetpack.navigation.safe_args // jetpack-safeargs 插件
+        classpath versions.deps.jetpack.navigation.safe_args // jetpack-safeargs 插件
     }
 }
 
@@ -30,7 +30,7 @@ subprojects {
                 versionCode versions.build.code
                 versionName versions.build.name
                 multiDexEnabled true
-                testInstrumentationRunner versions.deps.androidx.test.plugin
+                testInstrumentationRunner versions.deps.jetpack.test.plugin
                 javaCompileOptions {
                     annotationProcessorOptions {
                         arguments = [AROUTER_MODULE_NAME: projectName]
@@ -105,8 +105,8 @@ subprojects {
             implementation fileTree(include: ['*.aar'], dir: 'libs')
             // junit
             testImplementation versions.deps.junit
-            androidTestImplementation versions.deps.androidx.test.junit
-            androidTestImplementation versions.deps.androidx.test.espresso_core
+            androidTestImplementation versions.deps.jetpack.test.junit
+            androidTestImplementation versions.deps.jetpack.test.espresso_core
             // arouter
             annotationProcessor versions.deps.arouter.compiler
             annotationProcessor versions.deps.dagger.compiler

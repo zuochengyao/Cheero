@@ -43,6 +43,18 @@ dependencies {
     implementation(versions.deps.apache.httpmime) {
         exclude module: 'httpclient'
     }
+    // Kotlin
+    api versions.deps.kotlin.stdlib
+    // Support libraries
+    api versions.deps.jetpack.core
+    api versions.deps.jetpack.core_ktx
+    api versions.deps.jetpack.appcompat
+    api versions.deps.jetpack.annotation
+    api versions.deps.jetpack.constraintlayout
+    // api versions.deps.androidx.v4
+    api versions.deps.jetpack.design
+    api versions.deps.jetpack.multidex
+    api versions.deps.jetpack.lifecycle
     // Okhttp
     implementation versions.deps.okio
     implementation versions.deps.okhttp
@@ -56,20 +68,9 @@ dependencies {
     implementation versions.deps.retrofit.runtime
     implementation versions.deps.retrofit.adapter
     implementation versions.deps.retrofit.converter_gson
-    // Kotlin
-    api versions.deps.kotlin.stdlib
-    // Support libraries
-    api versions.deps.androidx.core
-    api versions.deps.androidx.core_ktx
-    api versions.deps.androidx.appcompat
-    api versions.deps.androidx.annotation
-    api versions.deps.androidx.constraintlayout
-//    api versions.deps.androidx.v4
-    api versions.deps.androidx.design
-    api versions.deps.androidx.multidex
     // Alibaba ARouter
     api versions.deps.arouter.core
-    // rx series
+    // Rx series
     api versions.deps.rx.java
     api versions.deps.rx.android
     api versions.deps.rx.permission
@@ -83,7 +84,6 @@ dependencies {
     api versions.deps.gson
     // greendao
     api versions.deps.greendao.impl
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     compileOnly versions.deps.greendao.generator
     // EventBus
     api versions.deps.eventbus

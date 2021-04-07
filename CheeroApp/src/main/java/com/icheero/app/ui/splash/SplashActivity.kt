@@ -7,7 +7,6 @@ import com.icheero.app.R
 import com.icheero.app.activity.MainActivity
 import com.icheero.app.databinding.ActivitySplashBinding
 import com.icheero.sdk.base.ui.BaseActivity
-import com.icheero.sdk.util.StatusBarUtils
 
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
 
@@ -15,6 +14,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        overridePendingTransition(0, 0)
     }
 
     override val layoutId: Int
