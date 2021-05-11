@@ -1,6 +1,5 @@
 package com.icheero.app.activity.network;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -108,7 +107,7 @@ public class WebViewActivity extends BaseActivity
         public void onPageFinished(WebView view, String url)
         {
             Log.d(TAG, "WebViewClient onPageFinished mType = " + mType);
-            SharedPreferences sp = getPreferences(Activity.MODE_PRIVATE);
+            SharedPreferences sp = getPreferences(MODE_PRIVATE);
             view.loadUrl(String.format(JS_SETELEMENT, KEY_ELEMENT_ID, sp.getString(KEY_ELEMENT_ID, "")));
         }
     };
@@ -119,7 +118,7 @@ public class WebViewActivity extends BaseActivity
         public void storeElement(String id, String element)
         {
             Log.d(TAG, "MyJavaScriptInterface storeElement mType = " + mType);
-            SharedPreferences.Editor editor = getPreferences(Activity.MODE_PRIVATE).edit();
+            SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
             editor.putString(id, element);
             editor.apply();
             if (!TextUtils.isEmpty(element))

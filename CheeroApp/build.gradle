@@ -16,6 +16,7 @@ dependencies {
     if (isLibrary) {
         implementation project(':CheeroPlugin')
     }
+    implementation versions.deps.jetpack.viewpager2
     compileOnly versions.deps.xposed
     implementation versions.deps.butterknife.runtime
     annotationProcessor versions.deps.butterknife.compiler

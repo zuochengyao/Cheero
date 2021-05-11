@@ -53,8 +53,11 @@ dependencies {
     api versions.deps.jetpack.constraintlayout
     // api versions.deps.androidx.v4
     api versions.deps.jetpack.design
-    api versions.deps.jetpack.multidex
     api versions.deps.jetpack.lifecycle
+    api versions.deps.jetpack.multidex
+    implementation versions.deps.jetpack.datastore.proto
+    implementation versions.deps.jetpack.datastore.preference
+    // implementation versions.deps.jetpack.datastore.preference_rx3
     // Okhttp
     implementation versions.deps.okio
     implementation versions.deps.okhttp

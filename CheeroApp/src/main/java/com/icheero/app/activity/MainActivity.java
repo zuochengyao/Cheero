@@ -49,6 +49,7 @@ import com.icheero.app.activity.ui.touch.PanGestureScrollActivity;
 import com.icheero.app.activity.ui.touch.PanScrollActivity;
 import com.icheero.app.activity.ui.touch.TouchEventActivity;
 import com.icheero.sdk.base.BaseActivity;
+import com.icheero.sdk.base.CheeroNative;
 import com.icheero.sdk.core.manager.CameraManager;
 import com.icheero.sdk.util.Common;
 
@@ -147,6 +148,7 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        CheeroNative.nativeHelloWorld();
         if (!mPermissionManager.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
             mPermissionManager.permissionRequest(Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }

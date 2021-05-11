@@ -6,7 +6,9 @@ import com.icheero.app.BR
 import com.icheero.app.R
 import com.icheero.app.activity.MainActivity
 import com.icheero.app.databinding.ActivitySplashBinding
+import com.icheero.sdk.base.BaseApplication
 import com.icheero.sdk.base.ui.BaseActivity
+import com.icheero.sdk.core.storage.datastore.PreferenceUtils
 
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
 
@@ -34,6 +36,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
                 mBinding.splashSkip.text = getString(R.string.cheero_app_splash_skip).replace("%s", (millisUntilFinished / 1000).toString())
             }
         }
-        timer.start()
+        if (BaseApplication.getAppInstance().isFirstLaunch) timer.start()
+        else {
+            openActivity(MainActivity::class.java)
+            finish()
+        }
     }
 }
