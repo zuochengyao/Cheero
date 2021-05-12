@@ -50,8 +50,8 @@ JNIEXPORT void JNICALL native_SetTraceFilePath(JNIEnv *env, jclass, jstring file
 
 JNIEXPORT void JNICALL native_HelloWorld(JNIEnv *, jclass) {
     LOGI("hello world");
-    test_sscanf("AT+POC=021234000000025D30BDD5",
-                strlen("AT+POC=021234000000025D30BDD5"));
+    test_sscanf("AT+POC=021234000000025D30BDD5613B5D2D293031622E",
+                strlen("AT+POC=021234000000025D30BDD5613B5D2D293031622E"));
 }
 
 JNIEXPORT void JNICALL native_CallJavaMethod(JNIEnv *env, jclass, jobject obj) {
