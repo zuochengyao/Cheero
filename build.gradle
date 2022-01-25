@@ -94,7 +94,7 @@ subprojects {
                     }
                     debug {
                         minifyEnabled false
-                        signingConfig signingConfigs.release
+                        signingConfig signingConfigs.debug
                     }
                 }
             }

@@ -32,7 +32,7 @@ void at_request_analysis(const char *request, int32 len, struct at_Request *atRe
     atReq->cmd = strtoul(buf2, NULL, 16);
     TRACE("LUAT", ANDROID_LOG_INFO,"4.atReq->cmd=%x\n", atReq->cmd);
     atReq->id = strtoul(buf3, NULL, 16);
-    TRACE("LUAT", ANDROID_LOG_INFO,"5.atReq->cmd=%x\n", atReq->id);
+    TRACE("LUAT", ANDROID_LOG_INFO,"5.atReq->id=%x\n", atReq->id);
     atReq->extra = strtoul(buf4, NULL, 16);
     TRACE("LUAT", ANDROID_LOG_INFO,"6.atReq->extra=%llx\n", atReq->extra);
     memFree(buf1);

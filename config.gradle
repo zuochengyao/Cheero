@@ -8,7 +8,7 @@ build_version.gradle = '4.1.2'
 build_version.code = 7
 build_version.name = "1.0.6"
 build_version.java = JavaVersion.VERSION_1_8
-build_version.ndk = "23.0.7196353"
+build_version.ndk = "21.1.6352462"
 build_version.cmake = "3.18.1"
 // endregion
 
@@ -205,10 +205,10 @@ sign_release.filepath = project.rootDir.absolutePath + "/cheero_key.jks"
 sign_release.store = "123456"
 
 def sign_debug = [:]
-sign_debug.alias = "androiddebugkey"
-sign_debug.password = "android"
-sign_debug.filepath = "/Users/Work/.android/debug.keystore"
-sign_debug.store = "android"
+sign_debug.alias = "chirpinpoc"
+sign_debug.password = "Admin123"
+sign_debug.filepath = project.rootDir.absolutePath + "/cheero.jks"
+sign_debug.store = "Admin123"
 
 def sign = [:]
 sign.debug = sign_debug
